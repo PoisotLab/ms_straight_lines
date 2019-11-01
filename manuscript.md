@@ -73,6 +73,11 @@ species are expected to stop interacting in large networks - our formulation
 ensures that species will establish at least one interaction. This is lower than
 the 2 suggested by Coheh **Ref**, but more realistic than the $0$ of Martinez
 
+Note TP
+> I think the table below is interesting, in that it shows that the
+> predictions for the previous theories where making predictions that lack sense
+> either for connectance or average degree -- our does not.
+
 | Model     | $L$                                                        | $Co$                                          | $LD$                   | $\text{lim} Co$ | $\text{lim} LD$ |
 |:----------|:-----------------------------------------------------------|:----------------------------------------------|:-----------------------|:----------------|:----------------|
 | LSSL      | $2S$                                                       | $2\times S^{-1}$                              | $2$                    | $0$             | $2$             |
