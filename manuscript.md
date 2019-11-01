@@ -76,12 +76,12 @@ Note TP
 > predictions for the previous theories where making predictions that lack sense
 > either for connectance or average degree -- our does not.
 
-| Model     | $L$        | $Co$                | $LD$                   | $\text{lim} Co$ | $\text{lim} LD$ |
-|:----------|:-----------|:--------------------|:-----------------------|:----------------|:----------------|
-| LSSL      | $2S$       | $2\times S^{-1}$    | $2$                    | $0$             | $2$             |
-| CC        | $aS^2$     | $a$                 | $a\times S$            | $a$             | $\infty$        |
-| power law | $aS^b$     | $a\times S^{(b-2)}$ | $a\times S^{(b-1)}$    | $0$             | $0$             |
-| Bernoulli | Eqn. @eq:L | Eqn. @eq:co         | $1+(p-1)\times S^{-1}$ | $p$             | $1$             |
+| Model     | interactions | connectance         | linkage density        | limit connectance | limit linkage |
+|:----------|:-------------|:--------------------|:-----------------------|:------------------|:--------------|
+| LSSL      | $2S$         | $2\times S^{-1}$    | $2$                    | $0$               | $2$           |
+| CC        | $aS^2$       | $a$                 | $a\times S$            | $a$               | $\infty$      |
+| power law | $aS^b$       | $a\times S^{(b-2)}$ | $a\times S^{(b-1)}$    | $0$               | $0$           |
+| Bernoulli | Eqn. @eq:L   | Eqn. @eq:co         | $1+(p-1)\times S^{-1}$ | $p$               | $1$           |
 
 ## 2 ...
 
