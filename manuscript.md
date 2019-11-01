@@ -1,43 +1,27 @@
-# The model
+# Introduction
 
-This is a citation: @HampAnde15 -- we can also have citations in brackets
-[@HampAnde15].
+The L/S relationship is a fundamental one for food webs ecology
+- Early predictions differ in whether this is a linear of exponential relationship
+- General case is $L = aS^b$, which is easy to fit
+- Has consequences for spatial scaling (Brose)
+- Parameters are difficult to reason about ecologically
 
-## Lists
+We know that there are hard boundaries to this system
+- Cannot have more than $S^2$ interactions
+- Cannot have fewer than $S-1$
+- This was not used in the previous attempts to fit the relationship
 
-1. one fish
-2. two fish
-3. red fish
-4. blue fish
+We know that interactions can be viewed as stochastic events
+- Interaction is the outcome of a Bernoulli process
+- This lends itself to powerful approaches in probabilistic programming
+
+In this paper
+- New relationship between L and S
+- Discuss how it changes network prediction
+- Use it as a story telling device for a broader point about using our knowledge of the system in creative ways
 
 # Methods
 
-There is an equation, which we can cite with {@eq:eq1}.
+# Data source
 
-$$J'(p) = \frac{1}{\text{log}(S)}\times\left(-\sum p \text{log}(p)\right)$$ {#eq:eq1}
-
-# Tables
-
-We can do tables:
-
-| Column 1 | Column 2 |
-| -------- | --------:|
-| c1       |       c2 |
-
-# Figures
-
-![This is the legend of the figure](figures/biomes.png){#fig:biomes}
-
-We can refer to @fig:biomes.
-
-# Code?
-
-Yes
-
-~~~ julia
-for i in eachindex(x)
-  x[i] = zero(eltype(x)) # Don't do that
-end
-~~~
-
-# References
+# Results and discussion
