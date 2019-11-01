@@ -26,6 +26,8 @@ In this paper
 
 # Deriving the model
 
+As identified by **MARTINEZ92**, the number of links $L$ in a food web with $S$ nodes can be no lower than $S-1$, and no higher than $S^2$
+
 # Fitting the model
 
 # Results and discussion
