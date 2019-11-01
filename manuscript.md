@@ -55,7 +55,7 @@ $$
 
 This results in the connectance being expressed as
 
-$$ \frac{\hat L}{S} = (p-1)\times S^{-2} + (1-p)\times S^{-1} + p \, .$$ {#eq:co}
+$$ \frac{\hat L}{S^2} = (p-1)\times S^{-2} + (1-p)\times S^{-1} + p \, .$$ {#eq:co}
 
 # Fitting the model
 
