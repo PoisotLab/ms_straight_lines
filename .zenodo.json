@@ -1,5 +1,5 @@
 {
-  "title": "Some notes on population dynamics",
+  "title": "Revisting the link-species scaling relationship in ecological networks",
   "upload_type": "preprint",
   "access_right": "open",
   "license": "CC-BY",
@@ -13,5 +13,5 @@
     }
   ],
   "description": "This document is intended purely as a demo for the manuscript building system.",
-  "keywords": ["population dynamics", "differential equations", "community ecology"]
+  "keywords": ["food webs", "constant connectance", "link species scaling", "power law"]
 }
