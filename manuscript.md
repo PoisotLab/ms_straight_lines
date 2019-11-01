@@ -33,12 +33,38 @@ guaranteed to observed at least $S-1$ interactions. From a predictive
 standpoint, this means that we need to figure out how much of the remaining
 interactions, out of $S^2-(S-1)$, will be realized. Following @PoisCirt16, we
 suggest that each of these interactions are instances of independent Bernoulli
-trials with a set probability of success $p$. This means that the number of predicted links can be expressed as
+trials with a set probability of success $p$. This means that the number of
+predicted links can be expressed as:
 
 $$
- \hat L = p\times\left[S^2-(S-1)\right]+(S-1)
+ \hat L = p\times\left[S^2-(S-1)\right]+(S-1)\,.
 $$
+
+This can be re-expressed as a second order polynomial:
+
+$$
+  \hat L = p\times S^2 + (1-p)\times S + (p-1)\,.
+$$
+
+Because we have an expression for the number of interactions, we can get an
+expression for the expected connectance, which is
+
+$$
+  \frac{\hat L}{S^2} = p\frac{S^2}{S^2} + (1-p)\frac{S}{S^2}+(p-1)\frac{1}{S^2}
+$$
+
+This results in the connectance being expressed as
+
+$$ \frac{\hat L}{S} = (p-1)\times S^{-2} + (1-p)\times S^{-1} + p \, .$$ {#eq:co}
 
 # Fitting the model
 
-# Results and discussion
+# Practical consequences
+
+## Connectance is constant (for large enough food webs)
+
+According to @eq:co
+
+## 2 ...
+
+## 3 ...
