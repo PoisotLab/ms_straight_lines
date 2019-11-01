@@ -73,12 +73,12 @@ species are expected to stop interacting in large networks - our formulation
 ensures that species will establish at least one interaction. This is lower than
 the 2 suggested by Coheh **Ref**, but more realistic than the $0$ of Martinez
 
-| Model     | $L$    | $Co$ | $LD$ | $\text{lim} Co$ | $\text{lim} LD$ |
-|:----------|:-------|:-----|:-----|:----------------|:----------------|
-| LSSL      | $2S$   |      |      |                 |                 |
-| CC        | $aS^2$ |      |      |                 |                 |
-| power law | $aS^b  |      |      |                 |                 |
-| Bernoulli |        |      |      |                 |                 |
+| Model     | $L$                                                        | $Co$                                          | $LD$                   | $\text{lim} Co$ | $\text{lim} LD$ |
+|:----------|:-----------------------------------------------------------|:----------------------------------------------|:-----------------------|:----------------|:----------------|
+| LSSL      | $2S$                                                       | $2\times S^{-1}$                              | $2$                    | $0$             | $2$             |
+| CC        | $aS^2$                                                     |                                               |                        |                 |                 |
+| power law | $aS^b                                                      |                                               |                        |                 |                 |
+| Bernoulli | $p\frac{S^2}{S^2} + (1-p)\frac{S}{S^2}+(p-1)\frac{1}{S^2}$ | $(p-1)\times S^{-2} + (1-p)\times S^{-1} + p$ | $1+(p-1)\times S^{-1}$ | $p$             | $1$             |
 
 ## 2 ...
 
