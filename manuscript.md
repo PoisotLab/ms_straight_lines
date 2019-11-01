@@ -63,7 +63,22 @@ $$ \frac{\hat L}{S} = (p-1)\times S^{-2} + (1-p)\times S^{-1} + p \, .$$ {#eq:c
 
 ## Connectance is constant (for large enough food webs)
 
-According to @eq:co
+Predictions from @eq:co
+
+1. Connectance at large $S$ is $p$, as opposed to $0^+$ for the power law
+1. Linkage density at large $S$ is $1$ (because it is $1+(p1)\times S^{-1}$), whereas it is $0^+$ for the power law
+
+the fact that LD reaches 0 with the power law is concerning, since it means that
+species are expected to stop interacting in large networks - our formulation
+ensures that species will establish at least one interaction. This is lower than
+the 2 suggested by Coheh **Ref**, but more realistic than the $0$ of Martinez
+
+| Model     | $L$    | $Co$ | $LD$ | $\text{lim} Co$ | $\text{lim} LD$ |
+|:----------|:-------|:-----|:-----|:----------------|:----------------|
+| LSSL      | $2S$   |      |      |                 |                 |
+| CC        | $aS^2$ |      |      |                 |                 |
+| power law | $aS^b  |      |      |                 |                 |
+| Bernoulli |        |      |      |                 |                 |
 
 ## 2 ...
 
