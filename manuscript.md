@@ -42,9 +42,7 @@ $$
 
 This can be re-expressed as a second order polynomial:
 
-$$
-  \hat L = p\times S^2 + (1-p)\times S + (p-1)\,.
-$$
+$$\hat L = p\times S^2 + (1-p)\times S + (p-1)\,. $${#eq:L}
 
 Because we have an expression for the number of interactions, we can get an
 expression for the expected connectance, which is
@@ -78,12 +76,12 @@ Note TP
 > predictions for the previous theories where making predictions that lack sense
 > either for connectance or average degree -- our does not.
 
-| Model     | $L$                                                        | $Co$                                          | $LD$                   | $\text{lim} Co$ | $\text{lim} LD$ |
-|:----------|:-----------------------------------------------------------|:----------------------------------------------|:-----------------------|:----------------|:----------------|
-| LSSL      | $2S$                                                       | $2\times S^{-1}$                              | $2$                    | $0$             | $2$             |
-| CC        | $aS^2$                                                     | $a$                                           | $a\times S$            | $a$             | $\infty$        |
-| power law | $aS^b$                                                     | $a\times S^{(b-2)}$                           | $a\times S^{(b-1)}$    | $0$             | $0$             |
-| Bernoulli | $p\frac{S^2}{S^2} + (1-p)\frac{S}{S^2}+(p-1)\frac{1}{S^2}$ | $(p-1)\times S^{-2} + (1-p)\times S^{-1} + p$ | $1+(p-1)\times S^{-1}$ | $p$             | $1$             |
+| Model     | $L$        | $Co$                | $LD$                   | $\text{lim} Co$ | $\text{lim} LD$ |
+|:----------|:-----------|:--------------------|:-----------------------|:----------------|:----------------|
+| LSSL      | $2S$       | $2\times S^{-1}$    | $2$                    | $0$             | $2$             |
+| CC        | $aS^2$     | $a$                 | $a\times S$            | $a$             | $\infty$        |
+| power law | $aS^b$     | $a\times S^{(b-2)}$ | $a\times S^{(b-1)}$    | $0$             | $0$             |
+| Bernoulli | Eqn. @eq:L | Eqn. @eq:co         | $1+(p-1)\times S^{-1}$ | $p$             | $1$             |
 
 ## 2 ...
 
