@@ -76,8 +76,8 @@ the 2 suggested by Coheh **Ref**, but more realistic than the $0$ of Martinez
 | Model     | $L$                                                        | $Co$                                          | $LD$                   | $\text{lim} Co$ | $\text{lim} LD$ |
 |:----------|:-----------------------------------------------------------|:----------------------------------------------|:-----------------------|:----------------|:----------------|
 | LSSL      | $2S$                                                       | $2\times S^{-1}$                              | $2$                    | $0$             | $2$             |
-| CC        | $aS^2$                                                     |                                               |                        |                 |                 |
-| power law | $aS^b                                                      |                                               |                        |                 |                 |
+| CC        | $aS^2$                                                     | $a$                                           | $a\times S$            | $a$             | $\infty$        |
+| power law | $aS^b$                                                     | $a\times S^{(b-2)}$                           | $a\times S^{(b-1)}$    | $0$             | $0$             |
 | Bernoulli | $p\frac{S^2}{S^2} + (1-p)\frac{S}{S^2}+(p-1)\frac{1}{S^2}$ | $(p-1)\times S^{-2} + (1-p)\times S^{-1} + p$ | $1+(p-1)\times S^{-1}$ | $p$             | $1$             |
 
 ## 2 ...
