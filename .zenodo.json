@@ -10,6 +10,12 @@
       "familyname": "Poisot",
       "givennames": "Timothée",
       "orcid": "0000-0002-0735-5184"
+    },
+      {
+      "affiliation": "Université de Montréal; QCBS",
+      "familyname": "Banville",
+      "givennames": "Francis",
+      "orcid": "0000-0001-9051-0597"
     }
   ],
   "description": "This document is intended purely as a demo for the manuscript building system.",
