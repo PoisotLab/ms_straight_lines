@@ -139,7 +139,7 @@ excess of $(S-1)$ as $n\times p\times (1-p)$. This means that given a network
 with observed species richness $S$ and observed links $L$, we can calculate its
 $z$-score as
 
-$$z = \frac{L - p\times \left[S^2-(S-1)\right]}{\sqrt{p\times (1-p)\times \left[S^2-(S-1)\right]}} \,.$${#eq:z}
+$$z = \frac{(L -(S-1)) - p\times \left[S^2-(S-1)\right]}{\sqrt{p\times (1-p)\times \left[S^2-(S-1)\right]}} \,.$${#eq:z}
 
 A network where $L = \hat L$ will have a $z$-score of 0, and any network with
 more (fewer) interactions will have a positive (negative) $z$-score. This has
