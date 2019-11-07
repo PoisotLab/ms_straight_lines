@@ -55,8 +55,8 @@ observed at least $S-1$ interactions. From a predictive standpoint, this means
 that we need to figure out how much of the remaining interactions, out of
 $S^2-(S-1)$, will be realized. Following @PoisCirt16, we suggest that each of
 these interactions are instances of independent Bernoulli trials with a set
-probability of success $p$, which much like $a$ and $b$ in equation @{eq:reg} is
-assumed to be a constant across all food webs.
+probability of success $p$, which much like $a$ and $b$ in +@eq:reg is assumed
+to be a constant across all food webs.
 
 This means that the number of predicted links can be expressed as:
 
@@ -78,7 +78,7 @@ $$\hat L = p\times S^2 + (1-p)\times S + (p-1)\,. $${#eq:L}
 
 ## Connectance is constant (for large enough food webs)
 
-Because we have an expression for the number of interactions (+@{eq:L}), we can
+Because we have an expression for the number of interactions (+@eq:L), we can
 get an expression for the expected connectance, which is
 
 $$
@@ -116,7 +116,7 @@ As noted by @BrosOstl04, the models of @CoheBria84 and @Mart92 results in
 networks in which the relationship between $L$ and $S$ obeys a power-law, albeit
 with different parameters. Our model does not make this prediction, due to the
 fact that we explicitly account for the lower bound of $(S-1)$ interactions. In
-+@{eq:L}, the term $p\times S^2$ will become increasingly important when $S$
++@eq:L, the term $p\times S^2$ will become increasingly important when $S$
 increases, and so we can quantify the extent to which the relationship gets
 closer to a power law when $S$ increases.
 
