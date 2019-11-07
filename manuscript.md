@@ -87,7 +87,7 @@ $$
 
 This results in the connectance being expressed as
 
-$$ \frac{\hat L}{S^2} = (p-1)\times S^{-2} + (1-p)\times S^{-1} + p \, .$$ {#eq:co}
+$$ \frac{\hat L}{S^2} = (p-1)\times S^{-2} + (1-p)\times S^{-1} + p \, .$${#eq:co}
 
 Note that the expression of connectance is no longer a polynomial; at large
 values of $S$, the terms in $S^{-1}$ and $S^{-2}$ will tend towards 0, and so
@@ -139,7 +139,7 @@ excess of $(S-1)$ as $n\times p\times (1-p)$. This means that given a network
 with observed species richness $S$ and observed links $L$, we can calculate its
 $z$-score as
 
-$$z = \frac{L - p\times \left[S^2-(S-1)\right]}{\sqrt{p\times (1-p)\times \left[S^2-(S-1)\right]}} \,.$$#{eq:z}
+$$z = \frac{L - p\times \left[S^2-(S-1)\right]}{\sqrt{p\times (1-p)\times \left[S^2-(S-1)\right]}} \,.$${#eq:z}
 
 A network where $L = \hat L$ will have a $z$-score of 0, and any network with
 more (fewer) interactions will have a positive (negative) $z$-score. This has
