@@ -70,48 +70,66 @@ $$\hat L = p\times S^2 + (1-p)\times S + (p-1)\,. $${#eq:L}
 
 # Fitting the model
 
-# Practical consequences
+# Results and discussion
+
+## The Bernoulli-based model outperforms previous solutions
+
+**Andrew** this one is for you to write
 
 ## Connectance is constant (for large enough food webs)
 
-Because we have an expression for the number of interactions, we can get an
-expression for the expected connectance, which is
+Because we have an expression for the number of interactions (+@{eq:L}), we can
+get an expression for the expected connectance, which is
 
 $$
-  \frac{\hat L}{S^2} = p\frac{S^2}{S^2} + (1-p)\frac{S}{S^2}+(p-1)\frac{1}{S^2}
+  \frac{\hat L}{S^2} = p\frac{S^2}{S^2} + (1-p)\frac{S}{S^2}+(p-1)\frac{1}{S^2} \,.
 $$
 
 This results in the connectance being expressed as
 
 $$ \frac{\hat L}{S^2} = (p-1)\times S^{-2} + (1-p)\times S^{-1} + p \, .$$ {#eq:co}
 
-**TP** Need to re-write this section, the table is wrong
+Note that the expression of connectance is no longer a polynomial; at large
+values of $S$, the terms in $S^{-1}$ and $S^{-2}$ will tend towards 0, and so
+the connectance will converge towards $p$. Therefore, for large enough
+ecological networks, we should expect to observe a connectance that belongs more
+or less in a constant way. This result provides an interesting ecological
+interpretation of $p$, namely that it represents the connectance which we expect
+a network large enough for the effect of $(S-1)$ minimum links to be negligible
+to have.
 
-Predictions from @eq:co
+Interestingly, this model still results in an expected average degree ($\hat
+L/S$, the *linkage density*) for a large number of species that scales with $S$:
 
-1. Connectance at large $S$ is $p$, as opposed to $0^+$ for the power law
-1. Linkage density at large $S$ is $1$ (because it is $1+(p1)\times S^{-1}$), whereas it is $0^+$ for the power law
+$$\frac{\hat L}{S} = p\times S + (1-p) + (p - 1)\times S^{-1}\,.$$
 
-the fact that LD reaches 0 with the power law is concerning, since it means that
-species are expected to stop interacting in large networks - our formulation
-ensures that species will establish at least one interaction. This is lower than
-the 2 suggested by Coheh **Ref**, but more realistic than the $0$ of Martinez
-
-Note TP
-> I think the table below is interesting, in that it shows that the
-> predictions for the previous theories where making predictions that lack sense
-> either for connectance or average degree -- our does not.
-
-| Model     | interactions | connectance         | linkage density        | limit connectance | limit linkage |
-|:----------|:-------------|:--------------------|:-----------------------|:------------------|:--------------|
-| LSSL      | $2S$         | $2\times S^{-1}$    | $2$                    | $0$               | $2$           |
-| CC        | $aS^2$       | $a$                 | $a\times S$            | $a$               | $\infty$      |
-| power law | $aS^b$       | $a\times S^{(b-2)}$ | $a\times S^{(b-1)}$    | $0$               | $0$           |
-| Bernoulli | Eqn. @eq:L   | Eqn. @eq:co         | $1+(p-1)\times S^{-1}$ | $p$               | $1$           |
+This means that the addition of $p^{-1}$ new species should increase the average
+degree in the food web by 1; of course, for increasingly large values of $S$,
+this may result in unrealistic average degree, as species are limited by
+biological mechanisms such as handling time, capture efficiency, etc, in the
+number of interactions they can establish. Seeing how most ecological networks
+are reasonably small, this does not look like an unreasonable assumption.
 
 ## Only very-large food webs obey a power law
 
-...
+As noted by @BrosOstl04, the models of @CoheBria84 and @Mart92 results in
+networks in which the relationship between $L$ and $S$ obeys a power-law, albeit
+with different parameters. Our model does not make this prediction, due to the
+fact that we explicitly account for the lower bound of $(S-1)$ interactions. In
++@{eq:L}, the term $p\times S^2$ will become increasingly important when $S$
+increases, and so we can quantify the extent to which the relationship gets
+closer to a power law when $S$ increases.
+
+We do so by dividing the terms with exponents lower than 2 by the term with
+exponent 2, which gives
+
+$$k = \frac{(1-p)\times S + (p-1)}{p\times S^2}\,.$$
+
+This will peak for small values of $S$, and then slowly decrease towards 0. We
+illustrate these results in **FIGURE**, which reveals that for networks under
+**500?** species, the relationship between $S$ and $L$ strongly deviates from a
+power-law. Specifically, **complete -- is it under or over-estimating the number
+of interactions?**.
 
 ## We can derive a measure of departure from expected number of links
 
