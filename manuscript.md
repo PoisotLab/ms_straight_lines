@@ -92,15 +92,25 @@ captured in the hyperparameter $\sigma_p$, which also partially pools estimates
 of $p_i$ towards the average value. This increases accuracy, both within sample
 and when making predictions for new webs.
 
-We selected our prior on $\mu_p$ to reflect previous estimates for the constant of connectance: we calculated the logit of @Mart92 's value. However, as no information is available for either the standard deviation of this distribution nor for $\sigma_p$, we followed the advice of (tk Simpson et al), and performed prior predictive checks. The  _tk actual values_
+We selected our prior on $\mu_p$ to reflect previous estimates for the constant
+of connectance: we calculated the logit of @Mart92 's value. However, as no
+information is available for either the standard deviation of this distribution
+nor for $\sigma_p$, we followed the advice of (tk Simpson et al), and performed
+prior predictive checks. We chose values of these two parameters that generated
+a wide range of values for $L_i$, but which did not frequently predict webs of
+either maximum or minimum connectance.  _tk actual values_
 
 Two quantities are interesting to calculate from this model. First we may calculate the MAP (maximum a posteriori) estimate of average $p$ across all webs, by using the inverse logit of $\mu_p$:
 
 $$p = \frac{e^{\mu_p}}{1 - e^{\mu_p}}$$
 
 Secondly, we may wish to provide the predicted value of $p$ for a new web. Because
+the precise $p_i$ for a new web cannot be known in advance, the best thing to do
+is to marginalize over the distribution of $p_i$s, as described by $\sigma_p$.
 
 We use Stan (**tk version, ref**) which implements Bayesian inference using Hamiltonian Monte Carlo.
+
+## Comparison with other models
 
 # Results and discussion
 
