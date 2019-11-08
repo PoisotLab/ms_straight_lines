@@ -112,6 +112,17 @@ We use Stan (**tk version, ref**) which implements Bayesian inference using Hami
 
 ## Comparison with other models
 
+Several other models have been used to predict the number of links in a food
+web; all of these have modeled the number of links directly, usually after
+transformation. We fit several of these models, as well as our own, to compare
+their predictive ability:
+
+$$L = aS^b$$
+
+$$L = aS^2$$
+
+and.. another one..
+
 # Results and discussion
 
 ## The Bernoulli-based model outperforms previous solutions
