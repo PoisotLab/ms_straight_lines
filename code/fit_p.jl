@@ -32,6 +32,13 @@ S_CO = @df d scatter(:nodes, :co, frame=:semi, c=:black)
 xaxis!(S_CO, :log)
 yaxis!(S_CO, (0,1), "Connectance")
 
-plot(S_L, S_LD, S_CO, layout=(1,3), size=(800,280), dpi=300, leg=false)
+plot(S_L, S_LD, S_CO, layout=(1,3), size=(800,300), dpi=300, leg=false)
 xaxis!("Species")
 savefig(joinpath("figures", "relationships.png"))
+
+# Fit the data
+density(rand(p, 100_000), c=:lightgrey, fill=(:lightgrey, 0), frame=:semi, lab="Fit", dpi=300, size=(400,400))
+density!(d.p, c=:black, ls=:dash, lab="Empirical data")
+xaxis!((0, 0.5), "p")
+yaxis!((0, 7), "Density")
+savefig(joinpath("figures", "penciltrick.png"))
