@@ -136,6 +136,8 @@ $\sigma_p$.
 We use Stan (**tk version, ref**) which implements Bayesian inference using
 Hamiltonian Monte Carlo.
 
+![LogitNormal fit](figures/penciltrick.png){#fig:penciltrick}
+
 ## Comparison with other models
 
 Several other models have been used to predict the number of links in a food
