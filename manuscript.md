@@ -37,7 +37,10 @@ We know that interactions can be viewed as stochastic events
 - Interaction is the outcome of a Bernoulli process
 - This lends itself to powerful approaches in probabilistic programming
 
-In this paper
+In this paper, we use data from the `mangal.io` networks database
+(+@fig:empirical), to ...
+
+![Relationships in the mangal data](figures/relationships.png){#fig:empirical}
 
 - New relationship between L and S
 - Discuss how it changes network prediction
