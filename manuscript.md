@@ -43,7 +43,7 @@ models are instead parameterizations of the same general model, in which
 $$\hat L_\text{reg} = b\times S^a\,, $${#eq:reg}
 
 where $a$ and $b$ are constants. When the number of links and number of
-interactions are transformed by their natural log, $a$ and $b$ can be identified
+interactions are transformed by their natural log, $a$ and $b$ can be estimated
 with a linear regression, as done by @Mart92.
 
 Although all of these models fit the data well enough, they neglect a
@@ -70,6 +70,38 @@ $$\hat L = p\times S^2 + (1-p)\times S + (p-1)\,. $${#eq:L}
 
 # Fitting the model
 
+We have rephrased the question of connectance in food webs as the proportion of
+links realized above the minimum. We use a Binomial likelihood where we consider
+the number of links above the minimum as 'successes' and the number of links
+between the minimum and maximum as the number of 'trials':
+
+$$\begin{aligned}
+L_i & \sim \text{Binomial}(\left[S_i^2-(S_i-1)\right], p_i)\\
+\text{logit}(p_i) &\sim \text{Normal}(\mu_p, \sigma_p)\\
+\mu_p & \sim \text{Normal}()\\
+\sigma_p & \sim \text{Exponential}()
+\end{aligned}$$
+
+Note that this model has no deterministic component for $p$, since it is modeled
+as a constant. We assume that $p$ may be described by a normal distribution on
+the logit scale. The parameter $\mu_p$ replaces previous estimates of the
+average connectance across all food webs. However, the variation among food webs
+is not completely captured by $S$ alone, and the variation in link number is
+greater than expected in a binomial distribution. This overdispersion is
+captured in the hyperparameter $\sigma_p$, which also partially pools estimates
+of $p_i$ towards the average value. This increases accuracy, both within sample
+and when making predictions for new webs.
+
+We selected our prior on $\mu_p$ to reflect previous estimates for the constant of connectance: we calculated the logit of @Mart92 's value. However, as no information is available for either the standard deviation of this distribution nor for $\sigma_p$, we followed the advice of (tk Simpson et al), and performed prior predictive checks. The  _tk actual values_
+
+Two quantities are interesting to calculate from this model. First we may calculate the MAP (maximum a posteriori) estimate of average $p$ across all webs, by using the inverse logit of $\mu_p$:
+
+$$p = \frac{e^{\mu_p}}{1 - e^{\mu_p}}$$
+
+Secondly, we may wish to provide the predicted value of $p$ for a new web. Because
+
+We use Stan (**tk version, ref**) which implements Bayesian inference using Hamiltonian Monte Carlo.
+
 # Results and discussion
 
 ## The Bernoulli-based model outperforms previous solutions
@@ -92,11 +124,10 @@ $$ \frac{\hat L}{S^2} = (p-1)\times S^{-2} + (1-p)\times S^{-1} + p \, .$${#eq:c
 Note that the expression of connectance is no longer a polynomial; at large
 values of $S$, the terms in $S^{-1}$ and $S^{-2}$ will tend towards 0, and so
 the connectance will converge towards $p$. Therefore, for large enough
-ecological networks, we should expect to observe a connectance that belongs more
+ecological networks, we should expect to observe a connectance that behaves more
 or less in a constant way. This result provides an interesting ecological
 interpretation of $p$, namely that it represents the connectance which we expect
-a network large enough for the effect of $(S-1)$ minimum links to be negligible
-to have.
+a network large enough for the effect of $(S-1)$ minimum links to be negligible.
 
 Interestingly, this model still results in an expected average degree ($\hat
 L/S$, the *linkage density*) for a large number of species that scales with $S$:
