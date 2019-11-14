@@ -100,8 +100,8 @@ between the minimum and maximum as the number of 'trials':
 $$\begin{aligned}
 L_i & \sim \text{Binomial}(\left[S_i^2-(S_i-1)\right], p_i)\\
 \text{logit}(p_i) &\sim \text{Normal}(\mu_p, \sigma_p)\\
-\mu_p & \sim \text{Normal}()\\
-\sigma_p & \sim \text{Exponential}()
+\mu_p & \sim \text{Normal}(-1.815, 0.3)\\
+\sigma_p & \sim \text{Exponential}(2)
 \end{aligned}$$
 
 Note that this model has no deterministic component for $p$, since it is modeled
