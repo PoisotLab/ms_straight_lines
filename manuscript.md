@@ -168,15 +168,22 @@ $$
 
 This results in the connectance being expressed as
 
-$$ \frac{\hat L}{S^2} = (p-1)\times S^{-2} + (1-p)\times S^{-1} + p \, .$${#eq:co}
+$$ \frac{\hat L}{S^2} = (p-1)\times S^{-2} + (1-p)\times S^{-1} + p \, ,$${#eq:co}
+
+or equivalently as
+
+
+$$ \frac{\hat L}{S^2} = p + (1-p)\times m(s) \, ,$${#eq:co2}
+
+where $m(s) = \frac{S - 1}{S^{2}}$ is the minimal connectance of a food web.
+
 
 Note that the expression of connectance is no longer a polynomial; at large
-values of $S$, the terms in $S^{-1}$ and $S^{-2}$ will tend towards 0, and so
+values of $S$, the value of $m(s)$ (equivalently the terms in $S^{-1}$ and $S^{-2}$) will tend towards 0, and so
 the connectance will converge towards $p$. Therefore, for large enough
-ecological networks, we should expect to observe a connectance that behaves more
-or less in a constant way. This result provides an interesting ecological
-interpretation of $p$, namely that it represents the connectance which we expect
-a network large enough for the effect of $(S-1)$ minimum links to be negligible.
+ecological networks, we should expect a connectance which is independent of $S$. Thus $p$ has an interesting ecological
+interpretation: it represents the average connectance of networks large enough
+that the proportion $(S-1)/S^{2}$ is negligible.
 
 Interestingly, this model still results in an expected average degree ($\hat
 L/S$, the *linkage density*) for a large number of species that scales with $S$:
