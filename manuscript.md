@@ -1,5 +1,17 @@
 # Introduction
 
+As community ecologists are fascinated by counting things, it is no surprise
+that early food webs literature paid so much attention to the relationship
+between species richness and the number of trophic interactions existing among
+them. In fact, the importance of connectance for nearly all aspects of food webs
+structure and dynamics provided a powerful rationale to identify general laws
+relating species richness with the density of their interactions [@PascDunn06].
+That there exists a strong scaling between species richness $S$ and number of
+interactions $L$ is not a matter of debate; in fact this scaling is so universal
+that it appears under purely neutral models of food web structure [@CanaMouq12].
+@BrosOstl04 suggested that this scaling be following a power-law, with $L =
+b\times S^a$, and this matches empirical data well enough.
+
 The L/S relationship is a fundamental one for food webs ecology
 
 - Early predictions differ in whether this is a linear of exponential relationship
@@ -13,12 +25,22 @@ We know that there are hard boundaries to this system
 - Cannot have fewer than $S-1$
 - This was not used in the previous attempts to fit the relationship
 
+@WillMart04 identified that most food webs appear to be limited in their height,
+as increasingly apical species require more energy flowing in to be sustained.
+In addition, constraints on omnivory appear to "linearize" food-webs; there
+should therefore be a limitation on the richness of a food web, and so for small
+values of $S$, the difference between assuming that there can be between $0$, or
+between $(S-1)$, and $S^2$ interactions is likely biologically relevant.
+
 We know that interactions can be viewed as stochastic events
 
 - Interaction is the outcome of a Bernoulli process
 - This lends itself to powerful approaches in probabilistic programming
 
-In this paper
+In this paper, we use data from the `mangal.io` networks database
+(+@fig:empirical), to ...
+
+![Relationships in the mangal data](figures/relationships.png){#fig:empirical}
 
 - New relationship between L and S
 - Discuss how it changes network prediction
@@ -100,15 +122,21 @@ prior predictive checks. We chose values of these two parameters that generated
 a wide range of values for $L_i$, but which did not frequently predict webs of
 either maximum or minimum connectance.  _tk actual values_
 
-Two quantities are interesting to calculate from this model. First we may calculate the MAP (maximum a posteriori) estimate of average $p$ across all webs, by using the inverse logit of $\mu_p$:
+Two quantities are interesting to calculate from this model. First we may
+calculate the MAP (maximum a posteriori) estimate of average $p$ across all
+webs, by using the inverse logit of $\mu_p$:
 
 $$p = \frac{e^{\mu_p}}{1 - e^{\mu_p}}$$
 
-Secondly, we may wish to provide the predicted value of $p$ for a new web. Because
-the precise $p_i$ for a new web cannot be known in advance, the best thing to do
-is to marginalize over the distribution of $p_i$s, as described by $\sigma_p$.
+Secondly, we may wish to provide the predicted value of $p$ for a new web.
+Because the precise $p_i$ for a new web cannot be known in advance, the best
+thing to do is to marginalize over the distribution of $p_i$s, as described by
+$\sigma_p$.
 
-We use Stan (**tk version, ref**) which implements Bayesian inference using Hamiltonian Monte Carlo.
+We use Stan (**tk version, ref**) which implements Bayesian inference using
+Hamiltonian Monte Carlo.
+
+![LogitNormal fit](figures/penciltrick.png){#fig:penciltrick}
 
 ## Comparison with other models
 
@@ -182,6 +210,12 @@ illustrate these results in **FIGURE**, which reveals that for networks under
 **500?** species, the relationship between $S$ and $L$ strongly deviates from a
 power-law. Specifically, **complete -- is it under or over-estimating the number
 of interactions?**.
+
+In a sense, this model sheds some light on a classical result [@DunnWill02a]:
+ecological networks deviate most strongly from the expectations under "small
+world" or "scale free" regimes when they exceed a certain connectance; this is
+because for small networks, connectance is higher, and only decreases towards
+$p$ when the term in $S^{-2}$ in +@eq:co vanishes.
 
 ## We can derive a measure of departure from expected number of links
 
