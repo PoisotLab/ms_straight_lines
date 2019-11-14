@@ -93,19 +93,30 @@ $$\hat L = p\times S^2 + (1-p)\times S + (p-1)\,. $${#eq:L}
 # Fitting the model
 
 We have rephrased the question of connectance in food webs as the proportion of
-links realized above the minimum. We use a Binomial likelihood where we consider
-the number of links above the minimum as 'successes' and the number of links
-between the minimum and maximum as the number of 'trials':
+links realized above the minimum. There are several ways of writing down this model;
+we compare two possibilities below. In both cases, we use a discrete probability distribution
+as the likelihood, with the number of observed links $L_i$ above the minimum as 'successes' and the number of possible links as 'trials'. Each model tries capture variation in link number that greater than
+would be predicted by $p$ alone.
+
+Our first model uses the Beta-Binomial distribution for observations of $L$;
+this distribution can be parameterized in terms of its mean $\mu_p$ and concentration parameter, $\phi$ :
+
+$$\begin{aligned}
+L_i & \sim \text{BetaBinomial}(\left[S_i^2-(S_i-1)\right], \mu_p \times \phi, (1 - \mu_p) \times \phi)\\
+\text{logit}(\mu_p) &\sim  \text{Normal}(-1.815, 0.3)\\
+\phi & \sim \text{Gamma}(0.01, 0.01)
+\end{aligned}$${#eq:betab}
+
+A second possibility is to use a binomial observation model, :
 
 $$\begin{aligned}
 L_i & \sim \text{Binomial}(\left[S_i^2-(S_i-1)\right], p_i)\\
 \text{logit}(p_i) &\sim \text{Normal}(\mu_p, \sigma_p)\\
 \mu_p & \sim \text{Normal}(-1.815, 0.3)\\
 \sigma_p & \sim \text{Exponential}(2)
-\end{aligned}$$
+\end{aligned}$${#eq:lnorm}
 
-Note that this model has no deterministic component for $p$, since it is modeled
-as a constant. We assume that $p$ may be described by a normal distribution on
+We assume that $p$ may be described by a normal distribution on
 the logit scale. The parameter $\mu_p$ replaces previous estimates of the
 average connectance across all food webs. However, the variation among food webs
 is not completely captured by $S$ alone, and the variation in link number is
@@ -155,7 +166,11 @@ and.. another one..
 
 ## The Bernoulli-based model outperforms previous solutions
 
-**Andrew** this one is for you to write
+| | |
+|-|-|
+
+
+
 
 ## Connectance is constant (for large enough food webs)
 
