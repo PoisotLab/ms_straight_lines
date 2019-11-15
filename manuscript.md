@@ -84,7 +84,7 @@ This means that the number of predicted links can be expressed as:
 
 $$
  \hat L = p\times\left[S^2-(S-1)\right]+(S-1)\,.
-$$
+$${#eq:lhat}
 
 This can be re-expressed as a second order polynomial:
 
@@ -102,33 +102,20 @@ Our first model uses the Beta-Binomial distribution for observations of $L$;
 this distribution can be parameterized in terms of its mean $\mu_p$ and concentration parameter, $\phi$ :
 
 $$\begin{aligned}
-L_i & \sim \text{BetaBinomial}(\left[S_i^2-(S_i-1)\right], \mu_p \times \phi, (1 - \mu_p) \times \phi)\\
-\text{logit}(\mu_p) &\sim  \text{Normal}(-1.815, 0.3)\\
+L_i & \sim \text{BetaBinomial}(\left[S_i^2-(S_i-1)\right], p \times \phi, (1 - p) \times \phi)\\
+p &\sim  \text{Beta}(1.54, 9.49)\\
 \phi & \sim \text{Gamma}(0.01, 0.01)
 \end{aligned}$${#eq:betab}
 
-We assume that $p$ may be described by a normal distribution on
-the logit scale. The parameter $\mu_p$ replaces previous estimates of the
-average connectance across all food webs. However, the variation among food webs
-is not completely captured by $S$ alone, and the variation in link number is
-greater than expected in a binomial distribution. This overdispersion is
-captured in the hyperparameter $\sigma_p$, which also partially pools estimates
-of $p_i$ towards the average value. This increases accuracy, both within sample
-and when making predictions for new webs.
-
-We selected our prior on $\mu_p$ to reflect previous estimates for the constant
-of connectance: we calculated the logit of @Mart92 's value. However, as no
-information is available for either the standard deviation of this distribution
-nor for $\sigma_p$, we followed the advice of (tk Simpson et al), and performed
-prior predictive checks. We chose values of these two parameters that generated
+We chose our prior distribution for $p$ based on @Mart92 , who gave a value of
+constant connectance equal to 0.14. While this prior is "informative", it is weakly so; as @Mart92 did not provide an estimate of the variance for his value we chose a relatively large variation around that mean.  However, as no
+information is available to inform a prior on $\phi$, we followed the advice of (tk Simpson et al), and performed
+prior predictive checks. We chose prior parameters that generated
 a wide range of values for $L_i$, but which did not frequently predict webs of
-either maximum or minimum connectance.  _tk actual values_
-
+either maximum or minimum connectance, neither of which are observed in nature.
 
 We use Stan (**tk version, ref**) which implements Bayesian inference using
 Hamiltonian Monte Carlo.
-
-![Beta fit](figures/penciltrick.png){#fig:penciltrick}
 
 ## Comparison with other models
 
@@ -142,6 +129,14 @@ $$L = aS^b$$
 $$L = aS^2$$
 
 and.. another one..
+
+## estimating hyperparameters
+
+While the full posterior distribution can be sampled using various bayesian conditioning engines, this is not necessary for obtaining point estimates of $p$
+ and $\phi$. A maximum likelihood estimate of each can be calculated by rearranging
+equation {#eq:lhat} and fitting a Beta distribution to the result:
+
+![Beta fit](figures/penciltrick.png){#fig:penciltrick}
 
 # Results and discussion
 
