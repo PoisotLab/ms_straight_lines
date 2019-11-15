@@ -193,6 +193,34 @@ biological mechanisms such as handling time, capture efficiency, etc, in the
 number of interactions they can establish. Seeing how most ecological networks
 are reasonably small, this does not look like an unreasonable assumption.
 
+
+## Distribution of connectance
+
+We have fit a Beta distribution to links in excess of the minimum. However,
+since the minimum connectance is a function of S (specifically $m(S) = \frac{S-1}{S^2}$), we can derive the distribution for connectances directly:
+
+$$ p_{Co} = (1 - m(S)) \times p + m(S)\, ,$$
+$$ \phi_{Co} = \frac{\phi + m(S)}{1 - m(S)}\, .$$
+
+The expression for $p_{Co}$ is identical to {#eq:co2} above. As S becomes large,
+both parameters converge to $p$ and $Co$ respectively. That is, for species-rich
+communities the minimal connectance becomes negligible, and the distribution of
+connectances is stationary, with a constant mean and variance.
+
+The distribution of connectances has several important uses. First, it can be used
+as an informative prior when constructing future food webs. Cirtwill et al. proposed using a Beta distribution for the probability of any specific edge in a food web.
+The prior defined above may be used in this way. Note that if multiplied by $S^2$, the above expression is equal to {#eq:L}, the expected number of links in a food web **tk probabilistic network citation**.
+
+In addition to use as a prior, the distribution of connectances can also be used to
+test whether networks are more or less connected than expected by chance. Using parameters $p$ and $\phi$, and adjusting for the observed number of species $S$,
+a food web ecologist may read the p-value associated with their observed connectance
+directly from a Beta distribution. Equivalently, one may instead choose to describe
+the distribution of links, rather than connectances. In our model, the distribution
+of links is beta-binomial, with hyperparameters $p_{Co}$ and $\phi_{Co}$.
+By the deMoivre-Laplace theorem, a binomial distribution may be approximated with a normal distribution.
+This allows us to convert an observed number of links directly into a z-score, without resorting to
+null distributions derived from samples
+
 ## Only very-large food webs obey a power law
 
 As noted by @BrosOstl04, the models of @CoheBria84 and @Mart92 results in
