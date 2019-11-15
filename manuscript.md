@@ -147,7 +147,7 @@ $\sigma_p$.
 We use Stan (**tk version, ref**) which implements Bayesian inference using
 Hamiltonian Monte Carlo.
 
-![LogitNormal fit](figures/penciltrick.png){#fig:penciltrick}
+![Beta fit](figures/penciltrick.png){#fig:penciltrick}
 
 ## Comparison with other models
 
@@ -198,7 +198,7 @@ values of $S$, the value of $m(s)$ (equivalently the terms in $S^{-1}$ and $S^{-
 the connectance will converge towards $p$. Therefore, for large enough
 ecological networks, we should expect a connectance which is independent of $S$. Thus $p$ has an interesting ecological
 interpretation: it represents the average connectance of networks large enough
-that the proportion $(S-1)/S^{2}$ is negligible.
+that the proportion $\frac{(S-1)}{S^{2}}$ is negligible.
 
 Interestingly, this model still results in an expected average degree ($\hat
 L/S$, the *linkage density*) for a large number of species that scales with $S$:
