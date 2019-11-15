@@ -95,7 +95,7 @@ $$\hat L = p\times S^2 + (1-p)\times S + (p-1)\,. $${#eq:L}
 We have rephrased the question of connectance in food webs as the proportion of
 links realized above the minimum. There are several ways of writing down this model;
 we compare two possibilities below. In both cases, we use a discrete probability distribution
-as the likelihood, with the number of observed links $L_i$ above the minimum as 'successes' and the number of possible links as 'trials'. Each model tries capture variation in link number that greater than
+as the likelihood, with the number of observed links $L_i$ above the minimum as 'successes' and the number of possible links as 'trials'. Each model tries to capture variation in link number greater than
 would be predicted by $p$ alone.
 
 Our first model uses the Beta-Binomial distribution for observations of $L$;
@@ -106,15 +106,6 @@ L_i & \sim \text{BetaBinomial}(\left[S_i^2-(S_i-1)\right], \mu_p \times \phi, (1
 \text{logit}(\mu_p) &\sim  \text{Normal}(-1.815, 0.3)\\
 \phi & \sim \text{Gamma}(0.01, 0.01)
 \end{aligned}$${#eq:betab}
-
-A second possibility is to use a binomial observation model, :
-
-$$\begin{aligned}
-L_i & \sim \text{Binomial}(\left[S_i^2-(S_i-1)\right], p_i)\\
-\text{logit}(p_i) &\sim \text{Normal}(\mu_p, \sigma_p)\\
-\mu_p & \sim \text{Normal}(-1.815, 0.3)\\
-\sigma_p & \sim \text{Exponential}(2)
-\end{aligned}$${#eq:lnorm}
 
 We assume that $p$ may be described by a normal distribution on
 the logit scale. The parameter $\mu_p$ replaces previous estimates of the
@@ -133,16 +124,6 @@ prior predictive checks. We chose values of these two parameters that generated
 a wide range of values for $L_i$, but which did not frequently predict webs of
 either maximum or minimum connectance.  _tk actual values_
 
-Two quantities are interesting to calculate from this model. First we may
-calculate the MAP (maximum a posteriori) estimate of average $p$ across all
-webs, by using the inverse logit of $\mu_p$:
-
-$$p = \frac{e^{\mu_p}}{1 - e^{\mu_p}}$$
-
-Secondly, we may wish to provide the predicted value of $p$ for a new web.
-Because the precise $p_i$ for a new web cannot be known in advance, the best
-thing to do is to marginalize over the distribution of $p_i$s, as described by
-$\sigma_p$.
 
 We use Stan (**tk version, ref**) which implements Bayesian inference using
 Hamiltonian Monte Carlo.
