@@ -21,6 +21,8 @@ d.exp = d.nodes.^2 .- (d.nodes .- 1)
 d.pex = d.exr ./ d.exp
 
 p = fit(Beta, d.pex)
+using DelimitedFiles
+writedlm("params.dat", params(p))
 
 # General figures to show the relationships
 S_L = @df d scatter(:nodes, :links, frame=:semi, c=:black)

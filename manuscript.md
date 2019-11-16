@@ -84,7 +84,7 @@ This means that the number of predicted links can be expressed as:
 
 $$
  \hat L = p\times\left[S^2-(S-1)\right]+(S-1)\,.
-$$
+$${#eq:lhat}
 
 This can be re-expressed as a second order polynomial:
 
@@ -95,59 +95,27 @@ $$\hat L = p\times S^2 + (1-p)\times S + (p-1)\,. $${#eq:L}
 We have rephrased the question of connectance in food webs as the proportion of
 links realized above the minimum. There are several ways of writing down this model;
 we compare two possibilities below. In both cases, we use a discrete probability distribution
-as the likelihood, with the number of observed links $L_i$ above the minimum as 'successes' and the number of possible links as 'trials'. Each model tries capture variation in link number that greater than
+as the likelihood, with the number of observed links $L_i$ above the minimum as 'successes' and the number of possible links as 'trials'. Each model tries to capture variation in link number greater than
 would be predicted by $p$ alone.
 
 Our first model uses the Beta-Binomial distribution for observations of $L$;
 this distribution can be parameterized in terms of its mean $\mu_p$ and concentration parameter, $\phi$ :
 
 $$\begin{aligned}
-L_i & \sim \text{BetaBinomial}(\left[S_i^2-(S_i-1)\right], \mu_p \times \phi, (1 - \mu_p) \times \phi)\\
-\text{logit}(\mu_p) &\sim  \text{Normal}(-1.815, 0.3)\\
+L_i & \sim \text{BetaBinomial}(\left[S_i^2-(S_i-1)\right], p \times \phi, (1 - p) \times \phi)\\
+p &\sim  \text{Beta}(1.54, 9.49)\\
 \phi & \sim \text{Gamma}(0.01, 0.01)
 \end{aligned}$${#eq:betab}
 
-A second possibility is to use a binomial observation model, :
-
-$$\begin{aligned}
-L_i & \sim \text{Binomial}(\left[S_i^2-(S_i-1)\right], p_i)\\
-\text{logit}(p_i) &\sim \text{Normal}(\mu_p, \sigma_p)\\
-\mu_p & \sim \text{Normal}(-1.815, 0.3)\\
-\sigma_p & \sim \text{Exponential}(2)
-\end{aligned}$${#eq:lnorm}
-
-We assume that $p$ may be described by a normal distribution on
-the logit scale. The parameter $\mu_p$ replaces previous estimates of the
-average connectance across all food webs. However, the variation among food webs
-is not completely captured by $S$ alone, and the variation in link number is
-greater than expected in a binomial distribution. This overdispersion is
-captured in the hyperparameter $\sigma_p$, which also partially pools estimates
-of $p_i$ towards the average value. This increases accuracy, both within sample
-and when making predictions for new webs.
-
-We selected our prior on $\mu_p$ to reflect previous estimates for the constant
-of connectance: we calculated the logit of @Mart92 's value. However, as no
-information is available for either the standard deviation of this distribution
-nor for $\sigma_p$, we followed the advice of (tk Simpson et al), and performed
-prior predictive checks. We chose values of these two parameters that generated
+We chose our prior distribution for $p$ based on @Mart92 , who gave a value of
+constant connectance equal to 0.14. While this prior is "informative", it is weakly so; as @Mart92 did not provide an estimate of the variance for his value we chose a relatively large variation around that mean.  However, as no
+information is available to inform a prior on $\phi$, we followed the advice of (tk Simpson et al), and performed
+prior predictive checks. We chose prior parameters that generated
 a wide range of values for $L_i$, but which did not frequently predict webs of
-either maximum or minimum connectance.  _tk actual values_
-
-Two quantities are interesting to calculate from this model. First we may
-calculate the MAP (maximum a posteriori) estimate of average $p$ across all
-webs, by using the inverse logit of $\mu_p$:
-
-$$p = \frac{e^{\mu_p}}{1 - e^{\mu_p}}$$
-
-Secondly, we may wish to provide the predicted value of $p$ for a new web.
-Because the precise $p_i$ for a new web cannot be known in advance, the best
-thing to do is to marginalize over the distribution of $p_i$s, as described by
-$\sigma_p$.
+either maximum or minimum connectance, neither of which are observed in nature.
 
 We use Stan (**tk version, ref**) which implements Bayesian inference using
 Hamiltonian Monte Carlo.
-
-![LogitNormal fit](figures/penciltrick.png){#fig:penciltrick}
 
 ## Comparison with other models
 
@@ -161,6 +129,14 @@ $$L = aS^b$$
 $$L = aS^2$$
 
 and.. another one..
+
+## estimating hyperparameters
+
+While the full posterior distribution can be sampled using various bayesian conditioning engines, this is not necessary for obtaining point estimates of $p$
+ and $\phi$. A maximum likelihood estimate of each can be calculated by rearranging
+equation {#eq:lhat} and fitting a Beta distribution to the result:
+
+![Beta fit](figures/penciltrick.png){#fig:penciltrick}
 
 # Results and discussion
 
@@ -198,7 +174,7 @@ values of $S$, the value of $m(s)$ (equivalently the terms in $S^{-1}$ and $S^{-
 the connectance will converge towards $p$. Therefore, for large enough
 ecological networks, we should expect a connectance which is independent of $S$. Thus $p$ has an interesting ecological
 interpretation: it represents the average connectance of networks large enough
-that the proportion $(S-1)/S^{2}$ is negligible.
+that the proportion $\frac{(S-1)}{S^{2}}$ is negligible.
 
 Interestingly, this model still results in an expected average degree ($\hat
 L/S$, the *linkage density*) for a large number of species that scales with $S$:
@@ -211,6 +187,34 @@ this may result in unrealistic average degree, as species are limited by
 biological mechanisms such as handling time, capture efficiency, etc, in the
 number of interactions they can establish. Seeing how most ecological networks
 are reasonably small, this does not look like an unreasonable assumption.
+
+
+## Distribution of connectance
+
+We have fit a Beta distribution to links in excess of the minimum. However,
+since the minimum connectance is a function of S (specifically $m(S) = \frac{S-1}{S^2}$), we can derive the distribution for connectances directly:
+
+$$ p_{Co} = (1 - m(S)) \times p + m(S)\, ,$$
+$$ \phi_{Co} = \frac{\phi + m(S)}{1 - m(S)}\, .$$
+
+The expression for $p_{Co}$ is identical to {#eq:co2} above. As S becomes large,
+both parameters converge to $p$ and $Co$ respectively. That is, for species-rich
+communities the minimal connectance becomes negligible, and the distribution of
+connectances is stationary, with a constant mean and variance.
+
+The distribution of connectances has several important uses. First, it can be used
+as an informative prior when constructing future food webs. Cirtwill et al. proposed using a Beta distribution for the probability of any specific edge in a food web.
+The prior defined above may be used in this way. Note that if multiplied by $S^2$, the above expression is equal to {#eq:L}, the expected number of links in a food web **tk probabilistic network citation**.
+
+In addition to use as a prior, the distribution of connectances can also be used to
+test whether networks are more or less connected than expected by chance. Using parameters $p$ and $\phi$, and adjusting for the observed number of species $S$,
+a food web ecologist may read the p-value associated with their observed connectance
+directly from a Beta distribution. Equivalently, one may instead choose to describe
+the distribution of links, rather than connectances. In our model, the distribution
+of links is beta-binomial, with hyperparameters $p_{Co}$ and $\phi_{Co}$.
+By the deMoivre-Laplace theorem, a binomial distribution may be approximated with a normal distribution.
+This allows us to convert an observed number of links directly into a z-score, without resorting to
+null distributions derived from samples
 
 ## Only very-large food webs obey a power law
 
