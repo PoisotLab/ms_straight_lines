@@ -194,11 +194,11 @@ are reasonably small, this does not look like an unreasonable assumption.
 We have fit a Beta distribution to links in excess of the minimum. However,
 since the minimum connectance is a function of S (specifically $m(S) = \frac{S-1}{S^2}$), we can derive the distribution for connectances directly:
 
-$$ p_{Co} = (1 - m(S)) \times p + m(S)\, ,$$
-$$ \phi_{Co} = \frac{\phi + m(S)}{1 - m(S)}\, .$$
+$$ p_{Co} = (1 - m(S)) \times p + m(S)\, ,$$ {#eq:pco}
+$$ \phi_{Co} = \frac{\phi + m(S)}{1 - m(S)}\, .$$ {#eq:phico}
 
 The expression for $p_{Co}$ is identical to {#eq:co2} above. As S becomes large,
-both parameters converge to $p$ and $Co$ respectively. That is, for species-rich
+$p_{Co}$ and $\phi_{Co}$ converge to $p$ and $ϕ$ respectively. That is, for species-rich
 communities the minimal connectance becomes negligible, and the distribution of
 connectances is stationary, with a constant mean and variance.
 
@@ -215,6 +215,14 @@ of links is beta-binomial, with hyperparameters $p_{Co}$ and $\phi_{Co}$.
 By the deMoivre-Laplace theorem, a binomial distribution may be approximated with a normal distribution.
 This allows us to convert an observed number of links directly into a z-score, without resorting to
 null distributions derived from samples
+
+Finally, a regularized value of connectance can be obtained for every site,
+directly from the parameters estimated in #eq:betab:
+
+$$ \widetilde{Co_i} = \frac{L_i + \phi p}{S^2 + \phi}\, , $$
+
+This partially pools the observed connectance towards the population average, $p$.
+The strength of this pooling is controlled by $\phi$. This could be useful when estimating the connectance for very small webs, and as another means to measure the "departure" of a community from an expectation. 
 
 ## Only very-large food webs obey a power law
 
