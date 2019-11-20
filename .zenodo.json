@@ -7,9 +7,9 @@
   "creators": [
     {
       "affiliation": "Université de Montréal; QCBS",
-      "familyname": "Poisot",
-      "givennames": "Timothée",
-      "orcid": "0000-0002-0735-5184"
+      "familyname": "MacDonald",
+      "givennames": "Andrew",
+      "orcid": "0000-0003-1162-169X"
     },
     {
       "affiliation": "Université de Montréal; QCBS",
@@ -19,9 +19,9 @@
     },
     {
       "affiliation": "Université de Montréal; QCBS",
-      "familyname": "MacDonald",
-      "givennames": "Andrew",
-      "orcid": "0000-0003-1162-169X"
+      "familyname": "Poisot",
+      "givennames": "Timothée",
+      "orcid": "0000-0002-0735-5184"
     }
   ],
   "description": "This document is intended purely as a demo for the manuscript building system.",
