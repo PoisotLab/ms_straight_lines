@@ -138,12 +138,12 @@ transformed data{
 }
 parameters{
     real<lower=0,upper=1> p;
-    real phi;
+    real<lower=1> phi;
 }
 model{
     phi ~ normal( 3 , 0.5 );
     p ~ beta( 1.54 , 9.49 );
-    R ~ beta_binomial(F ,  p * exp(phi) , (1 - p) * exp(phi) );
+    R ~ beta_binomial(F ,  p, exp(phi) );
 }
 generated quantities{
     vector[W] log_lik;
@@ -173,3 +173,59 @@ summary(betabin_stan_infdata)
 
 loo(pwrlaw_stan_infdata)
 loo(const_stan_infdata)
+
+
+### betabin connectance simpler
+
+const betabin_connectance_simpler = """
+data{
+    int W;
+    int F[W];
+    int R[W];
+}
+parameters{
+    real<lower=0,upper=1> a;
+    real<lower=0> theta;
+}
+model{
+    vector[W] pbar;
+    theta ~ exponential( 3 );
+    a ~ beta( 1.54 , 9.49 );
+    for(i in 1:W) pbar[i] = a;
+    R ~ beta_binomial(F ,  pbar * theta, (1 - pbar) * theta );
+}
+generated quantities{
+    vector[W] log_lik;
+    vector[W] y_hat;
+    for ( i in 1:W ) {
+        log_lik[i] = beta_binomial_lpmf( R[i] | F[i] , a * theta, (1 - a) * theta  );
+        y_hat[i] = beta_binomial_rng(F[i] , a * theta, (1 - a) * theta );
+    }
+}
+"""
+
+
+data_dict_simpler = Dict(
+    "W" => length(d.id),
+    "F" => d.nodes .^ 2 .- (d.nodes .- 1),
+    "R" => d.links      .- (d.nodes .- 1))
+
+
+betabin_conn_simpler_stan_model = Stanmodel(
+    model = betabin_connectance_simpler,
+    nchains = 2,
+    num_warmup = 1000,
+    num_samples = 1000,
+    name = "betabin_connectance_simpler"
+)
+
+
+_, betabin_stan_chns, _ = stan(betabin_conn_simpler_stan_model, data_dict_simpler, summary = false);
+
+betabin_stan_chns
+
+betabin_stan_chns
+
+betabin_stan_infdata = foodweb_model_output(betabin_stan_chns)
+
+summary(betabin_stan_infdata)
