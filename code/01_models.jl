@@ -189,10 +189,9 @@ parameters{
 }
 model{
     vector[W] pbar;
-    theta ~ exponential( 3 );
-    a ~ beta( 1.54 , 9.49 );
-    for(i in 1:W) pbar[i] = a;
-    R ~ beta_binomial(F ,  pbar * theta, (1 - pbar) * theta );
+    theta ~ normal( 3,0.5 );
+    a ~ beta( 3 , 7 );
+    R ~ beta_binomial(F ,  a * exp(theta), (1 - a) * exp(theta) );
 }
 generated quantities{
     vector[W] log_lik;
@@ -210,22 +209,23 @@ data_dict_simpler = Dict(
     "F" => d.nodes .^ 2 .- (d.nodes .- 1),
     "R" => d.links      .- (d.nodes .- 1))
 
+data_dict_simpler["W"]
 
-betabin_conn_simpler_stan_model = Stanmodel(
+data_dict_simpler["F"]
+data_dict_simpler["R"]
+
+dover_model = Stanmodel(
     model = betabin_connectance_simpler,
     nchains = 2,
     num_warmup = 1000,
     num_samples = 1000,
-    name = "betabin_connectance_simpler"
+    name = "simple_betabin"
 )
 
 
-_, betabin_stan_chns, _ = stan(betabin_conn_simpler_stan_model, data_dict_simpler, summary = false);
+_, bb_chains , _ = stan(dover_model, data_dict_simpler, summary = false);
 
-betabin_stan_chns
 
-betabin_stan_chns
+bb_chains_infdata = foodweb_model_output(bb_chains)
 
-betabin_stan_infdata = foodweb_model_output(betabin_stan_chns)
-
-summary(betabin_stan_infdata)
+summary(bb_chains_infdata)
