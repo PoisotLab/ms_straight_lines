@@ -180,11 +180,11 @@ summary(pwrlaw_stan_infdata)
 summary(bb_chains_infdata)
 
 ## calculate loo
-loo(const_stan_infdata)
+loo(const_stan_infdata) #2798 +- 104
 
-loo(pwrlaw_stan_infdata)
+loo(pwrlaw_stan_infdata) # 2595 +- 49
 
-loo(bb_chains_infdata)
+loo(bb_chains_infdata) # 2543 +- 46
 
 
 ### this should produce pointwise loo calculations but I don't know how to get the numbers out
