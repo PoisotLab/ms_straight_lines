@@ -59,17 +59,7 @@ const_conn_stan_model = Stanmodel(
 )
 _, const_stan_chns, _ = stan(const_conn_stan_model, data_dict, summary = false);
 
-const_stan_chns
-
 const_stan_infdata = foodweb_model_output(const_stan_chns)
-
-const_stan_infdata
-
-loo(const_stan_infdata)
-
-summary(const_stan_infdata)
-
-plot_density(stan_infdata, var_names=["mu"])
 
 
 ##### power law connectance
@@ -243,3 +233,17 @@ CSV.write("data/beta_binomial_posterior.csv", bb_df)
 bb_hpd = MCMCChains.hpd(bb_chains, alpha = 0.89)
 
 bb_hpd.df
+
+
+## loo and parameter estimates
+loo(const_stan_infdata)
+
+summary(const_stan_infdata)
+
+loo(pwrlaw_stan_infdata)
+
+loo(bb_chains_infdata)
+
+
+### this should produce pointwise loo calculations but I don't know how to get the numbers out
+loo_pw = loo(pwrlaw_stan_infdata, pointwise = true)
