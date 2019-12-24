@@ -165,6 +165,7 @@ betabin_conn_stan_model = Stanmodel(
 
 _, betabin_stan_chns, _ = stan(betabin_conn_stan_model, data_dict, summary = false);
 
+
 betabin_stan_chns
 
 betabin_stan_infdata = foodweb_model_output(betabin_stan_chns)
@@ -197,8 +198,8 @@ generated quantities{
     vector[W] log_lik;
     vector[W] y_hat;
     for ( i in 1:W ) {
-        log_lik[i] = beta_binomial_lpmf( R[i] | F[i] , a * theta, (1 - a) * theta  );
-        y_hat[i] = beta_binomial_rng(F[i] , a * theta, (1 - a) * theta );
+        log_lik[i] = beta_binomial_lpmf( R[i] | F[i] , a * exp(theta), (1 - a) * exp(theta)  );
+        y_hat[i] = beta_binomial_rng(F[i] , a * exp(theta), (1 - a) * exp(theta) );
     }
 }
 """
@@ -214,7 +215,7 @@ data_dict_simpler["W"]
 data_dict_simpler["F"]
 data_dict_simpler["R"]
 
-dover_model = Stanmodel(
+bb_model = Stanmodel(
     model = betabin_connectance_simpler,
     nchains = 2,
     num_warmup = 1000,
@@ -223,9 +224,22 @@ dover_model = Stanmodel(
 )
 
 
-_, bb_chains , _ = stan(dover_model, data_dict_simpler, summary = false);
+_, bb_chains , _ = stan(bb_model, data_dict_simpler, summary = false);
 
 
 bb_chains_infdata = foodweb_model_output(bb_chains)
 
 summary(bb_chains_infdata)
+
+bb_chains_infdata
+
+p = plot_posterior(bb_chains_infdata)
+
+bb_df = DataFrame(bb_chains)
+
+CSV.write("data/beta_binomial_posterior.csv", bb_df)
+
+## could be used to plot a "ribbon"
+bb_hpd = MCMCChains.hpd(bb_chains, alpha = 0.89)
+
+bb_hpd.df
