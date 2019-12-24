@@ -2,6 +2,10 @@ import Pkg; Pkg.activate(".")
 import CSV
 using DataFrames
 using StatsPlots
+
+
+# include functions
+include("common_functions.jl")
 ##
 beta_bin_df = CSV.read(joinpath(pwd(), "data", "beta_binomial_posterior.csv"))
 powerlaw_df = CSV.read(joinpath(pwd(), "data", "pwrlaw_posterior.csv"))
@@ -13,11 +17,30 @@ d = CSV.read(joinpath(pwd(), "data", "network_data.dat"))
 d = d[d.predation .> 0 , :]
 
 
-pp = beta_bin_df[:, r"y_hat"]
 
-pp_plot = scatter(d.nodes, [pp[15,i] for i in 1:ncol(pp)] .+ (d.nodes .- 1), alpha = 0.2)
-xaxis!(pp_plot, :log)
-yaxis!(pp_plot, :log, "Links")
-for k in rand(1:2000, 4)
-    scatter!(d.nodes, [pp[k,i] for i in 1:ncol(pp)] .+ (d.nodes .- 1), alpha = 0.2)
+plot_posterior(constant_df)
+savefig(joinpath("figures", "constant_connectance.png"))
+
+
+plot_posterior(powerlaw_df)
+savefig(joinpath("figures", "powerlaw_connectance.png"))
+
+bb_plot = plot_posterior_betabin(beta_bin_df)
+xaxis!(bb_plot,:identity,"Species", xlims = (3,60))
+yaxis!(bb_plot,:identity,"Links", ylims = (3,100))
+savefig(joinpath("figures", "beta_binomial_connectance.png"))
+
+pp = constant_df[:, r"y_hat"]
+
+pp_plot = scatter(d.nodes, [pp[15,i] for i in 1:ncol(pp)],
+                  alpha = 0.01, color = "black", legend = false)
+
+for k in rand(1:2000, 45)
+    scatter!(pp_plot, d.nodes, [pp[k,i] for i in 1:ncol(pp)],
+            alpha = 0.01, color = "black", legend = false)
 end
+
+xaxis!(pp_plot, "Species", xlims = (0,60))
+yaxis!(pp_plot, "Links", ylims = (0,100))
+
+scatter!(d.nodes, d.links, color = "darkorange")
