@@ -160,24 +160,27 @@ bb_chains_infdata = foodweb_model_output(bb_chains)
 
 summary(bb_chains_infdata)
 
-bb_chains_infdata
+##### write out posterior samples as csvs
 
-p = plot_posterior(bb_chains_infdata)
+write_posterior(bb_chains, "data/beta_binomial_posterior.csv")
 
-bb_df = DataFrame(bb_chains)
+write_posterior(pwrlaw_stan_chns, "data/pwrlaw_posterior.csv")
 
-CSV.write("data/beta_binomial_posterior.csv", bb_df)
+write_posterior(const_stan_chns, "data/const_posterior.csv")
+
 
 ## could be used to plot a "ribbon"
 bb_hpd = MCMCChains.hpd(bb_chains, alpha = 0.89)
 
 bb_hpd.df
 
-
-## loo and parameter estimates
-loo(const_stan_infdata)
-
+### get parameter estimates
 summary(const_stan_infdata)
+summary(pwrlaw_stan_infdata)
+summary(bb_chains_infdata)
+
+## calculate loo
+loo(const_stan_infdata)
 
 loo(pwrlaw_stan_infdata)
 
