@@ -11,3 +11,8 @@ function foodweb_model_output(model_chains)
             "y_hat" => ["id"]
     ))
 end
+
+function write_posterior(chns, path)
+    bb_df = DataFrame(bb_chains)
+    CSV.write(path, bb_df)
+end
