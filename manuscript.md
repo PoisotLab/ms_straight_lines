@@ -1,52 +1,58 @@
 # Introduction
 
-As community ecologists are fascinated by counting things, it is no surprise
-that early food webs literature paid so much attention to the relationship
-between species richness and the number of trophic interactions existing among
-them. In fact, the importance of connectance for nearly all aspects of food webs
-structure and dynamics provided a powerful rationale to identify general laws
-relating species richness with the density of their interactions [@PascDunn06].
-That there exists a strong scaling between species richness $S$ and number of
-interactions $L$ is not a matter of debate; in fact this scaling is so universal
-that it appears under purely neutral models of food web structure [@CanaMouq12].
-@BrosOstl04 suggested that this scaling be following a power-law, with $L =
-b\times S^a$, and this matches empirical data well enough.
+Community ecologists are fascinated by counting things. It is therefore no surprise
+that early food web literature paid so much attention to counting species, counting trophic interactions, and computing the relationship of these quantities.
+It is clear to any observer of nature that of all imaginable trophic interactions in a community, only a fraction actually occur.
+This ratio is termed "connectance" and has become a fundamental quantity for nearly all aspects of food web
+structure and dynamics [@PascDunn06].
+More species always means more interactions; this scaling between species richness $S$ and number of
+interactions $L$ is so universal
+that it even appears under purely neutral models of food web structure [@CanaMouq12].
+In observational dataset of food webs, it is ubiquitous.
+Various functional forms have been suggested as possible models for $L$;
+@BrosOstl04 suggested a power law, with $L =
+b\times S^a$.
+Power laws are very flexible, and indeed this function matches empirical data well enough.
 
-The L/S relationship is a fundamental one for food webs ecology
-
+Historical efforts to predict link number have produced numerous candidate models, of which the power law is the most general.
 - Early predictions differ in whether this is a linear of exponential relationship
-- General case is $L = aS^b$, which is easy to fit
 - Has consequences for spatial scaling (Brose)
-- Parameters are difficult to reason about ecologically
+While flexible, the power law relationship is limited because the parameters are difficult to reason about ecologically.
+This is in part because many mechanisms can produce power-law shaped relationships.
 
-We know that there are hard boundaries to this system
+The number of links in a foodweb does not simply scale with the number of species: it also must obey constraints fixed by biology.
+These constraints determine both the maximum and minimum number of links in a web.
+The maximum number of links is $S^2$: every species eats all others, including members of the same species.
+The minimum number, assuming at least some species are heterotrophs, is $S-1$.
+Numerous simple foodwebs could have this structure -- for example, a linear food chain wherein each trophic level consists of a single species, which eats only the species below it.
+These constraints have not been used in previous attempts to model the relationship between $L$ and $S$.
+This makes prediction difficult, since models without this constraint can make unrealistic predictions of link number.
 
-- Cannot have more than $S^2$ interactions
-- Cannot have fewer than $S-1$
-- This was not used in the previous attempts to fit the relationship
+When making predictions is it often helpful to use generative models, which can create simulated data with the same properties as observations.
+Creating such a model involves two key components: a mathematical expression which represents the ecological process being studied, and a distribution which represents our observations of this process.
+Either of these components can capture our ecological understanding of a system, including any constraints on the quantities studied.
+Here we suggest a new perspective for a model of $L$ as a function of $S$.
+In our model described below, our distribution of observations is a binomial distribution, which models the number of realized links ("successes") out of the total number possible ("trials").
+This automatically includes the maximum constraint, since the number of species determines the number of trials.
+We include the minimum constraint by modelling not the total number of links, but the number in excess of the minimum, which we term "flexible" links.
+Our process model is extremely simple: it is a single parameter, a constant which gives the proportion of these flexible links which are realized.
+Because food webs vary in the precise value of this proportion, we model it with a beta distribution, which allows some variation around the average value.
+The resulting model is therefore beta-binomial.
 
-@WillMart04 identified that most food webs appear to be limited in their height,
-as increasingly apical species require more energy flowing in to be sustained.
-In addition, constraints on omnivory appear to "linearize" food-webs; there
-should therefore be a limitation on the richness of a food web, and so for small
-values of $S$, the difference between assuming that there can be between $0$, or
-between $(S-1)$, and $S^2$ interactions is likely biologically relevant.
-
-We know that interactions can be viewed as stochastic events
-
-- Interaction is the outcome of a Bernoulli process
-- This lends itself to powerful approaches in probabilistic programming
-
-In this paper, we use data from the `mangal.io` networks database
-(+@fig:empirical), to ...
+In this paper we will describe this new approach to modelling $L$, and show how it compares to previous models.
+We estimate parameters for this model using open data from the `mangal.io` networks database (+@fig:empirical).
+Finally, we show how this model for $L$ suggests a new and more useful way of predicting network structure.
+Finally, we discuss how generative models can be useful devices for including our knowledge of a system into our predictions.
 
 ![Relationships in the mangal data](figures/relationships.png){#fig:empirical}
 
-- New relationship between L and S
-- Discuss how it changes network prediction
-- Use it as a story telling device for a broader point about using our knowledge of the system in creative ways
+### Models of link number
 
-# Deriving the model
+Several other models have been used to predict the number of links in a food
+web; all of these have modeled the number of links directly, usually after
+transformation.
+We fit several of these models, as well as our own, to compare
+their predictive ability.
 
 @CoheBria84 hypothesized that all networks would have the same average degree,
 resulting in link-species scaling expressed as
@@ -113,22 +119,10 @@ information is available to inform a prior on $\phi$, we followed the advice of 
 prior predictive checks. We chose prior parameters that generated
 a wide range of values for $L_i$, but which did not frequently predict webs of
 either maximum or minimum connectance, neither of which are observed in nature.
+The prior we use here can be thought of as beginning with a uniform prior and observing only one interaction among nine species.
 
 We use Stan (**tk version, ref**) which implements Bayesian inference using
 Hamiltonian Monte Carlo.
-
-## Comparison with other models
-
-Several other models have been used to predict the number of links in a food
-web; all of these have modeled the number of links directly, usually after
-transformation. We fit several of these models, as well as our own, to compare
-their predictive ability:
-
-$$L = aS^b$$
-
-$$L = aS^2$$
-
-and.. another one..
 
 ## estimating hyperparameters
 
@@ -140,11 +134,15 @@ equation {#eq:lhat} and fitting a Beta distribution to the result:
 
 # Results and discussion
 
-## The Bernoulli-based model outperforms previous solutions
+Our beta-binomial model outperforms previous solutions to the problem of modelling $L$.
 
-| | |
-|-|-|
+| model | PSIS-LOO| SE|
+|-|-|-|
+| Constant |2798| 104  |
+| Power law   | 2595  | 49  |
+| Beta Binomial   | 2543  | 46  |
 
+All models fit without any divergent iterations. However,
 
 
 
@@ -222,7 +220,7 @@ directly from the parameters estimated in #eq:betab:
 $$ \widetilde{Co_i} = \frac{L_i + \phi p}{S^2 + \phi}\, , $$
 
 This partially pools the observed connectance towards the population average, $p$.
-The strength of this pooling is controlled by $\phi$. This could be useful when estimating the connectance for very small webs, and as another means to measure the "departure" of a community from an expectation. 
+The strength of this pooling is controlled by $\phi$. This could be useful when estimating the connectance for very small webs, and as another means to measure the "departure" of a community from an expectation.
 
 ## Only very-large food webs obey a power law
 
@@ -269,3 +267,11 @@ probed for deviation from the random distribution of some measure of interest
 connectance **ref P&G**; therefore, *to be continued*.
 
 # Conclusions
+
+<!-- moving this to end because I don't really know where it fits in the narrative -->
+@WillMart04 identified that most food webs appear to be limited in their height,
+as increasingly apical species require more energy flowing in to be sustained.
+In addition, constraints on omnivory appear to "linearize" food-webs; there
+should therefore be a limitation on the richness of a food web, and so for small
+values of $S$, the difference between assuming that there can be between $0$, or
+between $(S-1)$, and $S^2$ interactions is likely biologically relevant.
