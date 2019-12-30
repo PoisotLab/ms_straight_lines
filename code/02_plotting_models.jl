@@ -30,6 +30,11 @@ xaxis!(bb_plot,:identity,"Species", xlims = (3,60))
 yaxis!(bb_plot,:identity,"Links", ylims = (3,100))
 savefig(joinpath("figures", "beta_binomial_connectance.png"))
 
+## make one with all three
+##plot(S_L, S_LD, S_CO, layout=(1,3), size=(800,300), dpi=300, leg=false)
+#xaxis!("Species")
+#savefig(joinpath("figures", "relationships.png"))
+
 pp = constant_df[:, r"y_hat"]
 
 pp_plot = scatter(d.nodes, [pp[15,i] for i in 1:ncol(pp)],

@@ -6,13 +6,11 @@ It is clear to any observer of nature that of all imaginable trophic interaction
 This ratio is termed "connectance" and has become a fundamental quantity for nearly all aspects of food web
 structure and dynamics [@PascDunn06].
 More species always means more interactions; this scaling between species richness $S$ and number of
-interactions $L$ is so universal
-that it even appears under purely neutral models of food web structure [@CanaMouq12].
-In observational dataset of food webs, it is ubiquitous.
+interactions $L$ is universal and appears both in observed webs and under purely neutral models of food web structure [@CanaMouq12].
 Various functional forms have been suggested as possible models for $L$;
 @BrosOstl04 suggested a power law, with $L =
 b\times S^a$.
-Power laws are very flexible, and indeed this function matches empirical data well enough.
+Power laws are very flexible, and indeed this function matches empirical data well.
 
 Historical efforts to predict link number have produced numerous candidate models, of which the power law is the most general.
 - Early predictions differ in whether this is a linear of exponential relationship
@@ -22,9 +20,9 @@ This is in part because many mechanisms can produce power-law shaped relationshi
 
 The number of links in a foodweb does not simply scale with the number of species: it also must obey constraints fixed by biology.
 These constraints determine both the maximum and minimum number of links in a web.
-The maximum number of links is $S^2$: every species eats all others, including members of the same species.
+The maximum number of links is $S^2$. In such a community, every species eats all others, including members of the same species.
 The minimum number, assuming at least some species are heterotrophs, is $S-1$.
-Numerous simple foodwebs could have this structure -- for example, a linear food chain wherein each trophic level consists of a single species, which eats only the species below it.
+Numerous simple foodwebs could have this number of links -- for example, a linear food chain wherein each trophic level consists of a single species, each of which consumes only the species below it.
 These constraints have not been used in previous attempts to model the relationship between $L$ and $S$.
 This makes prediction difficult, since models without this constraint can make unrealistic predictions of link number.
 
@@ -121,8 +119,10 @@ a wide range of values for $L_i$, but which did not frequently predict webs of
 either maximum or minimum connectance, neither of which are observed in nature.
 The prior we use here can be thought of as beginning with a uniform prior and observing only one interaction among nine species.
 
-We use Stan (**tk version, ref**) which implements Bayesian inference using
+We use Stan [**tk references**] which implements Bayesian inference using
 Hamiltonian Monte Carlo.
+We ran all models using four chains and 2000 iterations per chain.
+All models converged with no divergent iterations.
 
 ## estimating hyperparameters
 
@@ -136,14 +136,26 @@ equation {#eq:lhat} and fitting a Beta distribution to the result:
 
 Our beta-binomial model outperforms previous solutions to the problem of modelling $L$.
 
+Table [tk] PSIS-LOO values for the three models we contrast. Pareto-smoothed important sampling serves as a guide to model selection; like other information criteria it approximates the error in cross-validation predictions. Smaller values indicate a model which makes better predictions.
 | model | PSIS-LOO| SE|
 |-|-|-|
 | Constant |2798| 104  |
 | Power law   | 2595  | 49  |
 | Beta Binomial   | 2543  | 46  |
 
-All models fit without any divergent iterations. However,
+All models fit without any divergent iterations.
+However, the calculation of PSIS-LOO for the constant connectance model warned of a shape parameter greater than 0.7, which suggests that the model is not robust to extreme observations.
+The Beta-Binomial model had the most favourable values of PSIS-LOO information criteron (Table). Which suggests that it will make the best predictions.
+More importantly, only the Beta Binomial model makes predictions which respect the constraints set by ecological principles
 
+![constant connectance](figures/constant_connectance.png){#fig:constconn}
+Constant connectance model makes many predictions which are only approximate.
+
+![power law](figures/powerlaw_connectance.png){#fig:pwrlaw}
+The power law model makes predictions which are closer to observed values, but they are frequently too low
+
+![beta bin](figures/beta_binomial_connectance.png){#fig:bbin}
+The beta binomial makes roughly the same predictions as the power law, but in this case they are held within biologically possible values.
 
 
 ## Connectance is constant (for large enough food webs)
@@ -266,7 +278,7 @@ probed for deviation from the random distribution of some measure of interest
 (**ref Bascompte, Flores**), and most of these measures are in turn related to
 connectance **ref P&G**; therefore, *to be continued*.
 
-# Conclusions
+## Conclusions
 
 <!-- moving this to end because I don't really know where it fits in the narrative -->
 @WillMart04 identified that most food webs appear to be limited in their height,
@@ -275,3 +287,6 @@ In addition, constraints on omnivory appear to "linearize" food-webs; there
 should therefore be a limitation on the richness of a food web, and so for small
 values of $S$, the difference between assuming that there can be between $0$, or
 between $(S-1)$, and $S^2$ interactions is likely biologically relevant.
+
+
+# References
