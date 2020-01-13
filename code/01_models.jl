@@ -54,12 +54,13 @@ const_conn_stan_model = Stanmodel(
     model = constantconnectance,
     nchains = 4,
     num_warmup = 1000,
-    num_samples = 1000,
+    num_samples = 3000,
     name = "constant_connectance"
 )
 _, const_stan_chns, _ = stan(const_conn_stan_model, data_dict, summary = false);
 
 const_stan_infdata = foodweb_model_output(const_stan_chns)
+
 
 
 ##### power law connectance
@@ -101,7 +102,7 @@ pwrlaw_conn_stan_model = Stanmodel(
     model = pwrlaw_connectance,
     nchains = 4,
     num_warmup = 1000,
-    num_samples = 1000,
+    num_samples = 3000,
     name = "powerlaw_connectance"
 )
 
@@ -148,7 +149,7 @@ bb_model = Stanmodel(
     model = betabin_connectance,
     nchains = 2,
     num_warmup = 1000,
-    num_samples = 1000,
+    num_samples = 3000,
     name = "simple_betabin"
 )
 
