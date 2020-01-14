@@ -32,9 +32,9 @@ version = "0.3.2"
 
 [[ArrayInterface]]
 deps = ["LinearAlgebra", "Requires", "SparseArrays"]
-git-tree-sha1 = "7b26f0015d9459082a16ebe3fe934c4abb8f1327"
+git-tree-sha1 = "656fd4bcdf204ea96945d9bc1068c0056013438a"
 uuid = "4fba245c-0d91-5ea0-9b3e-6abc04ee57a9"
-version = "2.2.0"
+version = "2.3.1"
 
 [[ArrayLayouts]]
 deps = ["FillArrays", "LinearAlgebra"]
@@ -109,9 +109,9 @@ version = "0.13.3"
 
 [[CmdStan]]
 deps = ["CSV", "DataFrames", "DelimitedFiles", "Documenter", "MCMCChains", "Missings", "NamedArrays", "Pkg", "Reexport", "Statistics", "StatsPlots", "Test", "Unicode"]
-git-tree-sha1 = "87d686a19c56fd67f640bdef2a840eeb01386f12"
+git-tree-sha1 = "839e057e33eb734d305d75e03f725b76a5166dc1"
 uuid = "593b3428-ca2f-500c-ae53-031589ec8ddd"
-version = "5.4.0"
+version = "5.5.0"
 
 [[ColorTypes]]
 deps = ["FixedPointNumbers", "Random"]
@@ -193,9 +193,9 @@ uuid = "8bb1440f-4735-579b-a4ab-409b98df4dab"
 
 [[DiffEqDiffTools]]
 deps = ["ArrayInterface", "LinearAlgebra", "Requires", "SparseArrays", "StaticArrays"]
-git-tree-sha1 = "951600cc05d9626c3282e2ed125492931596e430"
+git-tree-sha1 = "a4ed8a740484627ea41b47f7e1a25dd909a28353"
 uuid = "01453d9d-ee7c-5054-8395-0335cb756afa"
-version = "1.6.0"
+version = "1.7.0"
 
 [[DiffResults]]
 deps = ["StaticArrays"]
@@ -400,10 +400,10 @@ uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 uuid = "56ddb016-857b-54e1-b83d-db4d58db5568"
 
 [[MCMCChains]]
-deps = ["AxisArrays", "DataFrames", "Distributions", "KernelDensity", "LinearAlgebra", "Plots", "Random", "RecipesBase", "Serialization", "Showoff", "SpecialFunctions", "Statistics", "StatsBase"]
-git-tree-sha1 = "54a33641c1be24a4d254b785f42b545c4b65253b"
+deps = ["AbstractMCMC", "AxisArrays", "DataFrames", "Distributions", "KernelDensity", "LinearAlgebra", "Random", "RecipesBase", "Serialization", "Showoff", "SpecialFunctions", "Statistics", "StatsBase"]
+git-tree-sha1 = "e70f5f2ba7c83af13c2c1f3f5ed5c368c65b759b"
 uuid = "c7f686f2-ff18-58e9-bc7b-31028e88f75d"
-version = "0.3.14"
+version = "1.0.0"
 
 [[MacroTools]]
 deps = ["DataStructures", "Markdown", "Random"]
@@ -442,9 +442,9 @@ version = "7.5.0"
 
 [[NNlib]]
 deps = ["BinaryProvider", "Libdl", "LinearAlgebra", "Requires", "Statistics"]
-git-tree-sha1 = "5b6c31d7265248f0e4b76f07ef9a9274e79c6281"
+git-tree-sha1 = "135c0de4794d5e214b06f1fb4787af4a72896e61"
 uuid = "872c559c-99b0-510c-b3b7-b6c96a88d5cd"
-version = "0.6.3"
+version = "0.6.2"
 
 [[NaNMath]]
 git-tree-sha1 = "928b8ca9b2791081dc71a51c55347c27c618760f"
@@ -699,7 +699,7 @@ uuid = "f3b207a7-027a-5e70-b257-86293d7955fd"
 version = "0.12.0"
 
 [[SuiteSparse]]
-deps = ["Libdl", "LinearAlgebra", "SparseArrays"]
+deps = ["Libdl", "LinearAlgebra", "Serialization", "SparseArrays"]
 uuid = "4607b0f0-06f3-5cda-b6b1-a6196a1729e9"
 
 [[TableTraits]]
