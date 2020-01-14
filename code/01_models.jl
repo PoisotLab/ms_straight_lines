@@ -28,7 +28,7 @@ parameters{
 model{
     vector[W] mu;
     phi ~ normal( 2 , 1 );
-    a ~ normal( -3 , 1 );
+    a ~ normal( 0.7 , 0.02 );
     for ( i in 1:W ) {
         mu[i] = exp(a) * S[i];
     }
