@@ -57,7 +57,7 @@ const_conn_stan_model = Stanmodel(
     num_samples = 3000,
     name = "constant_connectance"
 )
-_, const_stan_chns, _ = stan(const_conn_stan_model, data_dict, summary = false);
+_, const_stan_chns, _ = stan(const_conn_stan_model, data_dict, summary = true);
 
 const_stan_infdata = foodweb_model_output(const_stan_chns)
 
@@ -182,6 +182,7 @@ summary(bb_chains_infdata)
 
 ## calculate loo
 loo(const_stan_infdata) #2798 +- 104
+# 2940 +- 118 with a narrower prior
 
 loo(pwrlaw_stan_infdata) # 2595 +- 49
 
