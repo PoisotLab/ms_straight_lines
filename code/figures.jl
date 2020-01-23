@@ -67,4 +67,140 @@ scatter(S, Q99)
 yaxis!(:log)
 xaxis!(:log)
 
+
+
 # Figure 4
+
+# A - connectance - species
+# 67, 89, 97 %
+
+p_post = bb_posterior[:a]
+mean_p = mean(p_post)
+median_p = median(p_post)
+
+density(bb_posterior[:a])
+density(bb_posterior[:theta])
+density(bb_posterior[:a] .* bb_posterior[:theta])
+density((1 .- bb_posterior[:a]) .* bb_posterior[:theta])
+
+number_of_trials = S.*S.-(S.-1)
+
+L_predict = zeros(Int64, (length(number_of_trials), size(bb_posterior)[1]))
+
+for i in 1:length(number_of_trials)
+    for j in 1:size(bb_posterior)[1]
+        p = bb_posterior[j, :a]
+        theta = bb_posterior[j, :theta]
+        n = number_of_trials[i]
+
+        α = p*theta
+        β = (1.0-p)*theta
+        L_predict[i,j] = rand(BetaBinomial(n, α, β))
+    end
+end
+
+L_predict
+co = L_predict ./ (S.^2)
+
+density(co[, :])
+maximum(co)
+
+
+
+
+# B
+
+# Extent to which the relationship gets closer to a power law
+k_predict = zeros(Float64, (length(S), size(bb_posterior)[1]))
+
+for (i,s) in enumerate(S), (j,p) in enumerate(bb_posterior[:a])
+    k_predict[i, j] = ((1 - p) * s + (p - 1)) / (p * s^2)
+end
+
+# Replace the values of k by their row-wise quantiles
+k_quantiles = zeros(Float64, size(k_predict))
+
+n = 1000 # Round quantiles in n classes
+for s in 1:length(S)
+    qfinder = ecdf(k_predict[s,:]) # Create ECDF function
+
+    k_quantiles[s,:] = qfinder(k_predict[s,:]) # Replace scores by quantiles
+
+    k_quantiles[s,:] = round.(k_quantiles[s,:] * n) / n # Round quantiles
+end
+
+# Function for the mean values of k at the quantile q for each value of s
+function get_quantile(q)
+    k_quant = zeros(Float64, (length(S), 1))
+    for s in 1:length(S)
+        k_quant[s] = mean(k_predict[s, k_quantiles[s,:] .== q])
+    end
+    return(k_quant)
+end
+
+
+
+
+
+
+
+
+k_quantiles = zeros(Float64, (length(S), 8))
+
+for i in 1:length(S)
+    k_median = quantile(k_predict[i,:], 0.5)
+    k_quantile0015 = quantile(k_predict[i,:], 0.5)
+    quantiles = quantile(k_predict[i,:], [0.015, 0.055, 0.165, 0.5, 0.835, 0.945, 0.985])
+
+end
+
+k_quantiles[:,8] = mean(k_predict, dims = 2)
+
+plot(S, k_quantiles[:,4])
+
+
+fill=(M.(S), :grey, 0.2), c=:transparent, lab="")
+
+
+@df d scatter!(:nodes, :links, c=:black,
+ ms = 2, alpha = 0.6,dpi = 300, lab = "",
+ frame = :box)
+xaxis!(:log, "Species richness", (2, 1000))
+yaxis!(:log, "Number of links", (1, 1000000))
+
+
+
+
+function draw_posterior(row)
+    α = row[:a]*row[:theta]
+    β = (1.0-row[:a])*row[:theta]
+    return (n) -> BetaBinomial(n, α, β)
+end
+
+distributions = draw_posterior.(eachrow(bb_posterior))
+
+
+L_predict = zeros(Int64, (length(number_of_trials), length(d)))
+
+for (i, t) in enumerate(number_of_trials), (j, d) in enumerate(distributions)
+    L_predict[j,i] = rand(d(t))
+end
+
+L(s,p) = (s*s-(s-1))*p+(s-1)
+
+L_predict = L.(S', random_p)
+quantile_functions = vec(mapslices(ecdf, L_predict, dims=2))
+L_possible = 1:100:1_000_000
+
+
+
+
+p_post =  bb_posterior[:a]
+
+L(s,p) = (s*s-(s-1)).*p .+(s-1)
+
+
+L(S, bb_posterior[:a]
+scatter(p_post)
+
+bb_posterior
