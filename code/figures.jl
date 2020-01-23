@@ -111,7 +111,7 @@ maximum(co)
 
 
 
-# B - Extent to which the relationship gets closer to a power law (k)
+## B - Extent to which the relationship gets closer to a power law (k)
 
 k_predict = zeros(Float64, (length(S), size(bb_posterior)[1]))
 
@@ -140,7 +140,15 @@ function get_quantile(q)
     return(k_quant)
 end
 
+# k - species plot with quantiles:
+# 67% percentile interval: quantiles 0.165 and 0.835
+# 89% percentile interval: quantiles 0.055 and 0.945
+# 97% percentile interval: quantiles 0.015 and 0.985
 
-# quantiles: 0.015, 0.055, 0.165, 0.5, 0.835, 0.945, 0.985
-
-get_quantile(0.015)
+plot(S, range(get_quantile(0.015), stop=get_quantile(0.985), length=300), color=:lightgreen, fill=:lightgreen, label="") # 97% PI
+plot!(S, range(get_quantile(0.055), stop=get_quantile(0.945), length=300), color=:green, fill=:green, label="") # 89% PI
+plot!(S, range(get_quantile(0.165), stop=get_quantile(0.835), length=300), color=:darkgreen, fill=:darkgreen, label="") # 67% PI
+plot!(S, mean(k_predict, dims = 2), linecolor = :black, lab = "Mean")
+xaxis!(:log, "Species richness")
+yaxis!("k")
+savefig(joinpath("figures", "fig_04b_k_species"))
