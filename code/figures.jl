@@ -73,6 +73,23 @@ xaxis!(:log)
 
 # A - connectance - species
 
+links_predict = zeros(Int64, (length(S), size(bb_posterior)[1]))
+
+for (i,s) in enumerate(S), j in 1:size(bb_posterior)[1]
+    n = s^2-(s-1)
+    α = bb_posterior[j,:a]*bb_posterior[j,:theta]
+    β = (1.0-bb_posterior[j,:a])*bb_posterior[j,:theta]
+    links_predict[i,j] = rand(BetaBinomial(n, α, β))
+end
+
+co_predict = links_predict ./ (S.^2)
+
+plot(S, mean(co_predict, dims = 2), linecolor = :black, lab = "Mean")
+
+
+
+
+
 
 ########## Some tests (to be changed) ##########
 p_post = bb_posterior[:a]
