@@ -73,6 +73,8 @@ xaxis!(:log)
 
 # A - connectance - species
 
+# First try
+
 links_predict = zeros(Int64, (length(S), size(bb_posterior)[1]))
 
 for (i,s) in enumerate(S), j in 1:size(bb_posterior)[1]
@@ -87,44 +89,32 @@ co_predict = links_predict ./ (S.^2)
 plot(S, mean(co_predict, dims = 2), linecolor = :black, lab = "Mean")
 
 
+# Second try
 
+# Parameter p
+pco = zeros(Float64, (length(S), size(bb_posterior)[1]))
+ms = (S .- 1) ./ (S .^2)
 
-
-
-########## Some tests (to be changed) ##########
-p_post = bb_posterior[:a]
-mean_p = mean(p_post)
-median_p = median(p_post)
-
-density(bb_posterior[:a])
-density(bb_posterior[:theta])
-density(bb_posterior[:a] .* bb_posterior[:theta])
-density((1 .- bb_posterior[:a]) .* bb_posterior[:theta])
-
-number_of_trials = S.*S.-(S.-1)
-
-L_predict = zeros(Int64, (length(number_of_trials), size(bb_posterior)[1]))
-
-for i in 1:length(number_of_trials)
-    for j in 1:size(bb_posterior)[1]
-        p = bb_posterior[j, :a]
-        theta = bb_posterior[j, :theta]
-        n = number_of_trials[i]
-
-        α = p*theta
-        β = (1.0-p)*theta
-        L_predict[i,j] = rand(BetaBinomial(n, α, β))
-    end
+for (i,m) in enumerate(ms), j in 1:size(bb_posterior)[1]
+    p_post = bb_posterior[j,:a]
+    pco[i,j] = (1 - m) * p_post + m
 end
 
-L_predict
-co = L_predict ./ (S.^2)
+# Parameter theta (phi)
+phico = zeros(Float64, (length(S), size(bb_posterior)[1]))
+for (i,m) in enumerate(ms), j in 1:size(bb_posterior)[1]
+    phi_post = bb_posterior[j,:theta]
+    phico[i,j] = (phi_post + m) / (1 - m)
+end
 
-density(co[, :])
-maximum(co)
+
+plot(S, mean(pco, dims = 2), linecolor = :black, linewidth = 4)
+plot!(S, ms, linecolor = :black)
+xaxis!(:log, "Species richness")
+yaxis!("Connectance", (0.5, 0.7))
 
 
-########## End of tests ##########
+
 
 
 
