@@ -71,67 +71,48 @@ xaxis!(:log)
 
 # Figure 4
 
-# A - connectance - species
+# 4A - connectance - species
 
-# First try
-bb_posterior
-links_predict = zeros(Int64, (length(S), size(bb_posterior)[1]))
-
-for (i,s) in enumerate(S), j in 1:size(bb_posterior)[1]
-    n = s^2-(s-1)
-    α = bb_posterior[j,:p]*bb_posterior[j,:theta]
-    β = (1.0-bb_posterior[j,:p])*bb_posterior[j,:theta]
-    links_predict[i,j] = rand(BetaBinomial(n, α, β))
-end
-
-co_predict = links_predict ./ (S.^2)
-
-plot(S, mean(co_predict, dims = 2), linecolor = :black, lab = "Mean")
-
-
-# Second try
-
-# Parameter p
-pco = zeros(Float64, (length(S), size(bb_posterior)[1]))
+# Minimum number of species
 ms = (S .- 1) ./ (S .^2)
 
-for (i,m) in enumerate(ms), j in 1:size(bb_posterior)[1]
-    p_post = bb_posterior[j,:p]
-    pco[i,j] = (1 - m) * p_post + m
-end
+# Median p and phi (for beta distribution)
+p_median = median(bb_posterior[:p])
+phi_median = exp(median(bb_posterior[:theta]))
 
-# Parameter theta (phi)
-phico = zeros(Float64, (length(S), size(bb_posterior)[1]))
-for (i,m) in enumerate(ms), j in 1:size(bb_posterior)[1]
-    phi_post = bb_posterior[j,:theta]
-    phico[i,j] = (phi_post + m) / (1 - m)
-end
+# Beta distribution
+beta_dist = Beta.(p_median .* phi_median, (1 .- p_median) .* phi_median)
 
-# Regularized value of connectance
-links = d[:links]
-species = d[:nodes]
-p_mean = mean(bb_posterior[:p])
-phi_mean = mean(bb_posterior[:theta])
+# Quantiles to plot
+beta015 = quantile(beta_dist, 0.015) .* (1 .- ms) .+ ms
+beta985 = quantile(beta_dist, 0.985) .* (1 .- ms) .+ ms
+beta055 = quantile(beta_dist, 0.055) .* (1 .- ms) .+ ms
+beta945 = quantile(beta_dist, 0.945) .* (1 .- ms) .+ ms
+beta165 = quantile(beta_dist, 0.165) .* (1 .- ms) .+ ms
+beta835 = quantile(beta_dist, 0.835) .* (1 .- ms) .+ ms
+beta500 = quantile(beta_dist, 0.5) .* (1 .- ms) .+ ms
 
-co_reg = (links .+ phi_mean * p_mean) ./ (species .^2 .+ phi_mean)
 
 # Empirical connectance
+links = d[:links]
+species = d[:nodes]
 co_emp = links ./ (species .^2)
 
 # Connectance vs species
-plot(S, mean(pco, dims=2), linecolor=:black, linewidth=4, label="")
-plot!(S, ms, linecolor=:black, label="") # minimum value of connectance
-scatter!(species, co_emp, label="")
+plot(S, range(beta015, stop=beta985, length=300), color=:lightgreen, fill=:lightgreen, label="") # 97% PI
+plot!(S, range(beta055, stop=beta945, length=300), color=:green, fill=:green, label="") # 89% PI
+plot!(S, range(beta165, stop=beta835, length=300), color=:darkgreen, fill=:darkgreen, label="") # 67% PI
+plot!(S, beta500, linecolor=:black, linewidth=4, label="") # Median connectance
+scatter!(species, co_emp, label="") # Empirical connectance
+plot!(S, ms, linecolor=:black, label="") # Minimum connectance
 xaxis!(:log, "Species richness")
 yaxis!("Connectance")
 savefig(joinpath("figures", "fig_04a_connectance_species"))
 
 
+## 4B - Extent to which the relationship gets closer to a power law (k)
 
-
-
-## B - Extent to which the relationship gets closer to a power law (k)
-
+# Values of k function of s and posterior p
 k_predict = zeros(Float64, (length(S), size(bb_posterior)[1]))
 
 for (i,s) in enumerate(S), (j,p) in enumerate(bb_posterior[:p])
@@ -159,6 +140,12 @@ function get_quantile(q)
     return(k_quant)
 end
 
+# Empirical k (to be removed)
+links = d[:links]
+species = d[:nodes]
+p_emp = (links .- (species .- 1 )) ./ (species .^2 .- (species .- 1))
+k_emp = ((1 .- p_emp) .* species .+ (p_emp .- 1)) ./ (p_emp .* species .^2)
+
 # k - species plot with quantiles:
 # 67% percentile interval: quantiles 0.165 and 0.835
 # 89% percentile interval: quantiles 0.055 and 0.945
@@ -171,3 +158,18 @@ plot!(S, mean(k_predict, dims = 2), linecolor = :black, lab = "Mean")
 xaxis!(:log, "Species richness")
 yaxis!("k")
 savefig(joinpath("figures", "fig_04b_k_species"))
+
+
+
+
+
+
+
+###### Tim's problem ######
+Sx = 11367
+Lx = 7062647
+p = median(bb_posterior[:p])
+z = ((Lx - (Sx - 1)) - p * (Sx ^2 - (Sx - 1))) / (sqrt(p * (1 - p) * (Sx^2 - (Sx -1))))
+Lx - (Sx - 1)) / (Sx ^2 - (Sx - 1)
+minimum(bb_posterior[:p])
+###### End of Tim's problem ######
