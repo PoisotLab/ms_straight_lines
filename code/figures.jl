@@ -67,4 +67,107 @@ scatter(S, Q99)
 yaxis!(:log)
 xaxis!(:log)
 
+
+
 # Figure 4
+
+# A - connectance - species
+
+# First try
+
+links_predict = zeros(Int64, (length(S), size(bb_posterior)[1]))
+
+for (i,s) in enumerate(S), j in 1:size(bb_posterior)[1]
+    n = s^2-(s-1)
+    α = bb_posterior[j,:a]*bb_posterior[j,:theta]
+    β = (1.0-bb_posterior[j,:a])*bb_posterior[j,:theta]
+    links_predict[i,j] = rand(BetaBinomial(n, α, β))
+end
+
+co_predict = links_predict ./ (S.^2)
+
+plot(S, mean(co_predict, dims = 2), linecolor = :black, lab = "Mean")
+
+
+# Second try
+
+# Parameter p
+pco = zeros(Float64, (length(S), size(bb_posterior)[1]))
+ms = (S .- 1) ./ (S .^2)
+
+for (i,m) in enumerate(ms), j in 1:size(bb_posterior)[1]
+    p_post = bb_posterior[j,:a]
+    pco[i,j] = (1 - m) * p_post + m
+end
+
+# Parameter theta (phi)
+phico = zeros(Float64, (length(S), size(bb_posterior)[1]))
+for (i,m) in enumerate(ms), j in 1:size(bb_posterior)[1]
+    phi_post = bb_posterior[j,:theta]
+    phico[i,j] = (phi_post + m) / (1 - m)
+end
+
+# Regularized value of connectance
+links = d[:links]
+species = d[:nodes]
+p_mean = mean(bb_posterior[:a])
+phi_mean = mean(bb_posterior[:theta])
+
+co_reg = (links .+ phi_mean * p_mean) ./ (species .^2 .+ phi_mean)
+
+# Empirical connectance
+co_emp = links ./ (species .^2)
+
+# Connectance vs species
+plot(S, mean(pco, dims=2), linecolor=:black, linewidth=4, label="")
+plot!(S, ms, linecolor=:black, label="") # minimum value of connectance
+scatter!(species, co_emp, label="")
+xaxis!(:log, "Species richness")
+yaxis!("Connectance")
+savefig(joinpath("figures", "fig_04a_connectance_species"))
+
+
+
+
+
+## B - Extent to which the relationship gets closer to a power law (k)
+
+k_predict = zeros(Float64, (length(S), size(bb_posterior)[1]))
+
+for (i,s) in enumerate(S), (j,p) in enumerate(bb_posterior[:a])
+    k_predict[i, j] = ((1 - p) * s + (p - 1)) / (p * s^2)
+end
+
+# Replace the values of k by their row-wise quantiles
+k_quantiles = zeros(Float64, size(k_predict))
+
+n = 1000 # Round quantiles in n classes
+for s in 1:length(S)
+    qfinder = ecdf(k_predict[s,:]) # Create ECDF function
+
+    k_quantiles[s,:] = qfinder(k_predict[s,:]) # Replace scores by quantiles
+
+    k_quantiles[s,:] = round.(k_quantiles[s,:] * n) / n # Round quantiles
+end
+
+# Function for the mean values of k at the quantile q for each value of s
+function get_quantile(q)
+    k_quant = zeros(Float64, (length(S), 1))
+    for s in 1:length(S)
+        k_quant[s] = mean(k_predict[s, k_quantiles[s,:] .== q])
+    end
+    return(k_quant)
+end
+
+# k - species plot with quantiles:
+# 67% percentile interval: quantiles 0.165 and 0.835
+# 89% percentile interval: quantiles 0.055 and 0.945
+# 97% percentile interval: quantiles 0.015 and 0.985
+
+plot(S, range(get_quantile(0.015), stop=get_quantile(0.985), length=300), color=:lightgreen, fill=:lightgreen, label="") # 97% PI
+plot!(S, range(get_quantile(0.055), stop=get_quantile(0.945), length=300), color=:green, fill=:green, label="") # 89% PI
+plot!(S, range(get_quantile(0.165), stop=get_quantile(0.835), length=300), color=:darkgreen, fill=:darkgreen, label="") # 67% PI
+plot!(S, mean(k_predict, dims = 2), linecolor = :black, lab = "Mean")
+xaxis!(:log, "Species richness")
+yaxis!("k")
+savefig(joinpath("figures", "fig_04b_k_species"))
