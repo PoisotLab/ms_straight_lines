@@ -73,41 +73,60 @@ xaxis!(:log)
 
 # A - connectance - species
 
+# First try
 
-########## Some tests (to be changed) ##########
-p_post = bb_posterior[:a]
-mean_p = mean(p_post)
-median_p = median(p_post)
+links_predict = zeros(Int64, (length(S), size(bb_posterior)[1]))
 
-density(bb_posterior[:a])
-density(bb_posterior[:theta])
-density(bb_posterior[:a] .* bb_posterior[:theta])
-density((1 .- bb_posterior[:a]) .* bb_posterior[:theta])
-
-number_of_trials = S.*S.-(S.-1)
-
-L_predict = zeros(Int64, (length(number_of_trials), size(bb_posterior)[1]))
-
-for i in 1:length(number_of_trials)
-    for j in 1:size(bb_posterior)[1]
-        p = bb_posterior[j, :a]
-        theta = bb_posterior[j, :theta]
-        n = number_of_trials[i]
-
-        α = p*theta
-        β = (1.0-p)*theta
-        L_predict[i,j] = rand(BetaBinomial(n, α, β))
-    end
+for (i,s) in enumerate(S), j in 1:size(bb_posterior)[1]
+    n = s^2-(s-1)
+    α = bb_posterior[j,:a]*bb_posterior[j,:theta]
+    β = (1.0-bb_posterior[j,:a])*bb_posterior[j,:theta]
+    links_predict[i,j] = rand(BetaBinomial(n, α, β))
 end
 
-L_predict
-co = L_predict ./ (S.^2)
+co_predict = links_predict ./ (S.^2)
 
-density(co[, :])
-maximum(co)
+plot(S, mean(co_predict, dims = 2), linecolor = :black, lab = "Mean")
 
 
-########## End of tests ##########
+# Second try
+
+# Parameter p
+pco = zeros(Float64, (length(S), size(bb_posterior)[1]))
+ms = (S .- 1) ./ (S .^2)
+
+for (i,m) in enumerate(ms), j in 1:size(bb_posterior)[1]
+    p_post = bb_posterior[j,:a]
+    pco[i,j] = (1 - m) * p_post + m
+end
+
+# Parameter theta (phi)
+phico = zeros(Float64, (length(S), size(bb_posterior)[1]))
+for (i,m) in enumerate(ms), j in 1:size(bb_posterior)[1]
+    phi_post = bb_posterior[j,:theta]
+    phico[i,j] = (phi_post + m) / (1 - m)
+end
+
+# Regularized value of connectance
+links = d[:links]
+species = d[:nodes]
+p_mean = mean(bb_posterior[:a])
+phi_mean = mean(bb_posterior[:theta])
+
+co_reg = (links .+ phi_mean * p_mean) ./ (species .^2 .+ phi_mean)
+
+# Empirical connectance
+co_emp = links ./ (species .^2)
+
+# Connectance vs species
+plot(S, mean(pco, dims=2), linecolor=:black, linewidth=4, label="")
+plot!(S, ms, linecolor=:black, label="") # minimum value of connectance
+scatter!(species, co_emp, label="")
+xaxis!(:log, "Species richness")
+yaxis!("Connectance")
+savefig(joinpath("figures", "fig_04a_connectance_species"))
+
+
 
 
 
