@@ -26,8 +26,8 @@ savefig(joinpath("figures", "fig_01_link_species"))
 
 # Figure 2
 
-bb_posterior = CSV.read(joinpath("data", "beta_binomial_posterior.csv"))
-@df bb_posterior density(:a)
+bb_posterior = CSV.read(joinpath("data", "posterior_distributions", "bb_posterior.csv"))
+@df bb_posterior density(:p)
 plot!(Beta(3,7))
 xaxis!((0.06, 0.13))
 
@@ -36,8 +36,8 @@ xaxis!((0.06, 0.13))
 
 # Figure 3
 function draw_posterior(row)
-    α = row[:a]*row[:theta]
-    β = (1.0-row[:a])*row[:theta]
+    α = row[:p]*row[:theta]
+    β = (1.0-row[:p])*row[:theta]
     return (n) -> BetaBinomial(n, α, β)
 end
 
@@ -74,13 +74,13 @@ xaxis!(:log)
 # A - connectance - species
 
 # First try
-
+bb_posterior
 links_predict = zeros(Int64, (length(S), size(bb_posterior)[1]))
 
 for (i,s) in enumerate(S), j in 1:size(bb_posterior)[1]
     n = s^2-(s-1)
-    α = bb_posterior[j,:a]*bb_posterior[j,:theta]
-    β = (1.0-bb_posterior[j,:a])*bb_posterior[j,:theta]
+    α = bb_posterior[j,:p]*bb_posterior[j,:theta]
+    β = (1.0-bb_posterior[j,:p])*bb_posterior[j,:theta]
     links_predict[i,j] = rand(BetaBinomial(n, α, β))
 end
 
@@ -96,7 +96,7 @@ pco = zeros(Float64, (length(S), size(bb_posterior)[1]))
 ms = (S .- 1) ./ (S .^2)
 
 for (i,m) in enumerate(ms), j in 1:size(bb_posterior)[1]
-    p_post = bb_posterior[j,:a]
+    p_post = bb_posterior[j,:p]
     pco[i,j] = (1 - m) * p_post + m
 end
 
@@ -110,7 +110,7 @@ end
 # Regularized value of connectance
 links = d[:links]
 species = d[:nodes]
-p_mean = mean(bb_posterior[:a])
+p_mean = mean(bb_posterior[:p])
 phi_mean = mean(bb_posterior[:theta])
 
 co_reg = (links .+ phi_mean * p_mean) ./ (species .^2 .+ phi_mean)
@@ -134,7 +134,7 @@ savefig(joinpath("figures", "fig_04a_connectance_species"))
 
 k_predict = zeros(Float64, (length(S), size(bb_posterior)[1]))
 
-for (i,s) in enumerate(S), (j,p) in enumerate(bb_posterior[:a])
+for (i,s) in enumerate(S), (j,p) in enumerate(bb_posterior[:p])
     k_predict[i, j] = ((1 - p) * s + (p - 1)) / (p * s^2)
 end
 
