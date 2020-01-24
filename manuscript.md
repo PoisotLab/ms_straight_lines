@@ -126,7 +126,7 @@ concentration parameter, $\phi$ :
 $$\begin{aligned}
 L_i & \sim \text{BetaBinomial}(\left[S_i^2-(S_i-1)\right], p \times \phi, (1 - p) \times \phi)\\
 p &\sim  \text{Beta}(1.54, 9.49)\\
-\phi & \sim \text{Gamma}(0.01, 0.01)
+\log(\phi) & \sim \text{Normal}(3, 0.5)
 \end{aligned}$${#eq:betab}
 
 We chose our prior distribution for $p$ based on @Mart92 , who gave a value of
