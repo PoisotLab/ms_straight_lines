@@ -115,10 +115,13 @@ phi_mean = mean(bb_posterior[:theta])
 
 co_reg = (links .+ phi_mean * p_mean) ./ (species .^2 .+ phi_mean)
 
+# Empirical connectance
+co_emp = links ./ (species .^2)
+
 # Connectance vs species
 plot(S, mean(pco, dims=2), linecolor=:black, linewidth=4, label="")
 plot!(S, ms, linecolor=:black, label="") # minimum value of connectance
-scatter!(species, co_reg, label="")
+scatter!(species, co_emp, label="")
 xaxis!(:log, "Species richness")
 yaxis!("Connectance")
 savefig(joinpath("figures", "fig_04a_connectance_species"))
