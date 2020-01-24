@@ -107,12 +107,21 @@ for (i,m) in enumerate(ms), j in 1:size(bb_posterior)[1]
     phico[i,j] = (phi_post + m) / (1 - m)
 end
 
+# Regularized value of connectance
+links = d[:links]
+species = d[:nodes]
+p_mean = mean(bb_posterior[:a])
+phi_mean = mean(bb_posterior[:theta])
 
-plot(S, mean(pco, dims = 2), linecolor = :black, linewidth = 4)
-plot!(S, ms, linecolor = :black)
+co_reg = (links .+ phi_mean * p_mean) ./ (species .^2 .+ phi_mean)
+
+# Connectance vs species
+plot(S, mean(pco, dims=2), linecolor=:black, linewidth=4, label="")
+plot!(S, ms, linecolor=:black, label="") # minimum value of connectance
+scatter!(species, co_reg, label="")
 xaxis!(:log, "Species richness")
-yaxis!("Connectance", (0.5, 0.7))
-
+yaxis!("Connectance")
+savefig(joinpath("figures", "fig_04a_connectance_species"))
 
 
 
