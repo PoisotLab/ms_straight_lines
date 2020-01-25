@@ -81,16 +81,21 @@ p_median = median(bb_posterior[:p])
 phi_median = exp(median(bb_posterior[:theta]))
 
 # Beta distribution
-beta_dist = Beta.(p_median .* phi_median, (1 .- p_median) .* phi_median)
+beta_dist = Beta(p_median .* phi_median, (1 .- p_median) .* phi_median)
+
+#here
+bquant = LocationScale.(ms, 1 .- ms, beta_dist)
 
 # Quantiles to plot
-beta015 = quantile(beta_dist, 0.015) .* (1 .- ms) .+ ms
-beta985 = quantile(beta_dist, 0.985) .* (1 .- ms) .+ ms
-beta055 = quantile(beta_dist, 0.055) .* (1 .- ms) .+ ms
-beta945 = quantile(beta_dist, 0.945) .* (1 .- ms) .+ ms
-beta165 = quantile(beta_dist, 0.165) .* (1 .- ms) .+ ms
-beta835 = quantile(beta_dist, 0.835) .* (1 .- ms) .+ ms
-beta500 = quantile(beta_dist, 0.5) .* (1 .- ms) .+ ms
+beta015 = quantile.(bquant, 0.015)
+beta985 = quantile.(bquant, 0.985)
+beta945 = quantile.(bquant, 0.945)
+
+beta055 = quantile.(bquant, 0.055)
+beta165 = quantile.(bquant, 0.165)
+beta835 = quantile.(bquant, 0.835)
+
+beta500 = quantile.(bquant, 0.5)
 
 
 # Empirical connectance
