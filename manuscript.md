@@ -300,7 +300,7 @@ exponent 2, which gives
 $$k = \frac{(1-p)\times S + (p-1)}{p\times S^2}\,.$$
 
 This will peak for small values of $S$, and then slowly decrease towards 0. We
-illustrate these results in +@fig:empirical, which reveals that for networks under
+illustrate these results in +@fig:powerlawk, which reveals that for networks under
 **500?** species, the relationship between $S$ and $L$ strongly deviates from a
 power-law. Specifically, **complete -- is it under or over-estimating the number
 of interactions?**.
