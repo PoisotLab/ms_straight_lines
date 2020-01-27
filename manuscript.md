@@ -300,7 +300,7 @@ exponent 2, which gives
 $$k = \frac{(1-p)\times S + (p-1)}{p\times S^2}\,.$$
 
 This will peak for small values of $S$, and then slowly decrease towards 0. We
-illustrate these results in **FIGURE**, which reveals that for networks under
+illustrate these results in +@fig:empirical, which reveals that for networks under
 **500?** species, the relationship between $S$ and $L$ strongly deviates from a
 power-law. Specifically, **complete -- is it under or over-estimating the number
 of interactions?**.
@@ -310,6 +310,9 @@ ecological networks deviate most strongly from the expectations under "small
 world" or "scale free" regimes when they exceed a certain connectance; this is
 because for small networks, connectance is higher, and only decreases towards
 $p$ when the term in $S^{-2}$ in +@eq:co vanishes.
+
+![Power law relationship](figures/fig_04b_k_species.png){#fig:powerlawk}
+
 
 ## We can derive a measure of departure from expected number of links
 
