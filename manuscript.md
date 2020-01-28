@@ -111,9 +111,37 @@ $$\hat L = p\times S^2 + (1-p)\times S + (p-1)\,. $${#eq:L}
 
 # Fitting the model
 
-We have rephrased the question of connectance in food webs as the proportion of
-links realized above the minimum. There are several ways of writing down this
-model; we compare two possibilities below. In both cases, we use a discrete
+We begin by noting that equation [tk eq:L] implies that $\hat L$ has a binomial distribution, with $S^2 - S + 1$ trials and a probability $p$ of any flexible link being realized:
+
+
+
+$$
+[L | S, p] = { S^2 - (S - 1) \choose L - (S - 1)} p^{L-(S-1)}(1-p)^{S^2 - L} .
+$$
+
+<!-- should this be done with a different notation?? -->
+
+
+But then we also note that ecological communities are different in many ways besides their number of species ($S$). Therefore the proportion $p$ of flexible links which are realized will vary from one community to another.
+As a result, the links of a food web might follow a beta-binomial distribution:
+
+$$
+[L|S,\mu, \phi] =  { S^2 - (S - 1) \choose L - (S - 1)} \frac{B(L - (S - 1) + \mu \phi, S^2 - L + (1 - \mu)\phi)}{B(\mu \phi, (1 - \mu)\phi)}
+$$
+
+
+Links are discrete, but the connectance of a food web is bounded by 0 and 1.
+
+Equation [tk ; shifted p equantion for connectance]
+
+$$
+[Co | S, \mu, \phi] = \frac{\left(Co - m(S)\right)^{\mu \phi - 1}\left(1 - Co\right)^{(1 - \mu)\phi - 1} }{(1 - m(S))^{\phi - 1} \times B(\mu \phi, (1 - \mu)\phi)}
+$$
+
+This distribution uses hyperparameters estimated from the beta-binomial model above.
+It again includes the constraint described above: species may
+
+In both cases, we use a discrete
 probability distribution as the likelihood, with the number of observed links
 $L_i$ above the minimum as 'successes' and the number of possible links as
 'trials'. Each model tries to capture variation in link number greater than
@@ -122,6 +150,7 @@ would be predicted by $p$ alone.
 Our first model uses the Beta-Binomial distribution for observations of $L$;
 this distribution can be parameterized in terms of its mean $\mu_p$ and
 concentration parameter, $\phi$ :
+
 
 $$\begin{aligned}
 L_i & \sim \text{BetaBinomial}(\left[S_i^2-(S_i-1)\right], p \times \phi, (1 - p) \times \phi)\\
