@@ -7,7 +7,7 @@ using ArviZ
 include("common_functions.jl")
 
 # define cmdstan location
-set_cmdstan_home!(homedir() * "/cmdstan/")
+set_cmdstan_home!(homedir() * "/Desktop/cmdstan/")
 
 # get the data and filter for predation only
 d = CSV.read(joinpath(pwd(), "data", "network_data.dat"))
@@ -59,9 +59,6 @@ const_conn_stan_model = Stanmodel(
 )
 _, const_stan_chns, _ = stan(const_conn_stan_model, data_dict, summary = true);
 
-const_stan_infdata = foodweb_model_output(const_stan_chns)
-
-
 
 ##### power law connectance
 
@@ -108,33 +105,48 @@ pwrlaw_conn_stan_model = Stanmodel(
 
 _, pwrlaw_stan_chns, _ = stan(pwrlaw_conn_stan_model, data_dict, summary = false);
 
-pwrlaw_stan_infdata = foodweb_model_output(pwrlaw_stan_chns)
-
 
 ### beta-binomial connectance
 
 const betabin_connectance = """
 data{
     int W;
+    int L[W];
+    int S[W];
+    int cf;
+}
+transformed data{
     int F[W];
     int R[W];
+    int M[W];
+    for ( i in 1:W ) {
+        M[i] = S[i] - 1;
+        F[i] = S[i] * S[i] - M[i];
+        R[i] = L[i]        - M[i];
+    }
 }
 parameters{
-    real<lower=0,upper=1> a;
-    real<lower=0> theta;
+    real<lower=0,upper=1> mu;
+    real<lower=0> phi;
 }
 model{
     vector[W] pbar;
-    theta ~ normal( 3,0.5 );
-    a ~ beta( 3 , 7 );
-    R ~ beta_binomial(F ,  a * exp(theta), (1 - a) * exp(theta) );
+    phi ~ normal( 3,0.5 );
+    mu ~ beta( 3 , 7 );
+    for (i in 1:W){
+       target += beta_binomial_lpmf(  R[i] | F[i] ,  mu * exp(phi) , (1 - mu) * exp(phi));
+    }
 }
 generated quantities{
     vector[W] log_lik;
     vector[W] y_hat;
+    vector[cf] counterfactual_links;
     for ( i in 1:W ) {
-        log_lik[i] = beta_binomial_lpmf( R[i] | F[i] , a * exp(theta), (1 - a) * exp(theta)  );
-        y_hat[i] = beta_binomial_rng(F[i] , a * exp(theta), (1 - a) * exp(theta) );
+        log_lik[i] = beta_binomial_lpmf( R[i] | F[i] , mu * exp(phi), (1 - mu) * exp(phi)  );
+        y_hat[i] = beta_binomial_rng(F[i] , mu * exp(phi), (1 - mu) * exp(phi) ) + M[i];
+    }
+    for (j in 1:cf){
+        counterfactual_links[j] = beta_binomial_rng(j * j - j + 1 , mu * exp(phi), (1 - mu) * exp(phi) ) + j - 1;
     }
 }
 """
@@ -142,21 +154,22 @@ generated quantities{
 
 data_dict_simpler = Dict(
     "W" => length(d.id),
-    "F" => d.nodes .^ 2 .- (d.nodes .- 1),
-    "R" => d.links      .- (d.nodes .- 1))
+    "L" => d.links,
+    "S" => d.links,
+    "cf" => 750)
 
 bb_model = Stanmodel(
     model = betabin_connectance,
     nchains = 2,
     num_warmup = 1000,
     num_samples = 3000,
-    name = "simple_betabin"
+    name = "simple_betabin_p"
 )
 
 
-_, bb_chains , _ = stan(bb_model, data_dict_simpler, summary = false);
+_, bb_chains , _ = stan(bb_model, data_dict_simpler, summary = true);
 
-
+bb_chains
 bb_chains_infdata = foodweb_model_output(bb_chains)
 
 summary(bb_chains_infdata)
@@ -191,3 +204,12 @@ loo(bb_chains_infdata) # 2543 +- 46
 
 ### this should produce pointwise loo calculations but I don't know how to get the numbers out
 loo_pw = loo(pwrlaw_stan_infdata, pointwise = true)
+
+
+
+
+
+const_stan_infdata = foodweb_model_output(const_stan_chns)
+
+
+pwrlaw_stan_infdata = foodweb_model_output(pwrlaw_stan_chns)
