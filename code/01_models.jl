@@ -2,6 +2,7 @@ import Pkg; Pkg.activate(".")
 import CSV
 using CmdStan
 using ArviZ
+using DelimitedFiles
 
 # include functions
 include("common_functions.jl")
@@ -13,13 +14,14 @@ set_cmdstan_home!(homedir() * "/Desktop/cmdstan/")
 d = CSV.read(joinpath(pwd(), "data", "network_data.dat"))
 d = d[d.predation .> 0 , :]
 
-### constant connectance
+### LSSL
 
-const constantconnectance = """
+const lssl = """
 data{
     int W;
     int L[W];
     int S[W];
+    int cf;
 }
 parameters{
     real a;
@@ -38,26 +40,83 @@ generated quantities{
     vector[W] log_lik;
     vector[W] mu;
     vector[W] y_hat;
+    vector[cf] counterfactual_links;
     for ( i in 1:W ) {
         mu[i] = exp(a) * S[i];
         log_lik[i] = neg_binomial_2_lpmf( L[i] | mu[i] , exp(phi) );
         y_hat[i] = neg_binomial_2_rng(mu[i], exp(phi));
+    }
+    for (j in 1:cf){
+     counterfactual_links[j] = neg_binomial_2_rng(exp(a) * j, exp(phi));
     }
 }
 """
 
 data_dict = Dict("W" => length(d.id),
     "L" => d.links,
-    "S" => d.nodes)
+    "S" => d.nodes,
+    "cf" => 750)
 
-const_conn_stan_model = Stanmodel(
-    model = constantconnectance,
+lssl_stan_model = Stanmodel(
+    model =lssl,
     nchains = 4,
     num_warmup = 1000,
-    num_samples = 3000,
-    name = "constant_connectance"
+    num_samples = 1000,
+    name = "lssl"
 )
-_, const_stan_chns, _ = stan(const_conn_stan_model, data_dict, summary = true);
+_, lssl_stan_chns, _ = stan(lssl_stan_model, data_dict, summary = true);
+
+### Constant connectance
+
+const constant_connect = """
+data{
+    int W;
+    int L[W];
+    int S[W];
+    int cf;
+}
+parameters{
+    real a;
+    real phi;
+}
+model{
+    vector[W] mu;
+    phi ~ normal( 2 , 1 );
+    a ~ normal( 0.7 , 0.02 );
+    for ( i in 1:W ) {
+        mu[i] = exp(a) * S[i]^2;
+    }
+    L ~ neg_binomial_2( mu , exp(phi) );
+}
+generated quantities{
+    vector[W] log_lik;
+    vector[W] mu;
+    vector[W] y_hat;
+    vector[cf] counterfactual_links;
+    for ( i in 1:W ) {
+        mu[i] = exp(a) * S[i];
+        log_lik[i] = neg_binomial_2_lpmf( L[i] | mu[i] , exp(phi) );
+        y_hat[i] = neg_binomial_2_rng(mu[i], exp(phi));
+    }
+    for (j in 1:cf){
+     counterfactual_links[j] = neg_binomial_2_rng(exp(a) * j^2, exp(phi));
+    }
+}
+"""
+
+data_dict = Dict("W" => length(d.id),
+    "L" => d.links,
+    "S" => d.nodes,
+    "cf" => 750)
+
+const_connect_stan_model = Stanmodel(
+    model =constant_connect,
+    nchains = 4,
+    num_warmup = 1000,
+    num_samples = 1000,
+    name = "constant_connect"
+)
+_, constant_connect_stan_chns, _ = stan(const_connect_stan_model, data_dict, summary = true);
 
 
 ##### power law connectance
@@ -67,6 +126,7 @@ data{
     int W;
     int L[W];
     int S[W];
+    int cf;
 }
 parameters{
     real a;
@@ -77,7 +137,7 @@ model{
     vector[W] mu;
     phi ~ normal( 2 , 1 );
     a ~ normal( -3 , 1 );
-    b ~ normal(1, 0.2);
+    b ~ normal(2, 0.6);
     for ( i in 1:W ) {
         mu[i] = exp(a) * S[i] ^ b;
     }
@@ -87,10 +147,14 @@ generated quantities{
     vector[W] log_lik;
     vector[W] mu;
     vector[W] y_hat;
+    vector[cf] counterfactual_links;
     for ( i in 1:W ) {
         mu[i] = exp(a) * S[i] ^ b;
         log_lik[i] = neg_binomial_2_lpmf( L[i] | mu[i] , exp(phi) );
         y_hat[i] = neg_binomial_2_rng(mu[i], exp(phi));
+    }
+    for (j in 1:cf){
+     counterfactual_links[j] = neg_binomial_2_rng(exp(a) * j^b, exp(phi));
     }
 }
 """
@@ -99,7 +163,7 @@ pwrlaw_conn_stan_model = Stanmodel(
     model = pwrlaw_connectance,
     nchains = 4,
     num_warmup = 1000,
-    num_samples = 3000,
+    num_samples = 1000,
     name = "powerlaw_connectance"
 )
 
@@ -162,7 +226,7 @@ bb_model = Stanmodel(
     model = betabin_connectance,
     nchains = 2,
     num_warmup = 1000,
-    num_samples = 3000,
+    num_samples = 1000,
     name = "simple_betabin_p"
 )
 
@@ -176,11 +240,25 @@ summary(bb_chains_infdata)
 
 ##### write out posterior samples as csvs
 
-write_posterior(bb_chains, "data/beta_binomial_posterior.csv")
+size(lssl_stan_chns)
+
+lssl_array = Array(lssl_stan_chns)
+writedlm("data/posterior_distributions/lssl.csv", constant_connect_array, ',')
+
+
+constant_connect_array = Array(constant_connect_stan_chns)
+writedlm("data/posterior_distributions/const_posterior.csv", constant_connect_array, ',')
+
+size(constant_connect_array)
+
+
+
+write_posterior(constant_connect_stan_chns, "data/posterior_distributions/const_posterior.csv")
 
 write_posterior(pwrlaw_stan_chns, "data/pwrlaw_posterior.csv")
 
-write_posterior(const_stan_chns, "data/const_posterior.csv")
+write_posterior(bb_chains, "data/beta_binomial_posterior.csv")
+
 
 
 ## could be used to plot a "ribbon"
@@ -193,6 +271,24 @@ summary(const_stan_infdata)
 summary(pwrlaw_stan_infdata)
 summary(bb_chains_infdata)
 
+
+
+
+
+
+
+
+
+lssl_stan_infdata = foodweb_model_output(lssl_stan_chns)
+
+const_stan_infdata = foodweb_model_output(const_stan_chns)
+
+
+pwrlaw_stan_infdata = foodweb_model_output(pwrlaw_stan_chns)
+
+
+loo(lssl_stan_infdata)
+# 2940.68 +- 118.63
 ## calculate loo
 loo(const_stan_infdata) #2798 +- 104
 # 2940 +- 118 with a narrower prior
@@ -204,12 +300,3 @@ loo(bb_chains_infdata) # 2543 +- 46
 
 ### this should produce pointwise loo calculations but I don't know how to get the numbers out
 loo_pw = loo(pwrlaw_stan_infdata, pointwise = true)
-
-
-
-
-
-const_stan_infdata = foodweb_model_output(const_stan_chns)
-
-
-pwrlaw_stan_infdata = foodweb_model_output(pwrlaw_stan_chns)
