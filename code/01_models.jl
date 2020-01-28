@@ -242,8 +242,8 @@ summary(bb_chains_infdata)
 
 size(lssl_stan_chns)
 
-lssl_array = Array(lssl_stan_chns)
-writedlm("data/posterior_distributions/lssl.csv", constant_connect_array, ',')
+lssl_df = DataFrame(lssl_stan_chns)
+CSV.write("data/posterior_distributions/lssl.csv", lssl_df, ',')
 
 
 constant_connect_array = Array(constant_connect_stan_chns)
