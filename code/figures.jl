@@ -26,6 +26,37 @@ savefig(joinpath("figures", "fig_01_link_species"))
 
 # Figure 2
 
+
+lssl_posterior = CSV.read(joinpath("data", "posterior_distributions", "lssl.csv"))
+density(lssl_posterior[:a])
+plot!(Normal(mean(lssl_posterior[:a]), std(lssl_posterior[:a])))
+
+
+lssl_cf_links = lssl_posterior[r"counterfactual_links"]
+min_species = 6
+max_species = size(lssl_cf_links)[2]
+lssl_cf_links = lssl_posterior[:, min_species:max_species]
+quantile.(eachcol(lssl_cf_links), 0.5)
+
+# Connectance vs species
+cf_species = min_species:(size(lssl_cf_links)[2])
+plot(cf_species, quantile.(eachcol(lssl_cf_links), 0.985), fill = quantile.(eachcol(lssl_cf_links), 0.015)., color=:lightgreen, label="") # 97% PI
+plot!(cf_species, quantile.(eachcol(lssl_cf_links), 0.945), fill = quantile.(eachcol(lssl_cf_links), 0.055), color=:green, label="") # 89% PI
+plot!(cf_species, quantile.(eachcol(lssl_cf_links), 0.835), fill = quantile.(eachcol(lssl_cf_links), 0.165), color=:darkgreen, label="") # 67% PI
+plot!(cf_species, quantile.(eachcol(lssl_cf_links), 0.5), linecolor=:black, linewidth=4, label="") # Median connectance
+scatter!(d[:nodes], miniumum(d[:links]), label="") # Empirical links
+xaxis!(:log, "Species richness")
+yaxis!(:log, "Number of links")
+savefig(joinpath("figures", "fig_04a_connectance_species"))
+
+
+
+
+
+
+
+
+
 bb_posterior = CSV.read(joinpath("data", "posterior_distributions", "bb_posterior.csv"))
 @df bb_posterior density(:p)
 plot!(Beta(3,7))
@@ -163,6 +194,9 @@ plot!(S, mean(k_predict, dims = 2), linecolor = :black, lab = "Mean")
 xaxis!(:log, "Species richness")
 yaxis!("k")
 savefig(joinpath("figures", "fig_04b_k_species"))
+
+
+
 
 
 
