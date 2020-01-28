@@ -13,13 +13,14 @@ set_cmdstan_home!(homedir() * "/Desktop/cmdstan/")
 d = CSV.read(joinpath(pwd(), "data", "network_data.dat"))
 d = d[d.predation .> 0 , :]
 
-### constant connectance
+### LSSL
 
-const constantconnectance = """
+const lssl = """
 data{
     int W;
     int L[W];
     int S[W];
+    int cf;
 }
 parameters{
     real a;
@@ -38,10 +39,14 @@ generated quantities{
     vector[W] log_lik;
     vector[W] mu;
     vector[W] y_hat;
+    vector[cf] counterfactual_links;
     for ( i in 1:W ) {
         mu[i] = exp(a) * S[i];
         log_lik[i] = neg_binomial_2_lpmf( L[i] | mu[i] , exp(phi) );
         y_hat[i] = neg_binomial_2_rng(mu[i], exp(phi));
+    }
+    for (j in 1:cf){
+     counterfactual_links[j] = neg_binomial_2_rng(exp(a) * j, exp(phi));
     }
 }
 """
@@ -50,14 +55,66 @@ data_dict = Dict("W" => length(d.id),
     "L" => d.links,
     "S" => d.nodes)
 
-const_conn_stan_model = Stanmodel(
-    model = constantconnectance,
+lssl_stan_model = Stanmodel(
+    model =lssl,
     nchains = 4,
     num_warmup = 1000,
     num_samples = 3000,
-    name = "constant_connectance"
+    name = "lssl"
 )
-_, const_stan_chns, _ = stan(const_conn_stan_model, data_dict, summary = true);
+_, lssl_stan_chns, _ = stan(lssl_stan_model, data_dict, summary = true);
+
+
+### Constant connectance
+
+const constant_connect = """
+data{
+    int W;
+    int L[W];
+    int S[W];
+    int cf;
+}
+parameters{
+    real a;
+    real phi;
+}
+model{
+    vector[W] mu;
+    phi ~ normal( 2 , 1 );
+    a ~ normal( 0.7 , 0.02 );
+    for ( i in 1:W ) {
+        mu[i] = exp(a) * S[i]^2;
+    }
+    L ~ neg_binomial_2( mu , exp(phi) );
+}
+generated quantities{
+    vector[W] log_lik;
+    vector[W] mu;
+    vector[W] y_hat;
+    vector[cf] counterfactual_links;
+    for ( i in 1:W ) {
+        mu[i] = exp(a) * S[i];
+        log_lik[i] = neg_binomial_2_lpmf( L[i] | mu[i] , exp(phi) );
+        y_hat[i] = neg_binomial_2_rng(mu[i], exp(phi));
+    }
+    for (j in 1:cf){
+     counterfactual_links[j] = neg_binomial_2_rng(exp(a) * j^2, exp(phi));
+    }
+}
+"""
+
+data_dict = Dict("W" => length(d.id),
+    "L" => d.links,
+    "S" => d.nodes)
+
+const_connect_stan_model = Stanmodel(
+    model =constant_connect,
+    nchains = 4,
+    num_warmup = 1000,
+    num_samples = 3000,
+    name = "constant_connect"
+)
+_, constant_connect_stan_chns, _ = stan(constant_connect_stan_model, data_dict, summary = true);
 
 
 ##### power law connectance
@@ -67,6 +124,7 @@ data{
     int W;
     int L[W];
     int S[W];
+    int cf;
 }
 parameters{
     real a;
@@ -87,10 +145,14 @@ generated quantities{
     vector[W] log_lik;
     vector[W] mu;
     vector[W] y_hat;
+    vector[cf] counterfactual_links;
     for ( i in 1:W ) {
         mu[i] = exp(a) * S[i] ^ b;
         log_lik[i] = neg_binomial_2_lpmf( L[i] | mu[i] , exp(phi) );
         y_hat[i] = neg_binomial_2_rng(mu[i], exp(phi));
+    }
+    for (j in 1:cf){
+     counterfactual_links[j] = neg_binomial_2_rng(exp(a) * j^b, exp(phi));
     }
 }
 """
