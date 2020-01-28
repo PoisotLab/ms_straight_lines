@@ -1,3 +1,5 @@
 .Rproj.user
 *.Rproj
 tmp/
+.R
+.DS_Store
