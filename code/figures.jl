@@ -26,42 +26,77 @@ savefig(joinpath("figures", "fig_01_link_species"))
 
 # Figure 2
 
-
+# 2A - lssl links estimate
 lssl_posterior = CSV.read(joinpath("data", "posterior_distributions", "lssl.csv"))
 density(lssl_posterior[:a])
 plot!(Normal(mean(lssl_posterior[:a]), std(lssl_posterior[:a])))
 
-
 lssl_cf_links = lssl_posterior[r"counterfactual_links"]
-min_species = 6
+min_species = 3
 max_species = size(lssl_cf_links)[2]
 lssl_cf_links = lssl_posterior[:, min_species:max_species]
-quantile.(eachcol(lssl_cf_links), 0.5)
 
-# Connectance vs species
-cf_species = min_species:(size(lssl_cf_links)[2])
-plot(cf_species, quantile.(eachcol(lssl_cf_links), 0.985), fill = quantile.(eachcol(lssl_cf_links), 0.015)., color=:lightgreen, label="") # 97% PI
-plot!(cf_species, quantile.(eachcol(lssl_cf_links), 0.945), fill = quantile.(eachcol(lssl_cf_links), 0.055), color=:green, label="") # 89% PI
-plot!(cf_species, quantile.(eachcol(lssl_cf_links), 0.835), fill = quantile.(eachcol(lssl_cf_links), 0.165), color=:darkgreen, label="") # 67% PI
-plot!(cf_species, quantile.(eachcol(lssl_cf_links), 0.5), linecolor=:black, linewidth=4, label="") # Median connectance
-scatter!(d[:nodes], miniumum(d[:links]), label="") # Empirical links
+log_zeros(quant) = quant > 0 ? log(quant) : 0
+
+lssl_015 = log_zeros.(quantile.(eachcol(lssl_cf_links), 0.015))
+lssl_055 = log_zeros.(quantile.(eachcol(lssl_cf_links), 0.055))
+lssl_165 = log_zeros.(quantile.(eachcol(lssl_cf_links), 0.165))
+lssl_835 = log_zeros.(quantile.(eachcol(lssl_cf_links), 0.835))
+lssl_945 = log_zeros.(quantile.(eachcol(lssl_cf_links), 0.945))
+lssl_985 = log_zeros.(quantile.(eachcol(lssl_cf_links), 0.985))
+
+lssl_500 = log_zeros.(quantile.(eachcol(lssl_cf_links), 0.5))
+
+cf_species = min_species:max_species
+plot(cf_species, lssl_985, fill = lssl_015, color=:lightgreen, label="") # 97% PI
+plot!(cf_species, lssl_945, fill = lssl_055, color=:green, label="") # 89% PI
+plot!(cf_species, lssl_835, fill = lssl_165, color=:darkgreen, label="") # 69% PI
+plot!(cf_species, lssl_500, linecolor=:black, linewidth=4, label="") # Median link number
+scatter!(d[:nodes], log.(d[:links]), label="") # Empirical links
 xaxis!(:log, "Species richness")
-yaxis!(:log, "Number of links")
-savefig(joinpath("figures", "fig_04a_connectance_species"))
+yaxis!("Number of links (log)")
+savefig(joinpath("figures", "fig_02a_link_species_lssl"))
+
+
+
+# 2B - constant connectance links estimate
+const_posterior = CSV.read(joinpath("data", "posterior_distributions", "const_posterior.csv"))
+density(const_posterior[:1]) # to change (column a)
+plot!(Normal(mean(const_posterior[:1]), std(const_posterior[:1])))
+
+const_cf_links = const_posterior[2:751] # to change lssl_posterior[r"counterfactual_links"]
+max_species = size(const_cf_links)[2]
+const_cf_links = const_posterior[:, min_species:max_species]
+
+const_015 = log_zeros.(quantile.(eachcol(const_cf_links), 0.015))
+const_055 = log_zeros.(quantile.(eachcol(const_cf_links), 0.055))
+const_165 = log_zeros.(quantile.(eachcol(const_cf_links), 0.165))
+const_835 = log_zeros.(quantile.(eachcol(const_cf_links), 0.835))
+const_945 = log_zeros.(quantile.(eachcol(const_cf_links), 0.945))
+const_985 = log_zeros.(quantile.(eachcol(const_cf_links), 0.985))
+
+const_500 = log_zeros.(quantile.(eachcol(const_cf_links), 0.5))
+
+cf_species = min_species:max_species
+
+plot(cf_species, const_985, fill = const_015, color=:lightgreen, label="") # 97% PI
+plot!(cf_species, const_945, fill = const_055, color=:green, label="") # 89% PI
+plot!(cf_species, const_835, fill = const_165, color=:darkgreen, label="") # 69% PI
+plot!(cf_species, const_500, linecolor=:black, linewidth=4, label="") # Median link number
+scatter!(d[:nodes], log.(d[:links]), label="") # Empirical links
+xaxis!(:log, "Species richness")
+yaxis!("Number of links (log)")
+savefig(joinpath("figures", "fig_02b_link_species_const"))
 
 
 
 
 
-
-
-
-
+# First trial
 bb_posterior = CSV.read(joinpath("data", "posterior_distributions", "bb_posterior.csv"))
 @df bb_posterior density(:p)
 plot!(Beta(3,7))
 xaxis!((0.06, 0.13))
-
 ## compare density of posterior to pencil trick
 ## add value of mean to text
 
