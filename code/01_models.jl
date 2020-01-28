@@ -2,6 +2,7 @@ import Pkg; Pkg.activate(".")
 import CSV
 using CmdStan
 using ArviZ
+using DelimitedFiles
 
 # include functions
 include("common_functions.jl")
@@ -60,7 +61,7 @@ lssl_stan_model = Stanmodel(
     model =lssl,
     nchains = 4,
     num_warmup = 1000,
-    num_samples = 2000,
+    num_samples = 1000,
     name = "lssl"
 )
 _, lssl_stan_chns, _ = stan(lssl_stan_model, data_dict, summary = true);
@@ -105,16 +106,17 @@ generated quantities{
 
 data_dict = Dict("W" => length(d.id),
     "L" => d.links,
-    "S" => d.nodes)
+    "S" => d.nodes,
+    "cf" => 750)
 
 const_connect_stan_model = Stanmodel(
     model =constant_connect,
     nchains = 4,
     num_warmup = 1000,
-    num_samples = 3000,
+    num_samples = 1000,
     name = "constant_connect"
 )
-_, constant_connect_stan_chns, _ = stan(constant_connect_stan_model, data_dict, summary = true);
+_, constant_connect_stan_chns, _ = stan(const_connect_stan_model, data_dict, summary = true);
 
 
 ##### power law connectance
@@ -135,7 +137,7 @@ model{
     vector[W] mu;
     phi ~ normal( 2 , 1 );
     a ~ normal( -3 , 1 );
-    b ~ normal(1, 0.2);
+    b ~ normal(2, 0.6);
     for ( i in 1:W ) {
         mu[i] = exp(a) * S[i] ^ b;
     }
@@ -161,7 +163,7 @@ pwrlaw_conn_stan_model = Stanmodel(
     model = pwrlaw_connectance,
     nchains = 4,
     num_warmup = 1000,
-    num_samples = 3000,
+    num_samples = 1000,
     name = "powerlaw_connectance"
 )
 
@@ -224,7 +226,7 @@ bb_model = Stanmodel(
     model = betabin_connectance,
     nchains = 2,
     num_warmup = 1000,
-    num_samples = 3000,
+    num_samples = 1000,
     name = "simple_betabin_p"
 )
 
@@ -238,13 +240,25 @@ summary(bb_chains_infdata)
 
 ##### write out posterior samples as csvs
 
-write_posterior(lssl_stan_chns, "data/posterior_distributions/lssl.csv")
+size(lssl_stan_chns)
 
-write_posterior(bb_chains, "data/beta_binomial_posterior.csv")
+lssl_array = Array(lssl_stan_chns)
+writedlm("data/posterior_distributions/lssl.csv", constant_connect_array, ',')
+
+
+constant_connect_array = Array(constant_connect_stan_chns)
+writedlm("data/posterior_distributions/const_posterior.csv", constant_connect_array, ',')
+
+size(constant_connect_array)
+
+
+
+write_posterior(constant_connect_stan_chns, "data/posterior_distributions/const_posterior.csv")
 
 write_posterior(pwrlaw_stan_chns, "data/pwrlaw_posterior.csv")
 
-write_posterior(const_stan_chns, "data/const_posterior.csv")
+write_posterior(bb_chains, "data/beta_binomial_posterior.csv")
+
 
 
 ## could be used to plot a "ribbon"
