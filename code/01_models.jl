@@ -53,17 +53,17 @@ generated quantities{
 
 data_dict = Dict("W" => length(d.id),
     "L" => d.links,
-    "S" => d.nodes)
+    "S" => d.nodes,
+    "cf" => 750)
 
 lssl_stan_model = Stanmodel(
     model =lssl,
     nchains = 4,
     num_warmup = 1000,
-    num_samples = 3000,
+    num_samples = 2000,
     name = "lssl"
 )
 _, lssl_stan_chns, _ = stan(lssl_stan_model, data_dict, summary = true);
-
 
 ### Constant connectance
 
@@ -238,6 +238,8 @@ summary(bb_chains_infdata)
 
 ##### write out posterior samples as csvs
 
+write_posterior(lssl_stan_chns, "data/posterior_distributions/lssl.csv")
+
 write_posterior(bb_chains, "data/beta_binomial_posterior.csv")
 
 write_posterior(pwrlaw_stan_chns, "data/pwrlaw_posterior.csv")
@@ -255,6 +257,24 @@ summary(const_stan_infdata)
 summary(pwrlaw_stan_infdata)
 summary(bb_chains_infdata)
 
+
+
+
+
+
+
+
+
+lssl_stan_infdata = foodweb_model_output(lssl_stan_chns)
+
+const_stan_infdata = foodweb_model_output(const_stan_chns)
+
+
+pwrlaw_stan_infdata = foodweb_model_output(pwrlaw_stan_chns)
+
+
+loo(lssl_stan_infdata)
+# 2940.68 +- 118.63
 ## calculate loo
 loo(const_stan_infdata) #2798 +- 104
 # 2940 +- 118 with a narrower prior
@@ -266,12 +286,3 @@ loo(bb_chains_infdata) # 2543 +- 46
 
 ### this should produce pointwise loo calculations but I don't know how to get the numbers out
 loo_pw = loo(pwrlaw_stan_infdata, pointwise = true)
-
-
-
-
-
-const_stan_infdata = foodweb_model_output(const_stan_chns)
-
-
-pwrlaw_stan_infdata = foodweb_model_output(pwrlaw_stan_chns)
