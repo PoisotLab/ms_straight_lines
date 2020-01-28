@@ -80,10 +80,10 @@ ms = (S .- 1) ./ (S .^2)
 p_median = median(bb_posterior[:p])
 phi_median = exp(median(bb_posterior[:theta]))
 
-# Beta distribution
-beta_dist = Beta(p_median .* phi_median, (1 .- p_median) .* phi_median)
+# Beta distribution -- median parameters
+beta_dist = Beta(p_median * phi_median, (1 - p_median) * phi_median)
 
-#here
+## scale the "expected" distribution according to the mimum value:
 bquant = LocationScale.(ms, 1 .- ms, beta_dist)
 
 # Quantiles to plot
@@ -102,7 +102,7 @@ beta500 = quantile.(bquant, 0.5)
 links = d[:links]
 species = d[:nodes]
 co_emp = links ./ (species .^2)
-
+S = 2:1:1000
 # Connectance vs species
 plot(S, range(beta015, stop=beta985, length=300), color=:lightgreen, fill=:lightgreen, label="") # 97% PI
 plot!(S, range(beta055, stop=beta945, length=300), color=:green, fill=:green, label="") # 89% PI
@@ -178,3 +178,27 @@ z = ((Lx - (Sx - 1)) - p * (Sx ^2 - (Sx - 1))) / (sqrt(p * (1 - p) * (Sx^2 - (Sx
 Lx - (Sx - 1)) / (Sx ^2 - (Sx - 1)
 minimum(bb_posterior[:p])
 ###### End of Tim's problem ######
+
+
+# Beta distribution
+beta_dist = Beta(p_median .* phi_median, (1 .- p_median) .* phi_median)
+
+BetaBinomial(100, p_median * phi_median, (1 - p_median) * phi_median)
+
+max = 24
+S =2:1:max# 2:1:1000
+BBin_S = BetaBinomial.((S.^2 .- S .+ 1), p_median * phi_median, (1 - p_median) * phi_median)
+
+# need to shift this by S-1 to be the right value
+
+# when the quantiles are calculated
+
+plot(S,quantile.(BBin_S, 1-0.1) .+ S .- 1, fill = quantile.(BBin_S, 0.1) .+ S .- 1,color=:lightgreen, label="")
+plot!(S,quantile.(BBin_S, 1-0.3) .+ S .- 1, fill = quantile.(BBin_S, 0.3) .+ S .- 1,color=:green, label="" )
+plot!(S,quantile.(BBin_S, 1-0.4) .+ S .- 1, fill = quantile.(BBin_S, 0.4) .+ S .- 1,color=:darkgreen, label="")
+ds = d[d.nodes .< max,:   ]
+scatter!(ds[:nodes], ds[:links], lab="")
+plot!(S,S.-1, lab="")
+plot!(S,S.^2, lab ="")
+xaxis!(:log, "Species richness", (2, 35))
+yaxis!(:log, "Number of links", (1, 200))
