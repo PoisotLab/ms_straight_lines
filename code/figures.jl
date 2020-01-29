@@ -73,7 +73,7 @@ function plot_links_quantile(model; title = "", xlabel = "", ylabel = "")
     plot!(cf_species, quant_500, linecolor=:black, linewidth=4, label="") # Median link number
     plot!(cf_species, min_links_log, linecolor=:black, label="") # Minimum number of links
     plot!(cf_species, max_links_log, linecolor=:black, label="") # Maximum number of links
-    scatter!(d[:nodes], log10.(d[:links]), color=:red, alpha=0.6, label="") # Empirical links
+    scatter!(d[:nodes], log10.(d[:links]), color=:yellow, alpha=0.6, markersize = 3, label="") # Empirical links
     xaxis!(:log, xlabel = xlabel)
     yaxis!(ylabel = ylabel)
 end
@@ -88,9 +88,6 @@ plot_betab = plot_links_quantile(betab_cf_links, title = "D",
 
 plot(plot_lssl, plot_const, plot_powerlaw, plot_betab, layout = (2,2))
 savefig(joinpath("figures", "fig_02_link_species_4models"))
-
-
-
 
 
 
@@ -119,7 +116,53 @@ yaxis!(:log, "Number of links (log)")
 ## add value of mean to text
 
 
-# Figure 3
+# Figure 3 - BetaBinomial predictions
+
+betab_mu_map = median(betab_posterior[:mu])
+betab_phi_map = exp(median(betab_posterior[:phi]))
+
+α = betab_mu_map*betab_phi_map
+β = (1.0-betab_mu_map)*betab_phi_map
+
+S = 3:750
+n = S.^2 .- (S .- 1)
+
+nb_draw = 5000
+betab_draw = zeros(Int64, (nb_draw, length(S)))
+
+# counterfactuals
+# (i+2) because S starts at 3 species
+for i in 1:nb_draw, (j,n) in enumerate(n)
+    betab_draw[i,j] = rand(BetaBinomial(n, α, β)) + (j+2) - 1
+end
+
+
+plot_links_quantile(betab_draw)
+savefig(joinpath("figures", "fig_03_link_species_betab"))
+
+# Normal approximation of Beta distribution
+normal_approx_mean = α / (α + β)
+normal_approx_sd = sqrt((α * β) / (((α + β)^2) * (α + β + 1)))
+
+normal_draw = zeros(Float64, (nb_draw, length(S)))
+for i in 1:nb_draw, (j,n) in enumerate(n)
+    normal_draw[i,j] = rand(Normal(normal_approx_mean, normal_approx_sd))
+end
+
+plot_links_quantile(normal_draw)
+
+
+
+
+
+
+
+
+
+
+
+
+
 function draw_posterior(row)
     α = row[:p]*row[:theta]
     β = (1.0-row[:p])*row[:theta]
@@ -151,6 +194,10 @@ end
 scatter(S, Q99)
 yaxis!(:log)
 xaxis!(:log)
+
+
+
+
 
 
 
