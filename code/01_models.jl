@@ -249,15 +249,6 @@ bb_df = DataFrame(bb_chains)
 CSV.write("data/posterior_distributions/beta_binomial_posterior.csv", bb_df, delim=',')
 
 
-
-write_posterior(constant_connect_stan_chns, "data/posterior_distributions/const_posterior.csv")
-
-write_posterior(pwrlaw_stan_chns, "data/pwrlaw_posterior.csv")
-
-write_posterior(bb_chains, "data/beta_binomial_posterior.csv")
-
-
-
 ## could be used to plot a "ribbon"
 bb_hpd = MCMCChains.hpd(bb_chains, alpha = 0.89)
 
