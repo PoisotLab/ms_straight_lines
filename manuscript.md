@@ -349,6 +349,16 @@ $p$ when the term in $S^{-2}$ in +@eq:co vanishes.
 
 ## We can derive a measure of departure from expected number of links
 
+The beta binomial can be approximated by a Normal distribution
+
+$$ L \sim Normal(\bar{L}, \sigma_L^2) $$
+
+$$ \bar{L} = (S^2 - S + 1) \mu + S - 1$$
+
+$$ \sigma_L^2 = (S^2 - S + 1) \mu (1 - \mu)(1 + S(S-1)\left(\frac{1}{\phi + 1}\right))$$
+
+
+
 Because $p$ is the probability of a number $n = S^2 - (S-1)$ of independent
 Bernoulli events, we can express the variance of the number of interactions in
 excess of $(S-1)$ as $n\times p\times (1-p)$. This means that given a network
