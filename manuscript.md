@@ -2,7 +2,7 @@
 
 Community ecologists are fascinated by counting things. It is therefore no
 surprise that early food web literature paid so much attention to counting
-species, counting trophic interactions, and computing the relationship of these
+species, counting trophic interactions, and computing the relationship between these
 quantities. It is clear to any observer of nature that of all imaginable trophic
 interactions in a community, only a fraction actually occur. This ratio is
 termed "connectance" and has become a fundamental quantity for nearly all
@@ -36,7 +36,7 @@ When making predictions is it often helpful to use generative models, which can
 create simulated data with the same properties as observations. Creating such a
 model involves two key components: a mathematical expression which represents
 the ecological process being studied, and a distribution which represents our
-observations of this process. Either of these components can capture our
+observations of this process. Both of these components can capture our
 ecological understanding of a system, including any constraints on the
 quantities studied. Here we suggest a new perspective for a model of $L$ as a
 function of $S$. In our model described below, our distribution of observations
@@ -82,7 +82,7 @@ This is called the  *constant connectance* model, because it implies a constant 
 This model was a first attempt to recongize the constraint discussed above: no species can have more than $S^2$ interactions.
 
 Finally, @BrosOstl04 note that these two
-models are instead parameterizations of the same general model, in which
+models are instead special cases of the same general model, in which
 
 $$\hat L_\text{reg} = b\times S^a\,, $${#eq:reg}
 
@@ -97,10 +97,9 @@ than $S-1$, and no higher than $S^2$. Another way of expressing this idea is
 that because we observe a food web with $S$ species, we are guaranteed to
 observed at least $S-1$ interactions. From a predictive standpoint, this means
 that we need to figure out how much of the remaining interactions, out of
-$S^2-(S-1)$, will be realized. Following @PoisCirt16, we suggest that each of
-these interactions are instances of independent Bernoulli trials with a set
-probability of success $p$, which much like $a$ and $b$ in +@eq:reg is assumed
-to be a constant across all food webs.
+$S^2-(S-1)$, will be realized. Below, we refer to this quantity as the number of "flexible" links in a food web.
+Following @PoisCirt16, we suggest that each flexible link represents an independent Bernoulli trial with a probability  $p$ of existing.
+We assume that $p$ is a constant for all links in the same ecological community.
 
 This means that the number of predicted links can be expressed as:
 
@@ -119,30 +118,40 @@ We begin by noting that equation [tk eq:L] implies that $\hat L$ has a binomial 
 
 
 $$
-[L | S, p] = { S^2 - (S - 1) \choose L - (S - 1)} p^{L-(S-1)}(1-p)^{S^2 - L} .
+[L | S, p] = { S^2 - (S - 1) \choose L - (S - 1)} p^{L-(S-1)}(1-p)^{S^2 - L} ,
 $$
+
+This is often termed a _shifted Binomial distribution_.
 
 <!-- should this be done with a different notation?? -->
 
 
-But then we also note that ecological communities are different in many ways besides their number of species ($S$). Therefore the proportion $p$ of flexible links which are realized will vary from one community to another.
-As a result, the links of a food web might follow a beta-binomial distribution:
+We also note that ecological communities are different in many ways besides their number of species ($S$). Although we assume $p$ to be fixed within one community, the precise value of $p$ will change from one community to another.
+With this assumption, our likelihood becomes a shifted beta-binomial distribution:
 
 $$
 [L|S,\mu, \phi] =  { S^2 - (S - 1) \choose L - (S - 1)} \frac{B(L - (S - 1) + \mu \phi, S^2 - L + (1 - \mu)\phi)}{B(\mu \phi, (1 - \mu)\phi)}
-$$
+$${#eq:shiftBB}
 
 
-Links are discrete, but the connectance of a food web is bounded by 0 and 1.
+Links are discrete, but the connectance of a food web is bounded by 0 and 1. However, the minimum bound on links similarly imposes a lower value on connectance.
+This means that the distribution for $Co$ will be a shifted Beta distribution.
+This can be derived directly from the beta distribution for $p$.
+We use the same $Beta(\mu \phi, (1-\mu) \phi)$ distribiton for $p$, but shift and rescale it according to equation Co = f(p)
 
-Equation [tk ; shifted p equantion for connectance]
+<!-- TK actually rearrange the discussion of equations to put this above here -->
+
+We can convert the distribution for p into one for $Co$ by replacing p with a transformation of $Co$ as described above, and rescaling by the new range:
 
 $$
 [Co | S, \mu, \phi] = \frac{\left(Co - m(S)\right)^{\mu \phi - 1}\left(1 - Co\right)^{(1 - \mu)\phi - 1} }{(1 - m(S))^{\phi - 1} \times B(\mu \phi, (1 - \mu)\phi)}
-$$
+$${#eq:shiftBeta}
 
-This distribution uses hyperparameters estimated from the beta-binomial model above.
-It again includes the constraint described above: species may
+This distribution can be parameterized using hyperparameters μ and ϕ estimated from the beta-binomial model above.
+Using a Beta-binomial likelihood preserves information about sample sizes and provides more accurate parameter estimates.
+
+
+## parameter estimation
 
 In both cases, we use a discrete
 probability distribution as the likelihood, with the number of observed links
