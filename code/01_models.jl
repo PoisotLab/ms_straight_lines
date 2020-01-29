@@ -191,7 +191,7 @@ transformed data{
 }
 parameters{
     real<lower=0,upper=1> mu;
-    real<lower=0> phi;
+    real phi;
 }
 model{
     phi ~ normal( 3,0.5 );

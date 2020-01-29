@@ -91,12 +91,28 @@ savefig(joinpath("figures", "fig_02b_link_species_const"))
 
 
 # First trial
-bb_posterior = CSV.read(joinpath("data", "posterior_distributions", "bb_posterior.csv"))
-@df bb_posterior density(:p)
+bb_posterior = CSV.read(joinpath("data", "posterior_distributions", "beta_binomial_posterior.csv"))
+
+density(bb_posterior[:mu])
 plot!(Beta(3,7))
 xaxis!((0.06, 0.13))
+
+bb_cf_links = bb_posterior[:,r"counterfactual"] # to change lssl_posterior[r"counterfactual_links"]
+
+bb_cf_dropone = bb_cf_links[:,2:750]
+
+bb_05 = quantile.(eachcol(bb_cf_dropone), 0.05)
+bb_95 = quantile.(eachcol(bb_cf_dropone), 0.95)
+
+plot(2:750, bb_95, fill = bb_05, color=:lightgreen, label="") # 97% PI
+scatter!(d[:nodes], d[:links], label="", color = :orange) # Empirical links
+xaxis!(:log, "Species richness")
+yaxis!(:log, "Number of links (log)")
+
+
 ## compare density of posterior to pencil trick
 ## add value of mean to text
+
 
 # Figure 3
 function draw_posterior(row)
