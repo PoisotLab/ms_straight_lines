@@ -1,5 +1,6 @@
 .Rproj.user
 *.Rproj
 tmp/
-.R
+*.R
 .DS_Store
+notes.md
