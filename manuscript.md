@@ -55,30 +55,33 @@ In this paper we will describe this new approach to modelling $L$, and show how
 it compares to previous models. We estimate parameters for this model using open
 data from the `mangal.io` networks database (+@fig:empirical). Finally, we show
 how this model for $L$ suggests a new and more useful way of predicting network
-structure. Finally, we discuss how generative models can be useful devices for
+structure and discuss how generative models can be useful tools for
 including our knowledge of a system into our predictions.
 
 ![Relationships in the mangal data](figures/relationships.png){#fig:empirical}
 
 ### Models of link number
 
-Several other models have been used to predict the number of links in a food
+Several models have been used to predict the number of links in a food
 web; all of these have modeled the number of links directly, usually after
-transformation. We fit several of these models, as well as our own, to compare
+transformation. We fit three of these models, as well as our own, and compare
 their predictive ability.
 
-@CoheBria84 hypothesized that all networks would have the same average degree,
-resulting in link-species scaling expressed as
+The link-species scaling (LSSL) model introduced by @CoheBria84 hypothesized that all networks have the same average degree. Links are modeled as the number of species times a constant:
 
 $$\hat L_\text{LSSL} = b\times S\,,$${#eq:lssl}
 
-where $S$ is the species richness, and $b \approx 2$. @Mart92 instead suggested
-that most networks should have constant connectance, expressed as $L/S^2$, and
-therefore one can predict the number of interactions as
+where $S$ is species richness, and $b \approx 2$.
+
+@Mart92 instead suggested that the number of links should be in proportion to the _square_ of species richness:
 
 $$\hat L_\text{CC} = b\times S^2\,,$${#eq:cc}
 
-where $b$ is a constant in $]0,1[$. Finally, @BrosOstl04 note that these two
+where $b$ is a constant in $]0,1[$.
+This is called the  *constant connectance* model, because it implies a constant ratio $L/S^2$ for all networks.
+This model was a first attempt to recongize the constraint discussed above: no species can have more than $S^2$ interactions.
+
+Finally, @BrosOstl04 note that these two
 models are instead parameterizations of the same general model, in which
 
 $$\hat L_\text{reg} = b\times S^a\,, $${#eq:reg}
