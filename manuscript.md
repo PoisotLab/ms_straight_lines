@@ -37,21 +37,22 @@ The number of links in a foodweb does not simply scale with the number of
 species: it also must obey constraints fixed by biology.
 These constraints determine both the maximum and minimum number of links in a web.
 As discussed, the maximum number of links is $S^2$; the minimum number, assuming at least some species are heterotrophs, is $S-1$.
-Numerous simple foodwebs could have
-this minimal number of links -- for example, a linear food chain wherein each trophic
+Numerous simple foodwebs could have this minimal number of links -- for example, a linear food chain wherein each trophic
 level consists of a single species, each of which consumes only the species
-below it. These constraints have not been used in previous attempts to model the
+below it.
+These constraints have not been used in previous attempts to model the
 relationship between $L$ and $S$. This makes prediction difficult, since models
-without this constraint can make unrealistic predictions of link number.
+without this constraint can make unrealistic predictions of $L$.
 
-When making predictions is it often helpful to use generative models, which can
-create simulated data with the same properties as observations. Creating such a
-model involves two key components: a mathematical expression which represents
+When making predictions is it often helpful to use generative models, which aim to
+create simulated data with the same properties as observations.
+Creating such a model involves two key components: a mathematical expression which represents
 the ecological process being studied, and a distribution which represents our
-observations of this process. Both of these components can capture our
-ecological understanding of a system, including any constraints on the
+observations of this process.
+Both of these components can capture our ecological understanding of a system, including any constraints on the
 quantities studied. Here we suggest a new perspective for a model of $L$ as a
-function of $S$. In our model described below, our distribution of observations
+function of $S$.
+In our model described below, our distribution of observations
 is a binomial distribution, which models the number of realized links
 ("successes") out of the total number possible ("trials"). This automatically
 includes the maximum constraint, since the number of species determines the
