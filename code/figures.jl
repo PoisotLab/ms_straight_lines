@@ -141,12 +141,12 @@ plot_links_quantile(betab_draw)
 savefig(joinpath("figures", "fig_03_link_species_betab"))
 
 # Normal approximation of Beta distribution
-normal_approx_mean = α / (α + β)
-normal_approx_sd = sqrt((α * β) / (((α + β)^2) * (α + β + 1)))
+normal_approx_mean = n .* α ./ (α .+ β)
+normal_approx_sd = sqrt.(((n .* α .* β) .* (α .+ β .+ n)) ./ (((α .+ β).^2) .* (α .+ β .+ 1)))
 
 normal_draw = zeros(Float64, (nb_draw, length(S)))
-for i in 1:nb_draw, (j,n) in enumerate(n)
-    normal_draw[i,j] = rand(Normal(normal_approx_mean, normal_approx_sd))
+for i in 1:nb_draw, j in 1:length(S)
+    normal_draw[i,j] = rand(Normal(normal_approx_mean[j], normal_approx_sd[j])) + (j+2) - 1
 end
 
 plot_links_quantile(normal_draw)
