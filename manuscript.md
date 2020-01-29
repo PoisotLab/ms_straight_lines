@@ -1,32 +1,44 @@
 # Introduction
 
 Community ecologists are fascinated by counting things. It is therefore no
-surprise that early food web literature paid so much attention to counting
-species, counting trophic interactions, and computing the relationship between these
-quantities. It is clear to any observer of nature that of all imaginable trophic
-interactions in a community, only a fraction actually occur. This ratio is
-termed "connectance" and has become a fundamental quantity for nearly all
-aspects of food web structure and dynamics [@PascDunn06]. More species always
+surprise that the early food web literature paid so much attention to counting
+species, counting trophic interactions, and computing the relationship between these numbers.
+More species always
 means more interactions; this scaling between species richness $S$ and number of
 interactions $L$ is universal and appears both in observed webs and under purely
-neutral models of food web structure [@CanaMouq12]. Various functional forms
-have been suggested as possible models for $L$; @BrosOstl04 suggested a power
-law, with $L = b\times S^a$. Power laws are very flexible, and indeed this
-function matches empirical data well.
+neutral models of food web structure [@CanaMouq12].
+In fact, these numbers underlie most <!-- all?? --> means of describing a food web.
+Accurately predicting both is essential when trying to model food web structure.
+Food web structure, in turn, is very important for understanding how ecological systems function, develop, and respond to changes.
 
-Historical efforts to predict link number have produced numerous candidate models, of which the power law is the most general.
-- Early predictions differ in whether this is a linear of exponential relationship
-- Has consequences for spatial scaling (Brose)
+Two specific quantities are emphasized by food web ecologists.
+The most straightforward is $L$, the number of trophic interactions among species.
+This quantity can be large, especially in species-rich habitats, but it cannot be arbitrarily large.
+It is clear to any observer of nature that of all imaginable trophic
+interactions, only a fraction actually occur.
+If an ecological community contains $S$ species, then the maximum number of links in its foodweb is $S^2$: a community of omnivorous cannibals.
+Ecologists have therefore often chosen to define a ratio, called "connectance": $Co = L/S^2$.
+Connectance has become a fundamental quantity for nearly all other measures of food web structure and dynamics [@PascDunn06].
+
+<!-- tk: explain all models in more detail. -->
+Because $L$ represents such a fundamental quantity, many predictive models have been considered over the years.
+The current favourite is a power-law relationship:  $L = b\times S^a$.
+Power laws are a popular means of describing scaling relationships in many parts of science and were first applied to food webs by @BrosOstl04.
+Power laws are very flexible, and indeed this
+function matches empirical data well.
+Prior to the introduction of the power law relationship, commont models
+Early predictions differ in whether this is a linear of exponential relationship
+These models all have clear shortcomings.
 While flexible, the power law relationship is limited because the parameters are difficult to reason about ecologically.
 This is in part because many mechanisms can produce power-law shaped relationships.
+One weakness which all models have in common is their very flexibility: they can produce predicted values of $L$ which are ecologically impossible.
 
 The number of links in a foodweb does not simply scale with the number of
-species: it also must obey constraints fixed by biology. These constraints
-determine both the maximum and minimum number of links in a web. The maximum
-number of links is $S^2$. In such a community, every species eats all others,
-including members of the same species. The minimum number, assuming at least
-some species are heterotrophs, is $S-1$. Numerous simple foodwebs could have
-this number of links -- for example, a linear food chain wherein each trophic
+species: it also must obey constraints fixed by biology.
+These constraints determine both the maximum and minimum number of links in a web.
+As discussed, the maximum number of links is $S^2$; the minimum number, assuming at least some species are heterotrophs, is $S-1$.
+Numerous simple foodwebs could have
+this minimal number of links -- for example, a linear food chain wherein each trophic
 level consists of a single species, each of which consumes only the species
 below it. These constraints have not been used in previous attempts to model the
 relationship between $L$ and $S$. This makes prediction difficult, since models
@@ -276,18 +288,6 @@ are reasonably small, this does not look like an unreasonable assumption.
 
 ## Distribution of connectance
 
-We have fit a Beta distribution to links in excess of the minimum. However,
-since the minimum connectance is a function of S (specifically $m(S) =
-\frac{S-1}{S^2}$), we can derive the distribution for connectances directly:
-
-$$ p_{Co} = (1 - m(S)) \times p + m(S)\, ,$$ {#eq:pco}
-$$ \phi_{Co} = \frac{\phi + m(S)}{1 - m(S)}\, .$$ {#eq:phico}
-
-The expression for $p_{Co}$ is identical to {#eq:co2} above. As S becomes large,
-$p_{Co}$ and $\phi_{Co}$ converge to $p$ and $\phi$ respectively. That is, for
-species-rich communities the minimal connectance becomes negligible, and the
-distribution of connectances is stationary, with a constant mean and variance.
-
 The distribution of connectances has several important uses. First, it can be
 used as an informative prior when constructing future food webs. Cirtwill et al.
 proposed using a Beta distribution for the probability of any specific edge in a
@@ -348,6 +348,16 @@ $p$ when the term in $S^{-2}$ in +@eq:co vanishes.
 
 
 ## We can derive a measure of departure from expected number of links
+
+The beta binomial can be approximated by a Normal distribution
+
+$$ L \sim Normal(\bar{L}, \sigma_L^2) $$
+
+$$ \bar{L} = (S^2 - S + 1) \mu + S - 1$$
+
+$$ \sigma_L^2 = (S^2 - S + 1) \mu (1 - \mu)(1 + S(S-1)\left(\frac{1}{\phi + 1}\right))$$
+
+
 
 Because $p$ is the probability of a number $n = S^2 - (S-1)$ of independent
 Bernoulli events, we can express the variance of the number of interactions in
