@@ -48,10 +48,11 @@ betab_posterior = CSV.read(joinpath("data", "posterior_distributions", "beta_bin
 betab_cf_links = betab_posterior[r"counterfactual_links"]
 betab_cf_links = betab_cf_links[:, min_species:max_species]
 
-
-log_zeros(quant) = quant > 0 ? log(quant) : 0
+log_zeros(quant) = quant > 0 ? log10(quant) : 0
 
 cf_species = min_species:max_species
+min_links_log = log10.(cf_species .- 1)
+max_links_log = log10.(cf_species .^2)
 
 # Function to plot the quantiles of the counterfactuals links of each model
 # we use log_zeros function to plot the y-axis in log (to account for log(0))
@@ -65,17 +66,17 @@ function plot_links_quantile(model; title = "", xlabel = "", ylabel = "")
 
     quant_500 = log_zeros.(quantile.(eachcol(model), 0.5))
 
-    plot(cf_species, quant_985, fill = quant_015, color=:lightgreen, label="",
-        title = title, xlabel = xlabel, ylabel = ylabel,
-        title_position = ":left") # 97% PI
-    plot!(cf_species, quant_945, fill = quant_055, color=:green, label="") # 89% PI
-    plot!(cf_species, quant_835, fill = quant_165, color=:darkgreen, label="") # 69% PI
+    plot(cf_species, quant_985, fill = quant_015, color="#C0C0C0", label="",
+        title = title, xlabel = xlabel, ylabel = ylabel) # 97% PI
+    plot!(cf_species, quant_945, fill = quant_055, color="#A0A0A0", label="") # 89% PI
+    plot!(cf_species, quant_835, fill = quant_165, color="#808080", label="") # 69% PI
     plot!(cf_species, quant_500, linecolor=:black, linewidth=4, label="") # Median link number
-    scatter!(d[:nodes], log.(d[:links]), label="") # Empirical links
+    plot!(cf_species, min_links_log, linecolor=:black, label="") # Minimum number of links
+    plot!(cf_species, max_links_log, linecolor=:black, label="") # Maximum number of links
+    scatter!(d[:nodes], log10.(d[:links]), color=:red, alpha=0.6, label="") # Empirical links
     xaxis!(:log, xlabel = xlabel)
     yaxis!(ylabel = ylabel)
 end
-
 
 plot_lssl = plot_links_quantile(lssl_cf_links, title = "A",
     ylabel = "Number of links")
@@ -86,9 +87,7 @@ plot_betab = plot_links_quantile(betab_cf_links, title = "D",
     xlabel = "Species richness")
 
 plot(plot_lssl, plot_const, plot_powerlaw, plot_betab, layout = (2,2))
-
-
-savefig(joinpath("figures", "fig_02a_link_species_lssl"))
+savefig(joinpath("figures", "fig_02_link_species_4models"))
 
 
 
