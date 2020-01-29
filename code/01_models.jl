@@ -194,7 +194,6 @@ parameters{
     real<lower=0> phi;
 }
 model{
-    vector[W] pbar;
     phi ~ normal( 3,0.5 );
     mu ~ beta( 3 , 7 );
     for (i in 1:W){
@@ -216,10 +215,10 @@ generated quantities{
 """
 
 
-data_dict_simpler = Dict(
+data_dict = Dict(
     "W" => length(d.id),
     "L" => d.links,
-    "S" => d.links,
+    "S" => d.nodes,
     "cf" => 750)
 
 bb_model = Stanmodel(
@@ -227,16 +226,11 @@ bb_model = Stanmodel(
     nchains = 2,
     num_warmup = 1000,
     num_samples = 1000,
-    name = "simple_betabin_p"
+    name = "betabin_connectance"
 )
 
 
-_, bb_chains , _ = stan(bb_model, data_dict_simpler, summary = true);
-
-bb_chains
-bb_chains_infdata = foodweb_model_output(bb_chains)
-
-summary(bb_chains_infdata)
+_, bb_chains , _ = stan(bb_model, data_dict, summary = true);
 
 ##### write out posterior samples as csvs
 
@@ -249,7 +243,11 @@ CSV.write("data/posterior_distributions/lssl.csv", lssl_df, delim=',')
 constant_connect_array = Array(constant_connect_stan_chns)
 writedlm("data/posterior_distributions/const_posterior.csv", constant_connect_array, ',')
 
-size(constant_connect_array)
+pwrlaw_df = DataFrame(pwrlaw_stan_chns)
+CSV.write("data/posterior_distributions/powerlaw_posterior.csv", pwrlaw_df, delim=',')
+
+bb_df = DataFrame(bb_chains)
+CSV.write("data/posterior_distributions/beta_binomial_posterior.csv", bb_df, delim=',')
 
 
 
@@ -277,12 +275,11 @@ summary(bb_chains_infdata)
 
 
 
-
+bb_chains_infdata = foodweb_model_output(bb_chains)
 
 lssl_stan_infdata = foodweb_model_output(lssl_stan_chns)
 
 const_stan_infdata = foodweb_model_output(const_stan_chns)
-
 
 pwrlaw_stan_infdata = foodweb_model_output(pwrlaw_stan_chns)
 
