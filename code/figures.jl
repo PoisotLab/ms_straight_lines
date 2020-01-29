@@ -24,70 +24,67 @@ yaxis!(:log, "Number of links", (1, 1000000))
 savefig(joinpath("figures", "fig_01_link_species"))
 
 
-# Figure 2
-
-# 2A - lssl links estimate
-lssl_posterior = CSV.read(joinpath("data", "posterior_distributions", "lssl.csv"))
-density(lssl_posterior[:a])
-plot!(Normal(mean(lssl_posterior[:a]), std(lssl_posterior[:a])))
-
-lssl_cf_links = lssl_posterior[r"counterfactual_links"]
+# Figure 2 - Links estimate
 min_species = 3
-max_species = size(lssl_cf_links)[2]
-lssl_cf_links = lssl_posterior[:, min_species:max_species]
+max_species = 750
+
+# Counterfactuals of lssl model
+lssl_posterior = CSV.read(joinpath("data", "posterior_distributions", "lssl.csv"))
+lssl_cf_links = lssl_posterior[r"counterfactual_links"]
+lssl_cf_links = lssl_cf_links[:, min_species:max_species]
+
+# Counterfactuals of const connectance model
+const_posterior = CSV.read(joinpath("data", "posterior_distributions", "const_posterior.csv"))
+const_cf_links = const_posterior[r"counterfactual_links"]
+const_cf_links = const_cf_links[:, min_species:max_species]
+
+# Counterfactuals of power law model
+powerlaw_posterior = CSV.read(joinpath("data", "posterior_distributions", "powerlaw_posterior.csv"))
+powerlaw_cf_links = powerlaw_posterior[r"counterfactual_links"]
+powerlaw_cf_links = powerlaw_cf_links[:, min_species:max_species]
+
+# Counterfactuals of beta binomial model
+betab_posterior = CSV.read(joinpath("data", "posterior_distributions", "beta_binomial_posterior.csv"))
+betab_cf_links = betab_posterior[r"counterfactual_links"]
+betab_cf_links = betab_cf_links[:, min_species:max_species]
+
 
 log_zeros(quant) = quant > 0 ? log(quant) : 0
 
-lssl_015 = log_zeros.(quantile.(eachcol(lssl_cf_links), 0.015))
-lssl_055 = log_zeros.(quantile.(eachcol(lssl_cf_links), 0.055))
-lssl_165 = log_zeros.(quantile.(eachcol(lssl_cf_links), 0.165))
-lssl_835 = log_zeros.(quantile.(eachcol(lssl_cf_links), 0.835))
-lssl_945 = log_zeros.(quantile.(eachcol(lssl_cf_links), 0.945))
-lssl_985 = log_zeros.(quantile.(eachcol(lssl_cf_links), 0.985))
-
-lssl_500 = log_zeros.(quantile.(eachcol(lssl_cf_links), 0.5))
-
 cf_species = min_species:max_species
-plot(cf_species, lssl_985, fill = lssl_015, color=:lightgreen, label="") # 97% PI
-plot!(cf_species, lssl_945, fill = lssl_055, color=:green, label="") # 89% PI
-plot!(cf_species, lssl_835, fill = lssl_165, color=:darkgreen, label="") # 69% PI
-plot!(cf_species, lssl_500, linecolor=:black, linewidth=4, label="") # Median link number
-scatter!(d[:nodes], log.(d[:links]), label="") # Empirical links
-xaxis!(:log, "Species richness")
-yaxis!("Number of links (log)")
+
+# Function to plot the quantiles of the counterfactuals links of each model
+# we use log_zeros function to plot the y-axis in log (to account for log(0))
+function plot_links_quantile(model)
+    quant_015 = log_zeros.(quantile.(eachcol(model), 0.015))
+    quant_055 = log_zeros.(quantile.(eachcol(model), 0.055))
+    quant_165 = log_zeros.(quantile.(eachcol(model), 0.165))
+    quant_835 = log_zeros.(quantile.(eachcol(model), 0.835))
+    quant_945 = log_zeros.(quantile.(eachcol(model), 0.945))
+    quant_985 = log_zeros.(quantile.(eachcol(model), 0.985))
+
+    quant_500 = log_zeros.(quantile.(eachcol(model), 0.5))
+
+    plot(cf_species, quant_985, fill = quant_015, color=:lightgreen, label="") # 97% PI
+    plot!(cf_species, quant_945, fill = quant_055, color=:green, label="") # 89% PI
+    plot!(cf_species, quant_835, fill = quant_165, color=:darkgreen, label="") # 69% PI
+    plot!(cf_species, quant_500, linecolor=:black, linewidth=4, label="") # Median link number
+    scatter!(d[:nodes], log.(d[:links]), label="") # Empirical links
+    xaxis!(:log, "Species richness")
+    yaxis!("Number of links (log)")
+end
+
+plot_links_quantile(lssl_cf_links)
+plot_links_quantile(const_cf_links)
+plot_links_quantile(powerlaw_cf_links)
+plot_links_quantile(betab_cf_links)
+
 savefig(joinpath("figures", "fig_02a_link_species_lssl"))
 
 
 
-# 2B - constant connectance links estimate
-const_posterior = CSV.read(joinpath("data", "posterior_distributions", "const_posterior.csv"))
-density(const_posterior[:a])
-plot!(Normal(mean(const_posterior[:a]), std(const_posterior[:a])))
 
-const_cf_links = const_posterior[2:751] # to change lssl_posterior[r"counterfactual_links"]
-max_species = size(const_cf_links)[2]
-min_species = 3
-const_cf_links = const_posterior[:, min_species:max_species]
 
-const_015 = log_zeros.(quantile.(eachcol(const_cf_links), 0.015))
-const_055 = log_zeros.(quantile.(eachcol(const_cf_links), 0.055))
-const_165 = log_zeros.(quantile.(eachcol(const_cf_links), 0.165))
-const_835 = log_zeros.(quantile.(eachcol(const_cf_links), 0.835))
-const_945 = log_zeros.(quantile.(eachcol(const_cf_links), 0.945))
-const_985 = log_zeros.(quantile.(eachcol(const_cf_links), 0.985))
-
-const_500 = log_zeros.(quantile.(eachcol(const_cf_links), 0.5))
-
-cf_species = min_species:max_species
-
-plot(cf_species, const_985, fill = const_015, color=:lightgreen, label="") # 97% PI
-plot!(cf_species, const_945, fill = const_055, color=:green, label="") # 89% PI
-plot!(cf_species, const_835, fill = const_165, color=:darkgreen, label="") # 69% PI
-plot!(cf_species, const_500, linecolor=:black, linewidth=4, label="") # Median link number
-scatter!(d[:nodes], log.(d[:links]), label="", color = :orange) # Empirical links
-xaxis!(:log, "Species richness")
-yaxis!("Number of links (log)")
-savefig(joinpath("figures", "fig_02b_link_species_const"))
 
 
 # First trial
