@@ -227,18 +227,10 @@ criteron (Table). Which suggests that it will make the best predictions. More
 importantly, only the Beta Binomial model makes predictions which respect the
 constraints set by ecological principles
 
-![constant connectance](figures/constant_connectance.png){#fig:constconn}
+![posterior_predictions](figures/fig_02_link_species_4models.png){#fig:PP_counterfactual}
 
-Constant connectance model makes many predictions which are only approximate.
-
-![power law](figures/powerlaw_connectance.png){#fig:pwrlaw}
-
-The power law model makes predictions which are closer to observed values, but
-they are frequently too low
-
-![beta bin](figures/beta_binomial_connectance.png){#fig:bbin}
-
-The beta binomial makes roughly the same predictions as the power law, but in
+Constant connectance model makes many predictions which are only approximate. The power law model makes predictions which are closer to observed values, but
+they are frequently too low. The beta binomial makes roughly the same predictions as the power law, but in
 this case they are held within biologically possible values.
 
 ## Connectance is constant (for large enough food webs)
