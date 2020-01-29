@@ -61,11 +61,12 @@ savefig(joinpath("figures", "fig_02a_link_species_lssl"))
 
 # 2B - constant connectance links estimate
 const_posterior = CSV.read(joinpath("data", "posterior_distributions", "const_posterior.csv"))
-density(const_posterior[:1]) # to change (column a)
-plot!(Normal(mean(const_posterior[:1]), std(const_posterior[:1])))
+density(const_posterior[:a])
+plot!(Normal(mean(const_posterior[:a]), std(const_posterior[:a])))
 
 const_cf_links = const_posterior[2:751] # to change lssl_posterior[r"counterfactual_links"]
 max_species = size(const_cf_links)[2]
+min_species = 3
 const_cf_links = const_posterior[:, min_species:max_species]
 
 const_015 = log_zeros.(quantile.(eachcol(const_cf_links), 0.015))
@@ -83,13 +84,10 @@ plot(cf_species, const_985, fill = const_015, color=:lightgreen, label="") # 97%
 plot!(cf_species, const_945, fill = const_055, color=:green, label="") # 89% PI
 plot!(cf_species, const_835, fill = const_165, color=:darkgreen, label="") # 69% PI
 plot!(cf_species, const_500, linecolor=:black, linewidth=4, label="") # Median link number
-scatter!(d[:nodes], log.(d[:links]), label="") # Empirical links
+scatter!(d[:nodes], log.(d[:links]), label="", color = :orange) # Empirical links
 xaxis!(:log, "Species richness")
 yaxis!("Number of links (log)")
 savefig(joinpath("figures", "fig_02b_link_species_const"))
-
-
-
 
 
 # First trial

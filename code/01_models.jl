@@ -76,15 +76,15 @@ data{
     int cf;
 }
 parameters{
-    real a;
+    real<lower=0,upper=1> a;
     real phi;
 }
 model{
     vector[W] mu;
     phi ~ normal( 2 , 1 );
-    a ~ normal( 0.7 , 0.02 );
+    a ~ beta( 3 , 7 );
     for ( i in 1:W ) {
-        mu[i] = exp(a) * S[i]^2;
+        mu[i] = a * S[i]^2;
     }
     L ~ neg_binomial_2( mu , exp(phi) );
 }
@@ -94,12 +94,12 @@ generated quantities{
     vector[W] y_hat;
     vector[cf] counterfactual_links;
     for ( i in 1:W ) {
-        mu[i] = exp(a) * S[i];
+        mu[i] = a * S[i];
         log_lik[i] = neg_binomial_2_lpmf( L[i] | mu[i] , exp(phi) );
         y_hat[i] = neg_binomial_2_rng(mu[i], exp(phi));
     }
     for (j in 1:cf){
-     counterfactual_links[j] = neg_binomial_2_rng(exp(a) * j^2, exp(phi));
+     counterfactual_links[j] = neg_binomial_2_rng(a * j^2, exp(phi));
     }
 }
 """
@@ -171,7 +171,7 @@ _, pwrlaw_stan_chns, _ = stan(pwrlaw_conn_stan_model, data_dict, summary = false
 
 
 ### beta-binomial connectance
-
+# TODO should phi be > 0 ??? doesn't that mean that exp(phi) has to be fairly large? I mean it is but that is weird maybe
 const betabin_connectance = """
 data{
     int W;
@@ -239,9 +239,8 @@ size(lssl_stan_chns)
 lssl_df = DataFrame(lssl_stan_chns)
 CSV.write("data/posterior_distributions/lssl.csv", lssl_df, delim=',')
 
-
-constant_connect_array = Array(constant_connect_stan_chns)
-writedlm("data/posterior_distributions/const_posterior.csv", constant_connect_array, ',')
+constant_connect_array = DataFrame(constant_connect_stan_chns)
+CSV.write("data/posterior_distributions/const_posterior.csv", constant_connect_array, delim=',')
 
 pwrlaw_df = DataFrame(pwrlaw_stan_chns)
 CSV.write("data/posterior_distributions/powerlaw_posterior.csv", pwrlaw_df, delim=',')
@@ -272,8 +271,7 @@ summary(bb_chains_infdata)
 
 
 
-
-
+###  calculation of LOO
 
 bb_chains_infdata = foodweb_model_output(bb_chains)
 
