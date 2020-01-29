@@ -288,18 +288,6 @@ are reasonably small, this does not look like an unreasonable assumption.
 
 ## Distribution of connectance
 
-We have fit a Beta distribution to links in excess of the minimum. However,
-since the minimum connectance is a function of S (specifically $m(S) =
-\frac{S-1}{S^2}$), we can derive the distribution for connectances directly:
-
-$$ p_{Co} = (1 - m(S)) \times p + m(S)\, ,$$ {#eq:pco}
-$$ \phi_{Co} = \frac{\phi + m(S)}{1 - m(S)}\, .$$ {#eq:phico}
-
-The expression for $p_{Co}$ is identical to {#eq:co2} above. As S becomes large,
-$p_{Co}$ and $\phi_{Co}$ converge to $p$ and $\phi$ respectively. That is, for
-species-rich communities the minimal connectance becomes negligible, and the
-distribution of connectances is stationary, with a constant mean and variance.
-
 The distribution of connectances has several important uses. First, it can be
 used as an informative prior when constructing future food webs. Cirtwill et al.
 proposed using a Beta distribution for the probability of any specific edge in a
