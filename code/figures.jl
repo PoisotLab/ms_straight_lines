@@ -7,6 +7,7 @@ using Distributions
 using Statistics
 using StatsBase
 
+
 # get the data and filter for predation only
 d = CSV.read(joinpath("data", "network_data.dat"))
 d = d[d.predation .> 0 , :]
@@ -99,8 +100,6 @@ density(bb_posterior[:mu])
 plot!(Beta(3,7))
 xaxis!((0.06, 0.13))
 
-bb_cf_links = bb_posterior[:,r"counterfactual"] # to change lssl_posterior[r"counterfactual_links"]
-
 bb_cf_dropone = bb_cf_links[:,2:750]
 
 bb_05 = quantile.(eachcol(bb_cf_dropone), 0.05)
@@ -127,7 +126,6 @@ betab_phi_map = exp(median(betab_posterior[:phi]))
 S = 3:750
 n = S.^2 .- (S .- 1)
 
-nb_draw = 5000
 betab_draw = zeros(Int64, (nb_draw, length(S)))
 
 # counterfactuals
@@ -140,19 +138,9 @@ end
 plot_links_quantile(betab_draw)
 savefig(joinpath("figures", "fig_03_link_species_betab"))
 
-# Normal approximation of Beta distribution
-normal_approx_mean = n .* α ./ (α .+ β)
-normal_approx_sd = sqrt.(((n .* α .* β) .* (α .+ β .+ n)) ./ (((α .+ β).^2) .* (α .+ β .+ 1)))
 
-normal_draw = zeros(Float64, (nb_draw, length(S)))
-for i in 1:nb_draw, j in 1:length(S)
-    normal_draw[i,j] = rand(Normal(normal_approx_mean[j], normal_approx_sd[j])) + (j+2) - 1
-end
 
-plot_links_quantile(normal_draw)
-savefig(joinpath("figures", "fig_03b_link_species_betab_normal"))
-
-# andrew's attempt
+# Normal approximation of BetaBinomial
 
 means = n .* betab_mu_map .+ S .- 1
 vars = n .* betab_mu_map .* (1 .- betab_mu_map) .* (1 .+ S .* (S .- 1) .* (1 / (1 + betab_phi_map)))
@@ -163,29 +151,25 @@ approx_89 = quantile.(approxs, 0.89)
 approx_11 = quantile.(approxs, 0.11)
 
 plot(S, approx_89, fill = approx_11,label = "", colour = :grey)
-
 scatter!(d[:nodes], d[:links], label="", color = :orange) # Empirical links
 xaxis!(:log, "Species richness")
 yaxis!(:log, "Number of links (log)")
-
-
-
-# Normal approximation of BetaBinomial
-normal_approx_mean = (S.^2 .- S .+1) .* betab_mu_map .+ S .- 1
-normal_approx_sd = sqrt.((S.^2 .- S .+ 1) .* betab_mu_map .* (1 .- betab_mu_map) .* (1 .+ S .* (S .- 1) .* (1 ./ (betab_phi_map .+ 1))))
-
-normal_draw = zeros(Float64, (nb_draw, length(S)))
-for i in 1:nb_draw, j in 1:length(S)
-    normal_draw[i,j] = rand(Normal(normal_approx_mean[j], normal_approx_sd[j]))
-end
-
-plot_links_quantile(normal_draw)
 savefig(joinpath("figures", "fig_03b_link_species_betab_normal"))
 
 
 
 
 
+# Tim's question
+Sx = 11367
+Lx = 7062647
+
+means = (Sx^2 - Sx + 1) * betab_mu_map + Sx - 1
+sds = sqrt((Sx^2 - Sx + 1) * betab_mu_map * (1 - betab_mu_map) * (1 + Sx* (Sx - 1)) / (1 + betab_phi_map))
+
+
+zscore(7062647, [means, sds])
+(Lx - means) / sds
 
 
 
@@ -327,23 +311,6 @@ xaxis!(:log, "Species richness")
 yaxis!("k")
 savefig(joinpath("figures", "fig_04b_k_species"))
 
-
-
-
-
-
-
-
-
-
-###### Tim's problem ######
-Sx = 11367
-Lx = 7062647
-p = median(bb_posterior[:p])
-z = ((Lx - (Sx - 1)) - p * (Sx ^2 - (Sx - 1))) / (sqrt(p * (1 - p) * (Sx^2 - (Sx -1))))
-Lx - (Sx - 1)) / (Sx ^2 - (Sx - 1)
-minimum(bb_posterior[:p])
-###### End of Tim's problem ######
 
 
 # Beta distribution
