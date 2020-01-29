@@ -152,6 +152,21 @@ end
 plot_links_quantile(normal_draw)
 savefig(joinpath("figures", "fig_03b_link_species_betab_normal"))
 
+# andrew's attempt
+
+means = n .* betab_mu_map .+ S .- 1
+vars = n .* betab_mu_map .* (1 .- betab_mu_map) .* (1 .+ S .* (S .- 1) .* (1 / (1 + betab_phi_map)))
+
+approxs = Normal.(means, sqrt.(vars))
+
+approx_89 = quantile.(approxs, 0.89)
+approx_11 = quantile.(approxs, 0.11)
+
+plot(S, approx_89, fill = approx_11,label = "", colour = :grey)
+
+scatter!(d[:nodes], d[:links], label="", color = :orange) # Empirical links
+xaxis!(:log, "Species richness")
+yaxis!(:log, "Number of links (log)")
 
 
 
