@@ -150,6 +150,21 @@ for i in 1:nb_draw, j in 1:length(S)
 end
 
 plot_links_quantile(normal_draw)
+savefig(joinpath("figures", "fig_03b_link_species_betab_normal"))
+
+
+
+
+normal_approx_mean = (S.^2 .- S .+1) .* betab_mu_map .+ S .- 1
+normal_approx_sd = sqrt.((S.^2 .- S .+ 1) .* betab_mu_map .* (1 .- betab_mu_map) .* (1 .+ S .* (S .- 1) .* (1 ./ (betab_phi_map .+ 1))))
+
+normal_draw = zeros(Float64, (nb_draw, length(S)))
+for i in 1:nb_draw, j in 1:length(S)
+    normal_draw[i,j] = rand(Normal(normal_approx_mean[j], normal_approx_sd[j])) 
+end
+
+plot_links_quantile(normal_draw)
+savefig(joinpath("figures", "fig_03b_link_species_betab_normal"))
 
 
 
