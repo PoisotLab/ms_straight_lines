@@ -55,7 +55,7 @@ cf_species = min_species:max_species
 
 # Function to plot the quantiles of the counterfactuals links of each model
 # we use log_zeros function to plot the y-axis in log (to account for log(0))
-function plot_links_quantile(model)
+function plot_links_quantile(model; title = "", xlabel = "", ylabel = "")
     quant_015 = log_zeros.(quantile.(eachcol(model), 0.015))
     quant_055 = log_zeros.(quantile.(eachcol(model), 0.055))
     quant_165 = log_zeros.(quantile.(eachcol(model), 0.165))
@@ -65,19 +65,28 @@ function plot_links_quantile(model)
 
     quant_500 = log_zeros.(quantile.(eachcol(model), 0.5))
 
-    plot(cf_species, quant_985, fill = quant_015, color=:lightgreen, label="") # 97% PI
+    plot(cf_species, quant_985, fill = quant_015, color=:lightgreen, label="",
+        title = title, xlabel = xlabel, ylabel = ylabel,
+        title_position = ":left") # 97% PI
     plot!(cf_species, quant_945, fill = quant_055, color=:green, label="") # 89% PI
     plot!(cf_species, quant_835, fill = quant_165, color=:darkgreen, label="") # 69% PI
     plot!(cf_species, quant_500, linecolor=:black, linewidth=4, label="") # Median link number
     scatter!(d[:nodes], log.(d[:links]), label="") # Empirical links
-    xaxis!(:log, "Species richness")
-    yaxis!("Number of links (log)")
+    xaxis!(:log, xlabel = xlabel)
+    yaxis!(ylabel = ylabel)
 end
 
-plot_links_quantile(lssl_cf_links)
-plot_links_quantile(const_cf_links)
-plot_links_quantile(powerlaw_cf_links)
-plot_links_quantile(betab_cf_links)
+
+plot_lssl = plot_links_quantile(lssl_cf_links, title = "A",
+    ylabel = "Number of links")
+plot_const = plot_links_quantile(const_cf_links, title = "B")
+plot_powerlaw = plot_links_quantile(powerlaw_cf_links, title = "C",
+    xlabel = "Species richness", ylabel = "Number of links")
+plot_betab = plot_links_quantile(betab_cf_links, title = "D",
+    xlabel = "Species richness")
+
+plot(plot_lssl, plot_const, plot_powerlaw, plot_betab, layout = (2,2))
+
 
 savefig(joinpath("figures", "fig_02a_link_species_lssl"))
 
