@@ -1,5 +1,5 @@
 import Pkg; Pkg.activate(".")
-import CSV
+using CSV
 using CmdStan
 using ArviZ
 using DelimitedFiles
@@ -243,7 +243,7 @@ summary(bb_chains_infdata)
 size(lssl_stan_chns)
 
 lssl_df = DataFrame(lssl_stan_chns)
-CSV.write("data/posterior_distributions/lssl.csv", lssl_df, ',')
+CSV.write("data/posterior_distributions/lssl.csv", lssl_df, delim=',')
 
 
 constant_connect_array = Array(constant_connect_stan_chns)
