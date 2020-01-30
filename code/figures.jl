@@ -219,13 +219,13 @@ xaxis!(:log)
 # Figure 4
 
 # 4A - connectance - species
-
+S = 1:200
 # Minimum number of species
 ms = (S .- 1) ./ (S .^2)
 
 # Median p and phi (for beta distribution)
-p_median = median(bb_posterior[:p])
-phi_median = exp(median(bb_posterior[:theta]))
+p_median = median(bb_posterior[:mu])
+phi_median = exp(median(bb_posterior[:phi]))
 
 # Beta distribution -- median parameters
 beta_dist = Beta(p_median * phi_median, (1 - p_median) * phi_median)
@@ -262,10 +262,41 @@ yaxis!("Connectance")
 savefig(joinpath("figures", "fig_04a_connectance_species"))
 
 
+# L / S distribution of average degree
+
+S = 1.5:.1:800
+
+ms = (S .- 1) ./ (S)
+## scale the "expected" distribution according to the mimum value:
+bquant_LS = LocationScale.(ms, S .- ms, beta_dist)
+beta015_LS = quantile.(bquant_LS, 0.015)
+beta985_LS = quantile.(bquant_LS, 0.985)
+beta11_LS = quantile.(bquant_LS, 0.11)
+beta89_LS = quantile.(bquant_LS, 0.89)
+
+plot(S, beta985_LS, fill = beta015_LS, lab = "")
+plot!(S, beta11_LS, fill = beta89_LS, colour = :lightblue, lab = "")
+xaxis!(:log, "Species richness")
+yaxis!(:log, "Average degree, L/S")
+## add real points
+scatter!(d.nodes, d.links ./ d.nodes, colour = :grey, lab = "")
+
+
+plot!(S, S, lab="")
+plot!(S, (S .- 1)./S, lab="")
+
+savefig(joinpath("figures", "L_S_distribution"))
+
+
+#histogram(d.links ./ d.nodes, lab = "")
+
+minimum(d.links ./ d.nodes)
+
 ## 4B - Extent to which the relationship gets closer to a power law (k)
 
 # Values of k function of s and posterior p
 k_predict = zeros(Float64, (length(S), size(bb_posterior)[1]))
+
 
 for (i,s) in enumerate(S), (j,p) in enumerate(bb_posterior[:p])
     k_predict[i, j] = ((1 - p) * s + (p - 1)) / (p * s^2)
