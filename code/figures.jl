@@ -44,7 +44,7 @@ phi_random = exp.(betab_posterior[index, :phi])
 
 betab_random = Beta.(mu_random .* phi_random, (1 .- mu_random) .* phi_random)
 
-density(d.pex, c=:lightgrey, ls=:dash, fill=(:lightgrey, 0), frame=:semi, dpi=300, size=(400,400), lab="Empirical data")
+density(d.pex, c=:lightgrey, fill=(:lightgrey, 0), frame=:semi, dpi=300, size=(400,400), lab="Empirical data")
 density!(rand(p, 100_000), c=:black, ls=:dash, linewidth=2, lab="Fit")
 plot!(betab_random[1], c=:darkgreen, linewidth=0.5, alpha=0.4, lab="Posterior")
 for i in 1:length(index)
