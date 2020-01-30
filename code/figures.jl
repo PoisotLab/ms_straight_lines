@@ -25,6 +25,39 @@ yaxis!(:log, "Number of links", (1, 1000000))
 savefig(joinpath("figures", "fig_01_link_species"))
 
 
+## Figure 1 - Beta fit
+
+d.exr = d.links .- (d.nodes .- 1)
+d.exp = d.nodes.^2 .- (d.nodes .- 1)
+d.pex = d.exr ./ d.exp
+
+p = fit(Beta, d.pex)
+
+betab_posterior = CSV.read(joinpath("data", "posterior_distributions", "beta_binomial_posterior.csv"))
+
+using Random
+Random.seed!(1234)
+index = rand(1:size(betab_posterior,2), 20)
+mu_random = betab_posterior[index, :mu]
+phi_random = exp.(betab_posterior[index, :phi])
+
+
+betab_random = Beta.(mu_random .* phi_random, (1 .- mu_random) .* phi_random)
+
+density(d.pex, c=:lightgrey, ls=:dash, fill=(:lightgrey, 0), frame=:semi, dpi=300, size=(400,400), lab="Empirical data")
+density!(rand(p, 100_000), c=:black, ls=:dash, linewidth=2, lab="Fit")
+plot!(betab_random[1], c=:darkgreen, linewidth=0.5, alpha=0.4, lab="Posterior")
+for i in 1:length(index)
+    plot!(betab_random[i], c=:darkgreen, linewidth=0.5, alpha=0.2, lab="")
+end
+xaxis!((0, 0.5), "p")
+yaxis!((0, 9), "Density")
+savefig(joinpath("figures", "penciltrick"))
+
+
+
+
+
 # Figure 2 - Links estimate
 min_species = 3
 max_species = 750
@@ -165,10 +198,8 @@ Sx = 11367
 Lx = 7062647
 
 means = (Sx^2 - Sx + 1) * betab_mu_map + Sx - 1
-sds = sqrt((Sx^2 - Sx + 1) * betab_mu_map * (1 - betab_mu_map) * (1 + Sx* (Sx - 1)) / (1 + betab_phi_map))
+sds = sqrt((Sx^2 - Sx + 1) * betab_mu_map * (1 - betab_mu_map) * (1 + Sx* (Sx - 1) / (1 + betab_phi_map)))
 
-
-zscore(7062647, [means, sds])
 (Lx - means) / sds
 
 
