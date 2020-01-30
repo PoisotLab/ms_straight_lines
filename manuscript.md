@@ -1,49 +1,62 @@
 # Introduction
 
 Community ecologists are fascinated by counting things. It is therefore no
-surprise that early food web literature paid so much attention to counting
-species, counting trophic interactions, and computing the relationship of these
-quantities. It is clear to any observer of nature that of all imaginable trophic
-interactions in a community, only a fraction actually occur. This ratio is
-termed "connectance" and has become a fundamental quantity for nearly all
-aspects of food web structure and dynamics [@PascDunn06]. More species always
+surprise that the early food web literature paid so much attention to counting
+species, counting trophic interactions, and computing the relationship between these numbers.
+More species always
 means more interactions; this scaling between species richness $S$ and number of
 interactions $L$ is universal and appears both in observed webs and under purely
-neutral models of food web structure [@CanaMouq12]. Various functional forms
-have been suggested as possible models for $L$; @BrosOstl04 suggested a power
-law, with $L = b\times S^a$. Power laws are very flexible, and indeed this
-function matches empirical data well.
+neutral models of food web structure [@CanaMouq12].
+In fact, these numbers underlie most <!-- all?? --> means of describing a food web.
+Accurately predicting both is essential when trying to model food web structure.
+Food web structure, in turn, is very important for understanding how ecological systems function, develop, and respond to changes.
 
-Historical efforts to predict link number have produced numerous candidate models, of which the power law is the most general.
-- Early predictions differ in whether this is a linear of exponential relationship
-- Has consequences for spatial scaling (Brose)
+Two specific quantities are emphasized by food web ecologists.
+The most straightforward is $L$, the number of trophic interactions among species.
+This quantity can be large, especially in species-rich habitats, but it cannot be arbitrarily large.
+It is clear to any observer of nature that of all imaginable trophic
+interactions, only a fraction actually occur.
+If an ecological community contains $S$ species, then the maximum number of links in its foodweb is $S^2$: a community of omnivorous cannibals.
+Ecologists have therefore often chosen to define a ratio, called "connectance": $Co = L/S^2$.
+Connectance has become a fundamental quantity for nearly all other measures of food web structure and dynamics [@PascDunn06].
+
+<!-- tk: explain all models in more detail. -->
+Because $L$ represents such a fundamental quantity, many predictive models have been considered over the years.
+The current favourite is a power-law relationship:  $L = b\times S^a$.
+Power laws are a popular means of describing scaling relationships in many parts of science and were first applied to food webs by @BrosOstl04.
+Prior to the introduction of the power law relationship, common models included assuming that $L$ was in constant proportion to either $S$ or $S^2$.
+Power laws are very flexible, and indeed this
+function matches empirical data well -- so well that it is often treated as a "true" model which captures the scaling of link number with species richness.
+<!-- tk: too strong? -->
+These models all have clear shortcomings.
 While flexible, the power law relationship is limited because the parameters are difficult to reason about ecologically.
 This is in part because many mechanisms can produce power-law shaped relationships.
+One weakness which all models have in common is their very flexibility: they can produce predicted values of $L$ which are ecologically impossible.
 
 The number of links in a foodweb does not simply scale with the number of
-species: it also must obey constraints fixed by biology. These constraints
-determine both the maximum and minimum number of links in a web. The maximum
-number of links is $S^2$. In such a community, every species eats all others,
-including members of the same species. The minimum number, assuming at least
-some species are heterotrophs, is $S-1$. Numerous simple foodwebs could have
-this number of links -- for example, a linear food chain wherein each trophic
+species: it also must obey constraints fixed by biology.
+These constraints determine both the maximum and minimum number of links in a web.
+As discussed, the maximum number of links is $S^2$; the minimum number, assuming at least some species are heterotrophs, is $S-1$.
+Numerous simple foodwebs could have this minimal number of links -- for example, a linear food chain wherein each trophic
 level consists of a single species, each of which consumes only the species
-below it. These constraints have not been used in previous attempts to model the
+below it.
+These constraints have not been used in previous attempts to model the
 relationship between $L$ and $S$. This makes prediction difficult, since models
-without this constraint can make unrealistic predictions of link number.
+without this constraint can make unrealistic predictions of $L$.
 
-When making predictions is it often helpful to use generative models, which can
-create simulated data with the same properties as observations. Creating such a
-model involves two key components: a mathematical expression which represents
-the ecological process being studied, and a distribution which represents our
-observations of this process. Either of these components can capture our
-ecological understanding of a system, including any constraints on the
+Generative models are flexible and powerful tools for understanding and predicting natural phenomena.
+These models aim to
+create simulated data with the same properties as observations.
+Creating such a model involves two key components: a mathematical expression which represents
+the ecological process being studied, and a distribution which represents our observations of this process.
+Both of these components can capture our ecological understanding of a system, including any constraints on the
 quantities studied. Here we suggest a new perspective for a model of $L$ as a
-function of $S$. In our model described below, our distribution of observations
-is a binomial distribution, which models the number of realized links
-("successes") out of the total number possible ("trials"). This automatically
+function of $S$.
+In our model described below, our distribution of observations
+is a shifted beta-binomial distribution, which models the number of links which actually exist out of the total number possible.
+This automatically
 includes the maximum constraint, since the number of species determines the
-number of trials. We include the minimum constraint by modelling not the total
+number of possible links. We include the minimum constraint by modelling not the total
 number of links, but the number in excess of the minimum, which we term
 "flexible" links. Our process model is extremely simple: it is a single
 parameter, a constant which gives the proportion of these flexible links which
@@ -51,41 +64,44 @@ are realized. Because food webs vary in the precise value of this proportion, we
 model it with a beta distribution, which allows some variation around the
 average value. The resulting model is therefore beta-binomial.
 
+<!-- tk: rather than merging with previous, I like this as a means of giving a summary of the whole paper. -->
 In this paper we will describe this new approach to modelling $L$, and show how
 it compares to previous models. We estimate parameters for this model using open
 data from the `mangal.io` networks database (+@fig:empirical). Finally, we show
 how this model for $L$ suggests a new and more useful way of predicting network
-structure. Finally, we discuss how generative models can be useful devices for
-including our knowledge of a system into our predictions.
-
-![Relationships in the mangal data](figures/relationships.png){#fig:empirical}
+structure and discuss how generative models can be useful tools for including our knowledge of a system into our predictions.
 
 ### Models of link number
 
-Several other models have been used to predict the number of links in a food
-web; all of these have modeled the number of links directly, usually after
-transformation. We fit several of these models, as well as our own, to compare
-their predictive ability.
+Several models have been used to predict the number of links in a food
+web; all of these have modeled the number of links directly, usually after a log transformation of $L$ and $S$.
+We fit three of these models, as well as our proposed shifted Beta-binomial, and compare their predictive ability.
 
-@CoheBria84 hypothesized that all networks would have the same average degree,
-resulting in link-species scaling expressed as
+The link-species scaling (LSSL) model introduced by @CoheBria84 hypothesized that all networks have the same average degree. Links are modeled as the number of species times a constant:
 
 $$\hat L_\text{LSSL} = b\times S\,,$${#eq:lssl}
 
-where $S$ is the species richness, and $b \approx 2$. @Mart92 instead suggested
-that most networks should have constant connectance, expressed as $L/S^2$, and
-therefore one can predict the number of interactions as
+where $S$ is species richness, and $b \approx 2$.
+
+@Mart92 instead suggested that the number of links should be in proportion to the _square_ of species richness:
 
 $$\hat L_\text{CC} = b\times S^2\,,$${#eq:cc}
 
-where $b$ is a constant in $]0,1[$. Finally, @BrosOstl04 note that these two
-models are instead parameterizations of the same general model, in which
+where $b$ is a constant in $]0,1[$.
+This is called the  *constant connectance* model, because it implies a constant ratio $L/S^2$ for all networks.
+This model was a first attempt to recongize the constraint discussed above: no species can have more than $S^2$ interactions.
+
+Finally, @BrosOstl04 note that these two
+models are instead special cases of the same general model, in which
 
 $$\hat L_\text{reg} = b\times S^a\,, $${#eq:reg}
 
 where $a$ and $b$ are constants. When the number of links and number of
 interactions are transformed by their natural log, $a$ and $b$ can be estimated
 with a linear regression, as done by @Mart92.
+Here, because we want to compare all our models WAIC, we were required to use a discrete likelihood in all cases.
+We fit the three models above with a negative binomial distribution for observations.
+This distribution is limited to positive integers, and can vary on both sides of the mean relationship; this gives it a similar spirit to previous work which used a normal distribution on log-transformed variables.
 
 Although all of these models fit the data well enough, they neglect a
 fundamental piece of ecological knowledge about food webs: as identified by
@@ -94,10 +110,9 @@ than $S-1$, and no higher than $S^2$. Another way of expressing this idea is
 that because we observe a food web with $S$ species, we are guaranteed to
 observed at least $S-1$ interactions. From a predictive standpoint, this means
 that we need to figure out how much of the remaining interactions, out of
-$S^2-(S-1)$, will be realized. Following @PoisCirt16, we suggest that each of
-these interactions are instances of independent Bernoulli trials with a set
-probability of success $p$, which much like $a$ and $b$ in +@eq:reg is assumed
-to be a constant across all food webs.
+$S^2-(S-1)$, will be realized. Below, we refer to this quantity as the number of "flexible" links in a food web.
+Following @PoisCirt16, we suggest that each flexible link represents an independent Bernoulli trial with a probability  $p$ of existing.
+We assume that $p$ is a constant for all links in the same ecological community.
 
 This means that the number of predicted links can be expressed as:
 
@@ -105,15 +120,79 @@ $$
  \hat L = p\times\left[S^2-(S-1)\right]+(S-1)\,.
 $${#eq:lhat}
 
+
+Because we have an expression for the number of interactions (+@eq:L), we can also get an expression for the expected connectance, which is
+
+$$
+  \frac{\hat L}{S^2} = p\frac{S^2}{S^2} + (1-p)\frac{S}{S^2}+(p-1)\frac{1}{S^2} \,.
+$$
+
+This results in the connectance being expressed as
+
+$$ \frac{\hat L}{S^2} = (p-1)\times S^{-2} + (1-p)\times S^{-1} + p \, ,$${#eq:co}
+
+or equivalently as
+
+
+$$ \frac{\hat L}{S^2} = p + (1-p)\times m(s) \, ,$${#eq:co2}
+
+where $m(s) = \frac{S - 1}{S^{2}}$ is the minimal connectance of a food web.
+
+Note that the expression of connectance is no longer a polynomial; at large
+values of $S$, the value of $m(s)$ (equivalently the terms in $S^{-1}$ and
+$S^{-2}$) will tend towards 0, and so the connectance will converge towards $p$.
+Therefore, for large enough ecological networks, we should expect a connectance
+which is independent of $S$. Thus $p$ has an interesting ecological
+interpretation: it represents the average connectance of networks large enough
+that the proportion $\frac{(S-1)}{S^{2}}$ is negligible.
+
+<!-- tk: move this 2nd order polynomail down to where it actually features in an argument
+
 This can be re-expressed as a second order polynomial:
 
-$$\hat L = p\times S^2 + (1-p)\times S + (p-1)\,. $${#eq:L}
+$$\hat L = p\times S^2 + (1-p)\times S + (p-1)\,. $${#eq:L} -->
 
 # Fitting the model
 
-We have rephrased the question of connectance in food webs as the proportion of
-links realized above the minimum. There are several ways of writing down this
-model; we compare two possibilities below. In both cases, we use a discrete
+We begin by noting that equation [tk eq:L] implies that $\hat L$ has a binomial distribution, with $S^2 - S + 1$ trials and a probability $p$ of any flexible link being realized:
+
+$$
+[L | S, p] = { S^2 - (S - 1) \choose L - (S - 1)} p^{L-(S-1)}(1-p)^{S^2 - L} ,
+$$
+
+This is often termed a _shifted Binomial distribution_.
+
+<!-- should this be done with a different notation?? -->
+
+
+We also note that ecological communities are different in many ways besides their number of species ($S$). Although we assume $p$ to be fixed within one community, the precise value of $p$ will change from one community to another.
+With this assumption, our likelihood becomes a shifted beta-binomial distribution:
+
+$$
+[L|S,\mu, \phi] =  { S^2 - (S - 1) \choose L - (S - 1)} \frac{B(L - (S - 1) + \mu \phi, S^2 - L + (1 - \mu)\phi)}{B(\mu \phi, (1 - \mu)\phi)}
+$${#eq:shiftBB}
+
+
+Links are discrete, but the connectance of a food web is bounded by 0 and 1. However, the minimum bound on links similarly imposes a lower value on connectance.
+This means that the distribution for $Co$ will be a shifted Beta distribution.
+This can be derived directly from the beta distribution for $p$.
+We use the same $Beta(\mu \phi, (1-\mu) \phi)$ distribiton for $p$, but shift and rescale it according to equation Co = f(p)
+
+<!-- TK actually rearrange the discussion of equations to put this above here -->
+
+We can convert the distribution for p into one for $Co$ by replacing p with a transformation of $Co$ as described above, and rescaling by the new range:
+
+$$
+[Co | S, \mu, \phi] = \frac{\left(Co - m(S)\right)^{\mu \phi - 1}\left(1 - Co\right)^{(1 - \mu)\phi - 1} }{(1 - m(S))^{\phi - 1} \times B(\mu \phi, (1 - \mu)\phi)}
+$${#eq:shiftBeta}
+
+This distribution can be parameterized using hyperparameters μ and ϕ estimated from the beta-binomial model above.
+Using a Beta-binomial likelihood preserves information about sample sizes and provides more accurate parameter estimates.
+
+
+## Parameter estimation
+
+In both cases, we use a discrete
 probability distribution as the likelihood, with the number of observed links
 $L_i$ above the minimum as 'successes' and the number of possible links as
 'trials'. Each model tries to capture variation in link number greater than
@@ -122,6 +201,8 @@ would be predicted by $p$ alone.
 Our first model uses the Beta-Binomial distribution for observations of $L$;
 this distribution can be parameterized in terms of its mean $\mu_p$ and
 concentration parameter, $\phi$ :
+
+<!-- tk a better notation here; possibly imitating H&H's style?? -->
 
 $$\begin{aligned}
 L_i & \sim \text{BetaBinomial}(\left[S_i^2-(S_i-1)\right], p \times \phi, (1 - p) \times \phi)\\
@@ -137,9 +218,15 @@ information is available to inform a prior on $\phi$, we followed the advice of
 (tk Simpson et al), and performed prior predictive checks. We chose prior
 parameters that generated a wide range of values for $L_i$, but which did not
 frequently predict webs of either maximum or minimum connectance, neither of
-which are observed in nature. The prior we use here can be thought of as
-beginning with a uniform prior and observing only one interaction among nine
-species.
+which are observed in nature.
+
+### Data used to fit all models
+
+<!-- tk describe Mangal and its awesomeness in more wholeness -->
+We evaluated our model against 255 empirical foodwebs, available in the online database `mangal.io`
+
+![Relationships in the mangal data](figures/relationships.png){#fig:empirical}
+
 
 We use Stan [**tk references**] which implements Bayesian inference using
 Hamiltonian Monte Carlo. We ran all models using four chains and 2000 iterations
@@ -186,47 +273,15 @@ criteron (Table). Which suggests that it will make the best predictions. More
 importantly, only the Beta Binomial model makes predictions which respect the
 constraints set by ecological principles
 
-![constant connectance](figures/constant_connectance.png){#fig:constconn}
+![posterior_predictions](figures/fig_02_link_species_4models.png){#fig:PP_counterfactual}
 
-Constant connectance model makes many predictions which are only approximate.
-
-![power law](figures/powerlaw_connectance.png){#fig:pwrlaw}
-
-The power law model makes predictions which are closer to observed values, but
-they are frequently too low
-
-![beta bin](figures/beta_binomial_connectance.png){#fig:bbin}
-
-The beta binomial makes roughly the same predictions as the power law, but in
+Constant connectance model makes many predictions which are only approximate. The power law model makes predictions which are closer to observed values, but
+they are frequently too low. The beta binomial makes roughly the same predictions as the power law, but in
 this case they are held within biologically possible values.
 
-## Connectance is constant (for large enough food webs)
+## Average degree is constant (for large enough food webs)
 
-Because we have an expression for the number of interactions (+@eq:L), we can
-get an expression for the expected connectance, which is
-
-$$
-  \frac{\hat L}{S^2} = p\frac{S^2}{S^2} + (1-p)\frac{S}{S^2}+(p-1)\frac{1}{S^2} \,.
-$$
-
-This results in the connectance being expressed as
-
-$$ \frac{\hat L}{S^2} = (p-1)\times S^{-2} + (1-p)\times S^{-1} + p \, ,$${#eq:co}
-
-or equivalently as
-
-
-$$ \frac{\hat L}{S^2} = p + (1-p)\times m(s) \, ,$${#eq:co2}
-
-where $m(s) = \frac{S - 1}{S^{2}}$ is the minimal connectance of a food web.
-
-Note that the expression of connectance is no longer a polynomial; at large
-values of $S$, the value of $m(s)$ (equivalently the terms in $S^{-1}$ and
-$S^{-2}$) will tend towards 0, and so the connectance will converge towards $p$.
-Therefore, for large enough ecological networks, we should expect a connectance
-which is independent of $S$. Thus $p$ has an interesting ecological
-interpretation: it represents the average connectance of networks large enough
-that the proportion $\frac{(S-1)}{S^{2}}$ is negligible.
+<!-- tk I don't know what to do with "average degree" -- I like the arguments here, and I like this interpretation of how adding p^-1 species increases average degree, but we have not been talking about this at all yet. -->
 
 Interestingly, this model still results in an expected average degree ($\hat
 L/S$, the *linkage density*) for a large number of species that scales with $S$:
@@ -243,46 +298,20 @@ are reasonably small, this does not look like an unreasonable assumption.
 
 ## Distribution of connectance
 
-We have fit a Beta distribution to links in excess of the minimum. However,
-since the minimum connectance is a function of S (specifically $m(S) =
-\frac{S-1}{S^2}$), we can derive the distribution for connectances directly:
-
-$$ p_{Co} = (1 - m(S)) \times p + m(S)\, ,$$ {#eq:pco}
-$$ \phi_{Co} = \frac{\phi + m(S)}{1 - m(S)}\, .$$ {#eq:phico}
-
-The expression for $p_{Co}$ is identical to {#eq:co2} above. As S becomes large,
-$p_{Co}$ and $\phi_{Co}$ converge to $p$ and $\phi$ respectively. That is, for
-species-rich communities the minimal connectance becomes negligible, and the
-distribution of connectances is stationary, with a constant mean and variance.
-
-The distribution of connectances has several important uses. First, it can be
-used as an informative prior when constructing future food webs. Cirtwill et al.
-proposed using a Beta distribution for the probability of any specific edge in a
-food web. The prior defined above may be used in this way. Note that if
-multiplied by $S^2$, the above expression is equal to {#eq:L}, the expected
-number of links in a food web [@PoisCirt16].
-
-In addition to use as a prior, the distribution of connectances can also be used
+The distribution of connectances can also be used
 to test whether networks are more or less connected than expected by chance.
 Using parameters $p$ and $\phi$, and adjusting for the observed number of
 species $S$, a food web ecologist may read the p-value associated with their
-observed connectance directly from a Beta distribution. Equivalently, one may
+observed connectance directly from a Beta distribution.
+
+Similarly, one may
 instead choose to describe the distribution of links, rather than connectances.
 In our model, the distribution of links is beta-binomial, with hyperparameters
-$p_{Co}$ and $\phi_{Co}$. By the deMoivre-Laplace theorem, a binomial
-distribution may be approximated with a normal distribution. This allows us to
-convert an observed number of links directly into a z-score, without resorting
-to null distributions derived from samples
+$\mu$ and $\phi$.
 
-Finally, a regularized value of connectance can be obtained for every site,
-directly from the parameters estimated in #eq:betab:
+<!-- tk regularized estimates for L for a food web of size S?? why should anyone care -->
 
-$$ \widetilde{Co_i} = \frac{L_i + \phi p}{S^2 + \phi}\, , $$
-
-This partially pools the observed connectance towards the population average,
-$p$. The strength of this pooling is controlled by $\phi$. This could be useful
-when estimating the connectance for very small webs, and as another means to
-measure the "departure" of a community from an expectation.
+<!-- tk can a shifted beta distribution even BE used as a conjugate prior? how? maybe let's not think about this here -->
 
 ## Only very-large food webs obey a power law
 
@@ -316,13 +345,19 @@ $p$ when the term in $S^{-2}$ in +@eq:co vanishes.
 
 ## We can derive a measure of departure from expected number of links
 
-Because $p$ is the probability of a number $n = S^2 - (S-1)$ of independent
-Bernoulli events, we can express the variance of the number of interactions in
-excess of $(S-1)$ as $n\times p\times (1-p)$. This means that given a network
-with observed species richness $S$ and observed links $L$, we can calculate its
+The beta binomial can be approximated by a Normal distribution
+
+$$ L \sim Normal(\bar{L}, \sigma_L^2) $$
+
+$$ \bar{L} = (S^2 - S + 1) \mu + S - 1$$
+
+$$ \sigma_L^2 = (S^2 - S + 1) \mu (1 - \mu)(1 + S(S-1)\left(\frac{1}{\phi + 1}\right))$$
+
+This means that given a network
+with observed species richness $S_{obs}$ and observed links $L_{obs}$, we can calculate its
 $z$-score as
 
-$$z = \frac{(L -(S-1)) - p\times \left[S^2-(S-1)\right]}{\sqrt{p\times (1-p)\times \left[S^2-(S-1)\right]}} \,.$${#eq:z}
+$$z = \frac{L_{obs} - \bar{L}}{\sqrt{\sigma_L^2}} \,.$${#eq:z}
 
 A network where $L = \hat L$ will have a $z$-score of 0, and any network with
 more (fewer) interactions will have a positive (negative) $z$-score. This has
