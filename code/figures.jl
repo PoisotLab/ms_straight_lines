@@ -255,8 +255,8 @@ S = 3:750
 ms = (S .- 1) ./ (S .^2)
 
 # Median p and phi (for beta distribution)
-p_median = median(bb_posterior[:mu])
-phi_median = exp(median(bb_posterior[:phi]))
+p_median = median(betab_posterior[:mu])
+phi_median = exp(median(betab_posterior[:phi]))
 
 # Beta distribution -- median parameters
 beta_dist = Beta(p_median * phi_median, (1 - p_median) * phi_median)
@@ -267,11 +267,8 @@ bquant = LocationScale.(ms, 1 .- ms, beta_dist)
 # Quantiles to plot
 beta015 = quantile.(bquant, 0.015)
 beta985 = quantile.(bquant, 0.985)
-beta945 = quantile.(bquant, 0.945)
-
-beta055 = quantile.(bquant, 0.055)
-beta165 = quantile.(bquant, 0.165)
-beta835 = quantile.(bquant, 0.835)
+beta11 = quantile.(bquant, 0.110)
+beta89 = quantile.(bquant, 0.890)
 
 beta500 = quantile.(bquant, 0.5)
 
@@ -280,44 +277,40 @@ beta500 = quantile.(bquant, 0.5)
 links = d[:links]
 species = d[:nodes]
 co_emp = links ./ (species .^2)
-S = 2:1:1000
 
 # Connectance vs species
-plot(S, range(beta015, stop=beta985, length=300), color=:"#C0C0C0", label="") # 97% PI
-plot!(S, range(beta055, stop=beta945, length=300), color=:"#A0A0A0", fill=:green, label="") # 89% PI
-plot!(S, range(beta165, stop=beta835, length=300), color=:"#808080", fill=:darkgreen, label="") # 67% PI
-plot!(S, beta500, linecolor=:black, linewidth=4, label="") # Median connectance
-scatter!(species, co_emp, alpha=0.8, color=:orange, label="") # Empirical connectance
-plot!(S, ms, linecolor=:black, label="") # Minimum connectance
+plotA = plot(S, range(beta015, stop=beta985, length=1000), color=:"#03a1fc",  fill=:"#03a1fc", label="") # 97% PI
+plot!(S, range(beta11, stop=beta89, length=1000), color=:lightblue, fill=:lightblue, label="") # 89% PI
+plot!(S, beta500, linecolor=:black, linewidth=2, label="") # Median connectance
+scatter!(species, co_emp, color=:grey, label="") # Empirical connectance
+plot!(S, ms, label="", linecolor=:black) # Minimum connectance
 xaxis!(:log, "Species richness")
 yaxis!("Connectance")
-savefig(joinpath("figures", "fig_04a_connectance_species"))
 
 
-# L / S distribution of average degree
-
-S = 1.5:.1:800
+# 4B L/ S distribution of average degree
 
 ms = (S .- 1) ./ (S)
+
 ## scale the "expected" distribution according to the mimum value:
 bquant_LS = LocationScale.(ms, S .- ms, beta_dist)
 beta015_LS = quantile.(bquant_LS, 0.015)
 beta985_LS = quantile.(bquant_LS, 0.985)
 beta11_LS = quantile.(bquant_LS, 0.11)
 beta89_LS = quantile.(bquant_LS, 0.89)
+beta50_LS = quantile.(bquant_LS, 0.50)
 
-plot(S, beta985_LS, fill = beta015_LS, lab = "")
+
+plotB = plot(S, beta985_LS, fill = beta015_LS, color="#03a1fc", lab = "")
 plot!(S, beta11_LS, fill = beta89_LS, colour = :lightblue, lab = "")
+plot!(S, beta50_LS, linecolor=:black, linewidth=2, lab = "")
 xaxis!(:log, "Species richness")
 yaxis!(:log, "Average degree, L/S")
 ## add real points
 scatter!(d.nodes, d.links ./ d.nodes, colour = :grey, lab = "")
 
-
-plot!(S, S, lab="")
-plot!(S, (S .- 1)./S, lab="")
-
-savefig(joinpath("figures", "L_S_distribution"))
+plot!(S, (S .- 1)./S, linecolor=:black, lab="")
+plot!(S, S, linecolor=:black, lab="")
 
 
 #histogram(d.links ./ d.nodes, lab = "")
@@ -325,11 +318,9 @@ savefig(joinpath("figures", "L_S_distribution"))
 minimum(d.links ./ d.nodes)
 
 
-## 4B - Extent to which the relationship gets closer to a power law (k)
+## 4C - Extent to which the relationship gets closer to a power law (k)
 
 # Values of k function of s and posterior p
-
-S = 3:1:750
 
 mu = median(betab_posterior[:mu])
 phi =median(exp.(betab_posterior[:phi]))
@@ -369,13 +360,18 @@ end
 # 89% percentile interval: quantiles 0.055 and 0.945
 # 97% percentile interval: quantiles 0.015 and 0.985
 
-plot(S, get_quantile(0.015), fill=get_quantile(0.985), color=:"#C0C0C0", label="") # 97% PI
-plot!(S, get_quantile(0.055), fill=get_quantile(0.945), color="#A0A0A0", label="") # 89% PI
-plot!(S, get_quantile(0.165), fill=get_quantile(0.835), color="#808080", label="") # 67% PI
-plot!(S, mean(k_predict, dims = 2), linecolor = :black, linewidth=4, lab = "")
+plotC = plot(S, get_quantile(0.015), fill=get_quantile(0.985), color=:"#03a1fc", label="") # 97% PI
+plot!(S, get_quantile(0.11), fill=get_quantile(0.89), color=:lightblue, label="") # 89% PI
+plot!(S, get_quantile(0.5), linecolor=:black, linewidth=2, lab = "")
 xaxis!(:log, "Species richness")
 yaxis!("k")
-savefig(joinpath("figures", "fig_04b_k_species"))
+
+
+
+plot(plotA, plotB, plotC, layout = (3,1))
+savefig(joinpath("figures", "fig_04_linkdens_connect_k"))
+
+
 
 
 

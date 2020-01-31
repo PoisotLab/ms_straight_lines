@@ -309,6 +309,9 @@ instead choose to describe the distribution of links, rather than connectances.
 In our model, the distribution of links is beta-binomial, with hyperparameters
 $\mu$ and $\phi$.
 
+
+
+
 <!-- tk regularized estimates for L for a food web of size S?? why should anyone care -->
 
 <!-- tk can a shifted beta distribution even BE used as a conjugate prior? how? maybe let's not think about this here -->
@@ -340,8 +343,7 @@ world" or "scale free" regimes when they exceed a certain connectance; this is
 because for small networks, connectance is higher, and only decreases towards
 $p$ when the term in $S^{-2}$ in +@eq:co vanishes.
 
-![Power law relationship](figures/fig_04b_k_species.png){#fig:powerlawk}
-
+![Distribution of connectance, link density and k](figures/fig_04_linkdens_connect_k.png){#fig:connect_linkdens_k}
 
 ## We can derive a measure of departure from expected number of links
 
