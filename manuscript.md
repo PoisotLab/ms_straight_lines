@@ -351,6 +351,9 @@ probed for deviation from the random distribution of some measure of interest
 (**ref Bascompte, Flores**), and most of these measures are in turn related to
 connectance **ref P&G**. We argue that the use of a $z$-score could also help identify significantly under (over) sampled networks and estimate their number of missing (extra) links. (_example for oceanic network?_).
 
+### la pertinance du l'estimation des réseaux
+
+
 ## Conclusions
 
 <!-- moving this to end because I don't really know where it fits in the narrative -->
