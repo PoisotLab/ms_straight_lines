@@ -127,9 +127,8 @@ This can be re-expressed as a second order polynomial:
 
 $$\hat L = p\times S^2 + (1-p)\times S + (p-1)\,. $${#eq:L} -->
 
-# Results
 
-We begin by noting that equation [tk eq:L] implies that $\hat L$ has a binomial distribution, with $S^2 - S + 1$ trials and a probability $p$ of any flexible link being realized:
+Equation [tk eq:L] implies that $\hat L$ has a binomial distribution, with $S^2 - S + 1$ trials and a probability $p$ of any flexible link being realized:
 
 $$
 [L | S, p] = { S^2 - (S - 1) \choose L - (S - 1)} p^{L-(S-1)}(1-p)^{S^2 - L} ,
@@ -184,16 +183,16 @@ We use Stan [**tk references**] which implements Bayesian inference using
 Hamiltonian Monte Carlo. We ran all models using four chains and 2000 iterations
 per chain. All models converged with no divergent iterations.
 
-## estimating hyperparameters
+## Maximum likelihood estimate of μ and ϕ
 
 While the full posterior distribution can be sampled using various bayesian
 machinery, this is not necessary for obtaining point estimates of $p$
 and $\phi$. A maximum likelihood estimate of each can be calculated by
 rearranging equation {#eq:lhat} and fitting a Beta distribution to the result:
 
-![Beta fit](figures/penciltrick.png){#fig:penciltrick}
+![Maximum likelihood estimate of μ and ϕ](figures/penciltrick.png){#fig:penciltrick}
 
-# Discussion
+# Results
 
 Our beta-binomial model outperforms previous solutions to the problem of
 modelling $L$.
@@ -224,6 +223,19 @@ they are frequently too low. The beta binomial makes roughly the same prediction
 this case they are held within biologically possible values.
 
 ![Connectance and average degree can be derived from a model for links](figures/fig_04_linkdens_connect_k.png){#fig:beta_distributions}
+
+### Parameter estimates for all models
+
+| model                | parameter | interpretation                        | value | SD  |
+|----------------------|-----------|---------------------------------------|-------|-----|
+| Link-species scaling | $a$       | number of links per species           | 2.2     | 0.047  |
+| Constant connectance | $a$       | proportion of maximum links realized  | 0.12     | 0.0041  |
+| Power law            | $a$       | no unique meaning                 | 0.37    | 0.054  |
+|                      | $b$       | no unique meaning                 | 1.7   | 0.043 |
+| Shifted BetaBinomial | $\mu$     | proportion of flexible links realized | 0.086 | 0.0037    |
+|                      | $\phi$    | concentration around value of $\mu$   | 24.3  |  0.0040   |
+
+# Discussion
 
 ### Connectance and average degree can be derived from a model for links
 
