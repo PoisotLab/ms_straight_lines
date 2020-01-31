@@ -22,6 +22,15 @@ lssl_posterior = CSV.read(joinpath("data", "posterior_distributions", "lssl.csv"
 const_posterior = CSV.read(joinpath("data", "posterior_distributions", "const_posterior.csv"))
 powerlaw_posterior = CSV.read(joinpath("data", "posterior_distributions", "powerlaw_posterior.csv"))
 
+
+# number of species
+S = 3:750
+mms = S.-1 # min links
+Ms = S.^2 # max links
+ms = mms ./ Ms  # min connectance
+msl = (S .- 1) ./ (S) # min link density
+total_flex = S .^ 2 .-S .+1
+
 # map estimates
 mu_map = median(betab_posterior[:mu])
 phi_map = exp(median(betab_posterior[:phi]))
@@ -30,15 +39,7 @@ phi_map = exp(median(betab_posterior[:phi]))
 β = (1.0-mu_map)*phi_map
 
 beta_map = Beta(α, β)
-
-# number of species
-S = 3:750
-mms = S.-1 # min links
-Ms = S.^2 # max links
-ms = mms ./ Ms  # min connectance
-msl = (S .- 1) ./ (S) # min link density
-
-
+betabin_map = BetaBinomial.(total_flex, α, β)
 
 
 # counterfactuals
@@ -58,6 +59,7 @@ powerlaw_cf_links = powerlaw_cf_links[:, S]
 
 # Figure 1 -- Beta fit with posterior samples
 
+# generate posterior draws of the Beta distribution
 Random.seed!(1234)
 index = rand(1:size(betab_posterior,2), 20) # 20 posterior samples
 mu_rdm = betab_posterior[index, :mu]
@@ -122,9 +124,13 @@ savefig(joinpath("figures", "models_links"))
 
 # 3A BetaBinomial predictions from map values
 
-beta_89 = quantile.(beta_map, 0.89) .* (Ms .- mms) .+ S .- 1
-beta_11 = quantile.(beta_map, 0.11) .* (Ms .- mms) .+ S .- 1
-beta_50 = quantile.(beta_map, 0.5) .* (Ms .- mms) .+ S .- 1
+rand(betabin_map[50], 4)
+
+bb_rand = rand.(betabin_map, 5000)
+
+beta_89 = quantile.(bb_rand, 0.89) .+ S .- 1
+beta_11 = quantile.(bb_rand, 0.11) .+ S .- 1
+beta_50 = quantile.(bb_rand, 0.5)  .+ S .- 1
 
 links_beta_map = plot(S, beta_89, fill=beta_11,label="", colour=:grey)
 plot!(S, beta_50, color=:black, label="", linewidth=2)
