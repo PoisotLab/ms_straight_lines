@@ -323,13 +323,21 @@ savefig(joinpath("figures", "L_S_distribution"))
 
 minimum(d.links ./ d.nodes)
 
+
 ## 4B - Extent to which the relationship gets closer to a power law (k)
 
 # Values of k function of s and posterior p
-k_predict = zeros(Float64, (length(S), size(bb_posterior)[1]))
 
+S = 3:1:750
 
-for (i,s) in enumerate(S), (j,p) in enumerate(bb_posterior[:p])
+mu = median(betab_posterior[:mu])
+phi =median(exp.(betab_posterior[:phi]))
+beta_p = Beta(mu * phi, (1 - mu) * phi)
+
+k_predict = zeros(Float64, (length(S), 10000))
+
+for (i,s) in enumerate(S), j in 1:size(k_predict, 2)
+    p = rand(beta_p)
     k_predict[i, j] = ((1 - p) * s + (p - 1)) / (p * s^2)
 end
 
@@ -354,24 +362,21 @@ function get_quantile(q)
     return(k_quant)
 end
 
-# Empirical k (to be removed)
-links = d[:links]
-species = d[:nodes]
-p_emp = (links .- (species .- 1 )) ./ (species .^2 .- (species .- 1))
-k_emp = ((1 .- p_emp) .* species .+ (p_emp .- 1)) ./ (p_emp .* species .^2)
 
 # k - species plot with quantiles:
 # 67% percentile interval: quantiles 0.165 and 0.835
 # 89% percentile interval: quantiles 0.055 and 0.945
 # 97% percentile interval: quantiles 0.015 and 0.985
 
-plot(S, range(get_quantile(0.015), stop=get_quantile(0.985), length=300), color=:lightgreen, fill=:lightgreen, label="") # 97% PI
-plot!(S, range(get_quantile(0.055), stop=get_quantile(0.945), length=300), color=:green, fill=:green, label="") # 89% PI
-plot!(S, range(get_quantile(0.165), stop=get_quantile(0.835), length=300), color=:darkgreen, fill=:darkgreen, label="") # 67% PI
-plot!(S, mean(k_predict, dims = 2), linecolor = :black, lab = "Mean")
+plot(S, get_quantile(0.015), fill=get_quantile(0.985), color=:"#C0C0C0", label="") # 97% PI
+plot!(S, get_quantile(0.055), fill=get_quantile(0.945), color="#A0A0A0", label="") # 89% PI
+plot!(S, get_quantile(0.165), fill=get_quantile(0.835), color="#808080", label="") # 67% PI
+plot!(S, mean(k_predict, dims = 2), linecolor = :black, linewidth=4, lab = "")
 xaxis!(:log, "Species richness")
 yaxis!("k")
 savefig(joinpath("figures", "fig_04b_k_species"))
+
+
 
 
 
