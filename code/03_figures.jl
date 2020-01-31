@@ -6,6 +6,8 @@ import CSV
 using Distributions
 using Statistics
 using StatsBase
+using Random
+
 
 
 # get the data and filter for predation only
@@ -15,82 +17,64 @@ d = d[d.predation .> 0 , :]
 # posterior samples for beta binomial model
 betab_posterior = CSV.read(joinpath("data", "posterior_distributions", "beta_binomial_posterior.csv"))
 
+# posterior samples from previous models
+lssl_posterior = CSV.read(joinpath("data", "posterior_distributions", "lssl.csv"))
+const_posterior = CSV.read(joinpath("data", "posterior_distributions", "const_posterior.csv"))
+powerlaw_posterior = CSV.read(joinpath("data", "posterior_distributions", "powerlaw_posterior.csv"))
+
+# map estimates
+mu_map = median(betab_posterior[:mu])
+phi_map = exp(median(betab_posterior[:phi]))
+
+α = mu_map*phi_map
+β = (1.0-mu_map)*phi_map
+
+# number of species
+S = 3:750
+ms = S.-1 # min links
+Ms = S.^2 # max links
+
+# counterfactuals
+betab_cf_links = betab_posterior[r"counterfactual_links"]
+betab_cf_links = betab_cf_links[:, S]
+
+lssl_cf_links = lssl_posterior[r"counterfactual_links"]
+lssl_cf_links = lssl_cf_links[:, S]
+
+const_cf_links = const_posterior[r"counterfactual_links"]
+const_cf_links = const_cf_links[:, S]
+
+powerlaw_cf_links = powerlaw_posterior[r"counterfactual_links"]
+powerlaw_cf_links = powerlaw_cf_links[:, S]
+
+# MLE of p
+include("02_fit_p.jl")
 
 
 
-# Figure 1 -- Links - species
-S = 2:1:1000
-m(s) = s-1
-M(s) = s*s
-plot(S, m.(S), fill=(M.(S), :grey, 0.2), c=:transparent, lab="")
-@df d scatter!(:nodes, :links, c=:black,
- ms = 2, alpha = 0.6,dpi = 300, lab = "",
- frame = :box)
-xaxis!(:log, "Species richness", (2, 1000))
-yaxis!(:log, "Number of links", (1, 1000000))
-savefig(joinpath("figures", "fig_01_link_species"))
+# Figure 1 -- Beta fit with posterior samples
 
-
-## Figure 1 - Beta fit
-
-d.exr = d.links .- (d.nodes .- 1)
-d.exp = d.nodes.^2 .- (d.nodes .- 1)
-d.pex = d.exr ./ d.exp
-
-p = fit(Beta, d.pex)
-
-using Random
 Random.seed!(1234)
-index = rand(1:size(betab_posterior,2), 20)
-mu_random = betab_posterior[index, :mu]
-phi_random = exp.(betab_posterior[index, :phi])
+index = rand(1:size(betab_posterior,2), 20) # 20 posterior samples
+mu_rdm = betab_posterior[index, :mu]
+phi_rdm = exp.(betab_posterior[index, :phi])
 
-
-betab_random = Beta.(mu_random .* phi_random, (1 .- mu_random) .* phi_random)
+betab_random = Beta.(mu_rdm .* phi_rdm, (1 .- mu_rdm) .* phi_rdm)
 
 density(d.pex, c=:lightgrey, fill=(:lightgrey, 0), frame=:semi, dpi=300, size=(400,400), lab="Empirical data")
-density!(rand(p, 100_000), c=:black, ls=:dash, linewidth=2, lab="Fit")
-plot!(betab_random[1], c=:darkgreen, linewidth=0.5, alpha=0.4, lab="Posterior")
+density!(rand(p, 100_000), c=:black, ls=:dash, linewidth=2, lab="MLE fit")
+plot!(betab_random[1], c=:darkgreen, linewidth=1, alpha=0.4, lab="Posterior samples")
 for i in 1:length(index)
-    plot!(betab_random[i], c=:darkgreen, linewidth=0.5, alpha=0.2, lab="")
+    plot!(betab_random[i], c=:darkgreen, linewidth=1, alpha=0.2, lab="")
 end
 xaxis!((0, 0.5), "p")
 yaxis!((0, 9), "Density")
-savefig(joinpath("figures", "penciltrick"))
+savefig(joinpath("figures", "beta_fit"))
 
 
+# Figure 2 -- Links estimate from counterfactuals of the 4 models
 
-
-
-# Figure 2 - Links estimate
-min_species = 3
-max_species = 750
-
-# Counterfactuals of lssl model
-lssl_posterior = CSV.read(joinpath("data", "posterior_distributions", "lssl.csv"))
-lssl_cf_links = lssl_posterior[r"counterfactual_links"]
-lssl_cf_links = lssl_cf_links[:, min_species:max_species]
-
-# Counterfactuals of const connectance model
-const_posterior = CSV.read(joinpath("data", "posterior_distributions", "const_posterior.csv"))
-const_cf_links = const_posterior[r"counterfactual_links"]
-const_cf_links = const_cf_links[:, min_species:max_species]
-
-# Counterfactuals of power law model
-powerlaw_posterior = CSV.read(joinpath("data", "posterior_distributions", "powerlaw_posterior.csv"))
-powerlaw_cf_links = powerlaw_posterior[r"counterfactual_links"]
-powerlaw_cf_links = powerlaw_cf_links[:, min_species:max_species]
-
-# Counterfactuals of beta binomial model
-betab_posterior = CSV.read(joinpath("data", "posterior_distributions", "beta_binomial_posterior.csv"))
-betab_cf_links = betab_posterior[r"counterfactual_links"]
-betab_cf_links = betab_cf_links[:, min_species:max_species]
-
-log_zeros(quant) = quant > 0 ? log10(quant) : 0
-
-cf_species = min_species:max_species
-min_links_log = log10.(cf_species .- 1)
-max_links_log = log10.(cf_species .^2)
+log_zeros(quant) = quant > 0 ? log10(quant) : 0 # to deal with negative quantiles
 
 # Function to plot the quantiles of the counterfactuals links of each model
 # we use log_zeros function to plot the y-axis in log (to account for log(0))
@@ -102,82 +86,49 @@ function plot_links_quantile(model; title = "", xlabel = "", ylabel = "")
 
     quant_500 = log_zeros.(quantile.(eachcol(model), 0.5))
 
-    plot(cf_species, quant_985, fill = quant_015, color=:"#03a1fc", label="",
-        title = title, xlabel = xlabel, ylabel = ylabel) # 97% PI
-    plot!(cf_species, quant_890, fill = quant_110, color=:lightblue, label="") # 89% PI
+    plot(cf_species, quant_985, fill=quant_015, color=:"#03a1fc", label="",
+        title=title, xlabel=xlabel, ylabel=ylabel) # 97% PI
+    plot!(cf_species, quant_890, fill=quant_110, color=:lightblue, label="") # 89% PI
     plot!(cf_species, quant_500, linecolor=:black, linewidth=2, label="") # Median link number
-    plot!(cf_species, min_links_log, linecolor=:black, label="") # Minimum number of links
-    plot!(cf_species, max_links_log, linecolor=:black, label="") # Maximum number of links
-    scatter!(d[:nodes], log10.(d[:links]), color=:grey, markersize = 3, label="") # Empirical links
-    xaxis!(:log, xlabel = xlabel)
-    yaxis!(ylabel = ylabel)
+    plot!(cf_species, log10.(ms), linecolor=:black, label="") # Minimum number of links
+    plot!(cf_species, log10.(Ms), linecolor=:black, label="") # Maximum number of links
+    scatter!(d[:nodes], log10.(d[:links]), color=:grey, markersize=3, label="") # Empirical links
+    xaxis!(:log, xlabel=xlabel)
+    yaxis!(ylabel=ylabel)
 end
 
-plot_lssl = plot_links_quantile(lssl_cf_links, title = "A",
-    ylabel = "Number of links")
-plot_const = plot_links_quantile(const_cf_links, title = "B")
-plot_powerlaw = plot_links_quantile(powerlaw_cf_links, title = "C",
-    xlabel = "Species richness", ylabel = "Number of links")
-plot_betab = plot_links_quantile(betab_cf_links, title = "D",
-    xlabel = "Species richness")
+plot_lssl = plot_links_quantile(lssl_cf_links, title="A - lssl",
+    ylabel="Number of links")
+plot_const = plot_links_quantile(const_cf_links, title="B - constant connect")
+plot_powerlaw = plot_links_quantile(powerlaw_cf_links, title="C - power law",
+    xlabel="Species richness", ylabel="Number of links")
+plot_betab = plot_links_quantile(betab_cf_links, title="D - beta binomial",
+    xlabel="Species richness")
 
-plot(plot_lssl, plot_const, plot_powerlaw, plot_betab, layout = (2,2))
-savefig(joinpath("figures", "fig_02_link_species_4models"))
-
-
-
-
-# First trial
-bb_posterior = CSV.read(joinpath("data", "posterior_distributions", "beta_binomial_posterior.csv"))
-
-density(bb_posterior[:mu])
-plot!(Beta(3,7))
-xaxis!((0.06, 0.13))
-
-bb_cf_dropone = bb_cf_links[:,2:750]
-
-bb_05 = quantile.(eachcol(bb_cf_dropone), 0.05)
-bb_95 = quantile.(eachcol(bb_cf_dropone), 0.95)
-
-plot(2:750, bb_95, fill = bb_05, color=:lightgreen, label="") # 97% PI
-scatter!(d[:nodes], d[:links], label="", color = :orange) # Empirical links
-xaxis!(:log, "Species richness")
-yaxis!(:log, "Number of links (log)")
-
-
-## compare density of posterior to pencil trick
-## add value of mean to text
-
-
-# Figure 3 - BetaBinomial predictions
-
-betab_mu_map = median(betab_posterior[:mu])
-betab_phi_map = exp(median(betab_posterior[:phi]))
-
-α = betab_mu_map*betab_phi_map
-β = (1.0-betab_mu_map)*betab_phi_map
-
-S = 3:750
-n = S.^2 .- (S .- 1)
-
-betab_draw = zeros(Int64, (nb_draw, length(S)))
-
-# counterfactuals
-# (i+2) because S starts at 3 species
-for i in 1:nb_draw, (j,n) in enumerate(n)
-    betab_draw[i,j] = rand(BetaBinomial(n, α, β)) + (j+2) - 1
-end
-
-
-plot_links_quantile(betab_draw)
-savefig(joinpath("figures", "fig_03_link_species_betab"))
+plot(plot_lssl, plot_const, plot_powerlaw, plot_betab, layout=(2,2))
+savefig(joinpath("figures", "models_estimate_links"))
 
 
 
-# Normal approximation of BetaBinomial
+# Figure 3 -- Links estimate from MAP and normal approximation
 
-means = n .* betab_mu_map .+ S .- 1
-vars = n .* betab_mu_map .* (1 .- betab_mu_map) .* (1 .+ S .* (S .- 1) .* (1 / (1 + betab_phi_map)))
+# 3A BetaBinomial predictions from map values
+
+beta_map = Beta(α, β)
+
+beta_89 = quantile.(beta, 0.89) .* (Ms .- ms) .+ S .- 1
+beta_11 = quantile.(beta, 0.11) .* (Ms .- ms) .+ S .- 1
+beta_50 = quantile.(beta, 0.5) .* (Ms .- ms) .+ S .- 1
+
+links_betab = plot(S, beta_89, fill=beta_11,label="", colour=:grey)
+plot!(S, beta_50, color=:black, label="", linewidth=2)
+scatter!(d[:nodes], d[:links], label="", color=:orange) # Empirical links
+xaxis!(:log, "Species richness", label="")
+yaxis!(:log, "Number of links")
+
+# 3B Normal approximation of BetaBinomial
+means = (Ms .- ms) .* mu_map .+ S .- 1
+vars = (Ms .- ms) .* mu_map .* (1 .- mu_map) .* (1 .+ S .* (S .- 1) .* (1 / (1 + phi_map)))
 
 approxs = Normal.(means, sqrt.(vars))
 
@@ -188,7 +139,7 @@ plot(S, approx_89, fill = approx_11,label = "", colour = :grey)
 scatter!(d[:nodes], d[:links], label="", color = :orange) # Empirical links
 xaxis!(:log, "Species richness")
 yaxis!(:log, "Number of links (log)")
-savefig(joinpath("figures", "fig_03b_link_species_betab_normal"))
+savefig(joinpath("figures", "ink_species_betab_normal"))
 
 
 
