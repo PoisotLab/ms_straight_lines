@@ -369,7 +369,8 @@ xaxis!(:log, "Species richness")
 yaxis!("k")
 savefig(joinpath("figures", "fig_04b_k_species"))
 
-
+median_k = get_quantile(0.5)
+findall(x -> x < 0.1, median_k)
 
 
 plot(plotA, plotB, plotC, layout = (3,1))

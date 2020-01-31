@@ -335,10 +335,8 @@ exponent 2, which gives
 $$k = \frac{(1-p)\times S + (p-1)}{p\times S^2}\,.$$
 
 This will peak for small values of $S$, and then slowly decrease towards 0. We
-illustrate these results in +@fig:powerlawk, which reveals that for networks under
-**500?** species, the relationship between $S$ and $L$ strongly deviates from a
-power-law. Specifically, **complete -- is it under or over-estimating the number
-of interactions?**.
+illustrate these results in +@fig:powerlawk, which reveals that for networks under approximatively 120 species, the relationship between $S$ and $L$ strongly deviates from a
+power-law ($k > 0.1$). In small networks, the terms with exponents lower than 2 in +@eq:L are non negligible when compared to the power law $p\times S^2$, which therefore considerably under-estimates their number of interactions.
 
 In a sense, this model sheds some light on a classical result [@DunnWill02a]:
 ecological networks deviate most strongly from the expectations under "small
@@ -369,7 +367,7 @@ more (fewer) interactions will have a positive (negative) $z$-score. This has
 important practical consequences - the structure of ecological networks is often
 probed for deviation from the random distribution of some measure of interest
 (**ref Bascompte, Flores**), and most of these measures are in turn related to
-connectance **ref P&G**; therefore, *to be continued*.
+connectance **ref P&G**. We argue that the use of a $z$-score could also help identify significantly under (over) sampled networks and estimate their number of missing (extra) links. (_example for oceanic network?_).
 
 ## Conclusions
 
