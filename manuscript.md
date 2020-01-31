@@ -20,14 +20,12 @@ If an ecological community contains $S$ species, then the maximum number of link
 Ecologists have therefore often chosen to define a ratio, called "connectance": $Co = L/S^2$.
 Connectance has become a fundamental quantity for nearly all other measures of food web structure and dynamics [@PascDunn06].
 
-<!-- tk: explain all models in more detail. -->
 Because $L$ represents such a fundamental quantity, many predictive models have been considered over the years.
 The current favourite is a power-law relationship:  $L = b\times S^a$.
 Power laws are a popular means of describing scaling relationships in many parts of science and were first applied to food webs by @BrosOstl04.
 Prior to the introduction of the power law relationship, common models included assuming that $L$ was in constant proportion to either $S$ or $S^2$.
 Power laws are very flexible, and indeed this
 function matches empirical data well -- so well that it is often treated as a "true" model which captures the scaling of link number with species richness.
-<!-- tk: too strong? -->
 These models all have clear shortcomings.
 While flexible, the power law relationship is limited because the parameters are difficult to reason about ecologically.
 This is in part because many mechanisms can produce power-law shaped relationships.
@@ -38,11 +36,9 @@ species: it also must obey constraints fixed by biology.
 These constraints determine both the maximum and minimum number of links in a web.
 As discussed, the maximum number of links is $S^2$; the minimum number, assuming at least some species are heterotrophs, is $S-1$.
 Numerous simple foodwebs could have this minimal number of links -- for example, a linear food chain wherein each trophic
-level consists of a single species, each of which consumes only the species
-below it.
+level consists of a single species, each of which consumes only the species below it.
 These constraints have not been used in previous attempts to model the
-relationship between $L$ and $S$. This makes prediction difficult, since models
-without this constraint can make unrealistic predictions of $L$.
+relationship between $L$ and $S$. This makes prediction difficult, since models without this constraint can make unrealistic predictions of $L$.
 
 Generative models are flexible and powerful tools for understanding and predicting natural phenomena.
 These models aim to
@@ -60,7 +56,7 @@ number of possible links. We include the minimum constraint by modelling not the
 number of links, but the number in excess of the minimum, which we term
 "flexible" links. Our process model is extremely simple: it is a single
 parameter, a constant which gives the proportion of these flexible links which
-are realized. Because food webs vary in the precise value of this proportion, we
+are realized. Because different food webs will have different values of this proportion, we
 model it with a beta distribution, which allows some variation around the
 average value. The resulting model is therefore beta-binomial.
 
