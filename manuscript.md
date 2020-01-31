@@ -71,21 +71,20 @@ data from the `mangal.io` networks database (+@fig:empirical). Finally, we show
 how this model for $L$ suggests a new and more useful way of predicting network
 structure and discuss how generative models can be useful tools for including our knowledge of a system into our predictions.
 
-### Models of link number
 
 Several models have been used to predict the number of links in a food
-web; all of these have modeled the number of links directly, usually after a log transformation of $L$ and $S$.
-We fit three of these models, as well as our proposed shifted Beta-binomial, and compare their predictive ability.
+web.
+We fit three of these models, as well as our proposed shifted Beta-binomial, and compare their predictive ability. Here we briefly introduce each model before providing our own.
 
 The link-species scaling (LSSL) model introduced by @CoheBria84 hypothesized that all networks have the same average degree. Links are modeled as the number of species times a constant:
 
-$$\hat L_\text{LSSL} = b\times S\,,$${#eq:lssl}
+$$\hat L_\text{LSSL} = m\times S\,,$${#eq:lssl}
 
 where $S$ is species richness, and $b \approx 2$.
 
 @Mart92 instead suggested that the number of links should be in proportion to the _square_ of species richness:
 
-$$\hat L_\text{CC} = b\times S^2\,,$${#eq:cc}
+$$\hat L_\text{CC} = c\times S^2\,,$${#eq:cc}
 
 where $b$ is a constant in $]0,1[$.
 This is called the  *constant connectance* model, because it implies a constant ratio $L/S^2$ for all networks.
@@ -96,12 +95,7 @@ models are instead special cases of the same general model, in which
 
 $$\hat L_\text{reg} = b\times S^a\,, $${#eq:reg}
 
-where $a$ and $b$ are constants. When the number of links and number of
-interactions are transformed by their natural log, $a$ and $b$ can be estimated
-with a linear regression, as done by @Mart92.
-Here, because we want to compare all our models WAIC, we were required to use a discrete likelihood in all cases.
-We fit the three models above with a negative binomial distribution for observations.
-This distribution is limited to positive integers, and can vary on both sides of the mean relationship; this gives it a similar spirit to previous work which used a normal distribution on log-transformed variables.
+where $a$ and $b$ are constants.
 
 Although all of these models fit the data well enough, they neglect a
 fundamental piece of ecological knowledge about food webs: as identified by
@@ -109,7 +103,7 @@ fundamental piece of ecological knowledge about food webs: as identified by
 than $S-1$, and no higher than $S^2$. Another way of expressing this idea is
 that because we observe a food web with $S$ species, we are guaranteed to
 observed at least $S-1$ interactions. From a predictive standpoint, this means
-that we need to figure out how much of the remaining interactions, out of
+that we need to figure out how many of the remaining interactions, out of a possible
 $S^2-(S-1)$, will be realized. Below, we refer to this quantity as the number of "flexible" links in a food web.
 Following @PoisCirt16, we suggest that each flexible link represents an independent Bernoulli trial with a probability  $p$ of existing.
 We assume that $p$ is a constant for all links in the same ecological community.
@@ -117,78 +111,17 @@ We assume that $p$ is a constant for all links in the same ecological community.
 This means that the number of predicted links can be expressed as:
 
 $$
- \hat L = p\times\left[S^2-(S-1)\right]+(S-1)\,.
+ \hat L_{BB} = p\times\left[S^2-(S-1)\right]+(S-1)\,.
 $${#eq:lhat}
 
+We use the symbol $L_{BB}$ to represent our estimate of $L$, because our model defines a Beta-Binomial likelihood (derivation in Experimental Procedures).
 
-<!-- tk: move this 2nd order polynomail down to where it actually features in an argument
+<!-- Francis to write a paragraph summarizing Experimental Proc -->
 
-This can be re-expressed as a second order polynomial:
-
-$$\hat L = p\times S^2 + (1-p)\times S + (p-1)\,. $${#eq:L} -->
-
-
-Equation [tk eq:L] implies that $\hat L$ has a binomial distribution, with $S^2 - S + 1$ trials and a probability $p$ of any flexible link being realized:
-
-$$
-[L | S, p] = { S^2 - (S - 1) \choose L - (S - 1)} p^{L-(S-1)}(1-p)^{S^2 - L} ,
-$$
-
-This is often termed a _shifted Binomial distribution_.
-
-We also note that ecological communities are different in many ways besides their number of species ($S$). Although we assume $p$ to be fixed within one community, the precise value of $p$ will change from one community to another.
-With this assumption, our likelihood becomes a shifted beta-binomial distribution:
-
-$$
-[L|S,\mu, \phi] =  { S^2 - (S - 1) \choose L - (S - 1)} \frac{B(L - (S - 1) + \mu \phi, S^2 - L + (1 - \mu)\phi)}{B(\mu \phi, (1 - \mu)\phi)}
-$${#eq:shiftBB}
-
-
-## Parameter estimation
-
-In all models we use a discrete
-probability distribution as the likelihood, with the number of observed links
-$L_i$ above the minimum as 'successes' and the number of possible links as
-'trials'. Each model tries to capture variation in link number greater than
-would be predicted by $p$ alone.
-
-Our first model uses the Beta-Binomial distribution for observations of $L$;
-this distribution can be parameterized in terms of its mean $\mu_p$ and
-concentration parameter, $\phi$ :
-
-<!-- tk a better notation here; possibly imitating H&H's style?? -->
-
-$$\begin{aligned}
-L_i & \sim \text{BetaBinomial}(\left[S_i^2-(S_i-1)\right], p \times \phi, (1 - p) \times \phi)\\
-p &\sim  \text{Beta}(1.54, 9.49)\\
-\log(\phi) & \sim \text{Normal}(3, 0.5)
-\end{aligned}$${#eq:betab}
-
-We chose our prior distribution for $p$ based on @Mart92 , who gave a value of
-constant connectance equal to 0.14. While this prior is "informative", it is
-weakly so; as @Mart92 did not provide an estimate of the variance for his value
-we chose a relatively large variation around that mean.  However, as no
-information is available to inform a prior on $\phi$, we followed the advice of
-(tk Simpson et al), and performed prior predictive checks. We chose prior
-parameters that generated a wide range of values for $L_i$, but which did not
-frequently predict webs of either maximum or minimum connectance, neither of
-which are observed in nature.
-
-### Data used to fit all models
-
-<!-- tk describe Mangal and its awesomeness in more wholeness -->
-We evaluated our model against 255 empirical foodwebs, available in the online database `mangal.io`
-
-We use Stan [**tk references**] which implements Bayesian inference using
-Hamiltonian Monte Carlo. We ran all models using four chains and 2000 iterations
-per chain. All models converged with no divergent iterations.
-
-
-
-# Results
+# Results and Discussion
 
 Our beta-binomial model outperforms previous solutions to the problem of
-modelling $L$.
+modelling $L$. For explanation of the model derivation, fitting, and comparison, see Experimental Procedures.
 
 Table [tk] PSIS-LOO values for the three models we contrast. Pareto-smoothed
 important sampling serves as a guide to model selection; like other information
@@ -217,20 +150,23 @@ The constant connectance model makes many predictions which are only approximate
 they are frequently too low. The beta binomial makes roughly the same predictions as the power law, but in
 this case they are held within biologically possible values.
 
-![Connectance and average degree can be derived from a model for links](figures/fig_04_linkdens_connect_k.png){#fig:beta_distributions}
-
 ### Parameter estimates for all models
 
+
+Table [tk] **Parameter estimates for all models**. Mean and Standard deviation (SD) is given for each parameter.
 | model                | parameter | interpretation                        | value | SD  |
 |----------------------|-----------|---------------------------------------|-------|-----|
-| Link-species scaling | $a$       | number of links per species           | 2.2     | 0.047  |
-| Constant connectance | $a$       | proportion of maximum links realized  | 0.12     | 0.0041  |
+| Link-species scaling | $m$       | number of links per species           | 2.2     | 0.047  |
+| Constant connectance | $c$       | proportion of maximum links realized  | 0.12     | 0.0041  |
 | Power law            | $a$       | no unique meaning                 | 0.37    | 0.054  |
 |                      | $b$       | no unique meaning                 | 1.7   | 0.043 |
 | Shifted BetaBinomial | $\mu$     | proportion of flexible links realized | 0.086 | 0.0037    |
 |                      | $\phi$    | concentration around value of $\mu$   | 24.3  |  0.0040   |
 
-# Discussion
+
+
+![Connectance and average degree can be derived from a model for links](figures/connectance_linkdens.png){#fig:beta_distributions}
+
 
 ### Connectance and average degree can be derived from a model for links
 
@@ -293,13 +229,12 @@ number of interactions they can establish. Most ecological networks
 are reasonably small and so this does not look like an unreasonable assumption.
 
 
-## Distribution of connectance
+#### why use distributions for $Co$ and $Ld$
 
-The distribution of connectances can also be used
-to test whether networks are more or less connected than expected by chance.
-Using parameters $p$ and $\phi$, and adjusting for the observed number of
-species $S$, a food web ecologist may read the p-value associated with their
-observed connectance directly from a Beta distribution.
+Ecologists are often faced with the issue of comparing several networks.
+Often, they wish to know if the network they have is "unusual" relative to some expectation.
+Traditionally these comparisons have been done by constructing a Null distribution .
+But here we propose a means of doing so with math.
 
 ## Only very large food webs obey a power law
 
@@ -363,5 +298,87 @@ In addition, constraints on omnivory appear to "linearize" food-webs; there
 should therefore be a limitation on the richness of a food web, and so for small
 values of $S$, the difference between assuming that there can be between $0$, or
 between $(S-1)$, and $S^2$ interactions is likely biologically relevant.
+
+# Experimental Procedures
+
+## Bayesian model definitions
+
+$$
+[L | a, ϕ] = \text{NegBin}(a S, \phi)
+$$
+
+
+
+## explanation of shifted Beta Binomial distribution
+
+<!-- tk: move this 2nd order polynomail down to where it actually features in an argument
+
+This can be re-expressed as a second order polynomial:
+
+$$\hat L = p\times S^2 + (1-p)\times S + (p-1)\,. $${#eq:L} -->
+
+
+Equation [tk eq:L] implies that $\hat L_{BB}$ has a binomial distribution, with $S^2 - S + 1$ trials and a probability $p$ of any flexible link being realized:
+
+$$
+[L | S, p] = { S^2 - (S - 1) \choose L - (S - 1)} p^{L-(S-1)}(1-p)^{S^2 - L} ,
+$$
+
+This is often termed a _shifted Binomial distribution_.
+
+We also note that ecological communities are different in many ways besides their number of species ($S$). Although we assume $p$ to be fixed within one community, the precise value of $p$ will change from one community to another.
+With this assumption, our likelihood becomes a shifted beta-binomial distribution:
+
+$$
+[L|S,\mu, \phi] =  { S^2 - (S - 1) \choose L - (S - 1)} \frac{B(L - (S - 1) + \mu \phi, S^2 - L + (1 - \mu)\phi)}{B(\mu \phi, (1 - \mu)\phi)}
+$${#eq:shiftBB}
+
+Where $B$ is the Beta function.
+
+
+When the number of links and number of
+interactions are transformed by their natural log, $a$ and $b$ can be estimated
+with a linear regression, as done by @Mart92.
+Here, because we want to compare all our models WAIC, we were required to use a discrete likelihood in all cases.
+We fit the three models above with a negative binomial distribution for observations.
+This distribution is limited to positive integers, and can vary on both sides of the mean relationship; this gives it a similar spirit to previous work which used a normal distribution on log-transformed variables.
+
+In all models we use a discrete
+probability distribution as the likelihood, with the number of observed links
+$L_i$ above the minimum as 'successes' and the number of possible links as
+'trials'. Each model tries to capture variation in link number greater than
+would be predicted by $p$ alone.
+
+Our first model uses the Beta-Binomial distribution for observations of $L$;
+this distribution can be parameterized in terms of its mean $\mu$ and
+concentration parameter, $\phi$ :
+
+<!-- tk a better notation here; possibly imitating H&H's style?? -->
+
+$$\begin{aligned}
+\mu &\sim  \text{Beta}(3, 7)\\
+\log(\phi) & \sim \text{Normal}(3, 0.5)
+\end{aligned}$${#eq:betab}
+
+We chose our prior distribution for $p$ based on @Mart92 , who gave a value of
+constant connectance equal to 0.14. While this prior is "informative", it is
+weakly so; as @Mart92 did not provide an estimate of the variance for his value
+we chose a relatively large variation around that mean.  However, as no
+information is available to inform a prior on $\phi$, we followed the advice of
+(tk Simpson et al), and performed prior predictive checks. We chose prior
+parameters that generated a wide range of values for $L_i$, but which did not
+frequently predict webs of either maximum or minimum connectance, neither of
+which are observed in nature.
+
+### Data used to fit all models
+
+<!-- tk describe Mangal and its awesomeness in more wholeness -->
+We evaluated our model against 255 empirical foodwebs, available in the online database `mangal.io`
+
+We use Stan [**tk references**] which implements Bayesian inference using
+Hamiltonian Monte Carlo. We ran all models using four chains and 2000 iterations
+per chain. All models converged with no divergent iterations.
+
+
 
 # References
