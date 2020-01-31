@@ -295,6 +295,8 @@ biological mechanisms such as handling time, capture efficiency, etc, in the
 number of interactions they can establish. Seeing how most ecological networks
 are reasonably small, this does not look like an unreasonable assumption.
 
+![Distribution of average degree](figures/L_S_distribution.png){#fig:avg_degree}
+
 
 ## Distribution of connectance
 
@@ -309,6 +311,7 @@ instead choose to describe the distribution of links, rather than connectances.
 In our model, the distribution of links is beta-binomial, with hyperparameters
 $\mu$ and $\phi$.
 
+![Distribution of connectance](figures/fig_04a_connectance_species.png){#fig:connectance}
 
 
 
@@ -343,7 +346,7 @@ world" or "scale free" regimes when they exceed a certain connectance; this is
 because for small networks, connectance is higher, and only decreases towards
 $p$ when the term in $S^{-2}$ in +@eq:co vanishes.
 
-![Distribution of connectance, link density and k](figures/fig_04_linkdens_connect_k.png){#fig:connect_linkdens_k}
+![Powerlaw k](figures/fig_04b_k_species.png){#fig:powerlawk}
 
 ## We can derive a measure of departure from expected number of links
 

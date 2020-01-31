@@ -286,6 +286,7 @@ scatter!(species, co_emp, color=:grey, label="") # Empirical connectance
 plot!(S, ms, label="", linecolor=:black) # Minimum connectance
 xaxis!(:log, "Species richness")
 yaxis!("Connectance")
+savefig(joinpath("figures", "fig_04a_connectance_species"))
 
 
 # 4B L/ S distribution of average degree
@@ -311,6 +312,7 @@ scatter!(d.nodes, d.links ./ d.nodes, colour = :grey, lab = "")
 
 plot!(S, (S .- 1)./S, linecolor=:black, lab="")
 plot!(S, S, linecolor=:black, lab="")
+savefig(joinpath("figures", "L_S_distribution"))
 
 
 #histogram(d.links ./ d.nodes, lab = "")
@@ -365,6 +367,8 @@ plot!(S, get_quantile(0.11), fill=get_quantile(0.89), color=:lightblue, label=""
 plot!(S, get_quantile(0.5), linecolor=:black, linewidth=2, lab = "")
 xaxis!(:log, "Species richness")
 yaxis!("k")
+savefig(joinpath("figures", "fig_04b_k_species"))
+
 
 
 
