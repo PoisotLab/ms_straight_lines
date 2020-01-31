@@ -155,7 +155,7 @@ xaxis!(:log, "Species richness")
 yaxis!(:log, "")
 
 plot(links_beta_map, links_normal, layout=(1,2))
-savefig(joinpath("figures", "betamap_normal_links"))
+savefig(joinpath("figures", "betabinmap_normal_links"))
 
 
 
