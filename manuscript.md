@@ -121,38 +121,13 @@ $$
 $${#eq:lhat}
 
 
-Because we have an expression for the number of interactions (+@eq:L), we can also get an expression for the expected connectance, which is
-
-$$
-  \frac{\hat L}{S^2} = p\frac{S^2}{S^2} + (1-p)\frac{S}{S^2}+(p-1)\frac{1}{S^2} \,.
-$$
-
-This results in the connectance being expressed as
-
-$$ \frac{\hat L}{S^2} = (p-1)\times S^{-2} + (1-p)\times S^{-1} + p \, ,$${#eq:co}
-
-or equivalently as
-
-
-$$ \frac{\hat L}{S^2} = p + (1-p)\times m(s) \, ,$${#eq:co2}
-
-where $m(s) = \frac{S - 1}{S^{2}}$ is the minimal connectance of a food web.
-
-Note that the expression of connectance is no longer a polynomial; at large
-values of $S$, the value of $m(s)$ (equivalently the terms in $S^{-1}$ and
-$S^{-2}$) will tend towards 0, and so the connectance will converge towards $p$.
-Therefore, for large enough ecological networks, we should expect a connectance
-which is independent of $S$. Thus $p$ has an interesting ecological
-interpretation: it represents the average connectance of networks large enough
-that the proportion $\frac{(S-1)}{S^{2}}$ is negligible.
-
 <!-- tk: move this 2nd order polynomail down to where it actually features in an argument
 
 This can be re-expressed as a second order polynomial:
 
 $$\hat L = p\times S^2 + (1-p)\times S + (p-1)\,. $${#eq:L} -->
 
-# Fitting the model
+# Results
 
 We begin by noting that equation [tk eq:L] implies that $\hat L$ has a binomial distribution, with $S^2 - S + 1$ trials and a probability $p$ of any flexible link being realized:
 
@@ -173,26 +148,9 @@ $$
 $${#eq:shiftBB}
 
 
-Links are discrete, but the connectance of a food web is bounded by 0 and 1. However, the minimum bound on links similarly imposes a lower value on connectance.
-This means that the distribution for $Co$ will be a shifted Beta distribution.
-This can be derived directly from the beta distribution for $p$.
-We use the same $Beta(\mu \phi, (1-\mu) \phi)$ distribiton for $p$, but shift and rescale it according to equation Co = f(p)
-
-<!-- TK actually rearrange the discussion of equations to put this above here -->
-
-We can convert the distribution for p into one for $Co$ by replacing p with a transformation of $Co$ as described above, and rescaling by the new range:
-
-$$
-[Co | S, \mu, \phi] = \frac{\left(Co - m(S)\right)^{\mu \phi - 1}\left(1 - Co\right)^{(1 - \mu)\phi - 1} }{(1 - m(S))^{\phi - 1} \times B(\mu \phi, (1 - \mu)\phi)}
-$${#eq:shiftBeta}
-
-This distribution can be parameterized using hyperparameters μ and ϕ estimated from the beta-binomial model above.
-Using a Beta-binomial likelihood preserves information about sample sizes and provides more accurate parameter estimates.
-
-
 ## Parameter estimation
 
-In both cases, we use a discrete
+In all models cases, we use a discrete
 probability distribution as the likelihood, with the number of observed links
 $L_i$ above the minimum as 'successes' and the number of possible links as
 'trials'. Each model tries to capture variation in link number greater than
@@ -225,7 +183,7 @@ which are observed in nature.
 <!-- tk describe Mangal and its awesomeness in more wholeness -->
 We evaluated our model against 255 empirical foodwebs, available in the online database `mangal.io`
 
-![Relationships in the mangal data](figures/relationships.png){#fig:empirical}
+<!-- ![Relationships in the mangal data](figures/relationships.png){#fig:empirical} -->
 
 
 We use Stan [**tk references**] which implements Bayesian inference using
@@ -241,7 +199,7 @@ rearranging equation {#eq:lhat} and fitting a Beta distribution to the result:
 
 ![Beta fit](figures/penciltrick.png){#fig:penciltrick}
 
-# Results and discussion
+# Discussion
 
 Our beta-binomial model outperforms previous solutions to the problem of
 modelling $L$.
@@ -275,25 +233,77 @@ constraints set by ecological principles
 
 ![posterior_predictions](figures/fig_02_link_species_4models.png){#fig:PP_counterfactual}
 
-Constant connectance model makes many predictions which are only approximate. The power law model makes predictions which are closer to observed values, but
+The constant connectance model makes many predictions which are only approximate. The power law model makes predictions which are closer to observed values, but
 they are frequently too low. The beta binomial makes roughly the same predictions as the power law, but in
 this case they are held within biologically possible values.
 
+<<<<<<< HEAD
 ## Average degree is constant (for large enough food webs)
+=======
+![Connectance and average degree can be derived from a model for links](figures/fig_04_linkdens_connect_k.png){#fig:beta_distributions}
 
-<!-- tk I don't know what to do with "average degree" -- I like the arguments here, and I like this interpretation of how adding p^-1 species increases average degree, but we have not been talking about this at all yet. -->
+### Connectance and average degree can be derived from a model for links
+
+We have used a discrete distribution to model $L$, but we can also define continuous measures for two important network metrics: connectance ($L/S^2$) and average degree ($L/S$). This can be done by recalling the hierarchical interpretation of the Beta Binomial distribution
+
+The distribution for $L$ is a discrete beta binomial, but it is possible to use the values of $\mu$ and $\phi$ to parameterize a continuous distribution for each of these two quantities. We use the same $Beta(\mu \phi, (1-\mu) \phi)$ distribiton for $p$, but shift and rescale it according to the range for each variable
+
+The connectance of a food web is bounded by 0 and 1. However, the minimum bound on links similarly imposes a lower value on connectance.
+This means that the distribution for $Co$ will be a shifted Beta distribution, a transformed version of the distribution for $p$
+
+Because we have an expression for the number of interactions (+@eq:L), we can also get an expression for the expected connectance, which is
+
+$$
+  \frac{\hat L}{S^2} = p\frac{S^2}{S^2} + (1-p)\frac{S}{S^2}+(p-1)\frac{1}{S^2} \,.
+$$
+
+This results in the connectance being expressed as
+
+$$ \frac{\hat L}{S^2} = (p-1)\times S^{-2} + (1-p)\times S^{-1} + p \, ,$${#eq:co}
+
+or equivalently as
+
+
+$$ \frac{\hat L}{S^2} = p + (1-p)\times m(s) \, ,$${#eq:co2}
+
+where $m(s) = (S - 1)/S^{2}$ is the minimal connectance of a food web.
+
+Note that the expression of connectance is no longer a polynomial; at large
+values of $S$, the value of $m(s)$ (equivalently the terms in $S^{-1}$ and
+$S^{-2}$) will tend towards 0, and so the connectance will converge towards $p$.
+Therefore, for large enough ecological networks, we should expect a connectance
+which is independent of $S$. Thus $p$ has an interesting ecological
+interpretation: it represents the average connectance of networks large enough
+that the proportion $\frac{(S-1)}{S^{2}}$ is negligible.
+
+
+
+We can convert the distribution for p into one for $Co$ by replacing p with a transformation of $Co$ as described above, and rescaling by the new range:
+
+$$
+[Co | S, \mu, \phi] = \frac{\left(Co - m(S)\right)^{\mu \phi - 1}\left(1 - Co\right)^{(1 - \mu)\phi - 1} }{(1 - m(S))^{\phi - 1} \times B(\mu \phi, (1 - \mu)\phi)}
+$${#eq:shiftBeta}
+
+This distribution can be parameterized using hyperparameters μ and ϕ estimated from the beta-binomial model above.
+
+>>>>>>> 8e95b131a53d6deb1cb91d7cda17aad3bdb9ece6
+
 
 Interestingly, this model still results in an expected average degree ($\hat
 L/S$, the *linkage density*) for a large number of species that scales with $S$:
 
-$$\frac{\hat L}{S} = p\times S + (1-p) + (p - 1)\times S^{-1}\,.$$
+$$\frac{\hat L}{S} = pS + (1-p) + (p - 1) S^{-1}\,.$$
+
+or equivalently:
+
+$$\frac{\hat L}{S} = p S + (1-p)\frac{(S-1)}{ S}\,.$$
 
 This means that the addition of $p^{-1}$ new species should increase the average
 degree in the food web by 1; of course, for increasingly large values of $S$,
 this may result in unrealistic average degree, as species are limited by
 biological mechanisms such as handling time, capture efficiency, etc, in the
-number of interactions they can establish. Seeing how most ecological networks
-are reasonably small, this does not look like an unreasonable assumption.
+number of interactions they can establish. Most ecological networks
+are reasonably small and so this does not look like an unreasonable assumption.
 
 ![Distribution of average degree](figures/L_S_distribution.png){#fig:avg_degree}
 
