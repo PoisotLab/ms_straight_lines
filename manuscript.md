@@ -137,9 +137,6 @@ $$
 
 This is often termed a _shifted Binomial distribution_.
 
-<!-- should this be done with a different notation?? -->
-
-
 We also note that ecological communities are different in many ways besides their number of species ($S$). Although we assume $p$ to be fixed within one community, the precise value of $p$ will change from one community to another.
 With this assumption, our likelihood becomes a shifted beta-binomial distribution:
 
@@ -150,7 +147,7 @@ $${#eq:shiftBB}
 
 ## Parameter estimation
 
-In all models cases, we use a discrete
+In all models we use a discrete
 probability distribution as the likelihood, with the number of observed links
 $L_i$ above the minimum as 'successes' and the number of possible links as
 'trials'. Each model tries to capture variation in link number greater than
@@ -183,9 +180,6 @@ which are observed in nature.
 <!-- tk describe Mangal and its awesomeness in more wholeness -->
 We evaluated our model against 255 empirical foodwebs, available in the online database `mangal.io`
 
-<!-- ![Relationships in the mangal data](figures/relationships.png){#fig:empirical} -->
-
-
 We use Stan [**tk references**] which implements Bayesian inference using
 Hamiltonian Monte Carlo. We ran all models using four chains and 2000 iterations
 per chain. All models converged with no divergent iterations.
@@ -193,7 +187,7 @@ per chain. All models converged with no divergent iterations.
 ## estimating hyperparameters
 
 While the full posterior distribution can be sampled using various bayesian
-conditioning engines, this is not necessary for obtaining point estimates of $p$
+machinery, this is not necessary for obtaining point estimates of $p$
 and $\phi$. A maximum likelihood estimate of each can be calculated by
 rearranging equation {#eq:lhat} and fitting a Beta distribution to the result:
 
@@ -209,14 +203,6 @@ important sampling serves as a guide to model selection; like other information
 criteria it approximates the error in cross-validation predictions. Smaller
 values indicate a model which makes better predictions.
 
-| model         | PSIS-LOO | SE  |
-| ------------- | -------- | --- |
-| Constant      | 2798     | 104 |
-| Power law     | 2595     | 49  |
-| Beta Binomial | 2543     | 46  |
-
-*Alternative table* (TP)
-
 | model         | reference   | Δ PSIS-LOO | SE  |
 | ------------- | ----------- | ---------- | --- |
 | Beta Binomial |             | 0          | 46  |
@@ -229,7 +215,7 @@ than 0.7, which suggests that the model is not robust to extreme observations.
 The Beta-Binomial model had the most favourable values of PSIS-LOO information
 criteron (Table). Which suggests that it will make the best predictions. More
 importantly, only the Beta Binomial model makes predictions which respect the
-constraints set by ecological principles
+constraints set by ecological principles.
 
 ![posterior_predictions](figures/fig_02_link_species_4models.png){#fig:PP_counterfactual}
 
@@ -237,9 +223,6 @@ The constant connectance model makes many predictions which are only approximate
 they are frequently too low. The beta binomial makes roughly the same predictions as the power law, but in
 this case they are held within biologically possible values.
 
-<<<<<<< HEAD
-## Average degree is constant (for large enough food webs)
-=======
 ![Connectance and average degree can be derived from a model for links](figures/fig_04_linkdens_connect_k.png){#fig:beta_distributions}
 
 ### Connectance and average degree can be derived from a model for links
@@ -274,7 +257,7 @@ $S^{-2}$) will tend towards 0, and so the connectance will converge towards $p$.
 Therefore, for large enough ecological networks, we should expect a connectance
 which is independent of $S$. Thus $p$ has an interesting ecological
 interpretation: it represents the average connectance of networks large enough
-that the proportion $\frac{(S-1)}{S^{2}}$ is negligible.
+that the proportion $(S-1)/S^{2}$ is negligible.
 
 
 
@@ -285,9 +268,6 @@ $$
 $${#eq:shiftBeta}
 
 This distribution can be parameterized using hyperparameters μ and ϕ estimated from the beta-binomial model above.
-
->>>>>>> 8e95b131a53d6deb1cb91d7cda17aad3bdb9ece6
-
 
 Interestingly, this model still results in an expected average degree ($\hat
 L/S$, the *linkage density*) for a large number of species that scales with $S$:
@@ -305,8 +285,6 @@ biological mechanisms such as handling time, capture efficiency, etc, in the
 number of interactions they can establish. Most ecological networks
 are reasonably small and so this does not look like an unreasonable assumption.
 
-![Distribution of average degree](figures/L_S_distribution.png){#fig:avg_degree}
-
 
 ## Distribution of connectance
 
@@ -316,20 +294,7 @@ Using parameters $p$ and $\phi$, and adjusting for the observed number of
 species $S$, a food web ecologist may read the p-value associated with their
 observed connectance directly from a Beta distribution.
 
-Similarly, one may
-instead choose to describe the distribution of links, rather than connectances.
-In our model, the distribution of links is beta-binomial, with hyperparameters
-$\mu$ and $\phi$.
-
-![Distribution of connectance](figures/fig_04a_connectance_species.png){#fig:connectance}
-
-
-
-<!-- tk regularized estimates for L for a food web of size S?? why should anyone care -->
-
-<!-- tk can a shifted beta distribution even BE used as a conjugate prior? how? maybe let's not think about this here -->
-
-## Only very-large food webs obey a power law
+## Only very large food webs obey a power law
 
 As noted by @BrosOstl04, the models of @CoheBria84 and @Mart92 results in
 networks in which the relationship between $L$ and $S$ obeys a power-law, albeit
@@ -348,7 +313,7 @@ This will peak for small values of $S$, and then slowly decrease towards 0. We
 illustrate these results in +@fig:powerlawk, which reveals that for networks under approximatively 120 species, the relationship between $S$ and $L$ strongly deviates from a
 power-law ($k > 0.1$). In small networks, the terms with exponents lower than 2 in +@eq:L are non negligible when compared to the power law $p\times S^2$, which therefore considerably under-estimates their number of interactions.
 
-In a sense, this model sheds some light on a classical result [@DunnWill02a]:
+This model sheds some light on a classical result [@DunnWill02a]:
 ecological networks deviate most strongly from the expectations under "small
 world" or "scale free" regimes when they exceed a certain connectance; this is
 because for small networks, connectance is higher, and only decreases towards
@@ -356,7 +321,7 @@ $p$ when the term in $S^{-2}$ in +@eq:co vanishes.
 
 ![Powerlaw k](figures/fig_04b_k_species.png){#fig:powerlawk}
 
-## We can derive a measure of departure from expected number of links
+## Normal approximation provides an analytic z-score
 
 The beta binomial can be approximated by a Normal distribution
 
