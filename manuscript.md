@@ -183,14 +183,16 @@ We use Stan [**tk references**] which implements Bayesian inference using
 Hamiltonian Monte Carlo. We ran all models using four chains and 2000 iterations
 per chain. All models converged with no divergent iterations.
 
-## Maximum likelihood estimate of μ and ϕ
+## Parameters can be estimated by Maximum Likelihood
 
 While the full posterior distribution can be sampled using various bayesian
 machinery, this is not necessary for obtaining point estimates of $p$
 and $\phi$. A maximum likelihood estimate of each can be calculated by
 rearranging equation {#eq:lhat} and fitting a Beta distribution to the result:
 
-![Maximum likelihood estimate of μ and ϕ](figures/penciltrick.png){#fig:penciltrick}
+![Parameters can be estimated by Maximum Likelihood](figures/beta_fit.png){#fig:penciltrick}
+
+We include this result because ecologists may wish to apply our methods for estimating $L$, $Co$ or $L/S$ without fitting a Bayesian posterior of their own. This approach loses information about the sample size of webs, but nevertheless provides a close match to both the empirical data and the bayesian posterior. 
 
 # Results
 
@@ -212,11 +214,13 @@ All models fit without any divergent iterations. However, the calculation of
 PSIS-LOO for the constant connectance model warned of a shape parameter greater
 than 0.7, which suggests that the model is not robust to extreme observations.
 The Beta-Binomial model had the most favourable values of PSIS-LOO information
-criteron (Table). Which suggests that it will make the best predictions. More
+criterion (Table), which suggests that it will make the best predictions of $L$. More
 importantly, only the Beta Binomial model makes predictions which respect the
 constraints set by ecological principles.
 
-![posterior_predictions](figures/fig_02_link_species_4models.png){#fig:PP_counterfactual}
+![Beta Binomial model fits better and makes a plausible range of predictions](figures/models_links.png){#fig:PP_counterfactual}
+
+### Beta Binomial model fits better and makes a plausible range of predictions
 
 The constant connectance model makes many predictions which are only approximate. The power law model makes predictions which are closer to observed values, but
 they are frequently too low. The beta binomial makes roughly the same predictions as the power law, but in
