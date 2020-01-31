@@ -94,7 +94,7 @@ generated quantities{
     vector[W] y_hat;
     vector[cf] counterfactual_links;
     for ( i in 1:W ) {
-        mu[i] = a * S[i];
+        mu[i] = a * S[i] ^ 2;
         log_lik[i] = neg_binomial_2_lpmf( L[i] | mu[i] , exp(phi) );
         y_hat[i] = neg_binomial_2_rng(mu[i], exp(phi));
     }
@@ -171,7 +171,6 @@ _, pwrlaw_stan_chns, _ = stan(pwrlaw_conn_stan_model, data_dict, summary = false
 
 
 ### beta-binomial connectance
-# TODO should phi be > 0 ??? doesn't that mean that exp(phi) has to be fairly large? I mean it is but that is weird maybe
 const betabin_connectance = """
 data{
     int W;
@@ -254,12 +253,6 @@ bb_hpd = MCMCChains.hpd(bb_chains, alpha = 0.89)
 
 bb_hpd.df
 
-### get parameter estimates
-summary(const_stan_infdata)
-summary(pwrlaw_stan_infdata)
-summary(bb_chains_infdata)
-
-
 
 
 ###  calculation of LOO
@@ -268,9 +261,16 @@ bb_chains_infdata = foodweb_model_output(bb_chains)
 
 lssl_stan_infdata = foodweb_model_output(lssl_stan_chns)
 
-const_stan_infdata = foodweb_model_output(const_stan_chns)
+const_stan_infdata = foodweb_model_output(constant_connect_stan_chns)
 
 pwrlaw_stan_infdata = foodweb_model_output(pwrlaw_stan_chns)
+
+
+### get parameter estimates
+summary(const_stan_infdata)
+summary(pwrlaw_stan_infdata)
+summary(bb_chains_infdata)
+summary(lssl_stan_infdata)
 
 
 loo(lssl_stan_infdata)
