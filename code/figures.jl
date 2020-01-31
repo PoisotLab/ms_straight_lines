@@ -250,7 +250,7 @@ xaxis!(:log)
 # Figure 4
 
 # 4A - connectance - species
-S = 1:200
+S = 3:750
 # Minimum number of species
 ms = (S .- 1) ./ (S .^2)
 
@@ -281,12 +281,13 @@ links = d[:links]
 species = d[:nodes]
 co_emp = links ./ (species .^2)
 S = 2:1:1000
+
 # Connectance vs species
-plot(S, range(beta015, stop=beta985, length=300), color=:lightgreen, fill=:lightgreen, label="") # 97% PI
-plot!(S, range(beta055, stop=beta945, length=300), color=:green, fill=:green, label="") # 89% PI
-plot!(S, range(beta165, stop=beta835, length=300), color=:darkgreen, fill=:darkgreen, label="") # 67% PI
+plot(S, range(beta015, stop=beta985, length=300), color=:"#C0C0C0", label="") # 97% PI
+plot!(S, range(beta055, stop=beta945, length=300), color=:"#A0A0A0", fill=:green, label="") # 89% PI
+plot!(S, range(beta165, stop=beta835, length=300), color=:"#808080", fill=:darkgreen, label="") # 67% PI
 plot!(S, beta500, linecolor=:black, linewidth=4, label="") # Median connectance
-scatter!(species, co_emp, label="") # Empirical connectance
+scatter!(species, co_emp, alpha=0.8, color=:orange, label="") # Empirical connectance
 plot!(S, ms, linecolor=:black, label="") # Minimum connectance
 xaxis!(:log, "Species richness")
 yaxis!("Connectance")
@@ -375,8 +376,6 @@ plot!(S, mean(k_predict, dims = 2), linecolor = :black, linewidth=4, lab = "")
 xaxis!(:log, "Species richness")
 yaxis!("k")
 savefig(joinpath("figures", "fig_04b_k_species"))
-
-
 
 
 
