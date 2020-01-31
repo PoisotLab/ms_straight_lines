@@ -127,7 +127,7 @@ This can be re-expressed as a second order polynomial:
 
 $$\hat L = p\times S^2 + (1-p)\times S + (p-1)\,. $${#eq:L} -->
 
-# Fitting the model
+# Results
 
 We begin by noting that equation [tk eq:L] implies that $\hat L$ has a binomial distribution, with $S^2 - S + 1$ trials and a probability $p$ of any flexible link being realized:
 
@@ -199,7 +199,7 @@ rearranging equation {#eq:lhat} and fitting a Beta distribution to the result:
 
 ![Beta fit](figures/penciltrick.png){#fig:penciltrick}
 
-# Results and discussion
+# Discussion
 
 Our beta-binomial model outperforms previous solutions to the problem of
 modelling $L$.
