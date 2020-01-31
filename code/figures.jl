@@ -96,22 +96,19 @@ max_links_log = log10.(cf_species .^2)
 # we use log_zeros function to plot the y-axis in log (to account for log(0))
 function plot_links_quantile(model; title = "", xlabel = "", ylabel = "")
     quant_015 = log_zeros.(quantile.(eachcol(model), 0.015))
-    quant_055 = log_zeros.(quantile.(eachcol(model), 0.055))
-    quant_165 = log_zeros.(quantile.(eachcol(model), 0.165))
-    quant_835 = log_zeros.(quantile.(eachcol(model), 0.835))
-    quant_945 = log_zeros.(quantile.(eachcol(model), 0.945))
+    quant_110 = log_zeros.(quantile.(eachcol(model), 0.11))
+    quant_890 = log_zeros.(quantile.(eachcol(model), 0.89))
     quant_985 = log_zeros.(quantile.(eachcol(model), 0.985))
 
     quant_500 = log_zeros.(quantile.(eachcol(model), 0.5))
 
-    plot(cf_species, quant_985, fill = quant_015, color="#C0C0C0", label="",
+    plot(cf_species, quant_985, fill = quant_015, color=:"#03a1fc", label="",
         title = title, xlabel = xlabel, ylabel = ylabel) # 97% PI
-    plot!(cf_species, quant_945, fill = quant_055, color="#A0A0A0", label="") # 89% PI
-    plot!(cf_species, quant_835, fill = quant_165, color="#808080", label="") # 69% PI
-    plot!(cf_species, quant_500, linecolor=:black, linewidth=4, label="") # Median link number
+    plot!(cf_species, quant_890, fill = quant_110, color=:lightblue, label="") # 89% PI
+    plot!(cf_species, quant_500, linecolor=:black, linewidth=2, label="") # Median link number
     plot!(cf_species, min_links_log, linecolor=:black, label="") # Minimum number of links
     plot!(cf_species, max_links_log, linecolor=:black, label="") # Maximum number of links
-    scatter!(d[:nodes], log10.(d[:links]), color=:yellow, alpha=0.6, markersize = 3, label="") # Empirical links
+    scatter!(d[:nodes], log10.(d[:links]), color=:grey, markersize = 3, label="") # Empirical links
     xaxis!(:log, xlabel = xlabel)
     yaxis!(ylabel = ylabel)
 end

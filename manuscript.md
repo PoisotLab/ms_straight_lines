@@ -279,8 +279,6 @@ Constant connectance model makes many predictions which are only approximate. Th
 they are frequently too low. The beta binomial makes roughly the same predictions as the power law, but in
 this case they are held within biologically possible values.
 
-![Connectance and average degree can be derived from a model for links](figures/fig_04_linkdens_connect_k.png){#fig:beta_distributions}
-
 ## Average degree is constant (for large enough food webs)
 
 <!-- tk I don't know what to do with "average degree" -- I like the arguments here, and I like this interpretation of how adding p^-1 species increases average degree, but we have not been talking about this at all yet. -->
@@ -356,7 +354,7 @@ $$ L \sim Normal(\bar{L}, \sigma_L^2) $$
 
 $$ \bar{L} = (S^2 - S + 1) \mu + S - 1$$
 
-$$ \sigma_L^2 = (S^2 - S + 1) \mu (1 - \mu)(1 + S(S-1)\left(\frac{1}{\phi + 1}\right))$$
+$$ \sigma_L^2 = (S^2 - S + 1) \mu (1 - \mu)(1 + \frac{S(S-1)}{\phi + 1})$$
 
 This means that given a network
 with observed species richness $S_{obs}$ and observed links $L_{obs}$, we can calculate its
