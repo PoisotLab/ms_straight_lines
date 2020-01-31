@@ -12,6 +12,12 @@ using StatsBase
 d = CSV.read(joinpath("data", "network_data.dat"))
 d = d[d.predation .> 0 , :]
 
+# posterior samples for beta binomial model
+betab_posterior = CSV.read(joinpath("data", "posterior_distributions", "beta_binomial_posterior.csv"))
+
+
+
+
 # Figure 1 -- Links - species
 S = 2:1:1000
 m(s) = s-1
@@ -32,8 +38,6 @@ d.exp = d.nodes.^2 .- (d.nodes .- 1)
 d.pex = d.exr ./ d.exp
 
 p = fit(Beta, d.pex)
-
-betab_posterior = CSV.read(joinpath("data", "posterior_distributions", "beta_binomial_posterior.csv"))
 
 using Random
 Random.seed!(1234)
@@ -373,7 +377,7 @@ median_k = get_quantile(0.5)
 findall(x -> x < 0.1, median_k)
 
 
-plot(plotA, plotB, plotC, layout = (3,1))
+plot(plotA, plotB, plotC, layout = (1,3))
 savefig(joinpath("figures", "fig_04_linkdens_connect_k"))
 
 
