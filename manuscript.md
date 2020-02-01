@@ -160,7 +160,7 @@ Table [tk] **Parameter estimates for all models**. Mean and Standard deviation (
 | Power law            | $a$       | no unique meaning                 | 0.37    | 0.054  |
 |                      | $b$       | no unique meaning                 | 1.7   | 0.043 |
 | Shifted BetaBinomial | $\mu$     | proportion of flexible links realized | 0.086 | 0.0037    |
-|                      | $\phi$    | concentration around value of $\mu$   | 24.3  |  0.0040   |
+|                      | $\phi$    | concentration around value of $\mu$   | 24.3  |  2.4   |
 
 
 
@@ -283,10 +283,15 @@ more (fewer) interactions will have a positive (negative) $z$-score. This has
 important practical consequences - the structure of ecological networks is often
 probed for deviation from the random distribution of some measure of interest
 (**ref Bascompte, Flores**), and most of these measures are in turn related to
-connectance **ref P&G**. We argue that the use of a $z$-score could also help identify significantly under (over) sampled networks and estimate their number of missing (extra) links. (_example for oceanic network?_).
+connectance **ref P&G**. We argue that the use of a $z$-score could also help identify significantly under (over) sampled networks and estimate their number of missing (extra) links.
 
-### la pertinance du l'estimation des réseaux
+### Ecological networks in large-scale studies
 
+Data collection on ecological interactions can be challenging. Although an empirical network could be built based on databases and literature review, this often does not account for the inherent spatiotemporal variability of interaction between co-occurring species. A probability distribution for connectance non only accounts for that variability, but can be used to describe some of the most fundamental properties of ecological networks. Connectance has indeed been linked to more than a dozen metrics on the structure of networks, and represent the simultaneous effects of specific ecological and evolutive mechanisms.
+
+We believe that the appropriate modeling of the number of interactions can allow scientists to tackle a wide variety of ecological questions, which otherwise could have been left unexplored. For instance, the functions (productivity, resilience, _etc._) and dynamics of ecological networks at large spatial or temporal scales could be more easily explored. It also facilitates the conduction of network studies in regions where interaction data is lacking, notably due to geographical and/or financial reasons.
+
+It is nevertheless worth mentioning here that our ability to model the number of links in an ecological network does not diminish the value of data collection. Among others, data on interspecific interactions helps understanding more deeply an ecological community and the relationship between two or more species, as well as making better predictions in the statistical modelling of networks. 
 
 ## Conclusions
 
