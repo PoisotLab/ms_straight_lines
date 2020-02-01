@@ -40,13 +40,16 @@ level consists of a single species, each of which consumes only the species belo
 These constraints have not been used in previous attempts to model the
 relationship between $L$ and $S$. This makes prediction difficult, since models without this constraint can make unrealistic predictions of $L$.
 
+<!-- generative is useful .. to the end of the paper? -->
 Generative models are flexible and powerful tools for understanding and predicting natural phenomena.
 These models aim to
 create simulated data with the same properties as observations.
 Creating such a model involves two key components: a mathematical expression which represents
 the ecological process being studied, and a distribution which represents our observations of this process.
 Both of these components can capture our ecological understanding of a system, including any constraints on the
-quantities studied. Here we suggest a new perspective for a model of $L$ as a
+quantities studied.
+
+ Here we suggest a new perspective for a model of $L$ as a
 function of $S$.
 In our model described below, our distribution of observations
 is a shifted beta-binomial distribution, which models the number of links which actually exist out of the total number possible.
@@ -59,13 +62,6 @@ parameter, a constant which gives the proportion of these flexible links which
 are realized. Because different food webs will have different values of this proportion, we
 model it with a beta distribution, which allows some variation around the
 average value. The resulting model is therefore beta-binomial.
-
-<!-- tk: rather than merging with previous, I like this as a means of giving a summary of the whole paper. -->
-In this paper we will describe this new approach to modelling $L$, and show how
-it compares to previous models. We estimate parameters for this model using open
-data from the `mangal.io` networks database (+@fig:empirical). Finally, we show
-how this model for $L$ suggests a new and more useful way of predicting network
-structure and discuss how generative models can be useful tools for including our knowledge of a system into our predictions.
 
 
 Several models have been used to predict the number of links in a food
@@ -113,6 +109,13 @@ $${#eq:lhat}
 We use the symbol $L_{BB}$ to represent our estimate of $L$, because our model defines a Beta-Binomial likelihood (derivation in Experimental Procedures).
 
 <!-- Francis to write a paragraph summarizing Experimental Proc -->
+
+<!-- tk: rather than merging with previous, I like this as a means of giving a summary of the whole paper. -->
+In this paper we will describe this new approach to modelling $L$, and show how
+it compares to previous models. We estimate parameters for this model using open
+data from the `mangal.io` networks database (+@fig:empirical). Finally, we show
+how this model for $L$ suggests a new and more useful way of predicting network
+structure and discuss how generative models can be useful tools for including our knowledge of a system into our predictions.
 
 # Results and Discussion
 
