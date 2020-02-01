@@ -69,7 +69,12 @@ betab_random = Beta.(mu_rdm .* phi_rdm, (1 .- mu_rdm) .* phi_rdm)
 
 # MLE fit
 pex = (d.links .- (d.nodes .- 1)) ./  (d.nodes.^2 .- (d.nodes .- 1))
+
 p = fit(Beta, pex)
+
+# calculate for text
+phi_MLE = p.α + p.β
+mu_MLE = p.α / phi_MLE
 
 density(pex, c=:lightgrey, fill=(:lightgrey, 0), frame=:semi, dpi=300, size=(400,400), lab="Empirical data")
 density!(rand(p, 100_000), c=:black, ls=:dash, linewidth=2, lab="MLE fit")
