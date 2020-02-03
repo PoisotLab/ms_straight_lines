@@ -23,9 +23,9 @@ Connectance has become a fundamental quantity for nearly all other measures of f
 Because $L$ represents such a fundamental quantity, many predictive models have been considered over the years.
 The current favourite is a power-law relationship:  $L = b\times S^a$.
 Power laws are a popular means of describing scaling relationships in many parts of science and were first applied to food webs by @BrosOstl04.
-Prior to the introduction of the power law relationship, common models included assuming that $L$ was in constant proportion to either $S$ or $S^2$.
 Power laws are very flexible, and indeed this
 function matches empirical data well -- so well that it is often treated as a "true" model which captures the scaling of link number with species richness.
+Prior to the introduction of the power law relationship, common models included assuming that $L$ was in constant proportion to either $S$ or $S^2$.
 These models all have clear shortcomings.
 While flexible, the power law relationship is limited because the parameters are difficult to reason about ecologically.
 This is in part because many mechanisms can produce power-law shaped relationships.
@@ -34,7 +34,7 @@ One weakness which all models have in common is their very flexibility: they can
 The number of links in a foodweb does not simply scale with the number of
 species: it also must obey constraints fixed by biology.
 These constraints determine both the maximum and minimum number of links in a web.
-As discussed, the maximum number of links is $S^2$; the minimum number, assuming at least some species are heterotrophs, is $S-1$.
+As discussed, the maximum number of links is $S^2$; the minimum number, assuming at least some species are heterotrophs, is $S-1$. To be part of a foodweb, a species must have a trophic relationship with at least one other species in the connected network.
 Numerous simple foodwebs could have this minimal number of links -- for example, a linear food chain wherein each trophic
 level consists of a single species, each of which consumes only the species below it.
 These constraints have not been used in previous attempts to model the
@@ -49,7 +49,7 @@ the ecological process being studied, and a distribution which represents our ob
 Both of these components can capture our ecological understanding of a system, including any constraints on the
 quantities studied.
 
- Here we suggest a new perspective for a model of $L$ as a
+Here we suggest a new perspective for a model of $L$ as a
 function of $S$.
 In our model described below, our distribution of observations
 is a shifted beta-binomial distribution, which models the number of links which actually exist out of the total number possible.
@@ -68,19 +68,19 @@ Several models have been used to predict the number of links in a food
 web.
 We fit three of these models, as well as our proposed shifted Beta-binomial, and compare their predictive ability. Here we briefly introduce each model before providing our own.
 
-The link-species scaling (LSSL) model introduced by @CoheBria84 hypothesized that all networks have the same average degree. Links are modeled as the number of species times a constant:
+The link-species scaling (LSSL) model introduced by @CoheBria84 hypothesized that all networks have the same average degree (_i.e._ number of links per species). Links are modeled as the number of species times a constant:
 
 $$\hat L_\text{LSSL} = m\times S\,,$${#eq:lssl}
 
-where $S$ is species richness, and $b \approx 2$.
+where $S$ is species richness, and $m \approx 2$.
 
 @Mart92 instead suggested that the number of links should be in proportion to the _square_ of species richness:
 
 $$\hat L_\text{CC} = c\times S^2\,,$${#eq:cc}
 
-where $b$ is a constant in $]0,1[$.
+where $c$ is a constant in $]0,1[$.
 This is called the  *constant connectance* model, because it implies a constant ratio $L/S^2$ for all networks.
-This model was a first attempt to recongize the constraint discussed above: no species can have more than $S^2$ interactions.
+This model was a first attempt to recongize the constraint discussed above: no network can have more than $S^2$ interactions.
 
 Finally, @BrosOstl04 note that these two
 models are instead special cases of the same general model, in which
@@ -113,7 +113,7 @@ We use the symbol $L_{BB}$ to represent our estimate of $L$, because our model d
 <!-- tk: rather than merging with previous, I like this as a means of giving a summary of the whole paper. -->
 In this paper we will describe this new approach to modelling $L$, and show how
 it compares to previous models. We estimate parameters for this model using open
-data from the `mangal.io` networks database (+@fig:empirical). Finally, we show
+data from the `mangal.io` networks database. Finally, we show
 how this model for $L$ suggests a new and more useful way of predicting network
 structure and discuss how generative models can be useful tools for including our knowledge of a system into our predictions.
 
@@ -132,6 +132,8 @@ values indicate a model which makes better predictions.
 | Beta Binomial |             | 0          | 46  |
 | Power law     | @BrosOstl04 | 52         | 49  |
 | Constant      | @Mart92     | 255        | 104 |
+| Link-species scaling |     |         |  |
+
 
 All models fit without any divergent iterations. However, the calculation of
 PSIS-LOO for the constant connectance model warned of a shape parameter greater
@@ -203,13 +205,13 @@ that the proportion $(S-1)/S^{2}$ is negligible.
 
 
 
-We can convert the distribution for p into one for $Co$ by replacing p with a transformation of $Co$ as described above, and rescaling by the new range:
+We can convert the distribution for $p$ into one for $Co$ by replacing $p$ with a transformation of $Co$ as described above, and rescaling by the new range:
 
 $$
 [Co | S, \mu, \phi] = \frac{\left(Co - m(S)\right)^{\mu \phi - 1}\left(1 - Co\right)^{(1 - \mu)\phi - 1} }{(1 - m(S))^{\phi - 1} \times B(\mu \phi, (1 - \mu)\phi)}
 $${#eq:shiftBeta}
 
-This distribution can be parameterized using hyperparameters μ and ϕ estimated from the beta-binomial model above.
+This distribution can be parameterized using hyperparameters $\mu$ and $\phi$ estimated from the beta-binomial model above.
 
 Interestingly, this model still results in an expected average degree ($\hat
 L/S$, the *linkage density*) for a large number of species that scales with $S$:
@@ -221,19 +223,14 @@ or equivalently:
 $$\frac{\hat L}{S} = p S + (1-p)\frac{(S-1)}{ S}\,.$$
 
 This means that the addition of $p^{-1}$ new species should increase the average
-degree in the food web by 1; of course, for increasingly large values of $S$,
+degree in the food web by slightly more than 1; of course, for increasingly large values of $S$,
 this may result in unrealistic average degree, as species are limited by
-biological mechanisms such as handling time, capture efficiency, etc, in the
+biological mechanisms such as handling time, capture efficiency, _etc_, in the
 number of interactions they can establish. Most ecological networks
 are reasonably small and so this does not look like an unreasonable assumption.
 
-
 #### why use distributions for $Co$ and $Ld$
 
-Ecologists are often faced with the issue of comparing several networks.
-Often, they wish to know if the network they have is "unusual" relative to some expectation.
-Traditionally these comparisons have been done by constructing a Null distribution .
-But here we propose a means of doing so with math.
 
 ## Only very large food webs obey a power law
 
@@ -260,9 +257,14 @@ world" or "scale free" regimes when they exceed a certain connectance; this is
 because for small networks, connectance is higher, and only decreases towards
 $p$ when the term in $S^{-2}$ in +@eq:co vanishes.
 
-![Powerlaw k](figures/fig_04b_k_species.png){#fig:powerlawk}
+![Powerlaw k](figures/k_powerlaw.png){#fig:powerlawk}
 
 ## Normal approximation provides an analytic z-score
+
+Ecologists are often faced with the issue of comparing several networks.
+Often, they wish to know if the network they have is "unusual" relative to some expectation.
+Traditionally these comparisons have been done by constructing a Null distribution .
+But here we propose a means of doing so with math.
 
 The beta binomial can be approximated by a Normal distribution
 
@@ -271,6 +273,10 @@ $$ L \sim Normal(\bar{L}, \sigma_L^2) $$
 $$ \bar{L} = (S^2 - S + 1) \mu + S - 1$$
 
 $$ \sigma_L^2 = (S^2 - S + 1) \mu (1 - \mu)(1 + \frac{S(S-1)}{\phi + 1})$$
+
+(+@fig:MAPnormal) shows that the predictions made by the normal approximation (panel B) are similar to those made by the beta distribution parameterized with the maximum a posteriori values of $\mu$ and $\phi$ (panel A).
+
+![Normal approximation to the beta binomial distribution](figures/betabinmap_normal_links.png){#fig:MAPnormal}
 
 This means that given a network
 with observed species richness $S_{obs}$ and observed links $L_{obs}$, we can calculate its
@@ -283,15 +289,21 @@ more (fewer) interactions will have a positive (negative) $z$-score. This has
 important practical consequences - the structure of ecological networks is often
 probed for deviation from the random distribution of some measure of interest
 (**ref Bascompte, Flores**), and most of these measures are in turn related to
-connectance **ref P&G**. We argue that the use of a $z$-score could also help identify significantly under (over) sampled networks and estimate their number of missing (extra) links.
+connectance **ref P&G**.
+
+
+We argue that the use of a $z$-score could help identify significantly under (over) sampled networks and estimate their number of missing (extra) links.
+
+
+
 
 ### Ecological networks in large-scale studies
 
-Data collection on ecological interactions can be challenging. Although an empirical network could be built based on databases and literature review, this often does not account for the inherent spatiotemporal variability of interaction between co-occurring species. A probability distribution for connectance non only accounts for that variability, but can be used to describe some of the most fundamental properties of ecological networks. Connectance has indeed been linked to more than a dozen metrics on the structure of networks, and represent the simultaneous effects of specific ecological and evolutive mechanisms.
+Data collection on ecological interactions can be challenging. Although a network could be built based on databases and literature review, this often does not account for the inherent spatiotemporal variability of interaction between co-occurring species. A probability distribution for connectance non only accounts for that variability, but can be used to describe some of the most fundamental properties of ecological networks. Connectance has indeed been linked to more than a dozen metrics on the structure of networks, and represent the simultaneous effects of specific ecological and evolutive mechanisms.
 
 We believe that the appropriate modeling of the number of interactions can allow scientists to tackle a wide variety of ecological questions, which otherwise could have been left unexplored. For instance, the functions (productivity, resilience, _etc._) and dynamics of ecological networks at large spatial or temporal scales could be more easily explored. It also facilitates the conduction of network studies in regions where interaction data is lacking, notably due to geographical and/or financial reasons.
 
-It is nevertheless worth mentioning here that our ability to model the number of links in an ecological network does not diminish the value of data collection. Among others, data on interspecific interactions helps understanding more deeply an ecological community and the relationship between two or more species, as well as making better predictions in the statistical modelling of networks. 
+It is nevertheless worth mentioning here that our ability to model the number of links in an ecological network does not diminish the value of data collection. Among others, data on interspecific interactions helps understanding more deeply an ecological community and the relationship between two or more species, as well as making better predictions in the statistical modelling of networks.
 
 ## Conclusions
 
