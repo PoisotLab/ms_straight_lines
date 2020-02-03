@@ -11,7 +11,7 @@ In fact, these numbers underlie most <!-- all?? --> means of describing a food w
 Accurately predicting both is essential when trying to model food web structure.
 Food web structure, in turn, is very important for understanding how ecological systems function, develop, and respond to changes.
 
-Two specific quantities are emphasized by food web ecologists.
+Three specific quantities are emphasized by food web ecologists.
 The most straightforward is $L$, the number of trophic interactions among species.
 This quantity can be large, especially in species-rich habitats, but it cannot be arbitrarily large.
 It is clear to any observer of nature that of all imaginable trophic
@@ -19,6 +19,9 @@ interactions, only a fraction actually occur.
 If an ecological community contains $S$ species, then the maximum number of links in its foodweb is $S^2$: a community of omnivorous cannibals.
 Ecologists have therefore often chosen to define a ratio, called "connectance": $Co = L/S^2$.
 Connectance has become a fundamental quantity for nearly all other measures of food web structure and dynamics [@PascDunn06].
+The third important quantity is another ratio: $L/S$, or the "average degree" of nodes in a food web.
+This ratio expresses the average number of species with which any taxa is expected to interact, either as predators or prey.
+Accurate predictions of ecological networks are extremely useful in many ecological contexts; thus it is important to have an ecologically accurate predictive model for the underlying value, $L$.
 
 Because $L$ represents such a fundamental quantity, many predictive models have been considered over the years.
 The current favourite is a power-law relationship:  $L = b\times S^a$.
@@ -30,7 +33,7 @@ These models all have clear shortcomings.
 While flexible, the power law relationship is limited because the parameters are difficult to reason about ecologically.
 This is in part because many mechanisms can produce power-law shaped relationships.
 One weakness which all models have in common is their very flexibility: they can produce predicted values of $L$ which are ecologically impossible.
-
+<!-- fuse these paragraphs?  -->
 The number of links in a foodweb does not simply scale with the number of
 species: it also must obey constraints fixed by biology.
 These constraints determine both the maximum and minimum number of links in a web.
@@ -119,13 +122,15 @@ structure and discuss how generative models can be useful tools for including ou
 
 # Results and Discussion
 
+### Beta Binomial model fits better and makes a plausible range of predictions
 Our beta-binomial model outperforms previous solutions to the problem of
 modelling $L$. For explanation of the model derivation, fitting, and comparison, see Experimental Procedures.
 
 Table [tk] PSIS-LOO values for the three models we contrast. Pareto-smoothed
 important sampling serves as a guide to model selection; like other information
 criteria it approximates the error in cross-validation predictions. Smaller
-values indicate a model which makes better predictions.
+values indicate a model which makes better predictions. The expected log predictive density (ELPD)
+measures the predictive performance of the model; here, higher values indicate more reliable predictions.
 
 <!-- elpd table -- calculated with LOO -->
 | model                 | reference                  | PSIS-LOO       | Δ elpd   | SE     |
@@ -149,9 +154,6 @@ Additionally, we had to drop the largest observation (> 50 000 links) from all d
 Taken together, this suggests that the LSSL model is insufficiently flexible to accurately reproduce the data.  
 
 ![Beta Binomial model fits better and makes a plausible range of predictions](figures/models_links.png){#fig:PP_counterfactual}
-
-### Beta Binomial model fits better and makes a plausible range of predictions
-
 The constant connectance model makes many predictions which are only approximate. The power law model makes predictions which are closer to observed values, but
 they are frequently too low. The beta binomial makes roughly the same predictions as the power law, but in
 this case they are held within biologically possible values.
