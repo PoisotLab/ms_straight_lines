@@ -379,7 +379,7 @@ which are observed in nature.
 <!-- tk describe Mangal and its awesomeness in more wholeness -->
 We evaluated our model against 255 empirical foodwebs, available in the online database `mangal.io`
 
-We use Stan [**tk references**] which implements Bayesian inference using
+We use Stan (tk doi 10.18637/jss.v076.i01) which implements Bayesian inference using
 Hamiltonian Monte Carlo. We ran all models using four chains and 2000 iterations
 per chain. All models converged with no divergent iterations.
 
