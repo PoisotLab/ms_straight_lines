@@ -198,7 +198,7 @@ $$ \frac{\hat L}{S^2} = (p-1)\times S^{-2} + (1-p)\times S^{-1} + p \, ,$${#eq:c
 or equivalently as
 
 
-$$ \frac{\hat L}{S^2} = p(1 - m(S)) + m(S)\times m(s) ,$${#eq:co2}
+$$ \frac{\hat L}{S^2} = p(1 - m(S)) + m(S) ,$${#eq:co2}
 
 where $m(S) = (S - 1)/S^{2}$ is the minimal connectance of a food web.
 
