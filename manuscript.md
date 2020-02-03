@@ -198,12 +198,12 @@ $$ \frac{\hat L}{S^2} = (p-1)\times S^{-2} + (1-p)\times S^{-1} + p \, ,$${#eq:c
 or equivalently as
 
 
-$$ \frac{\hat L}{S^2} = p + (1-p)\times m(s) \, ,$${#eq:co2}
+$$ \frac{\hat L}{S^2} = p(1 - m(S)) + m(S)\times m(s) ,$${#eq:co2}
 
-where $m(s) = (S - 1)/S^{2}$ is the minimal connectance of a food web.
+where $m(S) = (S - 1)/S^{2}$ is the minimal connectance of a food web.
 
 Note that the expression of connectance is no longer a polynomial; at large
-values of $S$, the value of $m(s)$ (equivalently the terms in $S^{-1}$ and
+values of $S$, the value of $m(S)$ (equivalently the terms in $S^{-1}$ and
 $S^{-2}$) will tend towards 0, and so the connectance will converge towards $p$.
 Therefore, for large enough ecological networks, we should expect a connectance
 which is independent of $S$. Thus $p$ has an interesting ecological
@@ -216,7 +216,7 @@ We can convert the distribution for $p$ into one for $Co$ by replacing $p$ with 
 
 $$
 [Co | S, \mu, \phi] = \frac{\left(Co - m(S)\right)^{\mu \phi - 1}\left(1 - Co\right)^{(1 - \mu)\phi - 1} }{(1 - m(S))^{\phi - 1} \times B(\mu \phi, (1 - \mu)\phi)}
-$${#eq:shiftBeta}
+$${#eq:shiftBetaCo}
 
 This distribution can be parameterized using hyperparameters $\mu$ and $\phi$ estimated from the beta-binomial model above.
 
@@ -235,6 +235,11 @@ this may result in unrealistic average degree, as species are limited by
 biological mechanisms such as handling time, capture efficiency, _etc_, in the
 number of interactions they can establish. Most ecological networks
 are reasonably small and so this does not look like an unreasonable assumption.
+
+
+$$
+[L_{D} | S, \mu, \phi] = \frac{\left(L_D - \frac{S-1} {S}\right)^{\mu \phi - 1}\left(1 - L_D\right)^{(1 - \mu)\phi - 1} }{(S - \frac{S-1}{S})^{\phi - 1} \times B(\mu \phi, (1 - \mu)\phi)}
+$${#eq:shiftBetaLD}
 
 #### why use distributions for $Co$ and $Ld$
 
