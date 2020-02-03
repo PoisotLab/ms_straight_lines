@@ -127,30 +127,26 @@ important sampling serves as a guide to model selection; like other information
 criteria it approximates the error in cross-validation predictions. Smaller
 values indicate a model which makes better predictions.
 
-| model         | reference   | Δ PSIS-LOO | SE  |
-| ------------- | ----------- | ---------- | --- |
-| Beta Binomial |             | 0          | 46  |
-| Power law     | @BrosOstl04 | 52         | 49  |
-| Constant      | @Mart92     | 255        | 104 |
-| Link-species scaling |     |  398       | 119 |
-
 <!-- elpd table -- calculated with LOO -->
+| model                 | reference                  | PSIS-LOO       | Δ elpd   | SE     |
+|-----------------------|----------------------------|----------------|----------|--------|
+| Shifted Beta Binomial |                            | 2520.5 44.4    | 0        | 0      |
+| Power law             | @BrosOstl04                | 2564.3 46.6    | -21.9    | 6.5    |
+| Constant              | @Mart92                    | 2811.0 68.3    | -145.3   | 21.1   |
+| Link-species scaling  | doi 10.1098/rspb.1985.0042 | 39840.1 2795.1 | -18659.8 | 1381.7 |
 
-| model         | reference   | Δ elpd | SE  |
-| ------------- | ----------- | ---------- | --- |
-| Beta Binomial |             | 0          | 0  |
-| Power law     | @BrosOstl04 | -21.9         | 6.5  |
-| Constant      | @Mart92     | -145.3        | 21.1 |
-| Link-species scaling |  doi 10.1098/rspb.1985.0042   |  -18659.8       | 1381.7 |
 
-
-All models fit without any divergent iterations. However, the calculation of
-PSIS-LOO for the constant connectance model warned of a shape parameter greater
-than 0.7, which suggests that the model is not robust to extreme observations.
 The Beta-Binomial model had the most favourable values of PSIS-LOO information
-criterion (Table), which suggests that it will make the best predictions of $L$. More
-importantly, only the Beta Binomial model makes predictions which respect the
+criterion (Table) and of expected log predictive density (ELPD) which suggests that it will make the best predictions of $L$. More
+importantly, only the shifted Beta-Binomial model makes predictions which respect the
 constraints set by ecological principles.
+Information criteria are only a rough guide to model selection; as always domain expertise should take precedence. In both respects, the shifted Beta-Binomial model outperforms alternatives in predicting the distribution of $L$.
+
+All models fit without any divergent iterations, which indicates that is it safe to make inferences about the parameter estimates and to compare the models.
+However, the calculation of
+PSIS-LOO for the LSSL model warned of problematic values of the Pareto-k diagnostic statistic. This indicates that the model is heavily influenced by large values.
+Additionally, we had to drop the largest observation (> 50 000 links) from all datasets in order to calculate PSIS-LOO for the LSSL model.
+Taken together, this suggests that the LSSL model is insufficiently flexible to accurately reproduce the data.  
 
 ![Beta Binomial model fits better and makes a plausible range of predictions](figures/models_links.png){#fig:PP_counterfactual}
 
