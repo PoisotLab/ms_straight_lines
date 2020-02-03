@@ -7,20 +7,22 @@ More species always
 means more interactions; this scaling between species richness $S$ and number of
 interactions $L$ is universal and appears both in observed webs and under purely
 neutral models of food web structure [@CanaMouq12].
-In fact, these numbers underlie most <!-- all?? --> means of describing a food web.
-Accurately predicting both is essential when trying to model food web structure.
+In fact, these numbers underlie most means of describing a food web.
 Food web structure, in turn, is very important for understanding how ecological systems function, develop, and respond to changes.
+Species richness is perhaps the most widely recorded observation about natural systems.
+Therefore, if we can predict $L$ from $S$ in an ecologically realistic way, we will be in a position to make predictions of food web structure at large scales.
 
-Three specific quantities are emphasized by food web ecologists.
-The most straightforward is $L$, the number of trophic interactions among species.
+Measures of food web structure are based on three specific quantities.
+The first and most straightforward is $L$, the number of trophic interactions among species.
 This quantity can be large, especially in species-rich habitats, but it cannot be arbitrarily large.
-It is clear to any observer of nature that of all imaginable trophic
-interactions, only a fraction actually occur.
+It is clear to any observer of nature that of all imaginable trophic interactions, only a fraction actually occur.
 If an ecological community contains $S$ species, then the maximum number of links in its foodweb is $S^2$: a community of omnivorous cannibals.
-Ecologists have therefore often chosen to define a ratio, called "connectance": $Co = L/S^2$.
+This leads to the second quantity: a ratio, called _connectance_ defined by ecologists as $Co = L/S^2$.
 Connectance has become a fundamental quantity for nearly all other measures of food web structure and dynamics [@PascDunn06].
-The third important quantity is another ratio: $L/S$, or the "average degree" of nodes in a food web.
-This ratio expresses the average number of species with which any taxa is expected to interact, either as predators or prey.
+The third important quantity is another ratio: _linkage density_, $L_D = L/S$.
+This value represents the number of links added to the network for every additional species in the ecological system.
+<!-- tk what does Ld in itself represent? and is Ld an OK shortcut to use for it. -->
+Equivanlently, $L_D \times 2$ gives the _average degree_: the average number of species with which any taxa is expected to interact, either as predators or prey.
 Accurate predictions of ecological networks are extremely useful in many ecological contexts; thus it is important to have an ecologically accurate predictive model for the underlying value, $L$.
 
 Because $L$ represents such a fundamental quantity, many predictive models have been considered over the years.
@@ -162,14 +164,15 @@ this case they are held within biologically possible values.
 
 
 Table [tk] **Parameter estimates for all models**. Mean and Standard deviation (SD) is given for each parameter.
-| model                | parameter | interpretation                        | value | SD  |
-|----------------------|-----------|---------------------------------------|-------|-----|
-| Link-species scaling | $m$       | number of links per species           | 2.2     | 0.047  |
-| Constant connectance | $c$       | proportion of maximum links realized  | 0.12     | 0.0041  |
-| Power law            | $a$       | no unique meaning                 | 0.37    | 0.054  |
-|                      | $b$       | no unique meaning                 | 1.7   | 0.043 |
-| Shifted BetaBinomial | $\mu$     | proportion of flexible links realized | 0.086 | 0.0037    |
-|                      | $\phi$    | concentration around value of $\mu$   | 24.3  |  2.4   |
+
+| model                | parameter | interpretation                        | value | SD     |
+|----------------------|-----------|---------------------------------------|-------|--------|
+| Link-species scaling | $m$       | number of links per species           | 2.2   | 0.047  |
+| Constant connectance | $c$       | proportion of maximum links realized  | 0.12  | 0.0041 |
+| Power law            | $a$       | no unique meaning                     | 0.37  | 0.054  |
+|                      | $b$       | no unique meaning                     | 1.7   | 0.043  |
+| Shifted BetaBinomial | $\mu$     | proportion of flexible links realized | 0.086 | 0.0037 |
+|                      | $\phi$    | concentration around value of $\mu$   | 24.3  | 2.4    |
 
 
 
