@@ -135,7 +135,7 @@ beta_89 = quantile.(bb_rand, 0.89) .+ S .- 1
 beta_11 = quantile.(bb_rand, 0.11) .+ S .- 1
 beta_50 = quantile.(bb_rand, 0.5)  .+ S .- 1
 
-links_beta_map = plot(S, beta_89, fill=beta_11,label="", colour=:grey)
+links_beta_map = plot(S, beta_89, fill=beta_11,label="", colour=:grey, title="A - MAP values")
 plot!(S, beta_50, color=:black, label="", linewidth=2)
 scatter!(d[:nodes], d[:links], label="", color=:orange) # Empirical links
 xaxis!(:log, "Species richness", label="")
@@ -151,7 +151,7 @@ approx_89 = quantile.(approxs, 0.89)
 approx_11 = quantile.(approxs, 0.11)
 approx_50 = quantile.(approxs, 0.5)
 
-links_normal = plot(S, approx_89, fill=approx_11,label="", colour=:grey)
+links_normal = plot(S, approx_89, fill=approx_11,label="", colour=:grey, title="B - normal approximation")
 plot!(S, approx_50, color=:black, label="", linewidth=2)
 scatter!(d[:nodes], d[:links], label="", color=:orange) # Empirical links
 xaxis!(:log, "Species richness")
