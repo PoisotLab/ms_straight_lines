@@ -216,7 +216,7 @@ plot(connectance_beta, avg_degree_beta, label=(1,2), lab="")
 savefig(joinpath("figures", "connectance_linkdens"))
 
 
-# 5 - Extent to which the relationship gets closer to a power law (k)
+# Figure 5 - Extent to which the relationship gets closer to a power law (k)
 
 # Values of k function of s and posterior p
 
@@ -257,3 +257,31 @@ plot!(S, get_quantile(0.5), linecolor=:black, linewidth=2, lab = "")
 xaxis!(:log, "Species richness")
 yaxis!("k")
 savefig(joinpath("figures", "k_powerlaw"))
+
+
+
+# Figure 6 - % of model prediction above or below minimum
+
+function unrealistic_links(model_cf)
+    unrealistic = zeros(Float64, (1, length(S)))
+    for (i,s) in enumerate(S)
+        belowmin = length(findall(model_cf[:,i] .< (s - 1)))
+        abovemax = length(findall(model_cf[:,i] .> (s^2)))
+        unrealistic[i] = (belowmin + abovemax) / size(model_cf, 1)
+    end
+    return(vec(unrealistic))
+end
+
+unrealistic_betab =  unrealistic_links(betab_cf_links)
+unrealistic_lssl = unrealistic_links(lssl_cf_links)
+unrealistic_const = unrealistic_links(const_cf_links)
+unrealistic_powerlaw = unrealistic_links(powerlaw_cf_links)
+
+
+plot(S, unrealistic_lssl, color="#D61F62", linewidth=1.5, label="LSSL")
+plot!(S, unrealistic_const, color="#585050", linewidth=1.5, label="Constant connectance")
+plot!(S, unrealistic_powerlaw, color="#5E982F", linewidth=1.5, label="Power law")
+plot!(S, unrealistic_betab, color="#4E68E6", linewidth=1.5, label="Beta binomial")
+xaxis!(:log, "Species richness")
+yaxis!("% unrealistic predictions")
+savefig(joinpath("figures", "unreal_predict"))
