@@ -160,6 +160,10 @@ The constant connectance model makes many predictions which are only approximate
 they are frequently too low. The beta binomial makes roughly the same predictions as the power law, but in
 this case they are held within biologically possible values.
 
+
+![Beta Binomial model makes a plausible range of predictions](figures/unreal_predict.png){#fig:unreal_predict}
+
+
 ### Parameter estimates for all models
 
 
