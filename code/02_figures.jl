@@ -262,26 +262,29 @@ savefig(joinpath("figures", "k_powerlaw"))
 
 # Figure 6 - % of model prediction above or below minimum
 
-function unrealistic_links(model_cf)
-    unrealistic = zeros(Float64, (1, length(S)))
+function realistic_links(model_cf)
+    realistic = zeros(Float64, (1, length(S)))
     for (i,s) in enumerate(S)
         belowmin = length(findall(model_cf[:,i] .< (s - 1)))
         abovemax = length(findall(model_cf[:,i] .> (s^2)))
-        unrealistic[i] = (belowmin + abovemax) / size(model_cf, 1)
+        realistic[i] = 1 - (belowmin + abovemax) / size(model_cf, 1)
     end
-    return(vec(unrealistic))
+    return(vec(realistic))
 end
 
-unrealistic_betab =  unrealistic_links(betab_cf_links)
-unrealistic_lssl = unrealistic_links(lssl_cf_links)
-unrealistic_const = unrealistic_links(const_cf_links)
-unrealistic_powerlaw = unrealistic_links(powerlaw_cf_links)
+realistic_betab =  realistic_links(betab_cf_links)
+realistic_lssl = realistic_links(lssl_cf_links)
+realistic_const = realistic_links(const_cf_links)
+realistic_powerlaw = realistic_links(powerlaw_cf_links)
 
+maximum(findall(realistic_powerlaw .< .95))
 
-plot(S, unrealistic_lssl, color="#D61F62", linewidth=1.5, label="LSSL")
-plot!(S, unrealistic_const, color="#585050", linewidth=1.5, label="Constant connectance")
-plot!(S, unrealistic_powerlaw, color="#5E982F", linewidth=1.5, label="Power law")
-plot!(S, unrealistic_betab, color="#4E68E6", linewidth=1.5, label="Beta binomial")
+plot(S, realistic_lssl, color="#D61F62", linewidth=1.5, label="LSSL",
+    legend=:bottomright, foreground_color_legend=nothing, background_color_legend=:white,
+    framestyle = :box)
+plot!(S, realistic_const, color="#585050", linewidth=1.5, label="Constant connectance")
+plot!(S, realistic_powerlaw, color="#5E982F", linewidth=1.5, label="Power law")
+plot!(S, realistic_betab, color="#4E68E6", linewidth=1.5, label="Beta binomial")
 xaxis!(:log, "Species richness")
-yaxis!("% unrealistic predictions")
-savefig(joinpath("figures", "unreal_predict"))
+yaxis!("Proportion of realistic link numbers")
+savefig(joinpath("figures", "real_predict"))
