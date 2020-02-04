@@ -89,27 +89,27 @@ savefig(joinpath("figures", "beta_fit"))
 
 # Figure 2 -- Links estimate from counterfactuals of the 4 models
 
-log_zeros(quant) = quant > 0 ? log10(quant) : 0 # to deal with negative quantiles
+neg_to_zeros(quant) = quant > 0 ? quant : 0.01 # to deal with negative quantiles
 
 # Function to plot the quantiles of the counterfactuals links of each model
 # we use log_zeros function to plot the y-axis in log (to account for log(0))
-function plot_links_quantile(model; title = "", xlabel = "", ylabel = "")
-    quant_015 = log_zeros.(quantile.(eachcol(model), 0.015))
-    quant_110 = log_zeros.(quantile.(eachcol(model), 0.11))
-    quant_890 = log_zeros.(quantile.(eachcol(model), 0.89))
-    quant_985 = log_zeros.(quantile.(eachcol(model), 0.985))
+function plot_links_quantile(model; title="", xlabel="", ylabel="")
+    quant_015 = neg_to_zeros.(quantile.(eachcol(model), 0.015))
+    quant_110 = neg_to_zeros.(quantile.(eachcol(model), 0.11))
+    quant_890 = neg_to_zeros.(quantile.(eachcol(model), 0.89))
+    quant_985 = neg_to_zeros.(quantile.(eachcol(model), 0.985))
 
-    quant_500 = log_zeros.(quantile.(eachcol(model), 0.5))
+    quant_500 = neg_to_zeros.(quantile.(eachcol(model), 0.5))
 
     plot(S, quant_985, fill=quant_015, color=:"#03a1fc", label="",
         title=title, xlabel=xlabel, ylabel=ylabel) # 97% PI
     plot!(S, quant_890, fill=quant_110, color=:lightblue, label="") # 89% PI
     plot!(S, quant_500, linecolor=:black, linewidth=2, label="") # Median link number
-    plot!(S, log10.(mms), linecolor=:black, label="") # Minimum number of links
-    plot!(S, log10.(Ms), linecolor=:black, label="") # Maximum number of links
-    scatter!(d[:nodes], log10.(d[:links]), color=:grey, markersize=3, label="") # Empirical links
+    plot!(S, mms, linecolor=:black, label="") # Minimum number of links
+    plot!(S, Ms, linecolor=:black, label="") # Maximum number of links
+    scatter!(d[:nodes], d[:links], color=:grey, markersize=3, label="") # Empirical links
     xaxis!(:log, xlabel=xlabel)
-    yaxis!(ylabel=ylabel)
+    yaxis!(:log, ylims = (1,100000), ylabel=ylabel)
 end
 
 plot_lssl = plot_links_quantile(lssl_cf_links, title="A - lssl",
@@ -122,7 +122,6 @@ plot_betab = plot_links_quantile(betab_cf_links, title="D - beta binomial",
 
 plot(plot_lssl, plot_const, plot_powerlaw, plot_betab, layout=(2,2))
 savefig(joinpath("figures", "models_links"))
-
 
 
 # Figure 3 -- Links estimate from MAP and normal approximation
@@ -260,7 +259,7 @@ savefig(joinpath("figures", "k_powerlaw"))
 
 
 
-# Figure 6 - % of model prediction above or below minimum
+# Figure 6 -- % of model prediction above or below minimum
 
 function realistic_links(model_cf)
     realistic = zeros(Float64, (1, length(S)))
