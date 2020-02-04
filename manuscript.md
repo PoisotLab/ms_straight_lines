@@ -160,8 +160,10 @@ The constant connectance model makes many predictions which are only approximate
 they are frequently too low. The beta binomial makes roughly the same predictions as the power law, but in
 this case they are held within biologically possible values.
 
++@fig:real_predict shows that only a fraction of the models prediction were within realistic ecological constraints. The link-species scaling model made around 29% of unrealistic predictions of link numbers for every value of $S$ ($3 \leq S \leq 750$). The constant connectance and power law models, on the other hand, also produced unrealistic results but for small networks only. Indeed, more than 5% were unrealistic for networks comprising less than 22 and 17 species, and more than 20% were unrealistic for networks comprising less than 12 and 7 species, respectively. Only the shifted beta binomial model never failed to predict numbers of links between $S-1$ and $S^2$.  
 
-![Beta Binomial model makes a plausible range of predictions](figures/unreal_predict.png){#fig:unreal_predict}
+![Beta Binomial model makes a plausible range of predictions](figures/real_predict.png){#fig:real_predict}
+
 
 
 ### Parameter estimates for all models
