@@ -56,6 +56,11 @@ powerlaw_cf_links = powerlaw_posterior[r"counterfactual_links"]
 powerlaw_cf_links = powerlaw_cf_links[:, S]
 
 
+# Colors
+lssl_color = "#585050"
+const_color = "#5E982F"
+powerlaw_color = "#D61F62"
+betab_color = "#4E68E6"
 
 # Figure 1 -- Beta fit with posterior samples
 
@@ -76,14 +81,15 @@ p = fit(Beta, pex)
 phi_MLE = p.α + p.β
 mu_MLE = p.α / phi_MLE
 
-density(pex, c=:lightgrey, fill=(:lightgrey, 0), frame=:semi, dpi=300, size=(400,400), lab="Empirical data")
+density(pex, c=:lightgrey, fill=(:lightgrey, 0), frame=:semi, dpi=300, size=(400,400), lab="Empirical data",
+    foreground_color_legend=nothing, background_color_legend=:white, framestyle=:box)
 density!(rand(p, 100_000), c=:black, ls=:dash, linewidth=2, lab="MLE fit")
-plot!(betab_random[1], c=:darkgreen, linewidth=1, alpha=0.4, lab="Posterior samples")
+plot!(betab_random[1], c=betab_color, linewidth=1, alpha=0.3, lab="Posterior samples")
 for i in 1:length(index)
-    plot!(betab_random[i], c=:darkgreen, linewidth=1, alpha=0.2, lab="")
+    plot!(betab_random[i], c=betab_color, linewidth=1, alpha=0.3, lab="")
 end
 xaxis!((0, 0.5), "p")
-yaxis!((0, 9), "Density")
+yaxis!((0, 9.5), "Density")
 savefig(joinpath("figures", "beta_fit"))
 
 
@@ -93,7 +99,7 @@ neg_to_zeros(quant) = quant > 0 ? quant : 0.01 # to deal with negative quantiles
 
 # Function to plot the quantiles of the counterfactuals links of each model
 # we use log_zeros function to plot the y-axis in log (to account for log(0))
-function plot_links_quantile(model; title="", xlabel="", ylabel="")
+function plot_links_quantile(model; title="", xlabel="", ylabel="", linecolor="")
     quant_015 = neg_to_zeros.(quantile.(eachcol(model), 0.015))
     quant_110 = neg_to_zeros.(quantile.(eachcol(model), 0.11))
     quant_890 = neg_to_zeros.(quantile.(eachcol(model), 0.89))
@@ -101,24 +107,25 @@ function plot_links_quantile(model; title="", xlabel="", ylabel="")
 
     quant_500 = neg_to_zeros.(quantile.(eachcol(model), 0.5))
 
-    plot(S, quant_985, fill=quant_015, color=:"#03a1fc", label="",
-        title=title, xlabel=xlabel, ylabel=ylabel) # 97% PI
-    plot!(S, quant_890, fill=quant_110, color=:lightblue, label="") # 89% PI
-    plot!(S, quant_500, linecolor=:black, linewidth=2, label="") # Median link number
+    plot(S, quant_985, fill=quant_015, color=:darkgrey, label="",
+        title=title, xlabel=xlabel, ylabel=ylabel, framestyle=:box) # 97% PI
+    plot!(S, quant_890, fill=quant_110, color=:lightgrey, label="") # 89% PI
+    plot!(S, quant_500, linecolor=linecolor, linewidth=3, label="") # Median link number
     plot!(S, mms, linecolor=:black, label="") # Minimum number of links
     plot!(S, Ms, linecolor=:black, label="") # Maximum number of links
-    scatter!(d[:nodes], d[:links], color=:grey, markersize=3, label="") # Empirical links
+    scatter!(d[:nodes], d[:links], color=:grey, markersize=2, label="") # Empirical links
     xaxis!(:log, xlabel=xlabel)
     yaxis!(:log, ylims = (1,100000), ylabel=ylabel)
 end
 
 plot_lssl = plot_links_quantile(lssl_cf_links, title="A - lssl",
-    ylabel="Number of links")
-plot_const = plot_links_quantile(const_cf_links, title="B - constant connect")
+    ylabel="Number of links", linecolor=lssl_color)
+plot_const = plot_links_quantile(const_cf_links, title="B - constant connect",
+    linecolor=const_color)
 plot_powerlaw = plot_links_quantile(powerlaw_cf_links, title="C - power law",
-    xlabel="Species richness", ylabel="Number of links")
+    xlabel="Species richness", ylabel="Number of links", linecolor=powerlaw_color)
 plot_betab = plot_links_quantile(betab_cf_links, title="D - beta binomial",
-    xlabel="Species richness")
+    xlabel="Species richness", linecolor=betab_color)
 
 plot(plot_lssl, plot_const, plot_powerlaw, plot_betab, layout=(2,2))
 savefig(joinpath("figures", "models_links"))
@@ -132,11 +139,16 @@ bb_rand = rand.(betabin_map, 5000)
 
 beta_89 = quantile.(bb_rand, 0.89) .+ S .- 1
 beta_11 = quantile.(bb_rand, 0.11) .+ S .- 1
+beta_98 = quantile.(bb_rand, 0.985) .+ S .- 1
+beta_02 = quantile.(bb_rand, 0.015) .+ S .- 1
 beta_50 = quantile.(bb_rand, 0.5)  .+ S .- 1
 
-links_beta_map = plot(S, beta_89, fill=beta_11,label="", colour=:grey, title="A - MAP values")
-plot!(S, beta_50, color=:black, label="", linewidth=2)
-scatter!(d[:nodes], d[:links], label="", color=:orange) # Empirical links
+links_beta_map = plot(S, beta_98, fill=beta_02,label="", colour=:darkgrey, title="A - MAP values", framestyle=:box)
+plot!(S, beta_89, fill=beta_11,label="", colour=:lightgrey)
+plot!(S, beta_50, color=betab_color, label="", linewidth=2)
+plot!(S, mms, linecolor=:black, label="") # Minimum number of links
+plot!(S, Ms, linecolor=:black, label="") # Maximum number of links
+scatter!(d[:nodes], d[:links], label="", color=:grey) # Empirical links
 xaxis!(:log, "Species richness", label="")
 yaxis!(:log, "Number of links")
 
@@ -150,9 +162,11 @@ approx_89 = quantile.(approxs, 0.89)
 approx_11 = quantile.(approxs, 0.11)
 approx_50 = quantile.(approxs, 0.5)
 
-links_normal = plot(S, approx_89, fill=approx_11,label="", colour=:grey, title="B - normal approximation")
-plot!(S, approx_50, color=:black, label="", linewidth=2)
-scatter!(d[:nodes], d[:links], label="", color=:orange) # Empirical links
+links_normal = plot(S, approx_89, fill=approx_11,label="", colour=:lightgrey, title="B - normal approximation", framestyle=:box)
+plot!(S, approx_50, color=betab_color, label="", linewidth=2)
+plot!(S, mms, linecolor=:black, label="") # Minimum number of links
+plot!(S, Ms, linecolor=:black, label="") # Maximum number of links
+scatter!(d[:nodes], d[:links], label="", color=:grey) # Empirical links
 xaxis!(:log, "Species richness")
 yaxis!(:log, "")
 
@@ -180,10 +194,12 @@ beta500 = quantile.(bquant, 0.5)
 # Empirical connectance
 co_emp = d[:links] ./ (d[:nodes] .^2)
 
+
 # Connectance vs species
-connectance_beta = plot(S, range(beta015, stop=beta985, length=1000), color=:"#03a1fc",  fill=:"#03a1fc", label="", title="A") # 97% PI
-plot!(S, range(beta11, stop=beta89, length=1000), color=:lightblue, fill=:lightblue, label="") # 89% PI
-plot!(S, beta500, linecolor=:black, linewidth=2, label="") # Median connectance
+connectance_beta = plot(S, range(beta015, stop=beta985, length=1000), color=:darkgrey,  fill=:darkgrey,
+    label="", title="A", framestyle=:box) # 97% PI
+plot!(S, range(beta11, stop=beta89, length=1000), color=:lightgrey, fill=:lightgrey, label="") # 89% PI
+plot!(S, beta500, linecolor=betab_color, linewidth=2, label="") # Median connectance
 scatter!(d[:nodes], co_emp, color=:grey, label="") # Empirical connectance
 plot!(S, ms, label="", linecolor=:black) # Minimum connectance
 xaxis!(:log, "Species richness")
@@ -201,9 +217,9 @@ beta11_LS = quantile.(bquant_LS, 0.11)
 beta89_LS = quantile.(bquant_LS, 0.89)
 beta50_LS = quantile.(bquant_LS, 0.50)
 
-avg_degree_beta = plot(S, beta985_LS, fill = beta015_LS, color="#03a1fc", lab="", title="B")
-plot!(S, beta11_LS, fill = beta89_LS, colour = :lightblue, lab="")
-plot!(S, beta50_LS, linecolor=:black, linewidth=2, lab="")
+avg_degree_beta = plot(S, beta985_LS, fill = beta015_LS, color=:darkgrey, lab="", title="B", framestyle=:box)
+plot!(S, beta11_LS, fill = beta89_LS, colour = :lightgrey, lab="")
+plot!(S, beta50_LS, linecolor=betab_color, linewidth=2, lab="")
 scatter!(d.nodes, d.links ./ d.nodes, colour=:grey, lab="")
 plot!(S, msl, linecolor=:black, lab="")
 plot!(S, S, linecolor=:black, lab="")
@@ -250,9 +266,9 @@ end
 
 # k - species plot with quantiles:
 
-plot(S, get_quantile(0.015), fill=get_quantile(0.985), color=:"#03a1fc", label="") # 97% PI
-plot!(S, get_quantile(0.11), fill=get_quantile(0.89), color=:lightblue, label="") # 89% PI
-plot!(S, get_quantile(0.5), linecolor=:black, linewidth=2, lab = "")
+plot(S, get_quantile(0.015), fill=get_quantile(0.985), color=:darkgrey, label="", framestyle=:box) # 97% PI
+plot!(S, get_quantile(0.11), fill=get_quantile(0.89), color=:lightgrey, label="") # 89% PI
+plot!(S, get_quantile(0.5), linecolor=betab_color, linewidth=2, lab = "")
 xaxis!(:log, "Species richness")
 yaxis!("k")
 savefig(joinpath("figures", "k_powerlaw"))
@@ -276,14 +292,12 @@ realistic_lssl = realistic_links(lssl_cf_links)
 realistic_const = realistic_links(const_cf_links)
 realistic_powerlaw = realistic_links(powerlaw_cf_links)
 
-maximum(findall(realistic_powerlaw .< .95))
-
-plot(S, realistic_lssl, color="#D61F62", linewidth=1.5, label="LSSL",
+plot(S, realistic_lssl, color=lssl_color, linewidth=1.5, label="LSSL",
     legend=:bottomright, foreground_color_legend=nothing, background_color_legend=:white,
     framestyle = :box)
-plot!(S, realistic_const, color="#585050", linewidth=1.5, label="Constant connectance")
-plot!(S, realistic_powerlaw, color="#5E982F", linewidth=1.5, label="Power law")
-plot!(S, realistic_betab, color="#4E68E6", linewidth=1.5, label="Beta binomial")
+plot!(S, realistic_const, color=const_color, linewidth=1.5, label="Constant connectance")
+plot!(S, realistic_powerlaw, color=powerlaw_color, linewidth=1.5, label="Power law")
+plot!(S, realistic_betab, color=betab_color, linewidth=1.5, label="Beta binomial")
 xaxis!(:log, "Species richness")
 yaxis!("Proportion of realistic link numbers")
 savefig(joinpath("figures", "real_predict"))
