@@ -71,7 +71,7 @@ average value. The resulting model is therefore beta-binomial.
 
 Several models have been used to predict the number of links in a food
 web.
-We fit three of these models, as well as our proposed shifted Beta-binomial, and compare their predictive ability. Here we briefly introduce each model before providing our own.
+We fit three of these models, as well as our proposed shifted beta-binomial, and compare their predictive ability. Here we briefly introduce each model before providing our own.
 
 The link-species scaling (LSSL) model introduced by @CoheBria84 hypothesized that all networks have the same average degree (_i.e._ number of links per species). Links are modeled as the number of species times a constant:
 
@@ -111,7 +111,7 @@ $$
  \hat L_{BB} = p\times\left[S^2-(S-1)\right]+(S-1)\,.
 $${#eq:lhat}
 
-We use the symbol $L_{BB}$ to represent our estimate of $L$, because our model defines a Beta-Binomial likelihood (derivation in Experimental Procedures).
+We use the symbol $L_{BB}$ to represent our estimate of $L$, because our model defines a beta-Binomial likelihood (derivation in Experimental Procedures).
 
 <!-- Francis to write a paragraph summarizing Experimental Proc -->
 
@@ -124,7 +124,7 @@ structure and discuss how generative models can be useful tools for including ou
 
 # Results and Discussion
 
-### Beta Binomial model fits better and makes a plausible range of predictions
+### Beta-binomial model fits better and makes a plausible range of predictions
 Our beta-binomial model outperforms previous solutions to the problem of
 modelling $L$. For explanation of the model derivation, fitting, and comparison, see Experimental Procedures.
 
@@ -137,17 +137,17 @@ measures the predictive performance of the model; here, higher values indicate m
 <!-- elpd table -- calculated with LOO -->
 | model                 | reference                  | PSIS-LOO       | Δ elpd   | SE     |
 |-----------------------|----------------------------|----------------|----------|--------|
-| Shifted Beta Binomial |                            | 2520.5 44.4    | 0        | 0      |
+| Shifted beta-binomial |                            | 2520.5 44.4    | 0        | 0      |
 | Power law             | @BrosOstl04                | 2564.3 46.6    | -21.9    | 6.5    |
 | Constant              | @Mart92                    | 2811.0 68.3    | -145.3   | 21.1   |
 | Link-species scaling  | doi 10.1098/rspb.1985.0042 | 39840.1 2795.1 | -18659.8 | 1381.7 |
 
 
-The Beta-Binomial model had the most favourable values of PSIS-LOO information
+The beta-binomial model had the most favourable values of PSIS-LOO information
 criterion (Table) and of expected log predictive density (ELPD) which suggests that it will make the best predictions of $L$. More
-importantly, only the shifted Beta-Binomial model makes predictions which respect the
+importantly, only the shifted beta-binomial model makes predictions which respect the
 constraints set by ecological principles.
-Information criteria are only a rough guide to model selection; as always domain expertise should take precedence. In both respects, the shifted Beta-Binomial model outperforms alternatives in predicting the distribution of $L$.
+Information criteria are only a rough guide to model selection; as always domain expertise should take precedence. In both respects, the shifted beta-binomial model outperforms alternatives in predicting the distribution of $L$.
 
 All models fit without any divergent iterations, which indicates that is it safe to make inferences about the parameter estimates and to compare the models.
 However, the calculation of
@@ -155,14 +155,14 @@ PSIS-LOO for the LSSL model warned of problematic values of the Pareto-k diagnos
 Additionally, we had to drop the largest observation (> 50 000 links) from all datasets in order to calculate PSIS-LOO for the LSSL model.
 Taken together, this suggests that the LSSL model is insufficiently flexible to accurately reproduce the data.  
 
-![Beta Binomial model fits better and makes a plausible range of predictions](figures/models_links.png){#fig:PP_counterfactual}
+![Beta-binomial model fits better and makes a plausible range of predictions](figures/models_links.png){#fig:PP_counterfactual}
 The constant connectance model makes many predictions which are only approximate. The power law model makes predictions which are closer to observed values, but
-they are frequently too low. The beta binomial makes roughly the same predictions as the power law, but in
+they are frequently too low. The beta-binomial makes roughly the same predictions as the power law, but in
 this case they are held within biologically possible values.
 
-+@fig:real_predict shows that only a fraction of the models prediction were within realistic ecological constraints. The link-species scaling model made around 29% of unrealistic predictions of link numbers for every value of $S$ ($3 \leq S \leq 750$). The constant connectance and power law models, on the other hand, also produced unrealistic results but for small networks only. Indeed, more than 5% were unrealistic for networks comprising less than 22 and 17 species, and more than 20% were unrealistic for networks comprising less than 12 and 7 species, respectively. Only the shifted beta binomial model never failed to predict numbers of links between $S-1$ and $S^2$.  
++@fig:real_predict shows that only a fraction of the models prediction were within realistic ecological constraints. The link-species scaling model made around 29% of unrealistic predictions of link numbers for every value of $S$ ($3 \leq S \leq 750$). The constant connectance and power law models, on the other hand, also produced unrealistic results but for small networks only. Indeed, more than 5% were unrealistic for networks comprising less than 22 and 17 species, and more than 20% were unrealistic for networks comprising less than 12 and 7 species, respectively. Only the shifted beta-binomial model never failed to predict numbers of links between $S-1$ and $S^2$.  
 
-![Beta Binomial model makes a plausible range of predictions](figures/real_predict.png){#fig:real_predict}
+![Beta-binomial model makes a plausible range of predictions](figures/real_predict.png){#fig:real_predict}
 
 
 
@@ -177,7 +177,7 @@ Table [tk] **Parameter estimates for all models**. Mean and Standard deviation (
 | Constant connectance | $c$       | proportion of maximum links realized  | 0.12  | 0.0041 |
 | Power law            | $a$       | no unique meaning                     | 0.37  | 0.054  |
 |                      | $b$       | no unique meaning                     | 1.7   | 0.043  |
-| Shifted BetaBinomial | $\mu$     | proportion of flexible links realized | 0.086 | 0.0037 |
+| Shifted beta-binomial | $\mu$     | proportion of flexible links realized | 0.086 | 0.0037 |
 |                      | $\phi$    | concentration around value of $\mu$   | 24.3  | 2.4    |
 
 
@@ -187,12 +187,12 @@ Table [tk] **Parameter estimates for all models**. Mean and Standard deviation (
 
 ### Connectance and average degree can be derived from a model for links
 
-We have used a discrete distribution to model $L$, but we can also define continuous measures for two important network metrics: connectance ($L/S^2$) and average degree ($L/S$). This can be done by recalling the hierarchical interpretation of the Beta Binomial distribution
+We have used a discrete distribution to model $L$, but we can also define continuous measures for two important network metrics: connectance ($L/S^2$) and average degree ($L/S$). This can be done by recalling the hierarchical interpretation of the beta-binomial distribution
 
-The distribution for $L$ is a discrete beta binomial, but it is possible to use the values of $\mu$ and $\phi$ to parameterize a continuous distribution for each of these two quantities. We use the same $Beta(\mu \phi, (1-\mu) \phi)$ distribiton for $p$, but shift and rescale it according to the range for each variable
+The distribution for $L$ is a discrete beta-binomial, but it is possible to use the values of $\mu$ and $\phi$ to parameterize a continuous distribution for each of these two quantities. We use the same $Beta(\mu \phi, (1-\mu) \phi)$ distribiton for $p$, but shift and rescale it according to the range for each variable
 
 The connectance of a food web is bounded by 0 and 1. However, the minimum bound on links similarly imposes a lower value on connectance.
-This means that the distribution for $Co$ will be a shifted Beta distribution, a transformed version of the distribution for $p$
+This means that the distribution for $Co$ will be a shifted beta distribution, a transformed version of the distribution for $p$
 
 Because we have an expression for the number of interactions (+@eq:L), we can also get an expression for the expected connectance, which is
 
@@ -287,7 +287,7 @@ Often, they wish to know if the network they have is "unusual" relative to some 
 Traditionally these comparisons have been done by constructing a Null distribution .
 But here we propose a means of doing so with math.
 
-The beta binomial can be approximated by a Normal distribution
+The beta-binomial can be approximated by a Normal distribution
 
 $$ L \sim Normal(\bar{L}, \sigma_L^2) $$
 
@@ -297,7 +297,7 @@ $$ \sigma_L^2 = (S^2 - S + 1) \mu (1 - \mu)(1 + \frac{S(S-1)}{\phi + 1})$$
 
 (+@fig:MAPnormal) shows that the predictions made by the normal approximation (panel B) are similar to those made by the beta distribution parameterized with the maximum a posteriori values of $\mu$ and $\phi$ (panel A).
 
-![Normal approximation to the beta binomial distribution](figures/betabinmap_normal_links.png){#fig:MAPnormal}
+![Normal approximation to the beta-binomial distribution](figures/betabinmap_normal_links.png){#fig:MAPnormal}
 
 This means that given a network
 with observed species richness $S_{obs}$ and observed links $L_{obs}$, we can calculate its
@@ -346,7 +346,7 @@ $$
 
 
 
-## explanation of shifted Beta Binomial distribution
+## explanation of shifted beta-binomial distribution
 
 <!-- tk: move this 2nd order polynomail down to where it actually features in an argument
 
@@ -370,7 +370,7 @@ $$
 [L|S,\mu, \phi] =  { S^2 - (S - 1) \choose L - (S - 1)} \frac{B(L - (S - 1) + \mu \phi, S^2 - L + (1 - \mu)\phi)}{B(\mu \phi, (1 - \mu)\phi)}
 $${#eq:shiftBB}
 
-Where $B$ is the Beta function.
+Where $B$ is the beta function.
 
 
 When the number of links and number of
@@ -386,7 +386,7 @@ $L_i$ above the minimum as 'successes' and the number of possible links as
 'trials'. Each model tries to capture variation in link number greater than
 would be predicted by $p$ alone.
 
-Our first model uses the Beta-Binomial distribution for observations of $L$;
+Our first model uses the beta-binomial distribution for observations of $L$;
 this distribution can be parameterized in terms of its mean $\mu$ and
 concentration parameter, $\phi$ :
 
