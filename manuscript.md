@@ -155,14 +155,15 @@ PSIS-LOO for the LSSL model warned of problematic values of the Pareto-k diagnos
 Additionally, we had to drop the largest observation (> 50 000 links) from all datasets in order to calculate PSIS-LOO for the LSSL model.
 Taken together, this suggests that the LSSL model is insufficiently flexible to accurately reproduce the data.  
 
-![Beta-binomial model fits better and makes a plausible range of predictions](figures/models_links.png){#fig:PP_counterfactual}
+![Beta-binomial model fits better and makes a plausible range of predictions. Number of links as a function of species richness obtained from the posterior distributions of A) the link-species scaling, B) the constant connectance, C) the power law and D) the shifted beta-binomial models. In each panel, the colored line represent the median predicted link number and the grey areas cover the 78% and 97% percentile intervals. Empirical data from the `mangal.io` database are plotted in each panel (grey dots), as well as the minimal $S-1$ and maximal $S^2$ number of links (lower and upper grey lines, respectively).  ](figures/models_links.png){#fig:PP_counterfactual}
+
 The constant connectance model makes many predictions which are only approximate. The power law model makes predictions which are closer to observed values, but
 they are frequently too low. The beta-binomial makes roughly the same predictions as the power law, but in
 this case they are held within biologically possible values.
 
 +@fig:real_predict shows that only a fraction of the models prediction were within realistic ecological constraints. The link-species scaling model made around 29% of unrealistic predictions of link numbers for every value of $S$ ($3 \leq S \leq 750$). The constant connectance and power law models, on the other hand, also produced unrealistic results but for small networks only. Indeed, more than 5% were unrealistic for networks comprising less than 22 and 17 species, and more than 20% were unrealistic for networks comprising less than 12 and 7 species, respectively. Only the shifted beta-binomial model never failed to predict numbers of links between $S-1$ and $S^2$.  
 
-![Beta-binomial model makes a plausible range of predictions](figures/real_predict.png){#fig:real_predict}
+![Beta-binomial model makes a plausible range of predictions. Proportion of realist predicted numbers of links as a function of species richness obtained from the posterior distributions of the four models. A realistic number of links is comprised between $S-1$ and $S^2$.](figures/real_predict.png){#fig:real_predict}
 
 
 
@@ -182,7 +183,7 @@ Table [tk] **Parameter estimates for all models**. Mean and Standard deviation (
 
 
 
-![Connectance and average degree can be derived from a model for links](figures/connectance_linkdens.png){#fig:beta_distributions}
+![Connectance and linkage density can be derived from a model for links. A) Connectance and B) linkage density as a function of species richness, for the maximum _a posteriori_ estimates of the shifted beta-binomial model. In each panel, the colored line represent the median predicted quantity and the grey areas cover the 78% and 97% percentile intervals. Empirical data from the `mangal.io` database are plotted in each panel (grey dots). In A), the minimal $(S-1)/(S^2)$ connectance and in B) the minimal $(S-1)/S$ and maximum $S$ linkage density are plotted (grey lines).](figures/connectance_linkdens.png){#fig:beta_distributions}
 
 
 ### Connectance and average degree can be derived from a model for links
@@ -278,7 +279,7 @@ world" or "scale free" regimes when they exceed a certain connectance; this is
 because for small networks, connectance is higher, and only decreases towards
 $p$ when the term in $S^{-2}$ in +@eq:co vanishes.
 
-![Powerlaw k](figures/k_powerlaw.png){#fig:powerlawk}
+![Only very large food webs obey a power law. Extent $k$ to which the relationship between $L$ and $S$ obeys a power law, as a function of species richness, obtained from the maximum _a posteriori_ estimates of the shifted beta-binomial model. The colored line represent the median predicted $k$ and the grey areas cover the 78% and 97% percentile intervals.](figures/k_powerlaw.png){#fig:powerlawk}
 
 ## Normal approximation provides an analytic z-score
 
@@ -297,7 +298,7 @@ $$ \sigma_L^2 = (S^2 - S + 1) \mu (1 - \mu)(1 + \frac{S(S-1)}{\phi + 1})$$
 
 (+@fig:MAPnormal) shows that the predictions made by the normal approximation (panel B) are similar to those made by the beta distribution parameterized with the maximum a posteriori values of $\mu$ and $\phi$ (panel A).
 
-![Normal approximation to the beta-binomial distribution](figures/betabinmap_normal_links.png){#fig:MAPnormal}
+![The shifted beta-binomial distribution can be approximated by a normal distribution. Number of links as a function of species richness obtained from A) the maximum _a posteriori_ estimates of the shifted beta-binomial model and B) its normal approximation. In each panel, the colored line represent the median predicted link number and the grey areas cover the 78% and 97% percentile intervals (only the 78% percentile interval is depicted in B). Empirical data from the `mangal.io` database are plotted in each panel (grey dots), as well as the minimal $S-1$ and maximal $S^2$ number of links (lower and upper grey lines, respectively).](figures/betabinmap_normal_links.png){#fig:MAPnormal}
 
 This means that given a network
 with observed species richness $S_{obs}$ and observed links $L_{obs}$, we can calculate its

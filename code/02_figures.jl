@@ -301,7 +301,7 @@ plot(S, realistic_lssl, color=lssl_color, linewidth=1.5, label="LSSL",
     framestyle = :box)
 plot!(S, realistic_const, color=const_color, linewidth=1.5, label="Constant connectance")
 plot!(S, realistic_powerlaw, color=powerlaw_color, linewidth=1.5, label="Power law")
-plot!(S, realistic_betab, color=betab_color, linewidth=1.5, label="Beta binomial")
+plot!(S, realistic_betab, color=betab_color, linewidth=1.5, label="Shifted beta-binomial")
 xaxis!(:log, "Species richness")
 yaxis!("Proportion of realistic link numbers")
 savefig(joinpath("figures", "real_predict"))
