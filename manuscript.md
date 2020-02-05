@@ -24,8 +24,7 @@ This leads to the second quantity: a ratio, called _connectance_ defined by ecol
 Connectance has become a fundamental quantity for nearly all other measures of food web structure and dynamics [@PascDunn06].
 The third important quantity is another ratio: _linkage density_, $L_D = L/S$.
 This value represents the number of links added to the network for every additional species in the ecological system.
-<!-- tk what does Ld in itself represent? and is Ld an OK shortcut to use for it. -->
-Equivanlently, $L_D \times 2$ gives the _average degree_: the average number of species with which any taxa is expected to interact, either as predators or prey.
+Equivalently, $L_D \times 2$ gives the _average degree_: the average number of species with which any taxa is expected to interact, either as predators or prey.
 Accurate predictions of ecological networks are extremely useful in many ecological contexts; thus it is important to have an ecologically accurate predictive model for the underlying value, $L$.
 
 #### Past models of L as a function of S
@@ -34,9 +33,9 @@ Accurate predictions of ecological networks are extremely useful in many ecologi
 Because $L$ represents such a fundamental quantity, many predictive models have been considered over the years.
 Here we describe three popular approaches before describing our own proposed model.
 The *link-species scaling (LSSL)* model introduced by @CoheBria84 hypothesized that all networks have the same average degree (_i.e._ number of links per species).
-Links are modeled as the number of species times a constant: $\hat L_\text{LSSL} = m\times S$ with $m \approx 2$.
+Links are modeled as the number of species times a constant: $\hat L_\text{LSSL} = b\times S$ with $b \approx 2$.
 This model imagines that every species added to a community increases the number of interactions by two -- for example, an animal which consumes one resource and is consumed by one predator.
-Martinez @Mart92 instead suggested that the number of links should be in proportion to the _square_ of species richness: $\hat L_\text{CC} = c\times S^2$, where $c$ is a constant in $]0,1[$.
+Martinez @Mart92 instead suggested that the number of links should be in proportion to the _square_ of species richness: $\hat L_\text{CC} = b\times S^2$, where $c$ is a constant in $]0,1[$.
 This is called the  *constant connectance* model, because it implies a constant ratio $Co = L/S^2$ for all networks.
 This model was a first attempt to recongize the constraint discussed above: no network can have more than $S^2$ interactions.
 Finally, @BrosOstl04 note that these two models are instead special cases of the same general model, in which $\hat L_\text{reg} = b\times S^a $ where $a$ and $b$ are constants.
@@ -106,10 +105,13 @@ We assume that $p$ is a constant for all links in the same ecological community.
 This means that the number of predicted links can be expressed as:
 
 $$
- \hat L_{BB} = p\times\left[S^2-(S-1)\right]+(S-1)\,.
+ \hat L_{FL} = p\times\left[S^2-(S-1)\right]+(S-1)\,.
 $${#eq:lhat}
 
-We use the symbol $L_{BB}$ to represent our estimate of $L$, because our model defines a beta-Binomial likelihood (derivation in Experimental Procedures).
+We use the notation $L_{FL}$ to represent that our model considers the number of "flexible" links in a food web, ie the number of links in excess of the minimum up to the maximum.
+
+We use the symbol $L_{BB}$ to represent our estimate of $L$, because our model defines a beta-Binomial likelihood.
+For explanation of the model derivation, fitting, and comparison, see Experimental Procedures.
 
 <!-- Francis to write a paragraph summarizing Experimental Proc -->
 
@@ -123,33 +125,30 @@ structure and discuss how generative models can be useful tools for including ou
 # Results and Discussion
 
 ### Beta-binomial model fits better and makes a plausible range of predictions
-Our beta-binomial model outperforms previous solutions to the problem of
-modelling $L$. For explanation of the model derivation, fitting, and comparison, see Experimental Procedures.
 
-Table [tk] PSIS-LOO values for the three models we contrast. Pareto-smoothed
-important sampling serves as a guide to model selection; like other information
-criteria it approximates the error in cross-validation predictions. Smaller
-values indicate a model which makes better predictions. The expected log predictive density (ELPD)
-measures the predictive performance of the model; here, higher values indicate more reliable predictions.
+Table 1. PSIS-LOO values for the shifted Beta-Binomial model and the three competing models.
+Pareto-smoothed important sampling serves as a guide to model selection; like other information
+criteria it approximates the error in cross-validation predictions.
+Smaller values indicate a model which makes better predictions.
+The expected log predictive density (ELPD) measures the predictive performance of the model; here, higher values indicate more reliable predictions.
 
 <!-- elpd table -- calculated with LOO -->
-| model                 | reference                  | PSIS-LOO       | Δ elpd   | SE     |
+| model                 | reference                  | PSIS-LOO       | $\Delta \text{elpd}$   | $SE_{\Delta \text{elpd}}$     |
 |-----------------------|----------------------------|----------------|----------|--------|
-| Shifted beta-binomial |                            | 2520.5 44.4    | 0        | 0      |
-| Power law             | @BrosOstl04                | 2564.3 46.6    | -21.9    | 6.5    |
-| Constant              | @Mart92                    | 2811.0 68.3    | -145.3   | 21.1   |
-| Link-species scaling  | doi 10.1098/rspb.1985.0042 | 39840.1 2795.1 | -18659.8 | 1381.7 |
+| Flexible links model |                            | 2520.5 ± 44.4    | 0        | 0      |
+| Power law             | @BrosOstl04                | 2564.3 ± 46.6    | -21.9    | 6.5    |
+| Constant              | @Mart92                    | 2811.0 ± 68.3    | -145.3   | 21.1   |
+| Link-species scaling  | doi 10.1098/rspb.1985.0042 | 39840.1 ± 2795.1 | -18659.8 | 1381.7 |
 
 
+Our beta-binomial model outperforms previous solutions to the problem of
+modelling $L$.
 The beta-binomial model had the most favourable values of PSIS-LOO information
 criterion (Table) and of expected log predictive density (ELPD) which suggests that it will make the best predictions of $L$.
-Information criteria are only a rough guide to model selection; as always domain expertise should take precedence. In both respects, the shifted beta-binomial model outperforms alternatives in predicting the distribution of $L$.
-
-All models fit without any divergent iterations, which indicates that is it safe to make inferences about the parameter estimates and to compare the models.
-However, the calculation of
-PSIS-LOO for the LSSL model warned of problematic values of the Pareto-k diagnostic statistic. This indicates that the model is heavily influenced by large values.
-Additionally, we had to drop the largest observation (> 50 000 links) from all datasets in order to calculate PSIS-LOO for the LSSL model.
-Taken together, this suggests that the LSSL model is insufficiently flexible to accurately reproduce the data.  
+All models fit well, without any problematic warnings from Stan's diagnostics (see Experimental Procedures).
+The calculation of PSIS-LOO can also furnish some clues about potential model fits; in our case the algorithm suggested that the constant connectance model was sensitive to extreme observations.
+Information criteria are only a rough guide to model selection; as always domain expertise should take precedence.
+In both respects, the shifted beta-binomial model outperforms alternatives in predicting the distribution of $L$.
 
 
 Predicted link numbers were plotted for each model in +@fig:PP_counterfactual. The LSSL model clearly underestimated the number of links, especially in networks of high order $S$. More importantly, its predictions poorly respected the constraints set by ecological principles. The constant connectance model also made many predictions which were only approximate. The power law model, on the other hand, made predictions which were closer to observed values, but they were frequently too low. The shifted beta-binomial made roughly the same predictions as the power law, but in
@@ -336,6 +335,12 @@ quantities studied.
 
 
 <!-- moving this to end because I don't really know where it fits in the narrative -->
+##### consequences for network topology
+
+The constraints that we discuss in this paper important consequences for food web topology.
+For example, previous work has identified that networks with more omnivores have longer, more linear food web structure.
+Our approach recognizes that link number is also constrained, independently of structure.
+This means that previous work on how network topology and link number interact may need to be updated.
 @WillMart04 identified that most food webs appear to be limited in their height,
 as increasingly apical species require more energy flowing in to be sustained.
 In addition, constraints on omnivory appear to "linearize" food-webs; there
@@ -423,6 +428,15 @@ We evaluated our model against 255 empirical foodwebs, available in the online d
 We use Stan (tk doi 10.18637/jss.v076.i01) which implements Bayesian inference using
 Hamiltonian Monte Carlo. We ran all models using four chains and 2000 iterations
 per chain. All models converged with no divergent iterations.
+
+### Model fitting and diagnostics
+
+
+All models fit without any divergent iterations, which indicates that is it safe to make inferences about the parameter estimates and to compare the models.
+However, the calculation of
+PSIS-LOO for the LSSL model warned of problematic values of the Pareto-k diagnostic statistic. This indicates that the model is heavily influenced by large values.
+Additionally, we had to drop the largest observation (> 50 000 links) from all datasets in order to calculate PSIS-LOO for the LSSL model.
+Taken together, this suggests that the LSSL model is insufficiently flexible to accurately reproduce the data.  
 
 
 
