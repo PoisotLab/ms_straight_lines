@@ -25,54 +25,9 @@ This value represents the number of links added to the network for every additio
 Equivanlently, $L_D \times 2$ gives the _average degree_: the average number of species with which any taxa is expected to interact, either as predators or prey.
 Accurate predictions of ecological networks are extremely useful in many ecological contexts; thus it is important to have an ecologically accurate predictive model for the underlying value, $L$.
 
+<!-- Introducing the past of food web models -->
 Because $L$ represents such a fundamental quantity, many predictive models have been considered over the years.
-The current favourite is a power-law relationship:  $L = b\times S^a$.
-Power laws are a popular means of describing scaling relationships in many parts of science and were first applied to food webs by @BrosOstl04.
-Power laws are very flexible, and indeed this
-function matches empirical data well -- so well that it is often treated as a "true" model which captures the scaling of link number with species richness.
-Prior to the introduction of the power law relationship, common models included assuming that $L$ was in constant proportion to either $S$ or $S^2$.
-These models all have clear shortcomings.
-While flexible, the power law relationship is limited because the parameters are difficult to reason about ecologically.
-This is in part because many mechanisms can produce power-law shaped relationships.
-One weakness which all models have in common is their very flexibility: they can produce predicted values of $L$ which are ecologically impossible.
-<!-- fuse these paragraphs?  -->
-The number of links in a foodweb does not simply scale with the number of
-species: it also must obey constraints fixed by biology.
-These constraints determine both the maximum and minimum number of links in a web.
-As discussed, the maximum number of links is $S^2$; the minimum number, assuming at least some species are heterotrophs, is $S-1$. To be part of a foodweb, a species must have a trophic relationship with at least one other species in the connected network.
-Numerous simple foodwebs could have this minimal number of links -- for example, a linear food chain wherein each trophic
-level consists of a single species, each of which consumes only the species below it.
-These constraints have not been used in previous attempts to model the
-relationship between $L$ and $S$. This makes prediction difficult, since models without this constraint can make unrealistic predictions of $L$.
-
-<!-- generative is useful .. to the end of the paper? -->
-Generative models are flexible and powerful tools for understanding and predicting natural phenomena.
-These models aim to
-create simulated data with the same properties as observations.
-Creating such a model involves two key components: a mathematical expression which represents
-the ecological process being studied, and a distribution which represents our observations of this process.
-Both of these components can capture our ecological understanding of a system, including any constraints on the
-quantities studied.
-
-Here we suggest a new perspective for a model of $L$ as a
-function of $S$.
-In our model described below, our distribution of observations
-is a shifted beta-binomial distribution, which models the number of links which actually exist out of the total number possible.
-This automatically
-includes the maximum constraint, since the number of species determines the
-number of possible links. We include the minimum constraint by modelling not the total
-number of links, but the number in excess of the minimum, which we term
-"flexible" links. Our process model is extremely simple: it is a single
-parameter, a constant which gives the proportion of these flexible links which
-are realized. Because different food webs will have different values of this proportion, we
-model it with a beta distribution, which allows some variation around the
-average value. The resulting model is therefore beta-binomial.
-
-
-Several models have been used to predict the number of links in a food
-web.
-We fit three of these models, as well as our proposed shifted beta-binomial, and compare their predictive ability. Here we briefly introduce each model before providing our own.
-
+Here we describe three popular approaches before describing our own proposed model.
 The link-species scaling (LSSL) model introduced by @CoheBria84 hypothesized that all networks have the same average degree (_i.e._ number of links per species). Links are modeled as the number of species times a constant:
 
 $$\hat L_\text{LSSL} = m\times S\,,$${#eq:lssl}
@@ -97,7 +52,42 @@ where $a$ and $b$ are constants.
 Although all of these models fit the data well enough, they neglect a
 fundamental piece of ecological knowledge about food webs: as identified by
 @Mart92, the number of links $L$ in a food web with $S$ nodes can be no lower
-than $S-1$, and no higher than $S^2$. Another way of expressing this idea is
+than $S-1$, and no higher than $S^2$.
+The current favourite is a power-law relationship:  $L = b\times S^a$.
+Power laws are a popular means of describing scaling relationships in many parts of science and were first applied to food webs by @BrosOstl04.
+Power laws are very flexible, and indeed this
+function matches empirical data well -- so well that it is often treated as a "true" model which captures the scaling of link number with species richness.
+Prior to the introduction of the power law relationship, common models included assuming that $L$ was in constant proportion to either $S$ or $S^2$.
+These models all have clear shortcomings.
+While flexible, the power law relationship is limited because the parameters are difficult to reason about ecologically.
+This is in part because many mechanisms can produce power-law shaped relationships.
+One weakness which all models have in common is their very flexibility: they can produce predicted values of $L$ which are ecologically impossible.
+<!-- fuse these paragraphs?  -->
+The number of links in a foodweb does not simply scale with the number of
+species: it also must obey constraints fixed by biology.
+These constraints determine both the maximum and minimum number of links in a web.
+As discussed, the maximum number of links is $S^2$; the minimum number, assuming at least some species are heterotrophs, is $S-1$. To be part of a foodweb, a species must have a trophic relationship with at least one other species in the connected network.
+Numerous simple foodwebs could have this minimal number of links -- for example, a linear food chain wherein each trophic
+level consists of a single species, each of which consumes only the species below it.
+These constraints have not been used in previous attempts to model the
+relationship between $L$ and $S$. This makes prediction difficult, since models without this constraint can make unrealistic predictions of $L$.
+
+<!-- may we present: the shifted-beta-binomial modle -->
+Here we suggest a new perspective for a model of $L$ as a
+function of $S$.
+We model the distribution of observations as a shifted beta-binomial variable.
+This automatically includes the maximum constraint, since the number of species determines the
+number of possible links.
+We include the minimum constraint by modelling not the total
+number of links, but the number in excess of the minimum, which we term
+"flexible" links.
+Our process model is extremely simple: it is a single
+parameter, a constant which gives the proportion of these flexible links which
+are realized.
+Because different food webs will have different values of this proportion, we
+model it with a beta distribution, which allows some variation around the
+average value. The resulting model is therefore beta-binomial.
+Another way of expressing this idea is
 that because we observe a food web with $S$ species, we are guaranteed to
 observed at least $S-1$ interactions. From a predictive standpoint, this means
 that we need to figure out how many of the remaining interactions, out of a possible
@@ -325,6 +315,19 @@ We believe that the appropriate modeling of the number of interactions can allow
 
 Our ability to model the number of links in an ecological network does not diminish the value of data collection. Among others, data on interspecific interactions helps understanding more deeply an ecological community and the relationship between two or more given species, as well as making better predictions in the statistical modelling of networks.
 
+<<<<<<< HEAD
+=======
+## Thinking generatively in ecology
+Generative models are flexible and powerful tools for understanding and predicting natural phenomena.
+These models aim to
+create simulated data with the same properties as observations.
+Creating such a model involves two key components: a mathematical expression which represents
+the ecological process being studied, and a distribution which represents our observations of this process.
+Both of these components can capture our ecological understanding of a system, including any constraints on the
+quantities studied.
+
+## Conclusions
+>>>>>>> 69ccd8cddbbd6c3c8b49d768f5e72ac6f128801e
 
 <!-- moving this to end because I don't really know where it fits in the narrative -->
 @WillMart04 identified that most food webs appear to be limited in their height,
