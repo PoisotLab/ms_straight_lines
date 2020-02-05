@@ -113,9 +113,6 @@ We use the notation $L_{FL}$ to represent that our model considers the number of
 We use the symbol $L_{BB}$ to represent our estimate of $L$, because our model defines a beta-Binomial likelihood.
 For explanation of the model derivation, fitting, and comparison, see Experimental Procedures.
 
-<!-- Francis to write a paragraph summarizing Experimental Proc -->
-
-<!-- tk: rather than merging with previous, I like this as a means of giving a summary of the whole paper. -->
 In this paper we will describe this new approach to modelling $L$, and show how
 it compares to previous models. We estimate parameters for this model using open
 data from the `mangal.io` networks database. Finally, we show
@@ -191,6 +188,7 @@ Our value for $\mu$ is about 0.09, which is close to previous estimates of $b$ i
 Although we did not use the same approach to parameter estimation as previous authors, we found very consistent values of b for the LSSL model.
 We find a value of 2.2 for $b$ which is close to the value of approximately 2 used by @CoheBria84
 
+<!-- tk Francis to expand and improve -->
 
 ### Connectance and linkage density can be derived from a model for links
 
