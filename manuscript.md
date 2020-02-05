@@ -249,14 +249,6 @@ $$
 [Co | S, \mu, \phi] = \frac{\left(Co - m(S)\right)^{\mu \phi - 1}\left(1 - Co\right)^{(1 - \mu)\phi - 1} }{(1 - m(S))^{\phi - 1} \times B(\mu \phi, (1 - \mu)\phi)}
 $${#eq:shiftBetaCo}
 
-
-
-or equivalently:
-
-$$\frac{\hat L}{S} = p S + (1-p)\frac{(S-1)}{ S}\,.$$
-
-
-
 $$
 [L_{D} | S, \mu, \phi] = \frac{\left(L_D - \frac{S-1} {S}\right)^{\mu \phi - 1}\left(1 - L_D\right)^{(1 - \mu)\phi - 1} }{(S - \frac{S-1}{S})^{\phi - 1} \times B(\mu \phi, (1 - \mu)\phi)}
 $${#eq:shiftBetaLD}
