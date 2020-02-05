@@ -1,5 +1,6 @@
 # Introduction
 
+#### L and S, oft-measured and very important numbers
 Community ecologists are fascinated by counting things. It is therefore no
 surprise that the early food web literature paid so much attention to counting
 species, counting trophic interactions, and computing the relationship between these numbers.
@@ -9,9 +10,11 @@ interactions $L$ is universal and appears both in observed webs and under purely
 neutral models of food web structure [@CanaMouq12].
 In fact, these numbers underlie most means of describing a food web.
 Food web structure, in turn, is very important for understanding how ecological systems function, develop, and respond to changes.
-Species richness is perhaps the most widely recorded observation about natural systems.
+Although both $L$ and $S$ are frequently counted in nature, we have far more information about $S$.
+In fact, the distribution of species richness across the world is probably the most frequently observed and modelled ecological phenomena.
 Therefore, if we can predict $L$ from $S$ in an ecologically realistic way, we will be in a position to make predictions of food web structure at large scales.
 
+#### the three most important numbers about foodwebs are L, Co and L/S
 Measures of food web structure are based on three specific quantities.
 The first and most straightforward is $L$, the number of trophic interactions among species.
 This quantity can be large, especially in species-rich habitats, but it cannot be arbitrarily large.
@@ -25,54 +28,58 @@ This value represents the number of links added to the network for every additio
 Equivanlently, $L_D \times 2$ gives the _average degree_: the average number of species with which any taxa is expected to interact, either as predators or prey.
 Accurate predictions of ecological networks are extremely useful in many ecological contexts; thus it is important to have an ecologically accurate predictive model for the underlying value, $L$.
 
+#### Past models of L as a function of S
 <!-- Introducing the past of food web models -->
 Because $L$ represents such a fundamental quantity, many predictive models have been considered over the years.
 Here we describe three popular approaches before describing our own proposed model.
-The link-species scaling (LSSL) model introduced by @CoheBria84 hypothesized that all networks have the same average degree (_i.e._ number of links per species). Links are modeled as the number of species times a constant:
-
-$$\hat L_\text{LSSL} = m\times S\,,$${#eq:lssl}
-
-where $S$ is species richness, and $m \approx 2$.
-
-@Mart92 instead suggested that the number of links should be in proportion to the _square_ of species richness:
-
-$$\hat L_\text{CC} = c\times S^2\,,$${#eq:cc}
-
-where $c$ is a constant in $]0,1[$.
-This is called the  *constant connectance* model, because it implies a constant ratio $L/S^2$ for all networks.
+The *link-species scaling (LSSL)* model introduced by @CoheBria84 hypothesized that all networks have the same average degree (_i.e._ number of links per species).
+Links are modeled as the number of species times a constant: $\hat L_\text{LSSL} = m\times S$ with $m \approx 2$.
+This model imagines that every species added to a community increases the number of interactions by two -- for example, an animal which consumes one resource and is consumed by one predator.
+Martinez @Mart92 instead suggested that the number of links should be in proportion to the _square_ of species richness: $\hat L_\text{CC} = c\times S^2$, where $c$ is a constant in $]0,1[$.
+This is called the  *constant connectance* model, because it implies a constant ratio $Co = L/S^2$ for all networks.
 This model was a first attempt to recongize the constraint discussed above: no network can have more than $S^2$ interactions.
+Finally, @BrosOstl04 note that these two models are instead special cases of the same general model, in which $\hat L_\text{reg} = b\times S^a $ where $a$ and $b$ are constants.
 
-Finally, @BrosOstl04 note that these two
-models are instead special cases of the same general model, in which
-
-$$\hat L_\text{reg} = b\times S^a\,, $${#eq:reg}
-
-where $a$ and $b$ are constants.
-
-Although all of these models fit the data well enough, they neglect a
+All three of models fit the data well enough, they neglect a
 fundamental piece of ecological knowledge about food webs: as identified by
 @Mart92, the number of links $L$ in a food web with $S$ nodes can be no lower
 than $S-1$, and no higher than $S^2$.
+
+
 The current favourite is a power-law relationship:  $L = b\times S^a$.
+
 Power laws are a popular means of describing scaling relationships in many parts of science and were first applied to food webs by @BrosOstl04.
+
 Power laws are very flexible, and indeed this
 function matches empirical data well -- so well that it is often treated as a "true" model which captures the scaling of link number with species richness.
+
 Prior to the introduction of the power law relationship, common models included assuming that $L$ was in constant proportion to either $S$ or $S^2$.
+
 These models all have clear shortcomings.
+
 While flexible, the power law relationship is limited because the parameters are difficult to reason about ecologically.
+
 This is in part because many mechanisms can produce power-law shaped relationships.
+
 One weakness which all models have in common is their very flexibility: they can produce predicted values of $L$ which are ecologically impossible.
+
 <!-- fuse these paragraphs?  -->
 The number of links in a foodweb does not simply scale with the number of
 species: it also must obey constraints fixed by biology.
+
 These constraints determine both the maximum and minimum number of links in a web.
-As discussed, the maximum number of links is $S^2$; the minimum number, assuming at least some species are heterotrophs, is $S-1$. To be part of a foodweb, a species must have a trophic relationship with at least one other species in the connected network.
+
+As discussed, the maximum number of links is $S^2$; the minimum number, assuming at least some species are heterotrophs, is $S-1$.
+
+To be part of a foodweb, a species must have a trophic relationship with at least one other species in the connected network.
+
 Numerous simple foodwebs could have this minimal number of links -- for example, a linear food chain wherein each trophic
 level consists of a single species, each of which consumes only the species below it.
+
 These constraints have not been used in previous attempts to model the
 relationship between $L$ and $S$. This makes prediction difficult, since models without this constraint can make unrealistic predictions of $L$.
 
-<!-- may we present: the shifted-beta-binomial modle -->
+## presenting: the Flexible Links model
 Here we suggest a new perspective for a model of $L$ as a
 function of $S$.
 We model the distribution of observations as a shifted beta-binomial variable.
