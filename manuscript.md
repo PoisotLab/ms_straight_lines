@@ -80,7 +80,7 @@ level consists of a single species, each of which consumes only the species belo
 These constraints have not been used in previous attempts to model the
 relationship between $L$ and $S$. This makes prediction difficult, since models without this constraint can make unrealistic predictions of $L$.
 
-## presenting: the Flexible Links model
+##### presenting: the Flexible Links model
 Here we suggest a new perspective for a model of $L$ as a
 function of $S$.
 We model the distribution of observations as a shifted beta-binomial variable.
