@@ -108,7 +108,8 @@ function plot_links_quantile(model; title="", xlabel="", ylabel="", linecolor=""
     quant_500 = neg_to_zeros.(quantile.(eachcol(model), 0.5))
 
     plot(S, quant_985, fill=quant_015, color=:darkgrey, label="",
-        title=title, xlabel=xlabel, ylabel=ylabel, framestyle=:box) # 97% PI
+        title=title, title_location=:left, titlefontsize=11,
+        xlabel=xlabel, ylabel=ylabel, framestyle=:box) # 97% PI
     plot!(S, quant_890, fill=quant_110, color=:lightgrey, label="") # 89% PI
     plot!(S, quant_500, linecolor=linecolor, linewidth=3, label="") # Median link number
     plot!(S, mms, linecolor=:black, label="") # Minimum number of links
@@ -118,13 +119,13 @@ function plot_links_quantile(model; title="", xlabel="", ylabel="", linecolor=""
     yaxis!(:log, ylims = (1,100000), ylabel=ylabel)
 end
 
-plot_lssl = plot_links_quantile(lssl_cf_links, title="A - lssl",
+plot_lssl = plot_links_quantile(lssl_cf_links, title="A. LSSL",
     ylabel="Number of links", linecolor=lssl_color)
-plot_const = plot_links_quantile(const_cf_links, title="B - constant connect",
+plot_const = plot_links_quantile(const_cf_links, title="B. Constant connectance",
     linecolor=const_color)
-plot_powerlaw = plot_links_quantile(powerlaw_cf_links, title="C - power law",
+plot_powerlaw = plot_links_quantile(powerlaw_cf_links, title="C. Power law",
     xlabel="Species richness", ylabel="Number of links", linecolor=powerlaw_color)
-plot_betab = plot_links_quantile(betab_cf_links, title="D - beta binomial",
+plot_betab = plot_links_quantile(betab_cf_links, title="D. Shifted beta-binomial",
     xlabel="Species richness", linecolor=betab_color)
 
 plot(plot_lssl, plot_const, plot_powerlaw, plot_betab, layout=(2,2))
@@ -143,7 +144,8 @@ beta_98 = quantile.(bb_rand, 0.985) .+ S .- 1
 beta_02 = quantile.(bb_rand, 0.015) .+ S .- 1
 beta_50 = quantile.(bb_rand, 0.5)  .+ S .- 1
 
-links_beta_map = plot(S, beta_98, fill=beta_02,label="", colour=:darkgrey, title="A - MAP values", framestyle=:box)
+links_beta_map = plot(S, beta_98, fill=beta_02,label="", colour=:darkgrey,
+    title="A. Shifted beta-binomial (MAP)", title_location=:left, titlefontsize=11, framestyle=:box)
 plot!(S, beta_89, fill=beta_11,label="", colour=:lightgrey)
 plot!(S, beta_50, color=betab_color, label="", linewidth=2)
 plot!(S, mms, linecolor=:black, label="") # Minimum number of links
@@ -162,7 +164,8 @@ approx_89 = quantile.(approxs, 0.89)
 approx_11 = quantile.(approxs, 0.11)
 approx_50 = quantile.(approxs, 0.5)
 
-links_normal = plot(S, approx_89, fill=approx_11,label="", colour=:lightgrey, title="B - normal approximation", framestyle=:box)
+links_normal = plot(S, approx_89, fill=approx_11,label="", colour=:lightgrey,
+    title="B. Normal approximation", title_location=:left, titlefontsize=11, framestyle=:box)
 plot!(S, approx_50, color=betab_color, label="", linewidth=2)
 plot!(S, mms, linecolor=:black, label="") # Minimum number of links
 plot!(S, Ms, linecolor=:black, label="") # Maximum number of links
@@ -197,7 +200,7 @@ co_emp = d[:links] ./ (d[:nodes] .^2)
 
 # Connectance vs species
 connectance_beta = plot(S, range(beta015, stop=beta985, length=1000), color=:darkgrey,  fill=:darkgrey,
-    label="", title="A", framestyle=:box) # 97% PI
+    label="", title="A", title_location=:left, titlefontsize=11, framestyle=:box) # 97% PI
 plot!(S, range(beta11, stop=beta89, length=1000), color=:lightgrey, fill=:lightgrey, label="") # 89% PI
 plot!(S, beta500, linecolor=betab_color, linewidth=2, label="") # Median connectance
 scatter!(d[:nodes], co_emp, color=:grey, label="") # Empirical connectance
@@ -206,7 +209,7 @@ xaxis!(:log, "Species richness")
 yaxis!("Connectance")
 
 
-# 4B distribution of average degree
+# 4B distribution of linkage density
 
 ## scale the "expected" distribution according to the mimum value:
 bquant_LS = LocationScale.(msl, S .- msl, beta_map)
@@ -217,14 +220,15 @@ beta11_LS = quantile.(bquant_LS, 0.11)
 beta89_LS = quantile.(bquant_LS, 0.89)
 beta50_LS = quantile.(bquant_LS, 0.50)
 
-avg_degree_beta = plot(S, beta985_LS, fill = beta015_LS, color=:darkgrey, lab="", title="B", framestyle=:box)
-plot!(S, beta11_LS, fill = beta89_LS, colour = :lightgrey, lab="")
+avg_degree_beta = plot(S, beta985_LS, fill=beta015_LS, color=:darkgrey, lab="", title="B",
+    title_location=:left, titlefontsize=11, framestyle=:box)
+plot!(S, beta11_LS, fill=beta89_LS, colour=:lightgrey, lab="",)
 plot!(S, beta50_LS, linecolor=betab_color, linewidth=2, lab="")
 scatter!(d.nodes, d.links ./ d.nodes, colour=:grey, lab="")
 plot!(S, msl, linecolor=:black, lab="")
 plot!(S, S, linecolor=:black, lab="")
 xaxis!(:log, "Species richness")
-yaxis!(:log, "Average degree")
+yaxis!(:log, "Linkage density")
 
 
 plot(connectance_beta, avg_degree_beta, label=(1,2), lab="")
