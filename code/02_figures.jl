@@ -128,7 +128,7 @@ plot_const = plot_links_quantile(const_cf_links, title="B. Constant connectance"
     linecolor=const_color)
 plot_powerlaw = plot_links_quantile(powerlaw_cf_links, title="C. Power law",
     xlabel="Species richness", ylabel="Number of links", linecolor=powerlaw_color)
-plot_betab = plot_links_quantile(betab_cf_links, title="D. Shifted beta-binomial",
+plot_betab = plot_links_quantile(betab_cf_links, title="D. Flexible links",
     xlabel="Species richness", linecolor=betab_color)
 
 plot(plot_lssl, plot_const, plot_powerlaw, plot_betab, layout=(2,2))
@@ -148,9 +148,9 @@ beta_02 = quantile.(bb_rand, 0.015) .+ S .- 1
 beta_50 = quantile.(bb_rand, 0.5)  .+ S .- 1
 
 links_beta_map = plot(S, beta_98, fill=beta_02,label="", colour=:darkgrey,
-    title="A. Shifted beta-binomial (MAP)", title_location=:left, titlefontsize=11, framestyle=:box)
+    title="A. Flexible links (MAP)", title_location=:left, titlefontsize=11, framestyle=:box)
 plot!(S, beta_89, fill=beta_11,label="", colour=:lightgrey)
-plot!(S, beta_50, color=betab_color, label="", linewidth=2)
+plot!(S, beta_50, color=betab_color, label="", linewidth=4)
 plot!(S, mms, linecolor=:black, label="") # Minimum number of links
 plot!(S, Ms, linecolor=:black, label="") # Maximum number of links
 scatter!(d[:nodes], d[:links], label="", color=:grey) # Empirical links
@@ -169,7 +169,7 @@ approx_50 = quantile.(approxs, 0.5)
 
 links_normal = plot(S, approx_89, fill=approx_11,label="", colour=:lightgrey,
     title="B. Normal approximation", title_location=:left, titlefontsize=11, framestyle=:box)
-plot!(S, approx_50, color=betab_color, label="", linewidth=2)
+plot!(S, approx_50, color=betab_color, label="", linewidth=4)
 plot!(S, mms, linecolor=:black, label="") # Minimum number of links
 plot!(S, Ms, linecolor=:black, label="") # Maximum number of links
 scatter!(d[:nodes], d[:links], label="", color=:grey) # Empirical links
@@ -205,7 +205,7 @@ co_emp = d[:links] ./ (d[:nodes] .^2)
 connectance_beta = plot(S, range(beta015, stop=beta985, length=1000), color=:darkgrey,  fill=:darkgrey,
     label="", title="A", title_location=:left, titlefontsize=11, framestyle=:box) # 97% PI
 plot!(S, range(beta11, stop=beta89, length=1000), color=:lightgrey, fill=:lightgrey, label="") # 89% PI
-plot!(S, beta500, linecolor=betab_color, linewidth=2, label="") # Median connectance
+plot!(S, beta500, linecolor=betab_color, linewidth=4, label="") # Median connectance
 scatter!(d[:nodes], co_emp, color=:grey, label="") # Empirical connectance
 plot!(S, ms, label="", linecolor=:black) # Minimum connectance
 xaxis!(:log, "Species richness")
@@ -226,7 +226,7 @@ beta50_LS = quantile.(bquant_LS, 0.50)
 avg_degree_beta = plot(S, beta985_LS, fill=beta015_LS, color=:darkgrey, lab="", title="B",
     title_location=:left, titlefontsize=11, framestyle=:box)
 plot!(S, beta11_LS, fill=beta89_LS, colour=:lightgrey, lab="",)
-plot!(S, beta50_LS, linecolor=betab_color, linewidth=2, lab="")
+plot!(S, beta50_LS, linecolor=betab_color, linewidth=4, lab="")
 scatter!(d.nodes, d.links ./ d.nodes, colour=:grey, lab="")
 plot!(S, msl, linecolor=:black, lab="")
 plot!(S, S, linecolor=:black, lab="")
@@ -275,7 +275,7 @@ end
 
 plot(S, get_quantile(0.015), fill=get_quantile(0.985), color=:darkgrey, label="", framestyle=:box) # 97% PI
 plot!(S, get_quantile(0.11), fill=get_quantile(0.89), color=:lightgrey, label="") # 89% PI
-plot!(S, get_quantile(0.5), linecolor=betab_color, linewidth=2, lab = "")
+plot!(S, get_quantile(0.5), linecolor=betab_color, linewidth=4, lab = "")
 xaxis!(:log, "Species richness")
 yaxis!("k")
 savefig(joinpath("figures", "k_powerlaw"))
@@ -299,12 +299,11 @@ realistic_lssl = realistic_links(lssl_cf_links)
 realistic_const = realistic_links(const_cf_links)
 realistic_powerlaw = realistic_links(powerlaw_cf_links)
 
-plot(S, realistic_lssl, color=lssl_color, linewidth=1.5, label="LSSL",
-    legend=:bottomright, foreground_color_legend=nothing, background_color_legend=:white,
-    framestyle = :box)
-plot!(S, realistic_const, color=const_color, linewidth=1.5, label="Constant connectance")
-plot!(S, realistic_powerlaw, color=powerlaw_color, linewidth=1.5, label="Power law")
-plot!(S, realistic_betab, color=betab_color, linewidth=1.5, label="Shifted beta-binomial")
+plot(S, realistic_lssl, color=lssl_color, linewidth=3, label="LSSL",
+    legend=:bottomright, foreground_color_legend=nothing, background_color_legend=:white)
+plot!(S, realistic_const, color=const_color, linewidth=2.5, label="Constant connectance")
+plot!(S, realistic_powerlaw, color=powerlaw_color, linewidth=2.5, label="Power law")
+plot!(S, realistic_betab, color=betab_color, linewidth=2.5, label="Shifted beta-binomial")
 xaxis!(:log, "Species richness")
 yaxis!("Proportion of realistic link numbers")
 savefig(joinpath("figures", "real_predict"))
