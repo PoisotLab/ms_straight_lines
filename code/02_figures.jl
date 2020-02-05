@@ -56,11 +56,14 @@ powerlaw_cf_links = powerlaw_posterior[r"counterfactual_links"]
 powerlaw_cf_links = powerlaw_cf_links[:, S]
 
 
+
+#7570B3
+
 # Colors
-lssl_color = "#585050"
-const_color = "#5E982F"
-powerlaw_color = "#D61F62"
-betab_color = "#4E68E6"
+lssl_color = "#7570B3"
+const_color = "#D95F02"
+powerlaw_color = "#E7298A"
+betab_color = "#1B9E77"
 
 # Figure 1 -- Beta fit with posterior samples
 
