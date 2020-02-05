@@ -26,6 +26,7 @@ Equivanlently, $L_D \times 2$ gives the _average degree_: the average number of 
 Accurate predictions of ecological networks are extremely useful in many ecological contexts; thus it is important to have an ecologically accurate predictive model for the underlying value, $L$.
 
 <!-- Introducing the past of food web models -->
+
 Because $L$ represents such a fundamental quantity, many predictive models have been considered over the years.
 Here we describe three popular approaches before describing our own proposed model.
 The link-species scaling (LSSL) model introduced by @CoheBria84 hypothesized that all networks have the same average degree (_i.e._ number of links per species). Links are modeled as the number of species times a constant:
@@ -306,7 +307,6 @@ connectance **ref P&G**.
 We argue that the use of a $z$-score could help identify significantly under (over) sampled networks and estimate their number of missing (extra) links.
 
 
-
 ## Conclusions
 
 Here we derived a shifted beta-binomial model for the prediction of the number of links in ecological networks, which outperformed the three previous and more commonly used models describing the relationship between the numbers of links and species (the link-species scaling, the constant connectance and the power law). More importantly, we showed how our model's parameters non only had a clear ecological interpretation, but how they made predictions with remained within biological boundaries.
@@ -315,9 +315,6 @@ We believe that the appropriate modeling of the number of interactions can allow
 
 Our ability to model the number of links in an ecological network does not diminish the value of data collection. Among others, data on interspecific interactions helps understanding more deeply an ecological community and the relationship between two or more given species, as well as making better predictions in the statistical modelling of networks.
 
-<<<<<<< HEAD
-=======
-## Thinking generatively in ecology
 Generative models are flexible and powerful tools for understanding and predicting natural phenomena.
 These models aim to
 create simulated data with the same properties as observations.
@@ -326,8 +323,10 @@ the ecological process being studied, and a distribution which represents our ob
 Both of these components can capture our ecological understanding of a system, including any constraints on the
 quantities studied.
 
-## Conclusions
->>>>>>> 69ccd8cddbbd6c3c8b49d768f5e72ac6f128801e
+
+
+
+
 
 <!-- moving this to end because I don't really know where it fits in the narrative -->
 @WillMart04 identified that most food webs appear to be limited in their height,
