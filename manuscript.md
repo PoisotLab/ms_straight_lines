@@ -279,7 +279,7 @@ world" or "scale free" regimes when they exceed a certain connectance; this is
 because for small networks, connectance is higher, and only decreases towards
 $p$ when the term in $S^{-2}$ in +@eq:co vanishes.
 
-![**Only very large food webs obey a power law.** Extent $k$ to which the relationship between $L$ and $S$ obeys a power law, as a function of species richness, obtained from the maximum _a posteriori_ estimates of the shifted beta-binomial model. The colored line represent the median predicted $k$ and the grey areas cover the 78% and 97% percentile intervals.](figures/k_powerlaw.png){#fig:powerlawk}
+![**Only very large food webs obey a power law.** Extent $k$ to which the relationship between $L$ and $S$ deviates from a power law, as a function of species richness, obtained from the maximum _a posteriori_ estimates of the shifted beta-binomial model. The colored line represent the median predicted $k$ and the grey areas cover the 78% and 97% percentile intervals.](figures/k_powerlaw.png){#fig:powerlawk}
 
 ## Normal approximation provides an analytic z-score
 
