@@ -183,10 +183,15 @@ Table 2. **Parameter estimates for all models**. Mean and Standard deviation (SD
 | Flexible links | $\mu$     | proportion of flexible links realized | 0.086 | 0.0037 |
 |                      | $\phi$    | concentration around value of $\mu$   | 24.3  | 2.4    |
 
-Our approach to fitting this models recovered parameter estimates that are broadly congruent with previous models.
-Our value for $\mu$ is about 0.09, which is close to previous estimates of $b$ in the constant connectance model of 0.12
-Although we did not use the same approach to parameter estimation as previous authors, we found very consistent values of b for the LSSL model.
-We find a value of 2.2 for $b$ which is close to the value of approximately 2 used by @CoheBria84
+
+Although we did not use the same approach to parameter estimation as previous authors, our approach to fitting these models recovered parameter estimates that are broadly congruent with previous models.
+We found very consistent values of b for the LSSL model: we found a value of 2.2 which is close to the value of approximately 2 used by @CoheBria84.
+Similarly, we found a value 0.12 for $b$ for the constant connectance model, which was consistent with the 0.14 found by @Mart92.
+Finally, the parameters values we found for the power law were also comparable to the ones found by @Mart92 and @BrosOstl04.
+
+With regard to the flexible link model, our value for $\mu$ was about 0.09, which is close to previous estimates of $b$ in the constant connectance model of 0.12.
+In addition, we obtained a rather large value of 24.3 for $\phi$, which shrinks the variance of mean $p$ to approximatively 0.003 ($var(p)=\mu(1-\mu)/(1+\phi)$).
+
 
 
 ### Connectance and linkage density can be derived from a model for links
@@ -207,11 +212,15 @@ $$ L_D = \frac{\hat L}{S} = p \left(S - \frac{S-1}{S} \right) +  \frac{S-1}{S},$
 
 #### Discussion of these equations
 
-the equation for $L_D$ means that the addition of $p^{-1}$ new species should increase the linkage density in the food web by slightly more than 1; of course, for increasingly large values of $S$,
-this may result in an unrealistic linkage density, as species are limited by
-biological mechanisms such as handling time, capture efficiency, _etc_, in the
-number of interactions they can establish. Most ecological networks
-are reasonably small and so this does not look like an unreasonable assumption.
+The equation for $L_D$ means that the difference in linkage density between two networks of $S_1$ and $S_2$ species is
+$$
+p(S_2-S_1) + (1-p)\left(\frac{1}{S_1}-\frac{1}{S_2}\right)
+$$
+This implies that the addition of $n$ species should increase the linkage density by approximately $p\times n$.
+For example, the addition of $p^{-1}$ new species should increase the linkage density in the food web by roughly 1, meaning that each species in the original network would be expected to develop 2 additional interactions.
+Of course, for increasingly large values of $S$, this may result in an unrealistic average degree, as species are limited by biological mechanisms such as handling time, capture efficiency, _etc_, in the
+number of interactions they can establish.
+Most ecological networks are however reasonably small and so this does not look like an unreasonable assumption.
 
 Note that the expression of connectance is no longer a polynomial; at large
 values of $S$, the value of $m(S)$ (equivalently the terms in $S^{-1}$ and
@@ -243,7 +252,7 @@ This means that the distribution for $Co$ will be a shifted beta distribution, a
 We can convert the distribution for $p$ into one for $Co$ by replacing $p$ with a transformation of $Co$ as described above, and rescaling by the new range:
 
 $$
-[Co | S, \mu, \phi] = \frac{\left(Co - m(S)\right)^{\mu \phi - 1}\left(1 - Co\right)^{(1 - \mu)\phi - 1} }{(1 - m(S))^{\phi - 1} \times B(\mu \phi, (1 - \mu)\phi)}
+[Co | S, \mu, \phi] = \frac{\left(Co - \frac{S-1}{S^2}\right)^{\mu \phi - 1}\left(1 - Co\right)^{(1 - \mu)\phi - 1} }{(1 - \frac{S-1}{S^2})^{\phi - 1} \times B(\mu \phi, (1 - \mu)\phi)}
 $${#eq:shiftBetaCo}
 
 
