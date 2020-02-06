@@ -210,12 +210,14 @@ $$ L_D = \frac{\hat L}{S} = p \left(S - \frac{S-1}{S} \right) +  \frac{S-1}{S},$
 
 #### Discussion of these equations
 
-The equation for $L_D$ means that the difference in linkage density between two networks of $S_1$ and $S_2$ species is
-$$
-p(S_2-S_1) + (1-p)\left(\frac{1}{S_1}-\frac{1}{S_2}\right).
-$$
+For large ecological systems, where $S$ has a high value, +@eq:co2 and +@eq:ld respectively approach
+
+$$Co \approx p $$
+
+$$ L_D \approx pS $$
+
 This implies that the addition of $n$ species should increase the linkage density by approximately $p\times n$.
-For example, the addition of $p^{-1}$ new species should increase the linkage density in the food web by roughly 1, meaning that each species in the original network would be expected to develop 2 additional interactions.
+For example, the addition of 11 new species ($p^{-1}$) should increase the linkage density in the food web by roughly 1, meaning that each species in the original network would be expected to develop 2 additional interactions.
 Of course, for increasingly large values of $S$, this may result in an unrealistic average degree, as species are limited by biological mechanisms such as handling time, capture efficiency, _etc_, in the
 number of interactions they can establish.
 Most ecological networks are however reasonably small and so this does not look like an unreasonable assumption.
@@ -226,12 +228,6 @@ Therefore, for large enough ecological networks, we should expect a connectance
 which is independent of $S$. Thus $p$ has an interesting ecological
 interpretation: it represents the average connectance of networks large enough
 that the proportion $(S-1)/S^{2}$ is negligible.
-
-For large ecological systems, where $S$ has a high value, +@eq:co2 and +@eq:ld respectively approach
-
-$$Co \approx p $$
-
-$$ L_D \approx pS $$
 
 In previous work it has been debated whether $Co$ is a constant across all communities.
 However, some authors have found that this does not hold for small communities.
