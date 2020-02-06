@@ -39,6 +39,9 @@ Martinez @Mart92 instead suggested that the number of links should be in proport
 This is called the  *constant connectance* model, because it implies a constant ratio $Co = L/S^2$ for all networks.
 This model was a first attempt to recongize the constraint discussed above: no network can have more than $S^2$ interactions.
 Finally, @BrosOstl04 note that these two models are instead special cases of the same general model, in which $\hat L_\text{reg} = b\times S^a $ where $a$ and $b$ are constants.
+Power laws are very flexible, and indeed this
+function matches empirical data well -- so well that it is often treated as a "true" model which captures the scaling of link number with species richness.
+However, the parameters of a power law relationship are difficult to reason about ecologically. 
 
 All three of models fit the data well enough, they neglect a
 fundamental piece of ecological knowledge about food webs: as identified by
@@ -50,12 +53,6 @@ The current favourite is a power-law relationship:  $L = b\times S^a$.
 
 Power laws are a popular means of describing scaling relationships in many parts of science and were first applied to food webs by @BrosOstl04.
 
-Power laws are very flexible, and indeed this
-function matches empirical data well -- so well that it is often treated as a "true" model which captures the scaling of link number with species richness.
-
-Prior to the introduction of the power law relationship, common models included assuming that $L$ was in constant proportion to either $S$ or $S^2$.
-
-These models all have clear shortcomings.
 
 While flexible, the power law relationship is limited because the parameters are difficult to reason about ecologically.
 
