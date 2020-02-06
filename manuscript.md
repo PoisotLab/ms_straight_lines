@@ -28,60 +28,35 @@ Equivalently, $L_D \times 2$ gives the _average degree_: the average number of s
 Accurate predictions of ecological networks are extremely useful in many ecological contexts; thus it is important to have an ecologically accurate predictive model for the underlying value, $L$.
 
 #### Past models of L as a function of S
-<!-- Introducing the past of food web models -->
-
 Because $L$ represents such a fundamental quantity, many predictive models have been considered over the years.
 Here we describe three popular approaches before describing our own proposed model.
 The *link-species scaling (LSSL)* model introduced by @CoheBria84 hypothesized that all networks have the same average degree (_i.e._ number of links per species).
-Links are modeled as the number of species times a constant: $\hat L_\text{LSSL} = b\times S$ with $b \approx 2$.
+Links are modeled as the number of species times a constant: $\hat L_\text{LSSL} = b\times S$, with $b \approx 2$.
 This model imagines that every species added to a community increases the number of interactions by two -- for example, an animal which consumes one resource and is consumed by one predator.
 Martinez @Mart92 instead suggested that the number of links should be in proportion to the _square_ of species richness: $\hat L_\text{CC} = b\times S^2$, where $c$ is a constant in $]0,1[$.
 This is called the  *constant connectance* model, because it implies a constant ratio $Co = L/S^2$ for all networks.
 This model was a first attempt to recongize the constraint discussed above: no network can have more than $S^2$ interactions.
 Finally, @BrosOstl04 note that these two models are instead special cases of the same general model, in which $\hat L_\text{reg} = b\times S^a $ where $a$ and $b$ are constants.
+Power laws are a popular means of describing scaling relationships in many parts of science and were first applied to food webs by @BrosOstl04.
 Power laws are very flexible, and indeed this
 function matches empirical data well -- so well that it is often treated as a "true" model which captures the scaling of link number with species richness.
 However, the parameters of a power law relationship are difficult to reason about ecologically.
-
-All three of models fit the data well enough, they neglect a
-fundamental piece of ecological knowledge about food webs: as identified by
-@Mart92, the number of links $L$ in a food web with $S$ nodes can be no lower
-than $S-1$, and no higher than $S^2$.
-
-
-The current favourite is a power-law relationship:  $L = b\times S^a$.
-
-Power laws are a popular means of describing scaling relationships in many parts of science and were first applied to food webs by @BrosOstl04.
-
-
-While flexible, the power law relationship is limited because the parameters are difficult to reason about ecologically.
-
 This is in part because many mechanisms can produce power-law shaped relationships.
-
 One weakness which all models have in common is their very flexibility: they can produce predicted values of $L$ which are ecologically impossible.
 
-<!-- fuse these paragraphs?  -->
-The number of links in a foodweb does not simply scale with the number of
-species: it also must obey constraints fixed by biology.
-
-These constraints determine both the maximum and minimum number of links in a web.
-
-As discussed, the maximum number of links is $S^2$; the minimum number, assuming at least some species are heterotrophs, is $S-1$.
-
-To be part of a foodweb, a species must have a trophic relationship with at least one other species in the connected network.
-
+All three of the models described above share a second shortcoming: they have no means of including the _minimum_ number of interactions.
+This minimum is S-1 in communities where all species interact and at least some of the organisms are heterotrophs @Mart92.
 Numerous simple foodwebs could have this minimal number of links -- for example, a linear food chain wherein each trophic
-level consists of a single species, each of which consumes only the species below it.
-
+level consists of a single species, each of which consumes only the species below it; or a grazing herbivore which feeds on every plant in a field.
+Thus interaction number is required to vary between $S^2$ and $S-1$.
 These constraints have not been used in previous attempts to model the
-relationship between $L$ and $S$. This makes prediction difficult, since models without this constraint can make unrealistic predictions of $L$.
+relationship between $L$ and $S$.
+This makes prediction difficult, since models without this constraint can make unrealistic predictions of $L$.
 
 ##### presenting: the flexible Links model
-Here we suggest a new perspective for a model of $L$ as a
-function of $S$.
+Here we suggest a new perspective for a model of $L$ as a function of $S$.
 We model the distribution of observations as a shifted beta-binomial variable.
-This automatically includes the maximum constraint, since the number of species determines the
-number of possible links.
+This automatically includes the maximum constraint, since the number of species determines the number of possible links.
 We include the minimum constraint by modelling not the total
 number of links, but the number in excess of the minimum, which we term
 "flexible" links.
@@ -112,13 +87,11 @@ For explanation of the model derivation, fitting, and comparison, see Experiment
 In this paper we will describe this new approach to modelling $L$, and show how
 it compares to previous models. We estimate parameters for this model using open
 data from the `mangal.io` networks database. Finally, we show
-how this model for $L$ suggests a new and more useful way of predicting network
-structure and discuss how generative models can be useful tools for including our knowledge of a system into our predictions.
+how this model for $L$ suggests a new and more useful way of thinking about metrics of network structure and discuss how generative models can be useful tools for including our knowledge of a system into our predictions.
 
 # Results and Discussion
 
 ### Flexible link model fits better and makes a plausible range of predictions
-
 
 **Table 1. Model comparisons:** Pareto-smoothed important sampling values and differences relative to the maximum in the expected log predictive density for the flexible link and the three competing models. The mean and standard deviation (SD) (standard error (SE)) is given for the two metrics.
 
@@ -140,9 +113,6 @@ The calculation of PSIS-LOO can also furnish some clues about potential model fi
 Information criteria are only a rough guide to model selection; as always domain expertise should take precedence.
 The expected log predictive density (ELPD), on the other hand, measures the predictive performance of the model; here, higher values indicate more reliable predictions.
 This suggests that the flexible link model will make the best predictions of $L$.
-
-
-
 
 Useful predictions for $L$ must however stay within realistic boundaries determined by ecological principles.
 We generated posterior predictions for all models and visualized them against these constraints (@fig:PP_counterfactual). The LSSL model clearly underestimated the number of links, especially in large networks: its predictions were frequently lower than the minimum $S-1$.
