@@ -56,9 +56,6 @@ powerlaw_cf_links = powerlaw_posterior[r"counterfactual_links"]
 powerlaw_cf_links = powerlaw_cf_links[:, S]
 
 
-
-#7570B3
-
 # Colors
 lssl_color = "#7570B3"
 const_color = "#D95F02"
@@ -162,14 +159,18 @@ means = (Ms .- mms) .* mu_map .+ S .- 1
 vars = (Ms .- mms) .* mu_map .* (1 .- mu_map) .* (1 .+ S .* (S .- 1) .* (1 / (1 + phi_map)))
 
 approxs = Normal.(means, sqrt.(vars))
+tnormal = truncated.(approxs, 0.01, Inf)
 
-approx_89 = quantile.(approxs, 0.89)
-approx_11 = quantile.(approxs, 0.11)
-approx_50 = quantile.(approxs, 0.5)
+tnormal_89 = quantile.(tnormal, 0.89)
+tnormal_11 = quantile.(tnormal, 0.11)
+tnormal_98 = quantile.(tnormal, 0.985)
+tnormal_02 = quantile.(tnormal, 0.015)
+tnormal_50 = quantile.(tnormal, 0.5)
 
-links_normal = plot(S, approx_89, fill=approx_11,label="", colour=:lightgrey,
+links_normal = plot(S, tnormal_98, fill=tnormal_02,label="", colour=:darkgrey,
     title="B. Normal approximation", title_location=:left, titlefontsize=11, framestyle=:box)
-plot!(S, approx_50, color=betab_color, label="", linewidth=4)
+plot!(S, tnormal_89, fill=tnormal_11,label="", colour=:lightgrey)
+plot!(S, tnormal_50, color=betab_color, label="", linewidth=4)
 plot!(S, mms, linecolor=:black, label="") # Minimum number of links
 plot!(S, Ms, linecolor=:black, label="") # Maximum number of links
 scatter!(d[:nodes], d[:links], label="", color=:grey) # Empirical links
