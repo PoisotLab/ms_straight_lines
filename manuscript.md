@@ -110,7 +110,6 @@ $${#eq:lhat}
 
 We use the notation $L_{FL}$ to represent that our model considers the number of "flexible" links in a food web, ie the number of links in excess of the minimum up to the maximum.
 
-We use the symbol $L_{BB}$ to represent our estimate of $L$, because our model defines a beta-Binomial likelihood.
 For explanation of the model derivation, fitting, and comparison, see Experimental Procedures.
 
 In this paper we will describe this new approach to modelling $L$, and show how
@@ -122,7 +121,7 @@ structure and discuss how generative models can be useful tools for including ou
 # Results and Discussion
 
 
-Table 1. **Model comparisons** PSIS-LOO values for the shifted Beta-Binomial model and the three competing models.
+Table 1. **Model comparisons** PSIS-LOO values for the flexible link model and the three competing models.
 Pareto-smoothed important sampling serves as a guide to model selection; like other information
 criteria it approximates the error in cross-validation predictions.
 Smaller values indicate a model which makes better predictions.
@@ -142,7 +141,7 @@ The expected log predictive density (ELPD) measures the predictive performance o
 
 Our model for flexible links outperforms previous solutions to the problem of
 modelling $L$.
-The beta-binomial model had the most favourable values of PSIS-LOO information
+The flexible link model had the most favourable values of PSIS-LOO information
 criterion (Table) and of expected log predictive density (ELPD), relative to the three models which used a negative binomial observation model.
 This suggests that it will make the best predictions of $L$.
 All models fit well, without any problematic warnings from Stan's diagnostics (see Experimental Procedures).
@@ -153,10 +152,10 @@ Useful predictions for L must stay within realistic boundaries determined by eco
 We generated posterior predictions for all models and visualized them agains these constraints (@fig:PP_counterfactual). The LSSL model clearly underestimated the number of links, especially in large networks.
 More importantly, its predictions were frequently lower than the minimum $S-1$.
 The constant connectance model and power law model also made many predictions below this value, especially for small values of $S$.
-The shifted beta-binomial distribution defined by our model made roughly the same predictions, but within ecologically possible values.
+The flexible link model made roughly the same predictions, but within ecologically possible values.
 
 
-![**The Flexible link model fits better and makes a plausible range of predictions.** Number of links as a function of species richness obtained from the posterior distributions of A) the link-species scaling, B) the constant connectance, C) the power law and D) the shifted beta-binomial models. In each panel, the colored line represent the median predicted link number and the grey areas cover the 78% and 97% percentile intervals. Empirical data from the `mangal.io` database are plotted in each panel (grey dots), as well as the minimal $S-1$ and maximal $S^2$ number of links (lower and upper grey lines, respectively).  ](figures/models_links.png){#fig:PP_counterfactual}
+![**The Flexible link model fits better and makes a plausible range of predictions.** Number of links as a function of species richness obtained from the posterior distributions of A) the link-species scaling, B) the constant connectance, C) the power law and D) the flexible link models. In each panel, the colored line represent the median predicted link number and the grey areas cover the 78% and 97% percentile intervals. Empirical data from the `mangal.io` database are plotted in each panel (grey dots), as well as the minimal $S-1$ and maximal $S^2$ number of links (lower and upper grey lines, respectively).  ](figures/models_links.png){#fig:PP_counterfactual}
 
 ### Proportion of predictions in correct range increases with S
 
@@ -164,7 +163,7 @@ The constraints on food web structure are especially important for small communi
 This is emphasized in +@fig:real_predict, which shows that only a fraction of the models prediction were within realistic ecological constraints.
 The link-species scaling model made around 29% unrealistic predictions of link numbers for every value of $S$ ($3 \leq S \leq 750$).
 The constant connectance and power law models, on the other hand, also produced unrealistic results but for small networks only: more than 20% were unrealistic for networks comprising less than 12 and 7 species, respectively.
-Only the shifted beta-binomial model never failed to predict numbers of links between $S-1$ and $S^2$.  
+Only the flexible link model never failed to predict numbers of links between $S-1$ and $S^2$.  
 
 ![**Proportion of predictions in correct range increases with S.** Proportion of realistic predicted numbers of links as a function of species richness obtained from the posterior distributions of the four models. A realistic number of links for a community of S species is between $S-1$ and $S^2$.](figures/real_predict.png){#fig:real_predict}
 
@@ -183,10 +182,15 @@ Table 2. **Parameter estimates for all models**. Mean and Standard deviation (SD
 | Flexible links | $\mu$     | proportion of flexible links realized | 0.086 | 0.0037 |
 |                      | $\phi$    | concentration around value of $\mu$   | 24.3  | 2.4    |
 
-Our approach to fitting this models recovered parameter estimates that are broadly congruent with previous models.
-Our value for $\mu$ is about 0.09, which is close to previous estimates of $b$ in the constant connectance model of 0.12
-Although we did not use the same approach to parameter estimation as previous authors, we found very consistent values of b for the LSSL model.
-We find a value of 2.2 for $b$ which is close to the value of approximately 2 used by @CoheBria84
+
+Although we did not use the same approach to parameter estimation as previous authors, our approach to fitting these models recovered parameter estimates that are broadly congruent with previous models.
+We found very consistent values of b for the LSSL model: we found a value of 2.2 which is close to the value of approximately 2 used by @CoheBria84.
+Similarly, we found a value 0.12 for $b$ for the constant connectance model, which was consistent with the 0.14 found by @Mart92.
+Finally, the parameters values we found for the power law were also comparable to the ones found by @Mart92 and @BrosOstl04.
+
+With regard to the flexible link model, our value for $\mu$ was about 0.09, which is close to previous estimates of $b$ in the constant connectance model of 0.12.
+In addition, we obtained a rather large value of 24.3 for $\phi$, which shrinks the variance of mean $p$ to approximatively 0.003 ($var(p)=\mu(1-\mu)/(1+\phi)$).
+
 
 <!-- tk Francis to expand and improve -->
 
@@ -208,11 +212,15 @@ $$ L_D = \frac{\hat L}{S} = p \left(S - \frac{S-1}{S} \right) +  \frac{S-1}{S},$
 
 #### Discussion of these equations
 
-the equation for $L_D$ means that the addition of $p^{-1}$ new species should increase the linkage density in the food web by slightly more than 1; of course, for increasingly large values of $S$,
-this may result in an unrealistic linkage density, as species are limited by
-biological mechanisms such as handling time, capture efficiency, _etc_, in the
-number of interactions they can establish. Most ecological networks
-are reasonably small and so this does not look like an unreasonable assumption.
+The equation for $L_D$ means that the difference in linkage density between two networks of $S_1$ and $S_2$ species is
+$$
+p(S_2-S_1) + (1-p)\left(\frac{1}{S_1}-\frac{1}{S_2}\right)
+$$
+This implies that the addition of $n$ species should increase the linkage density by approximately $p\times n$.
+For example, the addition of $p^{-1}$ new species should increase the linkage density in the food web by roughly 1, meaning that each species in the original network would be expected to develop 2 additional interactions.
+Of course, for increasingly large values of $S$, this may result in an unrealistic average degree, as species are limited by biological mechanisms such as handling time, capture efficiency, _etc_, in the
+number of interactions they can establish.
+Most ecological networks are however reasonably small and so this does not look like an unreasonable assumption.
 
 Note that the expression of connectance is no longer a polynomial; at large
 values of $S$, the value of $m(S)$ (equivalently the terms in $S^{-1}$ and
@@ -244,7 +252,7 @@ This means that the distribution for $Co$ will be a shifted beta distribution, a
 We can convert the distribution for $p$ into one for $Co$ by replacing $p$ with a transformation of $Co$ as described above, and rescaling by the new range:
 
 $$
-[Co | S, \mu, \phi] = \frac{\left(Co - m(S)\right)^{\mu \phi - 1}\left(1 - Co\right)^{(1 - \mu)\phi - 1} }{(1 - m(S))^{\phi - 1} \times B(\mu \phi, (1 - \mu)\phi)}
+[Co | S, \mu, \phi] = \frac{\left(Co - \frac{S-1}{S^2}\right)^{\mu \phi - 1}\left(1 - Co\right)^{(1 - \mu)\phi - 1} }{(1 - \frac{S-1}{S^2})^{\phi - 1} \times B(\mu \phi, (1 - \mu)\phi)}
 $${#eq:shiftBetaCo}
 
 $$
@@ -253,7 +261,7 @@ $${#eq:shiftBetaLD}
 
 In +@fig:beta_distributions, we show that the connectance and linkage density obtained from the equations above fitted the empirical data well. Their predictions did not exceed ecological boundaries (between $(S-1)/S^2$ and 1 for connectance, and between $(S-1)/S$ and $S$ for the linkage density).
 
-![**Connectance and linkage density can be derived from a model for links.** A) Connectance and B) linkage density as a function of species richness, for the maximum _a posteriori_ estimates of the shifted beta-binomial model. In each panel, the colored line represent the median predicted quantity and the grey areas cover the 78% and 97% percentile intervals. Empirical data from the `mangal.io` database are plotted in each panel (grey dots). In A), the minimal $(S-1)/S^2$ connectance and in B) the minimal $(S-1)/S$ and maximum $S$ linkage density are plotted (grey lines).](figures/connectance_linkdens.png){#fig:beta_distributions}
+![**Connectance and linkage density can be derived from a model for links.** A) Connectance and B) linkage density as a function of species richness, for the maximum _a posteriori_ estimates of the flexible link model. In each panel, the colored line represent the median predicted quantity and the grey areas cover the 78% and 97% percentile intervals. Empirical data from the `mangal.io` database are plotted in each panel (grey dots). In A), the minimal $(S-1)/S^2$ connectance and in B) the minimal $(S-1)/S$ and maximum $S$ linkage density are plotted (grey lines).](figures/connectance_linkdens.png){#fig:beta_distributions}
 
 Connectance is more than the proportion of realized interactions. It has been associated with some of the most commonly used network metrics (@PoisGrav14, @Chag15), and contains meaningful information on the stability (@Dunn02, @Mont06) and dynamics (@VierAlme15) of ecological communities. A probability distribution for connectance non only accounts for the variability between networks, but can be used to describe fundamental properties of food webs and to identify ecological and evolutionary mechanisms shaping communities.
 
@@ -283,7 +291,7 @@ world" or "scale free" regimes when they exceed a certain connectance; this is
 because for small networks, connectance is higher, and only decreases towards
 $p$ when the term in $S^{-2}$ in +@eq:co vanishes.
 
-![**Only very large food webs obey a power law.** Extent $k$ to which the relationship between $L$ and $S$ deviates from a power law, as a function of species richness, obtained from the maximum _a posteriori_ estimates of the shifted beta-binomial model. The colored line represent the median predicted $k$ and the grey areas cover the 78% and 97% percentile intervals.](figures/k_powerlaw.png){#fig:powerlawk}
+![**Only very large food webs obey a power law.** Extent $k$ to which the relationship between $L$ and $S$ deviates from a power law, as a function of species richness, obtained from the maximum _a posteriori_ estimates of the flexible link model. The colored line represent the median predicted $k$ and the grey areas cover the 78% and 97% percentile intervals.](figures/k_powerlaw.png){#fig:powerlawk}
 
 ## Normal approximation provides an analytic z-score
 
@@ -302,7 +310,7 @@ $$ \sigma_L^2 = (S^2 - S + 1) \mu (1 - \mu)(1 + \frac{S(S-1)}{\phi + 1})$$
 
 (+@fig:MAPnormal) shows that the predictions made by the normal approximation (panel B) are similar to those made by the beta distribution parameterized with the maximum a posteriori values of $\mu$ and $\phi$ (panel A).
 
-![**The shifted beta-binomial distribution can be approximated by a normal distribution.** Number of links as a function of species richness obtained from A) the maximum _a posteriori_ estimates of the shifted beta-binomial model and B) its normal approximation. In each panel, the colored line represent the median predicted link number and the grey areas cover the 78% and 97% percentile intervals (only the 78% percentile interval is depicted in B). Empirical data from the `mangal.io` database are plotted in each panel (grey dots), as well as the minimal $S-1$ and maximal $S^2$ number of links (lower and upper grey lines, respectively).](figures/betabinmap_normal_links.png){#fig:MAPnormal}
+![**The shifted beta-binomial distribution can be approximated by a normal distribution.** Number of links as a function of species richness obtained from A) the maximum _a posteriori_ estimates of the flexible link model and B) its normal approximation. In each panel, the colored line represent the median predicted link number and the grey areas cover the 78% and 97% percentile intervals (only the 78% percentile interval is depicted in B). Empirical data from the `mangal.io` database are plotted in each panel (grey dots), as well as the minimal $S-1$ and maximal $S^2$ number of links (lower and upper grey lines, respectively).](figures/betabinmap_normal_links.png){#fig:MAPnormal}
 
 This means that given a network
 with observed species richness $S_{obs}$ and observed links $L_{obs}$, we can calculate its
@@ -323,7 +331,7 @@ We argue that the use of a $z$-score could help identify significantly under (ov
 
 ## Conclusions
 
-Here we derived a shifted beta-binomial model for the prediction of the number of links in ecological networks, which outperformed the three previous and more commonly used models describing the relationship between the numbers of links and species (the link-species scaling, the constant connectance and the power law). More importantly, we showed how our model's parameters non only had a clear ecological interpretation, but how they made predictions with remained within biological boundaries.
+Here we derived a flexible link model for the prediction of the number of links in ecological networks, which outperformed the three previous and more commonly used models describing the relationship between the numbers of links and species (the link-species scaling, the constant connectance and the power law). More importantly, we showed how our model's parameters non only had a clear ecological interpretation, but how they made predictions with remained within biological boundaries.
 
 We believe that the appropriate modeling of the number of interactions can allow scientists to tackle a wide variety of ecological questions, which otherwise could have been left unexplored. For instance, the functions (productivity, resilience, _etc._) and dynamics of ecological networks at large spatial or temporal scales could be more easily explored. It also facilitates the conduction of network studies in regions where interaction data is lacking, notably due to geographical and/or financial reasons.
 
