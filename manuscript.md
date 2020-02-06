@@ -79,7 +79,7 @@ level consists of a single species, each of which consumes only the species belo
 These constraints have not been used in previous attempts to model the
 relationship between $L$ and $S$. This makes prediction difficult, since models without this constraint can make unrealistic predictions of $L$.
 
-##### presenting: the Flexible Links model
+##### presenting: the flexible Links model
 Here we suggest a new perspective for a model of $L$ as a
 function of $S$.
 We model the distribution of observations as a shifted beta-binomial variable.
@@ -260,7 +260,7 @@ $${#eq:shiftBetaLD}
 
 In +@fig:beta_distributions, we show that the connectance and linkage density obtained from the equations above fitted the empirical data well. Their predictions did not exceed ecological boundaries (between $(S-1)/S^2$ and 1 for connectance, and between $(S-1)/S$ and $S$ for the linkage density).
 
-![**Connectance and linkage density can be derived from a model for links.** A) Connectance and B) linkage density as a function of species richness, for the maximum _a posteriori_ estimates of the flexible link model. In each panel, the colored line represent the median predicted quantity and the grey areas cover the 78% and 97% percentile intervals. Empirical data from the `mangal.io` database are plotted in each panel (grey dots). In A), the minimal $(S-1)/S^2$ connectance and in B) the minimal $(S-1)/S$ and maximum $S$ linkage density are plotted (black lines).](figures/connectance_linkdens.png){#fig:beta_distributions}
+![**Connectance and linkage density can be derived from a model for links.** A) Connectance and B) linkage density are plotted as a function of species richness, for the maximum _a posteriori_ estimates of the flexible link model. In each panel, the colored line represent the median predicted quantity and the grey areas cover the 78% and 97% percentile intervals. Empirical data from the `mangal.io` database are plotted in each panel (grey dots). In A), the minimal $(S-1)/S^2$ connectance and in B) the minimal $(S-1)/S$ and maximum $S$ linkage density are plotted (black lines).](figures/connectance_linkdens.png){#fig:beta_distributions}
 
 Connectance is more than the proportion of realized interactions. It has been associated with some of the most commonly used network metrics (@PoisGrav14, @Chag15), and contains meaningful information on the stability (@Dunn02, @Mont06) and dynamics (@VierAlme15) of ecological communities. A probability distribution for connectance non only accounts for the variability between networks, but can be used to describe fundamental properties of food webs and to identify ecological and evolutionary mechanisms shaping communities.
 
@@ -290,7 +290,7 @@ world" or "scale free" regimes when they exceed a certain connectance; this is
 because for small networks, connectance is higher, and only decreases towards
 $p$ when the term in $S^{-2}$ in +@eq:co vanishes.
 
-![**Only very large food webs obey a power law.** Extent $k$ to which the relationship between $L$ and $S$ deviates from a power law, as a function of species richness, obtained from the maximum _a posteriori_ estimates of the flexible link model. The colored line represent the median predicted $k$ and the grey areas cover the 78% and 97% percentile intervals.](figures/k_powerlaw.png){#fig:powerlawk}
+![**Only very large food webs obey a power law.** The extent $k$ to which the relationship between $L$ and $S$ deviates from a power law is plotted as a function of species richness, obtained from the maximum _a posteriori_ estimates of the flexible link model. The colored line represent the median predicted $k$ and the grey areas cover the 78% and 97% percentile intervals.](figures/k_powerlaw.png){#fig:powerlawk}
 
 ## Normal approximation provides an analytic z-score
 
@@ -299,17 +299,13 @@ Often, they wish to know if the network they have is "unusual" relative to some 
 Traditionally these comparisons have been done by constructing a Null distribution .
 But here we propose a means of doing so with math.
 
-The shifted beta-binomial can be approximated by a Normal distribution
+The shifted beta-binomial can be approximated by a normal distribution:
 
 $$ L \sim Normal(\bar{L}, \sigma_L^2) $$
 
 $$ \bar{L} = (S^2 - S + 1) \mu + S - 1$$
 
 $$ \sigma_L^2 = (S^2 - S + 1) \mu (1 - \mu)(1 + \frac{S(S-1)}{\phi + 1})$$
-
-(+@fig:MAPnormal) shows that the predictions made by the normal approximation (panel B) are similar to those made by the beta distribution parameterized with the maximum a posteriori values of $\mu$ and $\phi$ (panel A).
-
-![**The shifted beta-binomial distribution can be approximated by a normal distribution.** Number of links as a function of species richness obtained from A) the maximum _a posteriori_ estimates of the flexible link model and B) its normal approximation. In each panel, the colored line represent the median predicted link number and the grey areas cover the 78% and 97% percentile intervals (only the 78% percentile interval is depicted in B). Empirical data from the `mangal.io` database are plotted in each panel (grey dots), as well as the minimal $S-1$ and maximal $S^2$ number of links (lower and upper grey lines, respectively).](figures/betabinmap_normal_links.png){#fig:MAPnormal}
 
 This means that given a network
 with observed species richness $S_{obs}$ and observed links $L_{obs}$, we can calculate its
@@ -323,36 +319,26 @@ important practical consequences - the structure of ecological networks is often
 probed for deviation from the random distribution of some measure of interest
 (**ref Bascompte, Flores**), and most of these measures are in turn related to
 connectance **ref P&G**.
+We suggest that the use of a $z$-score could help identify significantly under (over) sampled networks and estimate their number of missing (extra) links.
 
+In (+@fig:MAPnormal), we show that the predictions made by the normal approximation (panel B) are similar to those made by the beta distribution parameterized with the maximum _a posteriori_ values of $\mu$ and $\phi$ (panel A).
 
-We argue that the use of a $z$-score could help identify significantly under (over) sampled networks and estimate their number of missing (extra) links.
-
+![**The shifted beta-binomial distribution can be approximated by a normal distribution.** The number of links is plotted as a function of species richness obtained from A) the maximum _a posteriori_ estimates of the flexible link model and B) its normal approximation. In each panel, the colored line represent the median predicted link number and the grey areas cover the 78% and 97% percentile intervals (only the 78% percentile interval is depicted in B). Empirical data from the `mangal.io` database are plotted in each panel (grey dots), as well as the minimal $S-1$ and maximal $S^2$ number of links (lower and upper black lines, respectively).](figures/betabinmap_normal_links.png){#fig:MAPnormal}
 
 ## Conclusions
 
-Here we derived a flexible link model for the prediction of the number of links in ecological networks, which outperformed the three previous and more commonly used models describing the relationship between the numbers of links and species (the link-species scaling, the constant connectance and the power law). More importantly, we showed how our model's parameters non only had a clear ecological interpretation, but how they made predictions with remained within biological boundaries.
+Here we derived a flexible link model for the prediction of the number of links in ecological networks using a beta-binomial distribution for $L$ and which outperformed the three previous and more commonly used models describing the relationship between species richness and the number of links (the link-species scaling, the constant connectance and the power law). More importantly, we showed how our model's parameters non only had a clear ecological interpretation, but how they made predictions which remained within biological boundaries.
 
 We believe that the appropriate modeling of the number of interactions can allow scientists to tackle a wide variety of ecological questions, which otherwise could have been left unexplored. For instance, the functions (productivity, resilience, _etc._) and dynamics of ecological networks at large spatial or temporal scales could be more easily explored. It also facilitates the conduction of network studies in regions where interaction data is lacking, notably due to geographical and/or financial reasons.
 
-Our ability to model the number of links in an ecological network does not diminish the value of data collection. Among others, data on interspecific interactions helps understanding more deeply an ecological community and the relationship between two or more given species, as well as making better predictions in the statistical modelling of networks.
-
-Generative models are flexible and powerful tools for understanding and predicting natural phenomena.
-These models aim to
-create simulated data with the same properties as observations.
-Creating such a model involves two key components: a mathematical expression which represents
-the ecological process being studied, and a distribution which represents our observations of this process.
-Both of these components can capture our ecological understanding of a system, including any constraints on the
-quantities studied.
-
-
-
+Our ability to model the number of links in an ecological network does not diminish the value of data collection. Among others, data on interspecific interactions helps understanding more deeply an ecological community and the interactions between two or more given species, as well as making better predictions in the statistical modelling of networks.
 
 
 
 <!-- moving this to end because I don't really know where it fits in the narrative -->
 ##### consequences for network topology
 
-The constraints that we discuss in this paper important consequences for food web topology.
+The constraints that we discuss in this paper have important consequences for food web topology.
 For example, previous work has identified that networks with more omnivores have longer, more linear food web structure.
 Our approach recognizes that link number is also constrained, independently of structure.
 This means that previous work on how network topology and link number interact may need to be updated.
@@ -367,6 +353,14 @@ between $(S-1)$, and $S^2$ interactions is likely biologically relevant.
 # Experimental Procedures
 
 ## Bayesian model definitions
+
+Generative models are flexible and powerful tools for understanding and predicting natural phenomena.
+These models aim to
+create simulated data with the same properties as observations.
+Creating such a model involves two key components: a mathematical expression which represents
+the ecological process being studied, and a distribution which represents our observations of this process.
+Both of these components can capture our ecological understanding of a system, including any constraints on the
+quantities studied.
 
 $$
 [L | a, ϕ] = \text{NegBin}(a S, \phi)
