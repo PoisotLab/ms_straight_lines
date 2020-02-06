@@ -300,11 +300,19 @@ realistic_lssl = realistic_links(lssl_cf_links)
 realistic_const = realistic_links(const_cf_links)
 realistic_powerlaw = realistic_links(powerlaw_cf_links)
 
-plot(S, realistic_lssl, color=lssl_color, linewidth=3, label="LSSL",
+
+medianspecies = median(d[:nodes], 0.5)
+species05 = quantile(d[:nodes], 0.05)
+species95 = quantile(d[:nodes], 0.95)
+
+plot([medianspecies], seriestype=:vline, color=:black, lab="")
+plot!([species05], seriestype=:vline, color=:grey, lab="")
+plot!([species95], seriestype=:vline, color=:grey, lab="")
+plot!(S, realistic_lssl, color=lssl_color, linewidth=3, label="LSSL",
     legend=:bottomright, foreground_color_legend=nothing, background_color_legend=:white)
 plot!(S, realistic_const, color=const_color, linewidth=2.5, label="Constant connectance")
 plot!(S, realistic_powerlaw, color=powerlaw_color, linewidth=2.5, label="Power law")
 plot!(S, realistic_betab, color=betab_color, linewidth=2.5, label="Shifted beta-binomial")
 xaxis!(:log, "Species richness")
-yaxis!("Proportion of realistic link numbers")
+yaxis!("Proportion of species or realistic link numbers", (0.3, 1.05))
 savefig(joinpath("figures", "real_predict"))
