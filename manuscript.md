@@ -115,7 +115,7 @@ The flexible link model made roughly the same predictions, but within ecological
 ### Flexible link model makes realistic predictions for small communities
 
 The constraints on food web structure are especially important for small communities.
-This is emphasized in +@fig:real_predict, which shows that only a fraction of the models prediction were within realistic ecological constraints.
+This is emphasized in +@fig:real_predict, which shows that all models other than the flexible links model fail to stay within realistic ecological constraints.
 The link-species scaling model made around 29% of unrealistic predictions of link numbers for every value of $S$ ($3 \leq S \leq 750$).
 The constant connectance and power law models, on the other hand, also produced unrealistic results but for small networks only: more than 20% were unrealistic for networks comprising less than 12 and 7 species, respectively.
 Only the flexible link model never failed to predict numbers of links between $S-1$ and $S^2$.  
@@ -141,12 +141,13 @@ Only the flexible link model never failed to predict numbers of links between $S
 |                      |                            | $\phi$    | concentration around value of $\mu$  | 24.3  | 2.4    |
 
 Although we did not use the same approach to parameter estimation as previous authors, our approach to fitting these models recovered parameter estimates that are broadly congruent with previous work.
-We found very consistent values of $b$ for the LSSL model: we found a value of 2.2 which is close to the value of approximately 2 used by @CoheBria84.
-Similarly, we found a value of 0.12 for $b$ for the constant connectance model, which was consistent with the 0.14 found by @Mart92.
+We found very consistent values of 2.2 for $b$ of the LSSL model, which is close to the value of approximately 2 used by @CoheBria84.
+Similarly, we found a value of 0.12 for $b$ of the constant connectance model, which was consistent with the 0.14 found by @Mart92.
 Finally, the parameters values we found for the power law were also comparable to the ones found by @BrosOstl04.
 
-With regard to the flexible link model, our value for $\mu$ was about 0.09, which is close to previous estimates of $b$ in the constant connectance model of 0.12.
-In addition, we obtained a rather large value of 24.3 for $\phi$, which shrinks the variance of mean $p$ to approximatively 0.003 ($var(p)=\mu(1-\mu)/(1+\phi)$).
+For large communities, our model should behave similarly to the constant connectance model; it is no surprise then than $\mu$ was about 0.09, which is close to our value of 0.12 for constant connectance.
+In addition, we obtained a rather large value of 24.3 for $\phi$, which shrinks the variance around the mean of $p$ to approximately 0.003 ($var(p)=\mu(1-\mu)/(1+\phi)$).
+This indicates that food webs are largely in their probabiliy of flexible links being realized. 
 <!-- tk add ecological interpretation where possible -->
 
 ### Connectance and linkage density can be derived from a model for links
