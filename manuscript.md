@@ -95,7 +95,7 @@ Finally, we show how this model for $L$ suggests a new and more useful way of th
 
 
 All models fitted well, without any problematic warnings from Stan's diagnostics (see Experimental Procedures), but our model for flexible links outperformed previous solutions to the problem of modelling $L$.
-The flexible link model, which used a beta-binomial observation model, had the most favourable values of PSIS-LOO information
+The flexible link model, which we fit via a beta-binomial observation model, had the most favourable values of PSIS-LOO information
 criterion (Table 1) and of expected log predictive density (ELPD), relative to the three competing models which used a negative binomial observation model.
 Pareto-smoothed important sampling serves as a guide to model selection; like other information criteria it approximates the error in cross-validation predictions.
 Smaller values indicate a model which makes better predictions.
@@ -145,25 +145,22 @@ Finally, the parameters values we found for the power law were also comparable t
 
 With regard to the flexible link model, our value for $\mu$ was about 0.09, which is close to previous estimates of $b$ in the constant connectance model of 0.12.
 In addition, we obtained a rather large value of 24.3 for $\phi$, which shrinks the variance of mean $p$ to approximatively 0.003 ($var(p)=\mu(1-\mu)/(1+\phi)$).
-
-
-<!-- tk Francis to expand and improve -->
+<!-- tk add ecological interpretation where possible -->
 
 ### Connectance and linkage density can be derived from a model for links
 
 Of the three important quantities which describe networks ($L$, $Co$ and $L_D$) we have directly modelled $L$ only.
 However, we can reuse the posterior for our model of $L$ to parameterize a distribution for connectance ($L/S^2$) and linkage density ($L/S$).
-These two quantities are continuous, and so require a continuous distribution.
 We can derive this by noticing that +@eq:lhat can be rearranged to show how $Co$ and $L_D$ are linear transformations of $p$:
-
 
 $$ Co = \frac{\hat L}{S^2} = p\left(1 - \frac{S-1}{S^2}\right) + \frac{S-1}{S^2} ,$${#eq:co2}
 
 and
 
-
-
 $$ L_D = \frac{\hat L}{S} = p \left(S - \frac{S-1}{S} \right) +  \frac{S-1}{S},$${#eq:ld}
+
+In a Beta-Binomial distribution, it is assumed that the probability of success $p$ varies among groups of trials according to a Beta distribution.
+Since $p$ has a Beta distribution the linear transformations described by +@eq:co2 and +@eq:ld also describe Beta distributions which have been shifted and scaled according to the number of species $S$ in a community.
 
 #### Discussion of these equations
 
