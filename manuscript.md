@@ -1,6 +1,5 @@
 # Introduction
 
-#### L and S, oft-measured and very important numbers
 Community ecologists are fascinated by counting things. It is therefore no
 surprise that the early food web literature paid so much attention to counting
 species, counting trophic interactions, and computing the relationship between these numbers.
@@ -14,20 +13,19 @@ Although both $L$ and $S$ are frequently counted in nature, we have far more inf
 In fact, the distribution of species richness across the world is probably the most frequently observed and modelled ecological phenomena.
 Therefore, if we can predict $L$ from $S$ in an ecologically realistic way, we will be in a position to make predictions of food web structure at large scales.
 
-#### the three most important numbers about foodwebs are L, Co and L/S
 Measures of food web structure are based on three specific quantities.
 The first and most straightforward is $L$, the number of trophic interactions among species.
 This quantity can be large, especially in species-rich habitats, but it cannot be arbitrarily large.
 It is clear to any observer of nature that of all imaginable trophic interactions, only a fraction actually occur.
 If an ecological community contains $S$ species, then the maximum number of links in its foodweb is $S^2$: a community of omnivorous cannibals.
-This leads to the second quantity: a ratio, called _connectance_ defined by ecologists as $Co = L/S^2$.
+This leads to the second quantity: a ratio called _connectance_ and defined by ecologists as $Co = L/S^2$.
 Connectance has become a fundamental quantity for nearly all other measures of food web structure and dynamics [@PascDunn06].
 The third important quantity is another ratio: _linkage density_, $L_D = L/S$.
 This value represents the number of links added to the network for every additional species in the ecological system.
-Equivalently, $L_D \times 2$ gives the _average degree_: the average number of species with which any taxa is expected to interact, either as predators or prey.
+A closely related quantity is $L_D \times 2$, which is the _average degree_: the average number of species with which any taxa is expected to interact, either as predators or prey.
+All of these quantities capture ecologically important aspects of a network, and all capture the information present in a prediction of $L$ links among $S$ species.
 Accurate predictions of ecological networks are extremely useful in many ecological contexts; thus it is important to have an ecologically accurate predictive model for the underlying value, $L$.
 
-#### Past models of L as a function of S
 Because $L$ represents such a fundamental quantity, many predictive models have been considered over the years.
 Here we describe three popular approaches before describing our own proposed model.
 The *link-species scaling (LSSL)* model introduced by @CoheBria84 hypothesized that all networks have the same average degree (_i.e._ number of links per species).
@@ -42,52 +40,44 @@ Power laws are very flexible, and indeed this
 function matches empirical data well -- so well that it is often treated as a "true" model which captures the scaling of link number with species richness.
 However, the parameters of a power law relationship are difficult to reason about ecologically.
 This is in part because many mechanisms can produce power-law shaped relationships.
-One weakness which all models have in common is their very flexibility: they can produce predicted values of $L$ which are ecologically impossible.
 
-All three of the models described above share a second shortcoming: they have no means of including the _minimum_ number of interactions.
-This minimum is S-1 in communities where all species interact and at least some of the organisms are heterotrophs @Mart92.
+All three of the models described above share an important shortcoming: they cannot be used for prediction while remaining within the bounds set by ecological principles.
+This is caused by two things: the equations used to calculate expected link number, and the modeling approach used to estimate the parameters.
+The present models for $L$ described above have no constraints -- with the exception of the "constant connectance" model, in which $L_{CC}$ has a maximum value of $S^2$. However, ecological networks also have a minimum number of links.
+This minimum is $S-1$ in communities where all species interact and at least some of the organisms are heterotrophs @Mart92.
 Numerous simple foodwebs could have this minimal number of links -- for example, a linear food chain wherein each trophic
 level consists of a single species, each of which consumes only the species below it; or a grazing herbivore which feeds on every plant in a field.
-Thus interaction number is required to vary between $S^2$ and $S-1$.
-These constraints have not been used in previous attempts to model the
-relationship between $L$ and $S$.
-This makes prediction difficult, since models without this constraint can make unrealistic predictions of $L$.
+Thus interaction number is constrained by ecological principles to be between $S^2$ and $S-1$, something which no present model includes.
+Secondly, accurate predictions are often difficult because of the way that parameters are estimated. This is usually done using a Gaussian likelihood for $L$, often after log transformation. For example, parameter estimates of power law relationships are often fit by linear regression of $\log(L)$ on $\log(S)$. While this approach ensures that predicted values of $L$ are always positive, it does nothing to ensure that they stay below $S^2$ and above $S-1$. Thus a good model for $L$ should meet these two needs: a bounded expression for the mean $\hat{L}$ , and a bounded distribution for the likelihood.
 
-##### presenting: the flexible Links model
-Here we suggest a new perspective for a model of $L$ as a function of $S$.
-We model the distribution of observations as a shifted beta-binomial variable.
-This automatically includes the maximum constraint, since the number of species determines the number of possible links.
+Here we suggest a new perspective for a model of $L$ as a function of $S$ which meets both of these requirements.
 We include the minimum constraint by modelling not the total
-number of links, but the number in excess of the minimum, which we term
-"flexible" links.
-Our process model is extremely simple: it is a single
-parameter, a constant which gives the proportion of these flexible links which
-are realized.
-Because different food webs will have different values of this proportion, we
-model it with a beta distribution, which allows some variation around the
-average value. The resulting model is therefore beta-binomial.
-Another way of expressing this idea is
-that because we observe a food web with $S$ species, we are guaranteed to
-observed at least $S-1$ interactions. From a predictive standpoint, this means
-that we need to figure out how many of the remaining interactions, out of a possible
-$S^2-(S-1)$, will be realized. Below, we refer to this quantity as the number of "flexible" links in a food web.
-Following @PoisCirt16, we suggest that each flexible link represents an independent Bernoulli trial with a probability  $p$ of existing.
-We assume that $p$ is a constant for all links in the same ecological community.
-
-This means that the number of predicted links can be expressed as:
+number of links, but the number in excess of the minimum, which we term "flexible" links.
+We include the maximum constraint in a similar fashion to the constant connectance model described above, by modelling the proportion of flexible links which are realized in a community:
 
 $$
- \hat L_{FL} = p\times\left[S^2-(S-1)\right]+(S-1)\,.
+ \hat L_{FL} = p\times\left[S^2-(S-1)\right]+(S-1)\,,
 $${#eq:lhat}
 
-We use the notation $L_{FL}$ to represent that our model considers the number of "flexible" links in a food web, ie the number of links in excess of the minimum up to the maximum.
+where $p \in [0,1]$. When $p = 1$, $L$ is at its maximum ($S^2$), and when $p = 0$ it is at the minimum value ($S - 1$).
+We use the notation $L_{FL}$ to represent that our model considers the number of "flexible" links in a food web; that is, the number of links in excess of the minimum but below the maximum.
 
-For explanation of the model derivation, fitting, and comparison, see Experimental Procedures.
+Our second contribution is to propose an improved means of fitting this model.
+Following @PoisCirt16, we suggest that each flexible link represents an independent Bernoulli trial with a probability  $p$ of existing, and that an observation of $L_i$ links in community $i$ represents an aggregation of $S^2 - (S - 1)$ such trials.
+If we then assume that $p$ is a constant for all links in the same ecological community, but may vary between communities, we can model the distribution of links directly as a shifted beta-binomial variable.
 
-In this paper we will describe this new approach to modelling $L$, and show how
-it compares to previous models. We estimate parameters for this model using open
-data from the `mangal.io` networks database. Finally, we show
-how this model for $L$ suggests a new and more useful way of thinking about metrics of network structure and discuss how generative models can be useful tools for including our knowledge of a system into our predictions.
+$$
+[L|S,\mu, \phi] =  { S^2 - (S - 1) \choose L - (S - 1)} \frac{B(L - (S - 1) + \mu \phi, S^2 - L + (1 - \mu)\phi)}{B(\mu \phi, (1 - \mu)\phi)}
+$${#eq:shiftBB}
+
+Where $B$ is the Beta function, $\mu$ is the average probability of a flexible link being realized (i.e. the average value of $p$) and $\phi$ is the concentration around this value.
+The support of this distribution is limited to only ecologically realistic values of $L$: the number of species determines the number of possible links and it is shifted to the right by $S-1$.
+This means that the problem of estimating values for $\mu$ and $\phi$ is reduced to fitting the univariate distribution described in +@eq:shiftBB.
+For more detailed explanation of the model derivation, fitting, and comparison, see Experimental Procedures.
+
+In this paper we will compare our flexible links model to previous models for $L$.
+We estimate compare the performance of all models in predicting $L$ using open data from the `mangal.io` networks database.
+Finally, we show how this model for $L$ suggests a new and more useful way of thinking about metrics of network structure and discuss how generative models can be useful tools for including our knowledge of a system into our predictions.
 
 # Results and Discussion
 
