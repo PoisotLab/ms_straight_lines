@@ -75,9 +75,9 @@ The support of this distribution is limited to only ecologically realistic value
 This means that the problem of estimating values for $\mu$ and $\phi$ is reduced to fitting the univariate distribution described in +@eq:shiftBB.
 For more detailed explanation of the model derivation, fitting, and comparison, see Experimental Procedures.
 
-In this paper we will compare our flexible links model to previous models for $L$.
-We estimate compare the performance of all models in predicting $L$ using open data from the `mangal.io` networks database.
-Finally, we show how this model for $L$ suggests a new and more useful way of thinking about metrics of network structure and discuss how generative models can be useful tools for including our knowledge of a system into our predictions.
+In this paper we will compare our flexible links model to three previous models for $L$.
+We estimate parameters and compare the performance of all models using open data from the `mangal.io` networks database.
+Finally, we will show how our model for $L_{FL}$ suggests a new and more useful way of thinking about metrics of network structure and discuss how generative models can be useful tools for including our knowledge of a system into our predictions.
 
 # Results and Discussion
 
