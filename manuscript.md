@@ -112,7 +112,7 @@ The flexible link model made roughly the same predictions, but within ecological
 
 ![**The flexible link model fits better and makes a plausible range of predictions.** The number of links is plotted as a function of species richness obtained from the posterior distributions of A) the link-species scaling, B) the constant connectance, C) the power law and D) the flexible link models. In each panel, the colored line represent the median predicted link number and the grey areas cover the 78% and 97% percentile intervals. Empirical data from the `mangal.io` database are plotted in each panel (grey dots), as well as the minimal $S-1$ and maximal $S^2$ number of links (lower and upper black lines, respectively).  ](figures/models_links.png){#fig:PP_counterfactual}
 
-### Proportion of predictions in correct range increases with S
+### Flexible link model makes realistic predictions for small communities
 
 The constraints on food web structure are especially important for small communities.
 This is emphasized in +@fig:real_predict, which shows that only a fraction of the models prediction were within realistic ecological constraints.
@@ -120,7 +120,7 @@ The link-species scaling model made around 29% of unrealistic predictions of lin
 The constant connectance and power law models, on the other hand, also produced unrealistic results but for small networks only: more than 20% were unrealistic for networks comprising less than 12 and 7 species, respectively.
 Only the flexible link model never failed to predict numbers of links between $S-1$ and $S^2$.  
 
-![**The proportion of predictions in correct range increases with $S$.** The proportion of realistic predicted numbers of links is plotted as a function of species richness obtained from the posterior distributions of the four models. A realistic number of links for a community of $S$ species is between $S-1$ and $S^2$.](figures/real_predict.png){#fig:real_predict}
+![**Only the flexible link model makes realistic predictions for small communities.** Here we show the proportion of posterior predictions from each of our 4 models which fall outside ecologically realistic values. The proportion of predictions in the correct range increases with species richness for the constant connectance and LSSL models. Vertical lines show the 5%, 50% and 95% quantiles of the distribution of S, demonstrating that many communities have potentially incorrect predictions under previous models](figures/real_predict.png){#fig:real_predict}
 
 
 
@@ -128,17 +128,19 @@ Only the flexible link model never failed to predict numbers of links between $S
 
 **Table 2. Parameter estimates for all models**. Mean and standard deviation (SD) is given for each parameter.
 
-| model                | parameter | interpretation                        | value | SD     |
-|----------------------|-----------|---------------------------------------|-------|--------|
-| Link-species scaling | $b$       | number of links per species           | 2.2   | 0.047  |
-| Constant connectance | $b$       | proportion of maximum links realized  | 0.12  | 0.0041 |
-| Power law            | $b$       | controls proportion of relationship                     | 0.37  | 0.054  |
-|                      | $a$       | controls scaling of relationship                     | 1.7   | 0.043  |
-| Flexible links | $\mu$     | proportion of flexible links realized | 0.086 | 0.0037 |
-|                      | $\phi$    | concentration around value of $\mu$   | 24.3  | 2.4    |
+| model                | Equation for $\hat{L}$     | parameter | interpretation                       | value | SD     |
+|----------------------|----------------------------|-----------|--------------------------------------|-------|--------|
+| Link-species scaling | $bS$                       | $b$       | number of links per species          | 2.2   | 0.047  |
+|                      |                            | $\kappa$  | concentration of $L$ around mean     | 1.4   | 0.12   |
+| Constant connectance | $bS^2$                     | $b$       | proportion of maximum links realized | 0.12  | 0.0041 |
+|                      |                            | $\kappa$  | concentration of $L$ around mean     | 4.0   | 0.37   |
+| Power law            | $bS^a$                     | $b$       | controls proportion of relationship  | 0.37  | 0.054  |
+|                      |                            | $a$       | controls scaling of relationship     | 1.7   | 0.043  |
+|                      |                            | $\kappa$  | concentration of $L$ around mean     | 4.8   | 0.41   |
+| Flexible links       | $(S^2 - (S - 1))p + S - 1$ | $\mu$     | average value of $p$                 | 0.086 | 0.0037 |
+|                      |                            | $\phi$    | concentration around value of $\mu$  | 24.3  | 2.4    |
 
-
-Although we did not use the same approach to parameter estimation as previous authors, our approach to fitting these models recovered parameter estimates that are broadly congruent with previous models.
+Although we did not use the same approach to parameter estimation as previous authors, our approach to fitting these models recovered parameter estimates that are broadly congruent with previous work.
 We found very consistent values of $b$ for the LSSL model: we found a value of 2.2 which is close to the value of approximately 2 used by @CoheBria84.
 Similarly, we found a value of 0.12 for $b$ for the constant connectance model, which was consistent with the 0.14 found by @Mart92.
 Finally, the parameters values we found for the power law were also comparable to the ones found by @BrosOstl04.
