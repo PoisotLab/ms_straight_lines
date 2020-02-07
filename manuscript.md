@@ -52,7 +52,7 @@ Secondly, accurate predictions are often difficult because of the way that param
 
 Here we suggest a new perspective for a model of $L$ as a function of $S$ which meets both of these requirements.
 We include the minimum constraint by modelling not the total
-number of links, but the number in excess of the minimum, which we term "flexible" links.
+number of links, but the number in excess of the minimum.
 We include the maximum constraint in a similar fashion to the constant connectance model described above, by modelling the proportion of flexible links which are realized in a community:
 
 $$
