@@ -48,26 +48,36 @@ Because $L$ represents such a fundamental quantity, many predictive models have
 been considered over the years. Here we describe three popular approaches before
 describing our own proposed model. The *link-species scaling (LSSL)* model
 introduced by @CoheBria84 hypothesized that all networks have the same average
-degree (_i.e._ number of links per species). Links are modeled as the number of
-species times a constant: $\hat L_\text{LSSL} = b\times S$, with $b \approx 2$.
-This model imagines that every species added to a community increases the number
-of interactions by two -- for example, an animal which consumes one resource and
-is consumed by one predator. Martinez @Mart92 instead suggested that the number
-of links should be in proportion to the *square* of species richness: $\hat
-L_\text{CC} = b\times S^2$, where $c$ is a constant in $]0,1[$. This is called
-the  *constant connectance* model, because it implies a constant ratio $Co =
-L/S^2$ for all networks. This model was a first attempt to recongize the
-constraint discussed above: no network can have more than $S^2$ interactions.
-Finally, @BrosOstl04 note that these two models are instead special cases of the
-same general model, in which $\hat L_\text{reg} = b\times S^a$ where $a$ and $b$
-are constants. Power laws are a popular means of describing scaling
-relationships in many parts of science and were first applied to food webs by
-@BrosOstl04. Power laws are very flexible, and indeed this function matches
-empirical data well -- so well that it is often treated as a "true" model which
-captures the scaling of link number with species richness. However, the
-parameters of a power law relationship are difficult to reason about
-ecologically. This is in part because many mechanisms can produce power-law
-shaped relationships.
+degree, thats is most species should have the same number of interactions. Links
+are modeled as the number of species times a constant: $\hat L_\text{LSSL} =
+b\times S$, with $b \approx 2$. This model imagines that every species added to
+a community increases the number of interactions by two -- for example, an
+animal which consumes one resource and is consumed by one predator. Yet this
+model started to show its deficiencies when data on larger food webs became
+available, which revealed that $L$ increases faster than a linear function of
+$S$ would. In response to the idea that the *average degree* is constant,
+Martinez [@Mart92] suggested instead that *connectance* is unchanged in response
+to $S$; in other words, a food web is always equally filled, regardless of
+whether it has 5 or 5000 species. Under the so-called "constant connectance"
+model, the number of links is proportional to the richness squared, $\hat
+L_\text{CC} = b\times S^2$, where $c$ is a constant in $]0,1[$ representing the
+expected value of connectance. This model can be relaxed by assuming that the
+scaling of $L$ with $S$ does not necessarily follows the maximum number of
+interactions, and the best fit was with a model of the form $\hat L_\text{reg} =
+b\times S^a$, which is trivially a linear relationship between $\text{log}(L)$
+and $\text{log}(S)$.
+
+This power law model can be parameterized in arbitrarily complex ways, including
+spatial scaling and species area relationships [@BrosOstl04]; it should further
+be noted that this model is a synthesis of preview hypotheses, encompassing both
+the link-species scaling ($a=1, b\approx 2$) and the strict constant connectance
+($a = \bar \text{Co}, b=2$) depending on which parameters are fixed. Power laws
+are very flexible, and indeed this function matches empirical data well -- so
+well that it is often treated as a "true" model which captures the scaling of
+link number with species richness [@WinePian01; @RiedRall10; @GarlCald03].
+However, the parameters of a power law relationship are difficult to reason
+about ecologically. This is in part because many mechanisms can produce
+power-law shaped relationships.
 
 All three of the models described above share an important shortcoming: they
 cannot be used for prediction while remaining within the bounds set by
@@ -413,6 +423,9 @@ diminish the value of data collection. Among others, data on interspecific
 interactions helps understanding more deeply an ecological community and the
 interactions between two or more given species, as well as making better
 predictions in the statistical modelling of networks.
+
+@GarlCald03 - small food webs and large food webs behave differently, and we
+didn't really knew why before
 
 <!-- moving this to end because I don't really know where it fits in the narrative -->
 
