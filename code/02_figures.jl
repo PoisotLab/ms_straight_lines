@@ -8,13 +8,11 @@ using Statistics
 using StatsBase
 using Random
 
-
-
 # get the data and filter for predation only
 d = CSV.read(joinpath("data", "network_data.dat"))
 d = d[d.predation .> 0 , :]
 
-# posterior samples for beta binomial model
+# posterior samples for the flexible links model
 betab_posterior = CSV.read(joinpath("data", "posterior_distributions", "beta_binomial_posterior.csv"))
 
 # posterior samples from previous models
@@ -22,6 +20,17 @@ lssl_posterior = CSV.read(joinpath("data", "posterior_distributions", "lssl.csv"
 const_posterior = CSV.read(joinpath("data", "posterior_distributions", "const_posterior.csv"))
 powerlaw_posterior = CSV.read(joinpath("data", "posterior_distributions", "powerlaw_posterior.csv"))
 
+# color palette for models
+pal = (
+    lssl=RGB(230/255,159/255,0/255),
+    cc=RGB(86/255,190/255,233/255),
+    pl=RGB(0/255,158/255,115/255),
+    fl=RGB(213/255,94/255,0/255)
+    )
+
+sym = (
+    lssl = :dashdot
+)
 
 # number of species
 S = 3:750
@@ -55,13 +64,6 @@ const_cf_links = const_cf_links[:, S]
 powerlaw_cf_links = powerlaw_posterior[r"counterfactual_links"]
 powerlaw_cf_links = powerlaw_cf_links[:, S]
 
-
-# Colors
-lssl_color = "#7570B3"
-const_color = "#D95F02"
-powerlaw_color = "#E7298A"
-betab_color = "#1B9E77"
-
 # Figure 1 -- Beta fit with posterior samples
 
 # generate posterior draws of the Beta distribution
@@ -81,13 +83,13 @@ p = fit(Beta, pex)
 phi_MLE = p.α + p.β
 mu_MLE = p.α / phi_MLE
 
-density(pex, c=:lightgrey, fill=(:lightgrey, 0), frame=:semi, dpi=300, size=(400,400), lab="Empirical data",
+density(pex, c=:lightgrey, fill=(:lightgrey, 0, 0.5), dpi=120, size=(800,500), lab="Empirical data",
     foreground_color_legend=nothing, background_color_legend=:white, framestyle=:box)
-density!(rand(p, 100_000), c=:black, ls=:dash, linewidth=2, lab="MLE fit")
-plot!(betab_random[1], c=betab_color, linewidth=1, alpha=0.3, lab="Posterior samples")
+plot!(betab_random[1], c=pal.fl, linewidth=1, alpha=0.3, lab="Posterior samples")
 for i in 1:length(index)
-    plot!(betab_random[i], c=betab_color, linewidth=1, alpha=0.3, lab="")
+    plot!(betab_random[i], c=pal.fl, linewidth=1, alpha=0.3, lab="")
 end
+density!(rand(p, 100_000), c=:black, ls=:dash, linewidth=2, lab="MLE fit")
 xaxis!((0, 0.5), "p")
 yaxis!((0, 9.5), "Density")
 savefig(joinpath("figures", "beta_fit"))
@@ -104,31 +106,30 @@ function plot_links_quantile(model; title="", xlabel="", ylabel="", linecolor=""
     quant_110 = neg_to_zeros.(quantile.(eachcol(model), 0.11))
     quant_890 = neg_to_zeros.(quantile.(eachcol(model), 0.89))
     quant_985 = neg_to_zeros.(quantile.(eachcol(model), 0.985))
-
     quant_500 = neg_to_zeros.(quantile.(eachcol(model), 0.5))
 
-    plot(S, quant_985, fill=quant_015, color=:darkgrey, label="",
+    plot(S, quant_985, fill=quant_015, color=:grey, alpha=0.15, label="",
         title=title, title_location=:left, titlefontsize=11,
         xlabel=xlabel, ylabel=ylabel, framestyle=:box) # 97% PI
-    plot!(S, quant_890, fill=quant_110, color=:lightgrey, label="") # 89% PI
+    plot!(S, quant_890, fill=quant_110, color=:grey, alpha=0.15, label="") # 89% PI
+    scatter!(d[:nodes], d[:links], c=:grey, msw=0, markersize=5, label="") # Empirical links
     plot!(S, quant_500, linecolor=linecolor, linewidth=3, label="") # Median link number
-    plot!(S, mms, linecolor=:black, label="") # Minimum number of links
-    plot!(S, Ms, linecolor=:black, label="") # Maximum number of links
-    scatter!(d[:nodes], d[:links], color=:grey, markersize=2, label="") # Empirical links
-    xaxis!(:log, xlabel=xlabel)
+    plot!(S, mms, linecolor=:black, lw=1, label="") # Minimum number of links
+    plot!(S, Ms, linecolor=:black, lw=2, label="") # Maximum number of links
+    xaxis!(:log, xlabel=xlabel, xlims=(minimum(S), maximum(S)))
     yaxis!(:log, ylims = (1,100000), ylabel=ylabel)
 end
 
 plot_lssl = plot_links_quantile(lssl_cf_links, title="A. LSSL",
-    ylabel="Number of links", linecolor=lssl_color)
+    ylabel="Number of links", linecolor=pal.lssl)
 plot_const = plot_links_quantile(const_cf_links, title="B. Constant connectance",
-    linecolor=const_color)
+    linecolor=pal.cc)
 plot_powerlaw = plot_links_quantile(powerlaw_cf_links, title="C. Power law",
-    xlabel="Species richness", ylabel="Number of links", linecolor=powerlaw_color)
+    xlabel="Species richness", ylabel="Number of links", linecolor=pal.pl)
 plot_betab = plot_links_quantile(betab_cf_links, title="D. Flexible links",
-    xlabel="Species richness", linecolor=betab_color)
+    xlabel="Species richness", linecolor=pal.fl)
 
-plot(plot_lssl, plot_const, plot_powerlaw, plot_betab, layout=(2,2))
+plot(plot_lssl, plot_const, plot_powerlaw, plot_betab, layout=(2,2), size=(700,700), dpi=120)
 savefig(joinpath("figures", "models_links"))
 
 
