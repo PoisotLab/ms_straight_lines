@@ -18,12 +18,13 @@ for affiliation in affiliations:
 
 for author in metadata["authors"]:
     auth_affil = [k for k,v in affiliations_data.items() if v in author["affiliation"]]
-    author["affiliation_index"] = auth_affil
+    author["affiliations"] = auth_affil
+    author.pop("affiliation", None)
 
-metadata["affiliation_name"] = affiliations_data
+metadata["affiliations"] = [{"index": k, "name": v} for k,v in affiliations_data.items()]
 
 # Fields to remove
 
-with open("metadata.json", "w") as outfile:
-    json.dump(metadata, outfile, sort_keys=True, indent=4, separators=(',', ': '))
+with open("metadata.json", "w", encoding="utf-8") as outfile:
+    json.dump(metadata, outfile, sort_keys=True, indent=4, separators=(',', ': '), ensure_ascii=False)
     outfile.write('\n')

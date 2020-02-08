@@ -33,6 +33,8 @@ jobs:
           pip install -r .assets/requirements.txt
       - name: Cleanup the bibliography
         run: python .assets/scripts/bibliography.py
+      - name: Cleanup the affiliations
+        run: python .assets/scripts/affiliations.py
       - name: Prepare the output
         run: |
           mkdir -p dist

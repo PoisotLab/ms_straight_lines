@@ -5,6 +5,7 @@
 \geometry{verbose,letterpaper,tmargin=2cm,bmargin=2cm,lmargin=2cm,rmargin=2cm}
 \usepackage[doublespacing]{setspace}
 \usepackage[left]{lineno}
+\usepackage{authblk}
 
 \input{../.assets/templates/pandoc}
 
@@ -21,6 +22,14 @@ $endif$
 $if(date)$
 \date{$date$}
 $endif$
+
+$for(authors)$
+\author[$for(authors.affiliations)$$authors.affiliations$$sep$,$endfor$]{$authors.familyname$}
+$endfor$
+
+$for(affiliations)$
+\affil[$affiliations.index$]{$affiliations.name$}
+$endfor$
 
 % At last:
 % The document itself!:
@@ -45,12 +54,6 @@ $endif$
 $if(title)$
 \maketitle
 $endif$
-
-{\small
-$for(creators)$
-\textsc{$creators.givennames$\,$creators.familyname$}\\
-$endfor$
-}
 
 $if(toc)$
 \tableofcontents
