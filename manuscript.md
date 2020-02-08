@@ -196,8 +196,6 @@ $S-1$ and $S^2$.
 
 ### Parameter estimates for all models
 
-**Table 2. Parameter estimates for all models**. Mean and standard deviation (SD) is given for each parameter.
-
 | model                | Equation for $\hat{L}$     | parameter | interpretation                       | value | SD     |
 |----------------------|----------------------------|-----------|--------------------------------------|-------|--------|
 | Link-species scaling | $bS$                       | $b$       | number of links per species          | 2.2   | 0.047  |
@@ -209,6 +207,8 @@ $S-1$ and $S^2$.
 |                      |                            | $\kappa$  | concentration of $L$ around mean     | 4.8   | 0.41   |
 | Flexible links       | $(S^2 - (S - 1))p + S - 1$ | $\mu$     | average value of $p$                 | 0.086 | 0.0037 |
 |                      |                            | $\phi$    | concentration around value of $\mu$  | 24.3  | 2.4    |
+
+Table: Parameter estimates for all models. Mean and standard deviation (SD) is given for each parameter. {#tbl:parameters}
 
 Although we did not use the same approach to parameter estimation as previous
 authors, our approach to fitting these models recovered parameter estimates that
