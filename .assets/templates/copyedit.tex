@@ -24,7 +24,7 @@ $if(date)$
 $endif$
 
 $for(authors)$
-\author[$for(authors.affiliations)$$authors.affiliations$$sep$,$endfor$]{$authors.familyname$}
+\author[$for(authors.affiliations)$$authors.affiliations$$sep$,$endfor$]{$authors.givennames$~$authors.familyname$}
 $endfor$
 
 $for(affiliations)$
