@@ -128,7 +128,7 @@ plot_powerlaw = plot_links_quantile(powerlaw_cf_links, title="C. Power law",
 plot_betab = plot_links_quantile(betab_cf_links, title="D. Flexible links",
     xlabel="Species richness", linecolor=pal.fl)
 
-plot(plot_lssl, plot_const, plot_powerlaw, plot_betab, layout=(2,2), size=(700,700), dpi=120)
+plot(plot_lssl, plot_const, plot_powerlaw, plot_betab, layout=(2,2), size=(700,700), dpi=200)
 savefig(joinpath("figures", "models_links"))
 
 
@@ -179,7 +179,7 @@ plot!(S, Ms, linecolor=:black, label="", lw=2) # Maximum number of links
 xaxis!(:log, "Species richness", label="", xlim=(minimum(S), maximum(S)))
 yaxis!(:log, "Number of links", ylims=(1,100000))
 
-plot(links_beta_map, links_normal, layout=(1,2), size=(700,350), dpi=120)
+plot(links_beta_map, links_normal, layout=(1,2), size=(700,350), dpi=200)
 savefig(joinpath("figures", "betabinmap_normal_links"))
 
 
