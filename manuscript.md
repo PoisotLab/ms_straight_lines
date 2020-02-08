@@ -30,10 +30,10 @@ cannot be arbitrarily large. It is clear to any observer of nature that of all
 imaginable trophic interactions, only a fraction actually occur. If an
 ecological community contains $S$ species, then the maximum number of links in
 its foodweb is $S^2$: a community of omnivorous cannibals. This leads to the
-second quantity: a ratio called _connectance_ and defined by ecologists as $Co =
+second quantity: a ratio called *connectance* and defined by ecologists as $Co =
 L/S^2$. Connectance has become a fundamental quantity for nearly all other
 measures of food web structure and dynamics [@PascDunn06]. The third important
-quantity is another ratio: _linkage density_, $L_D = L/S$. This value represents
+quantity is another ratio: *linkage density*, $L_D = L/S$. This value represents
 the number of links added to the network for every additional species in the
 ecological system. A closely related quantity is $L_D \times 2$, which is the
 _average degree_: the average number of species with which any taxa is expected
@@ -69,14 +69,14 @@ and $\text{log}(S)$. This power law model can be parameterized in arbitrarily
 complex ways, including spatial scaling and species area relationships
 [@BrosOstl04]; it should further be noted that this model is a synthesis of
 preview hypotheses, encompassing both the link-species scaling ($a=1, b\approx
-2$) and the strict constant connectance ($a = \bar \text{Co}, b=2$) depending on
-which parameters are fixed. Power laws are very flexible, and indeed this
-function matches empirical data well -- so well that it is often treated as a
-"true" model which captures the scaling of link number with species richness
-[@WinePian01; @RiedRall10; @GarlCald03], and from which we should draw
-ecological inferences about what shapes food webs. However, this approach is
-limited, because the parameters of a power law relationship can arise from many
-mechanisms, and are difficult to reason about ecologically.
+2$) and the strict constant connectance ($a, b=2$) depending on which parameters
+are fixed. Power laws are very flexible, and indeed this function matches
+empirical data well -- so well that it is often treated as a "true" model which
+captures the scaling of link number with species richness [@WinePian01;
+@RiedRall10; @GarlCald03], and from which we should draw ecological inferences
+about what shapes food webs. However, this approach is limited, because the
+parameters of a power law relationship can arise from many mechanisms, and are
+difficult to reason about ecologically.
 
 But the question of how informative parameters of a power law can be is moot.
 Indeed, both the general model and its variants share an important shortcoming:
