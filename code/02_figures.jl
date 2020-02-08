@@ -142,15 +142,15 @@ beta_98 = quantile.(bb_rand, 0.985) .+ S .- 1
 beta_02 = quantile.(bb_rand, 0.015) .+ S .- 1
 beta_50 = quantile.(bb_rand, 0.5)  .+ S .- 1
 
-links_beta_map = plot(S, beta_98, fill=beta_02,label="", colour=:darkgrey,
+links_beta_map = plot(S, beta_98, fill=beta_02,label="", color=:grey, alpha=0.15,
     title="A. Flexible links (MAP)", title_location=:left, titlefontsize=11, framestyle=:box)
-plot!(S, beta_89, fill=beta_11,label="", colour=:lightgrey)
-plot!(S, beta_50, color=betab_color, label="", linewidth=4)
+plot!(S, beta_89, fill=beta_11,label="", color=:grey, alpha=0.15)
+plot!(S, beta_50, color=pal.fl, label="", linewidth=2)
+#scatter!(d[:nodes], d[:links], c=:grey, msw=0, markersize=5, label="") # Empirical links
 plot!(S, mms, linecolor=:black, label="") # Minimum number of links
-plot!(S, Ms, linecolor=:black, label="") # Maximum number of links
-scatter!(d[:nodes], d[:links], label="", color=:grey) # Empirical links
-xaxis!(:log, "Species richness", label="")
-yaxis!(:log, "Number of links")
+plot!(S, Ms, linecolor=:black, label="", lw=2) # Maximum number of links
+xaxis!(:log, "Species richness", label="", xlim=(minimum(S), maximum(S)))
+yaxis!(:log, "Number of links", ylims=(1,100000))
 
 # 3B Normal approximation of BetaBinomial
 means = (Ms .- mms) .* mu_map .+ S .- 1
@@ -165,17 +165,19 @@ tnormal_98 = quantile.(tnormal, 0.985)
 tnormal_02 = quantile.(tnormal, 0.015)
 tnormal_50 = quantile.(tnormal, 0.5)
 
-links_normal = plot(S, tnormal_98, fill=tnormal_02,label="", colour=:darkgrey,
+links_normal = plot(S, tnormal_98, fill=tnormal_02,label="", color=:grey, alpha=0.15,
     title="B. Normal approximation", title_location=:left, titlefontsize=11, framestyle=:box)
-plot!(S, tnormal_89, fill=tnormal_11,label="", colour=:lightgrey)
-plot!(S, tnormal_50, color=betab_color, label="", linewidth=4)
+plot!(S, tnormal_89, fill=tnormal_11,label="", color=:grey, alpha=0.15,)
+plot!(S, tnormal_50, color=pal.fl, label="", linewidth=2)
 plot!(S, mms, linecolor=:black, label="") # Minimum number of links
 plot!(S, Ms, linecolor=:black, label="") # Maximum number of links
-scatter!(d[:nodes], d[:links], label="", color=:grey) # Empirical links
-xaxis!(:log, "Species richness")
-yaxis!(:log, "")
+#scatter!(d[:nodes], d[:links], label="", color=:grey) # Empirical links
+plot!(S, mms, linecolor=:black, label="") # Minimum number of links
+plot!(S, Ms, linecolor=:black, label="", lw=2) # Maximum number of links
+xaxis!(:log, "Species richness", label="", xlim=(minimum(S), maximum(S)))
+yaxis!(:log, "Number of links", ylims=(1,100000))
 
-plot(links_beta_map, links_normal, layout=(1,2))
+plot(links_beta_map, links_normal, layout=(1,2), size=(700,350), dpi=120)
 savefig(joinpath("figures", "betabinmap_normal_links"))
 
 
