@@ -141,16 +141,14 @@ including our knowledge of a system into our predictions.
 
 ### Flexible link model fits better and makes a plausible range of predictions
 
-**Table 1. Model comparisons:** Pareto-smoothed important sampling values and differences relative to the maximum in the expected log predictive density for the flexible link and the three competing models. The mean and standard deviation (SD) (standard error (SE)) is given for the two metrics.
-
-<!-- elpd table -- calculated with LOO -->
 | model                | reference     | PSIS-LOO         | $\Delta \text{elpd}$ | $SE_{\Delta \text{elpd}}$ |
 | -------------------- | ------------- | ---------------- | -------------------- | ------------------------- |
 | Flexible links       | current paper | 2520.5 ± 44.4    | 0                    | 0                         |
 | Power law            | @BrosOstl04   | 2564.3 ± 46.6    | -21.9                | 6.5                       |
 | Constant             | @Mart92       | 2811.0 ± 68.3    | -145.3               | 21.1                      |
-| Link-species scaling | @CoheNewm85   | 39840.1 ± 2795.1 | -18659.8             | 1381.7                    |
+| Link-species scaling | @CoheBria84   | 39840.1 ± 2795.1 | -18659.8             | 1381.7                    |
 
+Table: Comparison of the different modles. Pareto-smoothed important sampling values and differences relative to the maximum in the expected log predictive density for the flexible link and the three competing models. The mean and standard deviation (SD) (standard error (SE)) is given for the two metrics. {#tbl:comparison}
 
 All models fitted well, without any problematic warnings from Stan's diagnostics
 (see Experimental Procedures), but our model for flexible links outperformed
