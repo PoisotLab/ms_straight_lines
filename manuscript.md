@@ -15,7 +15,7 @@ and respond to changes [@Mcca12; @ThomBros12], to the point where some authors
 suggested that describing food webs was a necessity [@SeibCado18; @McCa07]. To
 this end, a first step is to come up with an estimate for the number of existing
 trophic interactions $L$, through sampling or otherwise. Although both $L$ and
-$S$ can be couunted in nature, the sampling of interactions is orders of
+$S$ can be counted in nature, the sampling of interactions is orders of
 magnitude more difficult than the sampling of species [@Jord16a; @Jord16]. As a
 result, we have far more information about $S$. In fact, the distribution of
 species richness across the world is probably the most frequently observed and
