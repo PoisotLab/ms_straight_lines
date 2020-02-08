@@ -101,7 +101,7 @@ realized in a community:
 
 $$
  \hat L_{FL} = p\times\left[S^2-(S-1)\right]+(S-1)\,,
-$${#eq:lhat}
+$$ {#eq:lhat}
 
 where $p \in [0,1]$. When $p = 1$, $L$ is at its maximum ($S^2$), and when $p =
 0$ it is at the minimum value ($S - 1$). We use the notation $L_{FL}$ to
@@ -118,7 +118,7 @@ the distribution of links directly as a shifted beta-binomial variable.
 
 $$
 [L|S,\mu, \phi] =  { S^2 - (S - 1) \choose L - (S - 1)} \frac{B(L - (S - 1) + \mu \phi, S^2 - L + (1 - \mu)\phi)}{B(\mu \phi, (1 - \mu)\phi)}
-$${#eq:shiftBB}
+$$ {#eq:shiftBB}
 
 Where $B$ is the Beta function, $\mu$ is the average probability of a flexible
 link being realized (i.e. the average value of $p$) and $\phi$ is the
