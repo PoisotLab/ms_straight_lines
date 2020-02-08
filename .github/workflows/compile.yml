@@ -38,10 +38,12 @@ jobs:
           mkdir -p dist
           cp -r figures dist/
           cp references.json dist/
+      - name: Get the CSL file
+        run: wget -O style.csl https://raw.githubusercontent.com/citation-style-language/styles/master/cell-numeric.csl
       - name: Build the website
         run: pandoc manuscript.md -o dist/index.html --filter pandoc-xnos --bibliography=references.json --metadata-file=metadata.json
       - name: Build the tex file
-        run: pandoc manuscript.md -s -o dist/${{ env.repo_name }}.tex --filte pandoc-xnos --bibliography=references.json --metadata-file=metadata.json --template=.assets/templates/copyedit.tex
+        run: pandoc manuscript.md -s -o dist/${{ env.repo_name }}.tex --filte pandoc-xnos --bibliography=references.json --metadata-file=metadata.json --template=.assets/templates/copyedit.tex --csl=style.csl
       - name: File check
         run: ls -lah dist/
       - name: Build the pdf file
