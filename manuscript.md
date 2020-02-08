@@ -65,52 +65,61 @@ expected value of connectance. This model can be relaxed by assuming that the
 scaling of $L$ with $S$ does not necessarily follows the maximum number of
 interactions, and the best fit was with a model of the form $\hat L_\text{reg} =
 b\times S^a$, which is trivially a linear relationship between $\text{log}(L)$
-and $\text{log}(S)$.
+and $\text{log}(S)$. This power law model can be parameterized in arbitrarily
+complex ways, including spatial scaling and species area relationships
+[@BrosOstl04]; it should further be noted that this model is a synthesis of
+preview hypotheses, encompassing both the link-species scaling ($a=1, b\approx
+2$) and the strict constant connectance ($a = \bar \text{Co}, b=2$) depending on
+which parameters are fixed. Power laws are very flexible, and indeed this
+function matches empirical data well -- so well that it is often treated as a
+"true" model which captures the scaling of link number with species richness
+[@WinePian01; @RiedRall10; @GarlCald03], and from which we should draw
+ecological inferences about what shapes food webs. However, this approach is
+limited, because the parameters of a power law relationship can arise from many
+mechanisms, and are difficult to reason about ecologically.
 
-This power law model can be parameterized in arbitrarily complex ways, including
-spatial scaling and species area relationships [@BrosOstl04]; it should further
-be noted that this model is a synthesis of preview hypotheses, encompassing both
-the link-species scaling ($a=1, b\approx 2$) and the strict constant connectance
-($a = \bar \text{Co}, b=2$) depending on which parameters are fixed. Power laws
-are very flexible, and indeed this function matches empirical data well -- so
-well that it is often treated as a "true" model which captures the scaling of
-link number with species richness [@WinePian01; @RiedRall10; @GarlCald03].
-However, the parameters of a power law relationship are difficult to reason
-about ecologically. This is in part because many mechanisms can produce
-power-law shaped relationships.
-
-All three of the models described above share an important shortcoming: they
-cannot be used for prediction while remaining within the bounds set by
-ecological principles. This is caused by two things: the equations used to
-calculate expected link number, and the modeling approach used to estimate the
-parameters. The present models for $L$ described above have no constraints --
-with the exception of the "constant connectance" model, in which $L_{CC}$ has a
-maximum value of $S^2$. However, ecological networks also have a minimum number
-of links. This minimum is $S-1$ in communities where all species interact and at
-least some of the organisms are heterotrophs @Mart92. Numerous simple foodwebs
-could have this minimal number of links -- for example, a linear food chain
-wherein each trophic level consists of a single species, each of which consumes
-only the species below it; or a grazing herbivore which feeds on every plant in
-a field. Thus interaction number is constrained by ecological principles to be
-between $S^2$ and $S-1$, something which no present model includes. Secondly,
-accurate predictions are often difficult because of the way that parameters are
-estimated. This is usually done using a Gaussian likelihood for $L$, often after
-log transformation. For example, parameter estimates of power law relationships
-are often fit by linear regression of $\log(L)$ on $\log(S)$. While this
-approach ensures that predicted values of $L$ are always positive, it does
-nothing to ensure that they stay below $S^2$ and above $S-1$. Thus a good model
-for $L$ should meet these two needs: a bounded expression for the mean $\hat{L}$
-, and a bounded distribution for the likelihood.
+But the question of how informative parameters of a power law can be is moot.
+Indeed, both the general model and its variants share an important shortcoming:
+they cannot be used for prediction while remaining within the bounds set by
+ecological principles. In short, while they can describe the *data* adequately,
+they are fundamentally unable to represent the mechanisms through which these
+data emerged. This has two causes. First, models that are variations of $\hat L
+\approx b\times S^a$ have no constraints --  with the exception of the "constant
+connectance" model, in which $L_{CC}$ has a maximum value of $S^2$. However, we
+know that the number of interactions within a food web is both lower and upper
+bounded [@Mart92; @PoisGrav14]: there can be no more than $S^2$ links, and there
+can be no fewer than $S-1$ links. This minimum of $S-1$ represents communities
+where all species interact and at least some of the organisms are heterotrophs
+[@Mart92]. Numerous simple foodwebs could have this minimal number of links --
+for example, a linear food chain wherein each trophic level consists of a single
+species, each of which consumes only the species below it; or a grazing
+herbivore which feeds on every plant in a field. Thus interaction number is
+constrained by ecological principles to be between $S^2$ and $S-1$, something
+which no present model includes. Secondly, accurate predictions of $L$ from $S$
+are often difficult because of how parameters are estimated. This is usually
+done using a Gaussian likelihood for $L$, often after log transformation or both
+$L$ and $S$. While this approach ensures that predicted values of $L$ are always
+positive, it does nothing to ensure that they stay below $S^2$ and above $S-1$.
+Thus a good model for $L$ should meet these two needs: a bounded expression for
+the mean $\hat{L}$, as well as a bounded distribution for the likelihood.
 
 Here we suggest a new perspective for a model of $L$ as a function of $S$ which
-meets both of these requirements. We include the minimum constraint by modelling
-not the total number of links, but the number in excess of the minimum. We
-include the maximum constraint in a similar fashion to the constant connectance
-model described above, by modelling the proportion of flexible links which are
-realized in a community:
+respects ecological bounds, and has a bounded distribution of the likelihood. We
+include the minimum constraint by modelling not the total number of links, but
+the number in excess of the minimum. We include the maximum constraint in a
+similar fashion to the constant connectance model described above, by modelling
+the proportion of flexible links which are realized in a community. In this
+contribution, we show how this model not only outperforms existing efforts at
+predicting the number of interactions, but also has numerous desirable
+properties from which novel insights about the structure of food webs can be
+derived.
+
+# Interlude - deriving a process-based model for the number of links
+
+Based on the ecological constraints discussed earlier, we know that $L$ is a
 
 $$
- \hat L_{FL} = p\times\left[S^2-(S-1)\right]+(S-1)\,,
+ \hat L_{\textsc{fl}} = p\times\left[S^2-(S-1)\right]+(S-1)\,,
 $$ {#eq:lhat}
 
 where $p \in [0,1]$. When $p = 1$, $L$ is at its maximum ($S^2$), and when $p =
