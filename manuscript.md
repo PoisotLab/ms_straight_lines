@@ -116,24 +116,34 @@ derived.
 
 # Interlude - deriving a process-based model for the number of links
 
-Based on the ecological constraints discussed earlier, we know that $L$ is a
+Based on the ecological constraints discussed earlier, we know that the number
+of links $L$ is an integer such that $S-1 \le L \le S^2$. Because we know that
+there are at least $S-1$ interactions, there can be at most $S^2-(S-1)$ links
+*in excess* of this quantity. The $S-1$ minimum links do not need to be
+modelled, because their existence is guaranteed as a pre-condition of observing
+the network. The question our model should address is therefore,how many of
+these $S^2-(S-1)$ "flexible" links are actually present? A second key piece of
+information is that the presence of an interaction can be viewed as a discrete
+stochastic event, with two outcomes (there is, or there is not, an interaction).
+Assuming that all of these flexible links have the same chance of being
+realized, which we call $p$, then we can write the expected number of links as
 
-$$
- \hat L_{\textsc{fl}} = p\times\left[S^2-(S-1)\right]+(S-1)\,,
-$$ {#eq:lhat}
+$$ \hat L_{FL} = p\times\left[S^2-(S-1)\right]+(S-1)\,, $$ {#eq:lhat}
 
 where $p \in [0,1]$. When $p = 1$, $L$ is at its maximum ($S^2$), and when $p =
 0$ it is at the minimum value ($S - 1$). We use the notation $L_{FL}$ to
 represent that our model considers the number of "flexible" links in a food web;
 that is, the number of links in excess of the minimum but below the maximum.
 
-Our second contribution is to propose an improved means of fitting this model.
-Following @PoisCirt16, we suggest that each flexible link represents an
-independent Bernoulli trial with a probability  $p$ of existing, and that an
-observation of $L_i$ links in community $i$ represents an aggregation of $S^2 -
-(S - 1)$ such trials. If we then assume that $p$ is a constant for all links in
-the same ecological community, but may vary between communities, we can model
-the distribution of links directly as a shifted beta-binomial variable.
+Because we assume that every one of these flexible links is an independent
+stochastic event with only two outcomes, we can follow recent literature on
+probabilistic ecological networks [@PoisCirt16] and represent every flexible
+link as an independent Bernoulli trial with a probability $p$ of existing.
+Furthermore, the observation of $L_i$ links in community $i$ represents an
+aggregation of $S^2 - (S - 1)$ such trials. If we then assume that $p$ is a
+constant for all links in the same ecological community, but may vary between
+communities, we can model the distribution of links directly as a shifted
+beta-binomial variable.
 
 $$
 [L|S,\mu, \phi] =  { S^2 - (S - 1) \choose L - (S - 1)} \frac{B(L - (S - 1) + \mu \phi, S^2 - L + (1 - \mu)\phi)}{B(\mu \phi, (1 - \mu)\phi)}
