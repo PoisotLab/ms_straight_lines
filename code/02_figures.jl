@@ -205,15 +205,14 @@ co_emp = d[:links] ./ (d[:nodes] .^2)
 
 
 # Connectance vs species
-connectance_beta = plot(S, range(beta015, stop=beta985, length=1000), color=:darkgrey,  fill=:darkgrey,
+connectance_beta = plot(S, beta985, fillrange=beta015, color=:grey, alpha=0.15,
     label="", title="A", title_location=:left, titlefontsize=11, framestyle=:box) # 97% PI
-plot!(S, range(beta11, stop=beta89, length=1000), color=:lightgrey, fill=:lightgrey, label="") # 89% PI
-plot!(S, beta500, linecolor=betab_color, linewidth=4, label="") # Median connectance
-scatter!(d[:nodes], co_emp, color=:grey, label="") # Empirical connectance
+plot!(S, beta11, fillrange=beta89, color=:grey, alpha=0.15, label="") # 89% PI
+scatter!(d[:nodes], co_emp, c=:grey, msw=0, markersize=5, label="") # Empirical connectance
+plot!(S, beta500, linecolor=pal.fl, linewidth=2, label="") # Median connectance
 plot!(S, ms, label="", linecolor=:black) # Minimum connectance
-xaxis!(:log, "Species richness")
-yaxis!("Connectance")
-
+xaxis!(:log, "Species richness", xlims=(minimum(S),maximum(S)))
+yaxis!("Connectance", (0, 0.5))
 
 # 4B distribution of linkage density
 
@@ -226,18 +225,18 @@ beta11_LS = quantile.(bquant_LS, 0.11)
 beta89_LS = quantile.(bquant_LS, 0.89)
 beta50_LS = quantile.(bquant_LS, 0.50)
 
-avg_degree_beta = plot(S, beta985_LS, fill=beta015_LS, color=:darkgrey, lab="", title="B",
+avg_degree_beta = plot(S, beta985_LS, fill=beta015_LS, color=:grey, alpha=0.15, lab="", title="B",
     title_location=:left, titlefontsize=11, framestyle=:box)
-plot!(S, beta11_LS, fill=beta89_LS, colour=:lightgrey, lab="",)
-plot!(S, beta50_LS, linecolor=betab_color, linewidth=4, lab="")
-scatter!(d.nodes, d.links ./ d.nodes, colour=:grey, lab="")
+plot!(S, beta11_LS, fill=beta89_LS, colour=:grey, alpha=0.15, lab="",)
+scatter!(d.nodes, d.links ./ d.nodes, c=:grey, msw=0, markersize=5, label="") # Empirical connectance
+plot!(S, beta50_LS, linecolor=pal.fl, linewidth=2, lab="")
 plot!(S, msl, linecolor=:black, lab="")
 plot!(S, S, linecolor=:black, lab="")
-xaxis!(:log, "Species richness")
-yaxis!(:log, "Linkage density")
+xaxis!(:log, "Species richness", xlims=(minimum(S),maximum(S)))
+yaxis!(:log, "Linkage density", ylims=(0.5,1000))
 
 
-plot(connectance_beta, avg_degree_beta, label=(1,2), lab="")
+plot(connectance_beta, avg_degree_beta, label=(1,2), lab="", size=(700,350), dpi=200)
 savefig(joinpath("figures", "connectance_linkdens"))
 
 
