@@ -11,7 +11,7 @@ both in observed food webs and under purely neutral models of food web structure
 [@CanaMouq12]. In fact, these numbers underlie most measures used to describe
 the structure of a food web [@DelmBess18]. The structure of a food web, in turn,
 is almost always required to understand how the community functions, develops,
-and respond to changes [@Mcca12; @ThomBros12], to the point where some authors
+and responds to changes [@McCa12; @ThomBros12], to the point where some authors
 suggested that describing food webs was a necessity [@SeibCado18; @McCa07]. To
 this end, a first step is to come up with an estimate for the number of existing
 trophic interactions $L$, through sampling or otherwise. Although both $L$ and
