@@ -2,18 +2,26 @@
 
 Community ecologists are fascinated by counting things. It is therefore no
 surprise that the early food web literature paid so much attention to counting
-species, counting trophic interactions, and computing the relationship between
-these numbers. More species always means more interactions; this scaling between
+species, counting trophic interactions, and uncovering the shape of the
+relationship that binds them -- and it is undeniable that these inquiries
+kickstarted what is now one of the most rapidly growing fields of ecology
+[@BorrMood14]. More species always means more interactions; this scaling between
 species richness $S$ and number of interactions $L$ is universal and appears
-both in observed webs and under purely neutral models of food web structure
-[@CanaMouq12]. In fact, these numbers underlie most means of describing a food
-web. Food web structure, in turn, is very important for understanding how
-ecological systems function, develop, and respond to changes. Although both $L$
-and $S$ are frequently counted in nature, we have far more information about
-$S$. In fact, the distribution of species richness across the world is probably
-the most frequently observed and modelled ecological phenomena. Therefore, if we
-can predict $L$ from $S$ in an ecologically realistic way, we will be in a
-position to make predictions of food web structure at large scales.
+both in observed food webs and under purely neutral models of food web structure
+[@CanaMouq12]. In fact, these numbers underlie most measures used to describe
+the structure of a food web [@DelmBess18]. The structure of a food web, in turn,
+is almost always required to understand how the community functions, develops,
+and respond to changes [@Mcca12; @ThomBros12], to the point where some authors
+suggested that describing food webs was a necessity [@SeibCado18; @McCa07]. To
+this end, a first step is to come up with an estimate for the number of existing
+trophic interactions $L$, through sampling or otherwise. Although both $L$ and
+$S$ can be couunted in nature, the sampling of interactions is orders of
+magnitude more difficult than the sampling of species [@Jord16a; @Jord16]. As a
+result, we have far more information about $S$. In fact, the distribution of
+species richness across the world is probably the most frequently observed and
+modelled ecological phenomena. Therefore, if we can predict $L$ from $S$ in an
+ecologically realistic way, we will be in a position to make first order
+approximations of food web structure at large scales.
 
 Measures of food web structure are based on three specific quantities. The first
 and most straightforward is $L$, the number of trophic interactions among
