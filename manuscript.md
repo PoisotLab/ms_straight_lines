@@ -45,14 +45,14 @@ species times a constant: $\hat L_\text{LSSL} = b\times S$, with $b \approx 2$.
 This model imagines that every species added to a community increases the number
 of interactions by two -- for example, an animal which consumes one resource and
 is consumed by one predator. Martinez @Mart92 instead suggested that the number
-of links should be in proportion to the _square_ of species richness: $\hat
+of links should be in proportion to the *square* of species richness: $\hat
 L_\text{CC} = b\times S^2$, where $c$ is a constant in $]0,1[$. This is called
 the  *constant connectance* model, because it implies a constant ratio $Co =
 L/S^2$ for all networks. This model was a first attempt to recongize the
 constraint discussed above: no network can have more than $S^2$ interactions.
 Finally, @BrosOstl04 note that these two models are instead special cases of the
-same general model, in which $\hat L_\text{reg} = b\times S^a $ where $a$ and
-$b$ are constants. Power laws are a popular means of describing scaling
+same general model, in which $\hat L_\text{reg} = b\times S^a$ where $a$ and $b$
+are constants. Power laws are a popular means of describing scaling
 relationships in many parts of science and were first applied to food webs by
 @BrosOstl04. Power laws are very flexible, and indeed this function matches
 empirical data well -- so well that it is often treated as a "true" model which
