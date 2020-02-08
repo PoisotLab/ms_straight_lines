@@ -8,6 +8,8 @@ using Statistics
 using StatsBase
 using Random
 
+Plots.scalefontsizes(1.3)
+
 # get the data and filter for predation only
 d = CSV.read(joinpath("data", "network_data.dat"))
 d = d[d.predation .> 0 , :]
@@ -80,7 +82,7 @@ p = fit(Beta, pex)
 phi_MLE = p.α + p.β
 mu_MLE = p.α / phi_MLE
 
-density(pex, c=:lightgrey, fill=(:lightgrey, 0, 0.5), dpi=120, size=(800,500), lab="Empirical data",
+density(pex, c=:lightgrey, fill=(:lightgrey, 0, 0.5), dpi=200, size=(800,500), lab="Empirical data",
     foreground_color_legend=nothing, background_color_legend=:white, framestyle=:box)
 plot!(betab_random[1], c=pal.fl, linewidth=1, alpha=0.3, lab="Posterior samples")
 for i in 1:length(index)
