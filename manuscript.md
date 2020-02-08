@@ -237,11 +237,11 @@ model of $L$ to parameterize a distribution for connectance ($L/S^2$) and
 linkage density ($L/S$). We can derive this by noticing that +@eq:lhat can be
 rearranged to show how $Co$ and $L_D$ are linear transformations of $p$:
 
-$$ Co = \frac{\hat L}{S^2} = p\left(1 - \frac{S-1}{S^2}\right) + \frac{S-1}{S^2} ,$${#eq:co2}
+$$ Co = \frac{\hat L}{S^2} = p\left(1 - \frac{S-1}{S^2}\right) + \frac{S-1}{S^2} ,$$ {#eq:co2}
 
 and
 
-$$ L_D = \frac{\hat L}{S} = p \left(S - \frac{S-1}{S} \right) +  \frac{S-1}{S},$${#eq:ld}
+$$ L_D = \frac{\hat L}{S} = p \left(S - \frac{S-1}{S} \right) +  \frac{S-1}{S},$$ {#eq:ld}
 
 In a Beta-Binomial distribution, it is assumed that the probability of success
 $p$ varies among groups of trials according to a Beta distribution. Since $p$
@@ -296,7 +296,7 @@ new range:
 
 $$
 [Co | S, \mu, \phi] = \frac{\left(Co - \frac{S-1}{S^2}\right)^{\mu \phi - 1}\left(1 - Co\right)^{(1 - \mu)\phi - 1} }{(1 - \frac{S-1}{S^2})^{\phi - 1} \times B(\mu \phi, (1 - \mu)\phi)}
-$${#eq:shiftBetaCo}
+$$ {#eq:shiftBetaCo}
 
 
 Similarly, we can convert the distribution for $p$ into one for $L_D$ by
@@ -305,7 +305,7 @@ replacing $p$ with the transformation of $L_D$ (+@eq:ld)
 
 $$
 [L_{D} | S, \mu, \phi] = \frac{\left(L_D - \frac{S-1} {S}\right)^{\mu \phi - 1}\left(1 - L_D\right)^{(1 - \mu)\phi - 1} }{(S - \frac{S-1}{S})^{\phi - 1} \times B(\mu \phi, (1 - \mu)\phi)}
-$${#eq:shiftBetaLD}
+$$ {#eq:shiftBetaLD}
 
 In +@fig:beta_distributions, we show that the connectance and linkage density
 obtained from the equations above fitted the empirical data well. Their
@@ -371,7 +371,7 @@ $$ \sigma_L^2 = (S^2 - S + 1) \mu (1 - \mu)(1 + \frac{S(S-1)}{\phi + 1})$$
 This means that given a network with observed species richness $S_{obs}$ and
 observed links $L_{obs}$, we can calculate its $z$-score as
 
-$$z = \frac{L_{obs} - \bar{L}}{\sqrt{\sigma_L^2}} \,.$${#eq:z}
+$$z = \frac{L_{obs} - \bar{L}}{\sqrt{\sigma_L^2}} \,.$$ {#eq:z}
 
 A network where $L = \hat L$ will have a $z$-score of 0, and any network with
 more (fewer) interactions will have a positive (negative) $z$-score. This has
