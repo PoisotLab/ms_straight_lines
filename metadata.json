@@ -6,19 +6,19 @@
   "language": "en",
   "creators": [
     {
-      "affiliation": "Université de Montréal; QCBS",
+      "affiliation": ["Université de Montréal, Département de Sciences Biologiques, Montréal QC, Canada", "Québec Centre for Biodiversity Sciences, Montréal QC, Canada"],
       "familyname": "MacDonald",
       "givennames": "Andrew",
       "orcid": "0000-0003-1162-169X"
     },
     {
-      "affiliation": "Université de Montréal; QCBS",
+      "affiliation": ["Université de Montréal, Département de Sciences Biologiques, Montréal QC, Canada", "Québec Centre for Biodiversity Sciences, Montréal QC, Canada"],
       "familyname": "Banville",
       "givennames": "Francis",
       "orcid": "0000-0001-9051-0597"
     },
     {
-      "affiliation": "Université de Montréal; QCBS",
+      "affiliation": ["Université de Montréal, Département de Sciences Biologiques, Montréal QC, Canada", "Québec Centre for Biodiversity Sciences, Montréal QC, Canada"],
       "familyname": "Poisot",
       "givennames": "Timothée",
       "orcid": "0000-0002-0735-5184"
