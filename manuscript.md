@@ -287,8 +287,8 @@ according to the number of species $S$ in a community.
 It is worth noting that +@eq:lhat can be expressed as a second degree
 polynomial, ($p\times S^2  + (1-p)\times S + (p-1)$), whose leading term is
 $p\times S^2$. Therefore, for large ecological systems, where $S$ has a high
-value, +@eq:co2 and +@eq:ld respectively approach $Co = L/S^2 \approx p $ and $
-L_D = L/S \approx pS $. These are notable properties, as they imply that our
+value, +@eq:co and +@eq:ld respectively approach $Co = L/S^2 \approx p$ and
+$L_D = L/S \approx pS$. These are notable properties, as they imply that our
 model captures both the behavior of +@eq:lsll and of +eq:cc, while having a
 markedly better fit (+@tab:comparison).
 
@@ -344,7 +344,16 @@ identify ecological and evolutionary mechanisms shaping communities.
 Ecologists are often faced with the issue of comparing several networks. Often,
 they wish to know if the network they have is "unusual" relative to some
 expectation. Traditionally these comparisons have been done by constructing a
-Null distribution . But here we propose a means of doing so with math.
+null distribution, which involves simulating random matrices [@FortBasc06;
+@BascJord03]; importantly, this approach assumes that (i) connectance is a fixed
+property of the network, which does not involve any stochasticity, and (ii) the
+simulated network distribution is an accurate and unbiased description of the
+null distribution. Yet recent advances in the study of probabilistic ecological
+networks show that connectance can also be modelled as a variable quantity
+[@PoisCirt16]; given that connectance drives most of the values of food web
+structure [@PoisGrav14], we provide a way to assess whether the number of links
+in a network (and therefore its connectance) is surprising. We do so using maths
+rather than simulations.
 
 The shifted beta-binomial can be approximated by a normal distribution:
 
