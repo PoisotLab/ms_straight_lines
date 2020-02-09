@@ -332,9 +332,9 @@ connectance, and between $(S-1)/S$ and $S$ for the linkage density).
 ![**Connectance and linkage density can be derived from a model for links.** A) Connectance and B) linkage density are plotted as a function of species richness, for the maximum _a posteriori_ estimates of the flexible link model. In each panel, the colored line represent the median predicted quantity and the grey areas cover the 78% and 97% percentile intervals. Empirical data from the `mangal.io` database are plotted in each panel (grey dots). In A), the minimal $(S-1)/S^2$ connectance and in B) the minimal $(S-1)/S$ and maximum $S$ linkage density are plotted (black lines).](figures/connectance_linkdens.png){#fig:beta_distributions}
 
 Connectance is more than the proportion of realized interactions. It has been
-associated with some of the most commonly used network metrics (@PoisGrav14,
-@Chag15), and contains meaningful information on the stability (@Dunn02,
-@Mont06) and dynamics (@VierAlme15) of ecological communities. A probability
+associated with some of the most commonly used network metrics [@PoisGrav14,
+@Chag15], and contains meaningful information on the stability [@DunnWill02a;
+@MontPimm06] and dynamics [@VieiAlme15] of ecological communities. A probability
 distribution for connectance non only accounts for the variability between
 networks, but can be used to describe fundamental properties of food webs and to
 identify ecological and evolutionary mechanisms shaping communities.
