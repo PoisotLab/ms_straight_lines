@@ -444,6 +444,8 @@ a food web, and so for small values of $S$, the difference between assuming that
 there can be between $0$, or between $(S-1)$, and $S^2$ interactions is likely
 biologically relevant.
 
+Consequences for NAR @GaliLurg18 -- $S = kA^z$, k = 10, z = 0.27
+
 # Experimental Procedures
 
 ## Bayesian model definitions
