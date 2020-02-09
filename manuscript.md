@@ -128,10 +128,10 @@ stochastic event, with two outcomes (there is, or there is not, an interaction).
 Assuming that all of these flexible links have the same chance of being
 realized, which we call $p$, then we can write the expected number of links as
 
-$$ \hat L_{FL} = p\times\left[S^2-(S-1)\right]+(S-1)\,, $$ {#eq:lhat}
+$$ L_{\textsc{fl}} = p\times\left[S^2-(S-1)\right]+(S-1)\,, $$ {#eq:lhat}
 
 where $p \in [0,1]$. When $p = 1$, $L$ is at its maximum ($S^2$), and when $p =
-0$ it is at the minimum value ($S - 1$). We use the notation $L_{FL}$ to
+0$ it is at the minimum value ($S - 1$). We use the notation $L_{\textsc{fl}}$ to
 represent that our model considers the number of "flexible" links in a food web;
 that is, the number of links in excess of the minimum but below the maximum.
 
@@ -149,8 +149,8 @@ $$
 [L|S,\mu, \phi] =  { S^2 - (S - 1) \choose L - (S - 1)} \frac{\Beta(L - (S - 1) + \mu \phi, S^2 - L + (1 - \mu)\phi)}{\Beta(\mu \phi, (1 - \mu)\phi)}
 $$ {#eq:shiftBB}
 
-Where $\Beta$ is the Beta function, $\mu$ is the average probability of a flexible
-link being realized (i.e. the average value of $p$) and $\phi$ is the
+Where $\Beta$ is the Beta function, $\mu$ is the average probability of a
+flexible link being realized (*i.e.* the average value of $p$) and $\phi$ is the
 concentration around this value. The support of this distribution is limited to
 only ecologically realistic values of $L$: the number of species determines the
 number of possible links and it is shifted to the right by $S-1$. This means
@@ -162,7 +162,7 @@ Procedures.
 In this paper we will compare our flexible links model to three previous models
 for $L$. We estimate parameters and compare the performance of all models using
 open data from the `mangal.io` networks database. Finally, we will show how our
-model for $L_{FL}$ suggests a new and more useful way of thinking about metrics
+model for $L_{\textsc{fl}}$ suggests a new and more useful way of thinking about metrics
 of network structure and discuss how generative models can be useful tools for
 including our knowledge of a system into our predictions.
 
