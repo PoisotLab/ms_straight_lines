@@ -264,8 +264,6 @@ mean of $p$ to approximately 0.003 ($var(p)=\mu(1-\mu)/(1+\phi)$). This
 indicates that food webs are largely in their probabiliy of flexible links being
 realized.
 
-<!-- tk add ecological interpretation where possible -->
-
 ## Connectance and linkage density can be derived from a model for links
 
 Of the three important quantities which describe networks ($L$, $Co$ and $L_D$)
@@ -289,21 +287,16 @@ according to the number of species $S$ in a community.
 It is worth noting that +@eq:lhat can be expressed as a second degree
 polynomial, ($p\times S^2  + (1-p)\times S + (p-1)$), whose leading term is
 $p\times S^2$. Therefore, for large ecological systems, where $S$ has a high
-value, +@eq:co2 and +@eq:ld respectively approach $Co = \nicefrac{L}{S^2}
-\approx p $ and $ L_D = L/S \approx pS $. These are notable properties, as they
-imply that our model captures both the behavior of +@eq:lsll and of +eq:cc,
-while having a markedly better fit (+@tab:comparison).
+value, +@eq:co2 and +@eq:ld respectively approach $Co = L/S^2 \approx p $ and $
+L_D = L/S \approx pS $. These are notable properties, as they imply that our
+model captures both the behavior of +@eq:lsll and of +eq:cc, while having a
+markedly better fit (+@tab:comparison).
 
 This implies that the addition of $n$ species should increase the linkage
 density by approximately $p\times n$. For example, the addition of 11 new
 species ($p^{-1}$) should increase the linkage density in the food web by
 roughly 1, meaning that each species in the original network would be expected
-to develop 2 additional interactions. Of course, for increasingly large values
-of $S$, this may result in an unrealistic average degree, as species are limited
-by biological mechanisms such as handling time, capture efficiency, _etc_, in
-the number of interactions they can establish. Most ecological networks are
-however reasonably small and so this does not look like an unreasonable
-assumption.
+to develop 2 additional interactions.
 
 Note also that the expression of connectance is no longer a polynomial; at large
 values of $S$, the value of $(S-1)/S^2$  will tend towards 0, and so the
@@ -428,6 +421,11 @@ networks deviate most strongly from the expectations under "small world" or
 small networks, connectance is higher, and only decreases towards $p$ when the
 term in $S^{-2}$ in +@eq:co vanishes.
 
+Eltonian demons? @Law79 Of course, for increasingly large values of $S$, this
+may result in an unrealistic average degree, as species are limited by
+biological mechanisms such as handling time, capture efficiency, _etc_, in the
+number of interactions they can establish. Most ecological networks are however
+reasonably small and so this does not look like an unreasonable assumption.
 
 <!-- moving this to end because I don't really know where it fits in the narrative -->
 
