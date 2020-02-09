@@ -376,9 +376,10 @@ sampled networks and estimate their number of missing (extra) links.
 In (+@fig:MAPnormal), we show that the predictions made by the normal
 approximation (panel B) are similar to those made by the beta distribution
 parameterized with the maximum _a posteriori_ values of $\mu$ and $\phi$ (panel
-A).
+A), although the later can undershoot the constraint on the minimum number of
+links.
 
-![**The shifted beta-binomial distribution can be approximated by a normal distribution.** The number of links is plotted as a function of species richness obtained from A) the maximum _a posteriori_ estimates of the flexible link model and B) its normal approximation. In each panel, the colored line represent the median predicted link number and the grey areas cover the 78% and 97% percentile intervals (only the 78% percentile interval is depicted in B). Empirical data from the `mangal.io` database are plotted in each panel (grey dots), as well as the minimal $S-1$ and maximal $S^2$ number of links (lower and upper black lines, respectively).](figures/betabinmap_normal_links.png){#fig:MAPnormal}
+![**The shifted beta-binomial distribution can be approximated by a normal distribution.** The number of links is plotted as a function of species richness obtained from A) the maximum _a posteriori_ estimates of the flexible link model and B) its normal approximation. In each panel, the colored line represent the median predicted link number and the grey areas cover the 78% and 97% percentile intervals (only the 78% percentile interval is depicted in B).](figures/betabinmap_normal_links.png){#fig:MAPnormal}
 
 ## Conclusions
 
