@@ -272,15 +272,15 @@ model of $L$ to parameterize a distribution for connectance ($L/S^2$) and
 linkage density ($L/S$). We can derive this by noticing that +@eq:lhat can be
 rearranged to show how $Co$ and $L_D$ are linear transformations of $p$:
 
-$$ Co = \frac{\hat L}{S^2} = p\left(1 - \frac{S-1}{S^2}\right) + \frac{S-1}{S^2} ,$$ {#eq:co2}
+$$ Co = \frac{L}{S^2} = p\left(1 - \frac{S-1}{S^2}\right) + \frac{S-1}{S^2} ,$$ {#eq:co}
 
 and
 
-$$ L_D = \frac{\hat L}{S} = p \left(S - \frac{S-1}{S} \right) +  \frac{S-1}{S},$$ {#eq:ld}
+$$ L_D = \frac{L}{S} = p \left(S - \frac{S-1}{S} \right) +  \frac{S-1}{S},$$ {#eq:ld}
 
 In a Beta-Binomial distribution, it is assumed that the probability of success
 $p$ varies among groups of trials according to a Beta distribution. Since $p$
-has a Beta distribution the linear transformations described by +@eq:co2 and
+has a Beta distribution the linear transformations described by +@eq:co and
 +@eq:ld also describe Beta distributions which have been shifted and scaled
 according to the number of species $S$ in a community.
 
@@ -294,33 +294,22 @@ markedly better fit (+@tab:comparison).
 
 This implies that the addition of $n$ species should increase the linkage
 density by approximately $p\times n$. For example, the addition of 11 new
-species ($p^{-1}$) should increase the linkage density in the food web by
-roughly 1, meaning that each species in the original network would be expected
-to develop 2 additional interactions.
-
-Note also that the expression of connectance is no longer a polynomial; at large
-values of $S$, the value of $(S-1)/S^2$  will tend towards 0, and so the
-connectance will converge towards $p$. Therefore, for large enough ecological
-networks, we should expect a connectance which is independent of $S$. Thus $p$
-has an interesting ecological interpretation: it represents the average
+species ($p^{-1}$ according to +@tab:parameters) should increase the linkage
+density in the food web by roughly 1, meaning that each species in the original
+network would be expected to develop 2 additional interactions. For large enough
+ecological networks, we should expect a connectance which is independent of $S$.
+Thus $p$ has an interesting ecological interpretation: it represents the average
 connectance of networks large enough that the proportion $(S-1)/S^{2}$ is
 negligible.
 
-In previous work it has been debated whether $Co$ is a constant across all
-communities. However, some authors have found that this does not hold for small
-communities. This result makes it clear that this confusion comes from
-neglecting the minimum value.
-
-### Discussion of the shifted beta distributions.
-
-Just as $L$ must be within ecologically meaningful bounds, $Co$ and $L_D$ must
-be as well. The connectance of a food web is bounded by 0 and 1. However, the
-minimum bound on links similarly imposes a lower value on connectance. This
-means that the distribution for $Co$ will be a shifted beta distribution, a
-transformed version of the distribution for $p$.
+Just as $L$ must be within ecologically meaningful bounds, $Co$ (+@eq:co) and
+$L_D$ (+@eq:ld) must be as well. The connectance of a food web is bounded by 0
+and 1. However, the minimum bound on links similarly imposes a lower value on
+connectance. This means that the distribution for $Co$ will be a shifted beta
+distribution, a transformed version of the distribution for $p$.
 
 We can convert the distribution for $p$ into one for $Co$ by replacing $p$ with
-the transformation of $Co$ as described above (+@eq:co2), and rescaling by the
+the transformation of $Co$ as described above (+@eq:co), and rescaling by the
 new range:
 
 $$
@@ -330,7 +319,6 @@ $$ {#eq:shiftBetaCo}
 
 Similarly, we can convert the distribution for $p$ into one for $L_D$ by
 replacing $p$ with the transformation of $L_D$ (+@eq:ld)
-
 
 $$
 [L_{D} | S, \mu, \phi] = \frac{\left(L_D - \frac{S-1} {S}\right)^{\mu \phi - 1}\left(1 - L_D\right)^{(1 - \mu)\phi - 1} }{(S - \frac{S-1}{S})^{\phi - 1} \times B(\mu \phi, (1 - \mu)\phi)}
@@ -419,13 +407,19 @@ This model sheds some light on a classical result by @DunnWill02a: ecological
 networks deviate most strongly from the expectations under "small world" or
 "scale free" regimes when they exceed a certain connectance; this is because for
 small networks, connectance is higher, and only decreases towards $p$ when the
-term in $S^{-2}$ in +@eq:co vanishes.
+term in $S^{-2}$ in +@eq:co vanishes. +@eq:co2 for the reason why
 
 Eltonian demons? @Law79 Of course, for increasingly large values of $S$, this
 may result in an unrealistic average degree, as species are limited by
 biological mechanisms such as handling time, capture efficiency, _etc_, in the
 number of interactions they can establish. Most ecological networks are however
 reasonably small and so this does not look like an unreasonable assumption.
+
+
+In previous work it has been debated whether $Co$ is a constant across all
+communities. However, some authors have found that this does not hold for small
+communities. This result makes it clear that this confusion comes from
+neglecting the minimum value.
 
 <!-- moving this to end because I don't really know where it fits in the narrative -->
 
