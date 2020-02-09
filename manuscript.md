@@ -369,13 +369,9 @@ observed links $L_{obs}$, we can calculate its $z$-score as
 $$z = \frac{L_{obs} - \bar{L}}{\sqrt{\sigma_L^2}} \,.$$ {#eq:z}
 
 A network where $L = \hat L$ will have a $z$-score of 0, and any network with
-more (fewer) interactions will have a positive (negative) $z$-score. This has
-important practical consequences - the structure of ecological networks is often
-probed for deviation from the random distribution of some measure of interest
-(**ref Bascompte, Flores**), and most of these measures are in turn related to
-connectance **ref P&G**. We suggest that the use of a $z$-score could help
-identify significantly under (over) sampled networks and estimate their number
-of missing (extra) links.
+more (fewer) interactions will have a positive (negative) $z$-score. We suggest
+that the use of a $z$-score could help identify significantly under (over)
+sampled networks and estimate their number of missing (extra) links.
 
 In (+@fig:MAPnormal), we show that the predictions made by the normal
 approximation (panel B) are similar to those made by the beta distribution
