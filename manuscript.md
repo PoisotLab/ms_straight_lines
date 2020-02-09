@@ -49,23 +49,32 @@ been considered over the years. Here we describe three popular approaches before
 describing our own proposed model. The *link-species scaling (LSSL)* model
 introduced by @CoheBria84 hypothesized that all networks have the same average
 degree, thats is most species should have the same number of interactions. Links
-are modeled as the number of species times a constant: $\hat L_\text{LSSL} =
-b\times S$, with $b \approx 2$. This model imagines that every species added to
-a community increases the number of interactions by two -- for example, an
-animal which consumes one resource and is consumed by one predator. Yet this
-model started to show its deficiencies when data on larger food webs became
-available, which revealed that $L$ increases faster than a linear function of
-$S$ would. In response to the idea that the *average degree* is constant,
-Martinez [@Mart92] suggested instead that *connectance* is unchanged in response
-to $S$; in other words, a food web is always equally filled, regardless of
-whether it has 5 or 5000 species. Under the so-called "constant connectance"
-model, the number of links is proportional to the richness squared, $\hat
-L_\text{CC} = b\times S^2$, where $c$ is a constant in $]0,1[$ representing the
-expected value of connectance. This model can be relaxed by assuming that the
-scaling of $L$ with $S$ does not necessarily follows the maximum number of
-interactions, and the best fit was with a model of the form $\hat L_\text{reg} =
-b\times S^a$, which is trivially a linear relationship between $\text{log}(L)$
-and $\text{log}(S)$. This power law model can be parameterized in arbitrarily
+are modeled as the number of species times a constant:
+
+$$ L_{\textsc{lssl}} = b\times S \,$$ {#eq:lssl}
+
+with $b \approx 2$. This model imagines that every species added to a community
+increases the number of interactions by two -- for example, an animal which
+consumes one resource and is consumed by one predator. Yet this model started to
+show its deficiencies when data on larger food webs became available, which
+revealed that $L$ increases faster than a linear function of $S$ would. In
+response to the idea that the *average degree* is constant, Martinez [@Mart92]
+suggested instead that *connectance* is unchanged in response to $S$; in other
+words, a food web is always equally filled, regardless of whether it has 5 or
+5000 species. Under the so-called "constant connectance" model, the number of
+links is proportional to the richness squared,
+
+$$ L_{\textsc{cc}} = b\times S^2\,, $$ {#eq:cc}
+
+where $c$ is a constant in $]0,1[$ representing the expected value of
+connectance. This model can be relaxed by assuming that the scaling of $L$ with
+$S$ does not necessarily follows the maximum number of interactions, and the
+best fit was with a model of the form
+
+$$ L_{\textsc{pl}} = b\times S^a\,, $$ {#eq:pl}
+
+which is trivially a linear relationship between $\text{log}(L)$ and
+$\text{log}(S)$. This power law model can be parameterized in arbitrarily
 complex ways, including spatial scaling and species area relationships
 [@BrosOstl04]; it should further be noted that this model is a synthesis of
 preview hypotheses, encompassing both the link-species scaling ($a=1, b\approx
@@ -83,18 +92,18 @@ Indeed, both the general model and its variants share an important shortcoming:
 they cannot be used for prediction while remaining within the bounds set by
 ecological principles. In short, while they can describe the *data* adequately,
 they are fundamentally unable to represent the mechanisms through which these
-data emerged. This has two causes. First, models that are variations of $\hat L
+data emerged. This has two causes. First, models that are variations of $L
 \approx b\times S^a$ have no constraints --  with the exception of the "constant
-connectance" model, in which $L_{CC}$ has a maximum value of $S^2$. However, we
-know that the number of interactions within a food web is both lower and upper
-bounded [@Mart92; @PoisGrav14]: there can be no more than $S^2$ links, and there
-can be no fewer than $S-1$ links. This minimum of $S-1$ represents communities
-where all species interact and at least some of the organisms are heterotrophs
-[@Mart92]. Numerous simple foodwebs could have this minimal number of links --
-for example, a linear food chain wherein each trophic level consists of a single
-species, each of which consumes only the species below it; or a grazing
-herbivore which feeds on every plant in a field. Thus interaction number is
-constrained by ecological principles to be between $S^2$ and $S-1$, something
+connectance" model, in which $L_{\textsc{cc}}$ has a maximum value of $S^2$.
+However, we know that the number of interactions within a food web is both lower
+and upper bounded [@Mart92; @PoisGrav14]: there can be no more than $S^2$ links,
+and there can be no fewer than $S-1$ links. This minimum of $S-1$ represents
+communities where all species interact and at least some of the organisms are
+heterotrophs [@Mart92]. Numerous simple foodwebs could have this minimal number
+of links -- for example, a linear food chain wherein each trophic level consists
+of a single species, each of which consumes only the species below it; or a
+grazing herbivore which feeds on every plant in a field. Thus interaction number
+is constrained by ecological principles to be between $S^2$ and $S-1$, something
 which no present model includes. Secondly, accurate predictions of $L$ from $S$
 are often difficult because of how parameters are estimated. This is usually
 done using a Gaussian likelihood for $L$, often after log transformation or both
@@ -135,6 +144,11 @@ where $p \in [0,1]$. When $p = 1$, $L$ is at its maximum ($S^2$), and when $p =
 represent that our model considers the number of "flexible" links in a food web;
 that is, the number of links in excess of the minimum but below the maximum.
 
+It is worth noting that +@eq:lhat can be expressed as a second degree
+polynomial, namely
+
+$$ L_{\textsc{fl}} =  $$
+
 Because we assume that every one of these flexible links is an independent
 stochastic event with only two outcomes, we can follow recent literature on
 probabilistic ecological networks [@PoisCirt16] and represent every flexible
@@ -169,12 +183,12 @@ predictions.
 
 ## Flexible links model fits better and makes a plausible range of predictions
 
-| model                | ref.        | PSIS-LOO         | $\Delta \text{ELPD}$ | $SE_{\Delta \text{ELPD}}$ |
-| -------------------- | ----------- | ---------------- | -------------------- | ------------------------- |
-| Flexible links       | +@eq:lhat   | 2520.5 ± 44.4    | 0                    | 0                         |
-| Power law            | @BrosOstl04 | 2564.3 ± 46.6    | -21.9                | 6.5                       |
-| Constant             | @Mart92     | 2811.0 ± 68.3    | -145.3               | 21.1                      |
-| Link-species scaling | @CoheBria84 | 39840.1 ± 2795.1 | -18659.8             | 1381.7                    |
+| Model                              | eq.      | PSIS-LOO         | $\Delta \text{ELPD}$ | $SE_{\Delta \text{ELPD}}$ |
+| ---------------------------------- | --------- | ---------------- | -------------------- | ------------------------- |
+| Flexible links                     | @eq:lhat | 2520.5 ± 44.4    | 0                    | 0                         |
+| Power law [@BrosOstl04]            | @eq:pl    | 2564.3 ± 46.6    | -21.9                | 6.5                       |
+| Constant [@Mart92]                 | @eq:cc    | 2811.0 ± 68.3    | -145.3               | 21.1                      |
+| Link-species scaling [@CoheBria84] | @eq:lssl  | 39840.1 ± 2795.1 | -18659.8             | 1381.7                    |
 
 Table: Comparison of the different models. Pareto-smoothed important sampling values and differences relative to the maximum in the expected log predictive density for the flexible links and the three competing models. The mean and standard deviation (SD) (standard error (SE)) is given for the two metrics. {#tbl:comparison}
 
@@ -241,11 +255,11 @@ Table: Parameter estimates for all models. Mean and standard deviation (SD) is g
 Although we did not use the same approach to parameter estimation as previous
 authors, our approach to fitting these models recovered parameter estimates that
 are broadly congruent with previous work. We found very consistent values of 2.2
-for $b$ of the LSSL model, which is close to the value of approximately 2 used
-by @CoheBria84. Similarly, we found a value of 0.12 for $b$ of the constant
-connectance model, which was consistent with the 0.14 found by @Mart92. Finally,
-the parameters values we found for the power law were also comparable to the
-ones found by @BrosOstl04.
+for $b$ of the LSSL model, which is close to the original value of approximately
+2 [@CoheBria84]. Similarly, we found a value of 0.12 for $b$ of the constant
+connectance model, which was consistent with original estimate of 0.14
+[@Mart92]. Finally, the parameters values we found for the power law were also
+comparable to earlier estimates [@BrosOstl04].
 
 For large communities, our model should behave similarly to the constant
 connectance model; it is no surprise then than $\mu$ was about 0.09, which is
