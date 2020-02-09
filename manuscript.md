@@ -289,11 +289,10 @@ according to the number of species $S$ in a community.
 It is worth noting that +@eq:lhat can be expressed as a second degree
 polynomial, ($p\times S^2  + (1-p)\times S + (p-1)$), whose leading term is
 $p\times S^2$. Therefore, for large ecological systems, where $S$ has a high
-value, +@eq:co2 and +@eq:ld respectively approach
-
-$$Co = \nicefrac{L}{S^2} \approx p $$
-
-$$ L_D \approx pS $$
+value, +@eq:co2 and +@eq:ld respectively approach $Co = \nicefrac{L}{S^2}
+\approx p $ and $ L_D = L/S \approx pS $. These are notable properties, as they
+imply that our model captures both the behavior of +@eq:lsll and of +eq:cc,
+while having a markedly better fit (+@tab:comparison).
 
 This implies that the addition of $n$ species should increase the linkage
 density by approximately $p\times n$. For example, the addition of 11 new
