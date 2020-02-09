@@ -145,9 +145,9 @@ constant for all links in the same ecological community, but may vary between
 communities, we can model the distribution of links directly as a shifted
 beta-binomial variable.
 
-$$ [L|S,\mu, \phi] =  { S^2 - (S - 1) \choose L - (S - 1)} \frac{\Beta(L - (S - 1) + \mu \phi, S^2 - L + (1 - \mu)\phi)}{\Beta(\mu \phi, (1 - \mu)\phi)} $$ {#eq:shiftBB}
+$$ [L|S,\mu, \phi] =  { S^2 - (S - 1) \choose L - (S - 1)} \frac{B(L - (S - 1) + \mu \phi, S^2 - L + (1 - \mu)\phi)}{B(\mu \phi, (1 - \mu)\phi)} $$ {#eq:shiftBB}
 
-Where $\Beta$ is the Beta function, $\mu$ is the average probability of a
+Where $\mathrm{B}$ is the Beta function, $\mu$ is the average probability of a
 flexible link being realized (*i.e.* the average value of $p$) and $\phi$ is the
 concentration around this value. The support of this distribution is limited to
 only ecologically realistic values of $L$: the number of species determines the
