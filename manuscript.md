@@ -224,17 +224,17 @@ links between $S-1$ and $S^2$.
 
 ## Parameter estimates for all models
 
-| model            | Equation for $\hat{L}$     | parameter | interpretation                      | value | SD     |
-| ---------------- | -------------------------- | --------- | ----------------------------------- | ----- | ------ |
-| $L_{LSSL}$       | $bS$                       | $b$       | links per species                   | 2.2   | 0.047  |
-|                  |                            | $\kappa$  | concentration of $L$ around mean    | 1.4   | 0.12   |
-| $L_{CC}$         | $bS^2$                     | $b$       | proportion of links realized        | 0.12  | 0.0041 |
-|                  |                            | $\kappa$  | concentration of $L$ around mean    | 4.0   | 0.37   |
-| $L_{\text{reg}}$ | $bS^a$                     | $b$       | proportion of relationship          | 0.37  | 0.054  |
-|                  |                            | $a$       | scaling of relationship             | 1.7   | 0.043  |
-|                  |                            | $\kappa$  | concentration of $L$ around mean    | 4.8   | 0.41   |
-| $L_{FL}$         | $(S^2 - (S - 1))p + S - 1$ | $\mu$     | average value of $p$                | 0.086 | 0.0037 |
-|                  |                            | $\phi$    | concentration around value of $\mu$ | 24.3  | 2.4    |
+| Model                      | parameter | interpretation                      | value | SD     |
+| -------------------------- | --------- | ----------------------------------- | ----- | ------ |
+| $bS$                       | $b$       | links per species                   | 2.2   | 0.047  |
+|                            | $\kappa$  | concentration of $L$ around mean    | 1.4   | 0.12   |
+| $bS^2$                     | $b$       | proportion of links realized        | 0.12  | 0.0041 |
+|                            | $\kappa$  | concentration of $L$ around mean    | 4.0   | 0.37   |
+| $bS^a$                     | $b$       | proportion of relationship          | 0.37  | 0.054  |
+|                            | $a$       | scaling of relationship             | 1.7   | 0.043  |
+|                            | $\kappa$  | concentration of $L$ around mean    | 4.8   | 0.41   |
+| $(S^2 - (S - 1))p + S - 1$ | $\mu$     | average value of $p$                | 0.086 | 0.0037 |
+|                            | $\phi$    | concentration around value of $\mu$ | 24.3  | 2.4    |
 
 Table: Parameter estimates for all models. Mean and standard deviation (SD) is given for each parameter. {#tbl:parameters}
 
