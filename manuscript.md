@@ -184,11 +184,11 @@ predictions.
 ## Flexible links model fits better and makes a plausible range of predictions
 
 | Model                              | eq.      | PSIS-LOO         | $\Delta \text{ELPD}$ | $SE_{\Delta \text{ELPD}}$ |
-| ---------------------------------- | --------- | ---------------- | -------------------- | ------------------------- |
+| ---------------------------------- | -------- | ---------------- | -------------------- | ------------------------- |
 | Flexible links                     | @eq:lhat | 2520.5 ± 44.4    | 0                    | 0                         |
-| Power law [@BrosOstl04]            | @eq:pl    | 2564.3 ± 46.6    | -21.9                | 6.5                       |
-| Constant [@Mart92]                 | @eq:cc    | 2811.0 ± 68.3    | -145.3               | 21.1                      |
-| Link-species scaling [@CoheBria84] | @eq:lssl  | 39840.1 ± 2795.1 | -18659.8             | 1381.7                    |
+| Power law [@BrosOstl04]            | @eq:pl   | 2564.3 ± 46.6    | -21.9                | 6.5                       |
+| Constant [@Mart92]                 | @eq:cc   | 2811.0 ± 68.3    | -145.3               | 21.1                      |
+| Link-species scaling [@CoheBria84] | @eq:lssl | 39840.1 ± 2795.1 | -18659.8             | 1381.7                    |
 
 Table: Comparison of the different models. Pareto-smoothed important sampling values and differences relative to the maximum in the expected log predictive density for the flexible links and the three competing models. The mean and standard deviation (SD) (standard error (SE)) is given for the two metrics. {#tbl:comparison}
 
@@ -240,11 +240,11 @@ links between $S-1$ and $S^2$.
 
 | Model                      | parameter | interpretation                      | value | SD     |
 | -------------------------- | --------- | ----------------------------------- | ----- | ------ |
-| $bS$                       | $b$       | links per species                   | 2.2   | 0.047  |
+| $bS$ [@CoheBria84]         | $b$       | links per species                   | 2.2   | 0.047  |
 |                            | $\kappa$  | concentration of $L$ around mean    | 1.4   | 0.12   |
-| $bS^2$                     | $b$       | proportion of links realized        | 0.12  | 0.0041 |
+| $bS^2$ [@Mart92]           | $b$       | proportion of links realized        | 0.12  | 0.0041 |
 |                            | $\kappa$  | concentration of $L$ around mean    | 4.0   | 0.37   |
-| $bS^a$                     | $b$       | proportion of relationship          | 0.37  | 0.054  |
+| $bS^a$ [@BrosOstl04]       | $b$       | proportion of relationship          | 0.37  | 0.054  |
 |                            | $a$       | scaling of relationship             | 1.7   | 0.043  |
 |                            | $\kappa$  | concentration of $L$ around mean    | 4.8   | 0.41   |
 | $(S^2 - (S - 1))p + S - 1$ | $\mu$     | average value of $p$                | 0.086 | 0.0037 |
