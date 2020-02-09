@@ -144,11 +144,6 @@ where $p \in [0,1]$. When $p = 1$, $L$ is at its maximum ($S^2$), and when $p =
 represent that our model considers the number of "flexible" links in a food web;
 that is, the number of links in excess of the minimum but below the maximum.
 
-It is worth noting that +@eq:lhat can be expressed as a second degree
-polynomial, namely
-
-$$ L_{\textsc{fl}} =  $$
-
 Because we assume that every one of these flexible links is an independent
 stochastic event with only two outcomes, we can follow recent literature on
 probabilistic ecological networks [@PoisCirt16] and represent every flexible
@@ -291,12 +286,12 @@ has a Beta distribution the linear transformations described by +@eq:co2 and
 +@eq:ld also describe Beta distributions which have been shifted and scaled
 according to the number of species $S$ in a community.
 
-### Discussion of these equations
+It is worth noting that +@eq:lhat can be expressed as a second degree
+polynomial, ($p\times S^2  + (1-p)\times S + (p-1)$), whose leading term is
+$p\times S^2$. Therefore, for large ecological systems, where $S$ has a high
+value, +@eq:co2 and +@eq:ld respectively approach
 
-For large ecological systems, where $S$ has a high value, +@eq:co2 and +@eq:ld
-respectively approach
-
-$$Co \approx p $$
+$$Co = \nicefrac{L}{S^2} \approx p $$
 
 $$ L_D \approx pS $$
 
