@@ -169,7 +169,7 @@ predictions.
 
 # Results and Discussion
 
-### Flexible link model fits better and makes a plausible range of predictions
+## Flexible links model fits better and makes a plausible range of predictions
 
 | model                | ref.        | PSIS-LOO         | $\Delta \text{ELPD}$ | $SE_{\Delta \text{ELPD}}$ |
 | -------------------- | ----------- | ---------------- | -------------------- | ------------------------- |
@@ -178,7 +178,7 @@ predictions.
 | Constant             | @Mart92     | 2811.0 ± 68.3    | -145.3               | 21.1                      |
 | Link-species scaling | @CoheBria84 | 39840.1 ± 2795.1 | -18659.8             | 1381.7                    |
 
-Table: Comparison of the different modles. Pareto-smoothed important sampling values and differences relative to the maximum in the expected log predictive density for the flexible link and the three competing models. The mean and standard deviation (SD) (standard error (SE)) is given for the two metrics. {#tbl:comparison}
+Table: Comparison of the different models. Pareto-smoothed important sampling values and differences relative to the maximum in the expected log predictive density for the flexible links and the three competing models. The mean and standard deviation (SD) (standard error (SE)) is given for the two metrics. {#tbl:comparison}
 
 All models fitted well, without any problematic warnings from Stan's diagnostics
 (see Experimental Procedures), but our model for flexible links outperformed
@@ -209,7 +209,7 @@ the same predictions, but within ecologically possible values.
 
 ![**The flexible link model fits better and makes a plausible range of predictions.** The number of links is plotted as a function of species richness obtained from the posterior distributions of A) the link-species scaling, B) the constant connectance, C) the power law and D) the flexible link models. In each panel, the colored line represent the median predicted link number and the grey areas cover the 78% and 97% percentile intervals. Empirical data from the `mangal.io` database are plotted in each panel (grey dots), as well as the minimal $S-1$ and maximal $S^2$ number of links (lower and upper black lines, respectively).  ](figures/models_links.png){#fig:PP_counterfactual}
 
-### Flexible link model makes realistic predictions for small communities
+## Flexible link model makes realistic predictions for small communities
 
 The constraints on food web structure are especially important for small
 communities. This is emphasized in +@fig:real_predict, which shows that all
@@ -224,7 +224,7 @@ $S-1$ and $S^2$.
 
 ![**Only the flexible link model makes realistic predictions for small communities.** Here we show the proportion of posterior predictions from each of our 4 models which fall outside ecologically realistic values. The proportion of predictions in the correct range increases with species richness for the constant connectance and LSSL models. Vertical lines show the 5%, 50% and 95% quantiles of the distribution of S, demonstrating that many communities have potentially incorrect predictions under previous models](figures/real_predict.png){#fig:real_predict}
 
-### Parameter estimates for all models
+## Parameter estimates for all models
 
 | model                | Equation for $\hat{L}$     | parameter | interpretation                       | value | SD     |
 |----------------------|----------------------------|-----------|--------------------------------------|-------|--------|
@@ -259,7 +259,7 @@ realized.
 
 <!-- tk add ecological interpretation where possible -->
 
-### Connectance and linkage density can be derived from a model for links
+## Connectance and linkage density can be derived from a model for links
 
 Of the three important quantities which describe networks ($L$, $Co$ and $L_D$)
 we have directly modelled $L$ only. However, we can reuse the posterior for our
@@ -279,7 +279,7 @@ has a Beta distribution the linear transformations described by +@eq:co2 and
 +@eq:ld also describe Beta distributions which have been shifted and scaled
 according to the number of species $S$ in a community.
 
-#### Discussion of these equations
+### Discussion of these equations
 
 For large ecological systems, where $S$ has a high value, +@eq:co2 and +@eq:ld
 respectively approach
@@ -312,7 +312,7 @@ communities. However, some authors have found that this does not hold for small
 communities. This result makes it clear that this confusion comes from
 neglecting the minimum value.
 
-#### Discussion of the shifted beta distributions.
+### Discussion of the shifted beta distributions.
 
 Just as $L$ must be within ecologically meaningful bounds, $Co$ and $L_D$ must
 be as well. The connectance of a food web is bounded by 0 and 1. However, the
@@ -351,37 +351,6 @@ associated with some of the most commonly used network metrics (@PoisGrav14,
 distribution for connectance non only accounts for the variability between
 networks, but can be used to describe fundamental properties of food webs and to
 identify ecological and evolutionary mechanisms shaping communities.
-
-## Only very large food webs obey a power law
-
-As noted by @BrosOstl04, the models of @CoheBria84 and @Mart92 results in
-networks in which the relationship between $L$ and $S$ obeys a power-law, albeit
-with different parameters. Our model does not make this prediction, due to the
-fact that we explicitly account for the lower bound of $(S-1)$ interactions. In
-+@eq:L, the term $p\times S^2$ will become increasingly important when $S$
-increases, and so we can quantify the extent to which the relationship gets
-closer to a power law when $S$ increases.
-
-We do so by dividing the terms with exponents lower than 2 by the term with
-exponent 2, which gives
-
-$$k = \frac{(1-p)\times S + (p-1)}{p\times S^2}\,.$$
-
-This will peak for small values of $S$, and then slowly decrease towards 0. We
-illustrate these results in +@fig:powerlawk, which reveals that for networks
-under approximatively 120 species, the relationship between $S$ and $L$ strongly
-deviates from a power law ($k > 0.1$). In large networks, the terms with
-exponents lower than 2 in +@eq:L are negligible when compared to the power law
-$p\times S^2$. The power law model therefore considerably under-estimates the
-number of interactions, especially for small networks.
-
-This model sheds some light on a classical result by @DunnWill02a: ecological
-networks deviate most strongly from the expectations under "small world" or
-"scale free" regimes when they exceed a certain connectance; this is because for
-small networks, connectance is higher, and only decreases towards $p$ when the
-term in $S^{-2}$ in +@eq:co vanishes.
-
-![**Only very large food webs obey a power law.** The extent $k$ to which the relationship between $L$ and $S$ deviates from a power law is plotted as a function of species richness, obtained from the maximum _a posteriori_ estimates of the flexible link model. The colored line represent the median predicted $k$ and the grey areas cover the 78% and 97% percentile intervals.](figures/k_powerlaw.png){#fig:powerlawk}
 
 ## Normal approximation provides an analytic z-score
 
@@ -447,6 +416,13 @@ predictions in the statistical modelling of networks.
 @GarlCald03 - small food webs and large food webs behave differently, and we
 didn't really knew why before
 
+This model sheds some light on a classical result by @DunnWill02a: ecological
+networks deviate most strongly from the expectations under "small world" or
+"scale free" regimes when they exceed a certain connectance; this is because for
+small networks, connectance is higher, and only decreases towards $p$ when the
+term in $S^{-2}$ in +@eq:co vanishes.
+
+
 <!-- moving this to end because I don't really know where it fits in the narrative -->
 
 ##### consequences for network topology
@@ -463,7 +439,6 @@ flowing in to be sustained. In addition, constraints on omnivory appear to
 a food web, and so for small values of $S$, the difference between assuming that
 there can be between $0$, or between $(S-1)$, and $S^2$ interactions is likely
 biologically relevant.
-
 
 # Experimental Procedures
 
