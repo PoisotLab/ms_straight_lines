@@ -357,11 +357,11 @@ rather than simulations.
 
 The shifted beta-binomial can be approximated by a normal distribution:
 
-$$ L \sim Normal(\bar{L}, \sigma_L^2) $$
+$$L \sim Normal(\bar{L}, \sigma_L^2)$$
 
-$$ \bar{L} = (S^2 - S + 1) \mu + S - 1$$
+$$\bar{L} = (S^2 - S + 1) \mu + S - 1$$
 
-$$ \sigma_L^2 = (S^2 - S + 1) \mu (1 - \mu)(1 + \frac{S(S-1)}{\phi + 1})$$
+$$\sigma_L^2 = (S^2 - S + 1) \mu (1 - \mu)(1 + \frac{S(S-1)}{\phi + 1})$$
 
 This means that given a network with observed species richness $S_{obs}$ and
 observed links $L_{obs}$, we can calculate its $z$-score as
