@@ -161,21 +161,22 @@ Procedures.
 
 In this paper we will compare our flexible links model to three previous models
 for $L$. We estimate parameters and compare the performance of all models using
-open data from the `mangal.io` networks database. Finally, we will show how our
-model for $L_{\textsc{fl}}$ suggests a new and more useful way of thinking about metrics
-of network structure and discuss how generative models can be useful tools for
-including our knowledge of a system into our predictions.
+open data from the `mangal.io` networks database [@PoisBais16]. Finally, we will
+show how our model for $L_{\textsc{fl}}$ suggests a new and more useful way of
+thinking about metrics of network structure and discuss how generative models
+can be useful tools for including our knowledge of a system into our
+predictions.
 
 # Results and Discussion
 
 ### Flexible link model fits better and makes a plausible range of predictions
 
-| model                | reference     | PSIS-LOO         | $\Delta \text{elpd}$ | $SE_{\Delta \text{elpd}}$ |
-| -------------------- | ------------- | ---------------- | -------------------- | ------------------------- |
-| Flexible links       | current paper | 2520.5 ± 44.4    | 0                    | 0                         |
-| Power law            | @BrosOstl04   | 2564.3 ± 46.6    | -21.9                | 6.5                       |
-| Constant             | @Mart92       | 2811.0 ± 68.3    | -145.3               | 21.1                      |
-| Link-species scaling | @CoheBria84   | 39840.1 ± 2795.1 | -18659.8             | 1381.7                    |
+| model                | ref.        | PSIS-LOO         | $\Delta \text{ELPD}$ | $SE_{\Delta \text{ELPD}}$ |
+| -------------------- | ----------- | ---------------- | -------------------- | ------------------------- |
+| Flexible links       | +@eq:lhat   | 2520.5 ± 44.4    | 0                    | 0                         |
+| Power law            | @BrosOstl04 | 2564.3 ± 46.6    | -21.9                | 6.5                       |
+| Constant             | @Mart92     | 2811.0 ± 68.3    | -145.3               | 21.1                      |
+| Link-species scaling | @CoheBria84 | 39840.1 ± 2795.1 | -18659.8             | 1381.7                    |
 
 Table: Comparison of the different modles. Pareto-smoothed important sampling values and differences relative to the maximum in the expected log predictive density for the flexible link and the three competing models. The mean and standard deviation (SD) (standard error (SE)) is given for the two metrics. {#tbl:comparison}
 
