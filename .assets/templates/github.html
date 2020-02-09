@@ -15,21 +15,16 @@
          <section class="container">
             <h1>$title$</h1>
             <section class="creators">
-               $for(creators)$
+               $for(authors)$
                <div class="creator">
-                  <div class="author">$creators.givennames$ $creators.familyname$</div>
+                  <div class="author">$author.givennames$ $authir.familyname$</div>
                   <div class="affiliation">$creators.affiliation$</div>
                   <div class="orcid">$creators.orcid$</div>
                </div>
                $endfor$
             </section>
             <summary>
-               $description$
-               <!--<div class="keywords">-->
-               <!--$for(keywords)$-->
-               <!--<span class="keyword">$keywords$</span>-->
-               <!--$endfor$-->
-               <!--</div>-->
+               $abstract$
             </summary>
          </section>
       </header>
