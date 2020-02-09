@@ -182,12 +182,12 @@ All models fitted well, without any problematic warnings from Stan's diagnostics
 (see Experimental Procedures), but our model for flexible links outperformed
 previous solutions to the problem of modelling $L$. The flexible link model,
 which we fit via a beta-binomial observation model, had the most favourable
-values of PSIS-LOO information criterion (Table 1) and of expected log
+values of PSIS-LOO information criterion (+@tbl:comparison) and of expected log
 predictive density (ELPD), relative to the three competing models which used a
 negative binomial observation model. Pareto-smoothed important sampling serves
 as a guide to model selection; like other information criteria it approximates
 the error in cross-validation predictions. Smaller values indicate a model which
-makes better predictions. The calculation of PSIS-LOO can also furnish some
+makes better predictions. The calculation of PSIS-LOO can also provide some
 clues about potential model fits; in our case the algorithm suggested that the
 constant connectance model was sensitive to extreme observations. Information
 criteria are only a rough guide to model selection; as always domain expertise
@@ -198,7 +198,7 @@ will make the best predictions of $L$.
 
 Useful predictions for $L$ must however stay within realistic boundaries
 determined by ecological principles. We generated posterior predictions for all
-models and visualized them against these constraints (@fig:PP_counterfactual).
+models and visualized them against these constraints (+@fig:PP_counterfactual).
 The LSSL model clearly underestimated the number of links, especially in large
 networks: its predictions were frequently lower than the minimum $S-1$. The
 constant connectance and power law models also made many predictions below this
