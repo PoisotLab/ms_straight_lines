@@ -444,7 +444,13 @@ a food web, and so for small values of $S$, the difference between assuming that
 there can be between $0$, or between $(S-1)$, and $S^2$ interactions is likely
 biologically relevant.
 
-Consequences for NAR @GaliLurg18 -- $S = kA^z$, k = 10, z = 0.27
+Consequences for NAR @GaliLurg18 -- $S = kA^z$, k = 200, z = 0.27 - show a wide
+range of possible values for the scaling - we do simulations to look at it using
+their parameters and find that the confidence interval is extremely large,
+suggesting that we might observe a lot of scaling situations between area and
+network properties in space.
+
+![**FIND A TITLE**. @GaliLurg18 - scales faster than the power law, but the confidence interval is extremely high. Possible that we do not see a strong signal of scaling ](figures/nar.png){#fig:nar}
 
 # Experimental Procedures
 

@@ -89,8 +89,8 @@ for i in 1:length(index)
     plot!(betab_random[i], c=pal.fl, linewidth=1, alpha=0.3, lab="")
 end
 density!(rand(p, 100_000), c=:black, ls=:dash, linewidth=2, lab="MLE fit")
-xaxis!((0, 0.5), "p")
 yaxis!((0, 9.5), "Density")
+xaxis!((0, 0.5), "p")
 savefig(joinpath("figures", "beta_fit"))
 
 
@@ -318,3 +318,27 @@ plot!(S, realistic_betab, color=pal.fl, linewidth=2, label="Flexible links")
 xaxis!(:log, "Species richness", xlims=(minimum(S),maximum(S)))
 yaxis!("Proportion of realistic links", (0.3, 1.01))
 savefig(joinpath("figures", "real_predict"))
+
+# network-area relationships after Galliana et al 2018 (using figure 3 as a template)
+A = 0.0001:0.02:1.2
+k,z = 200.0, 0.27
+AS = convert.(Int64, ceil.(k.*A.^z))
+
+pl_mod = powerlaw_posterior[:,AS]
+fl_mod = betab_posterior[:,AS]
+
+pl500 = neg_to_zeros.(quantile.(eachcol(pl_mod./AS'), 0.5))
+
+fl015 = neg_to_zeros.(quantile.(eachcol(fl_mod./AS'), 0.015))
+fl110 = neg_to_zeros.(quantile.(eachcol(fl_mod./AS'), 0.11))
+fl890 = neg_to_zeros.(quantile.(eachcol(fl_mod./AS'), 0.89))
+fl985 = neg_to_zeros.(quantile.(eachcol(fl_mod./AS'), 0.985))
+fl500 = neg_to_zeros.(quantile.(eachcol(fl_mod./AS'), 0.5))
+
+plot(A, fl985, fillrange=fl015, color=:grey, alpha=0.15, label="", frame=:box, size=(400, 400), dpi=120, legend=:topleft, foreground_color_legend=nothing, background_color_legend=:white)
+plot!(A, fl890, fillrange=fl110, color=:grey, alpha=0.15, label="")
+plot!(A, fl500, linecolor=pal.fl, linewidth=2, label="Flexible links")
+plot!(A, pl500, linecolor=pal.pl, linewidth=1, ls=:dot, label="Power law")
+xaxis!(xlabel="Area", xlims=(0.0, 1.0))
+yaxis!(ylims = (1,20), ylabel="Linkage density")
+savefig(joinpath("figures", "nar"))
