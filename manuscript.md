@@ -207,9 +207,9 @@ the same predictions, but within ecologically possible values.
 
 ![**The flexible link model fits better and makes a plausible range of predictions.** The number of links is plotted as a function of species richness obtained from the posterior distributions of A) the link-species scaling, B) the constant connectance, C) the power law and D) the flexible link models. In each panel, the colored line represent the median predicted link number and the grey areas cover the 78% and 97% percentile intervals. Empirical data from the `mangal.io` database are plotted in each panel (grey dots), as well as the minimal $S-1$ and maximal $S^2$ number of links (lower and upper black lines, respectively).  ](figures/models_links.png){#fig:PP_counterfactual}
 
-## Flexible link model makes realistic predictions for small communities
+## The flexible links model makes realistic predictions for small communities
 
-The constraints on food web structure are especially important for small
+Constraints on food web structure are especially important for small
 communities. This is emphasized in +@fig:real_predict, which shows that all
 models other than the flexible links model fail to stay within realistic
 ecological constraints. The link-species scaling model made around 29% of
@@ -217,24 +217,24 @@ unrealistic predictions of link numbers for every value of $S$ ($3 \leq S \leq
 750$). The constant connectance and power law models, on the other hand, also
 produced unrealistic results but for small networks only: more than 20% were
 unrealistic for networks comprising less than 12 and 7 species, respectively.
-Only the flexible link model never failed to predict numbers of links between
-$S-1$ and $S^2$.  
+Only the flexible links model, by design, never failed to predict numbers of
+links between $S-1$ and $S^2$.  
 
-![**Only the flexible link model makes realistic predictions for small communities.** Here we show the proportion of posterior predictions from each of our 4 models which fall outside ecologically realistic values. The proportion of predictions in the correct range increases with species richness for the constant connectance and LSSL models. Vertical lines show the 5%, 50% and 95% quantiles of the distribution of S, demonstrating that many communities have potentially incorrect predictions under previous models](figures/real_predict.png){#fig:real_predict}
+![**Only the flexible link model makes realistic predictions for small communities.** Here we show the proportion of posterior predictions from each of our 4 models which fall outside ecologically realistic values. The proportion of predictions in the correct range increases with species richness for the constant connectance and LSSL models. Shaded area shows the 5%, 50% and 95% quantiles of the distribution of S, demonstrating that many communities have potentially incorrect predictions under previous models](figures/real_predict.png){#fig:real_predict}
 
 ## Parameter estimates for all models
 
-| model                | Equation for $\hat{L}$     | parameter | interpretation                       | value | SD     |
-|----------------------|----------------------------|-----------|--------------------------------------|-------|--------|
-| Link-species scaling | $bS$                       | $b$       | number of links per species          | 2.2   | 0.047  |
-|                      |                            | $\kappa$  | concentration of $L$ around mean     | 1.4   | 0.12   |
-| Constant connectance | $bS^2$                     | $b$       | proportion of maximum links realized | 0.12  | 0.0041 |
-|                      |                            | $\kappa$  | concentration of $L$ around mean     | 4.0   | 0.37   |
-| Power law            | $bS^a$                     | $b$       | controls proportion of relationship  | 0.37  | 0.054  |
-|                      |                            | $a$       | controls scaling of relationship     | 1.7   | 0.043  |
-|                      |                            | $\kappa$  | concentration of $L$ around mean     | 4.8   | 0.41   |
-| Flexible links       | $(S^2 - (S - 1))p + S - 1$ | $\mu$     | average value of $p$                 | 0.086 | 0.0037 |
-|                      |                            | $\phi$    | concentration around value of $\mu$  | 24.3  | 2.4    |
+| model            | Equation for $\hat{L}$     | parameter | interpretation                      | value | SD     |
+| ---------------- | -------------------------- | --------- | ----------------------------------- | ----- | ------ |
+| $L_{LSSL}$       | $bS$                       | $b$       | links per species                   | 2.2   | 0.047  |
+|                  |                            | $\kappa$  | concentration of $L$ around mean    | 1.4   | 0.12   |
+| $L_{CC}$         | $bS^2$                     | $b$       | proportion of links realized        | 0.12  | 0.0041 |
+|                  |                            | $\kappa$  | concentration of $L$ around mean    | 4.0   | 0.37   |
+| $L_{\text{reg}}$ | $bS^a$                     | $b$       | proportion of relationship          | 0.37  | 0.054  |
+|                  |                            | $a$       | scaling of relationship             | 1.7   | 0.043  |
+|                  |                            | $\kappa$  | concentration of $L$ around mean    | 4.8   | 0.41   |
+| $L_{FL}$         | $(S^2 - (S - 1))p + S - 1$ | $\mu$     | average value of $p$                | 0.086 | 0.0037 |
+|                  |                            | $\phi$    | concentration around value of $\mu$ | 24.3  | 2.4    |
 
 Table: Parameter estimates for all models. Mean and standard deviation (SD) is given for each parameter. {#tbl:parameters}
 
