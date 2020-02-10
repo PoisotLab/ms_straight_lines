@@ -426,6 +426,8 @@ energy transfer allows [@ThomBros12], and as wide as competition allows
 likely to be constrained to remain within an acceptable richness, we have no
 reason to anticipate that $p\times S$ will keep growing infinitely.
 
+![**Stability imposes a limit on network growth**. Using +@eq:ld, we can calculate the maximum standard deviation in the strength of interactions which should ensure food web stability, $\sigma^\star = \sqrt{L_D}^{-1}$. This value falls sharply when the number of species increases, which will limit the stability of large food webs, and therefore explain why Eltonian demons should not emerge.](figures/may.png){#fig:stability}
+
 In fact, May [@May72] suggested that a network of richness $S$ and connectance
 $Co$ is stable as long as the criteria $\sigma \sqrt{S/Co} < 1$ is satisfied,
 with $\sigma$ being the standard deviation of the strengths of interactions.
