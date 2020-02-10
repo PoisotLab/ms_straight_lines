@@ -1,0 +1,77 @@
+%!TEX TS-program = xelatex
+\documentclass[12pt]{article}
+
+\usepackage{geometry}
+\geometry{verbose,letterpaper,tmargin=2.2cm,bmargin=2.2cm,lmargin=2.2cm,rmargin=2.2cm}
+\usepackage[doublespacing]{setspace}
+\usepackage[left]{lineno}
+\usepackage{authblk}
+\renewcommand\Authfont{\scshape\normalsize}
+\renewcommand\Affilfont{\itshape\small}
+
+\input{../.assets/templates/pandoc}
+
+\usepackage[hang,flushmargin]{footmisc}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+
+\makeatletter
+\def\@maketitle{%
+  \newpage
+  \null
+  \vskip 1em%
+  \let \footnote \thanks
+    {\large \bfseries \@title \par}%
+    \vskip 1.5em%
+    {\normalsize
+      \lineskip .5em%
+      \@author
+      \par}%
+    \vskip 2em%
+    %{\large \@date}%
+  \par
+  \vskip 1.5em}
+\makeatother
+
+\pagestyle{plain}
+
+$if(title)$
+\title{$title$}
+$endif$
+$if(date)$
+\date{$date$}
+$endif$
+
+$for(authors)$
+\author[$for(authors.affiliations)$$authors.affiliations$$sep$,$endfor$]{$authors.givennames$~$authors.familyname$}
+$endfor$
+
+$for(affiliations)$
+\affil[$affiliations.index$]{$affiliations.name$}
+$endfor$
+
+\begin{document}
+
+
+$if(title)$
+\maketitle
+$endif$
+
+$if(abstract)$
+\begin{abstract}
+$abstract$
+\end{abstract}
+$endif$
+
+$if(toc)$
+\tableofcontents
+$endif$
+
+
+\linenumbers
+
+$body$
+
+
+\end{document}
