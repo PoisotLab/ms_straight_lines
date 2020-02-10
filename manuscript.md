@@ -470,7 +470,14 @@ family of relationship, and instead draws from our knowledge of ecological
 processes, and from novel tools in probabilistic programming. As a result, we
 provide predictions of the number of interactions which are closer to empirical
 data, allow to derive new ecological insights, and can be safely assumed to
-always fall within realistic values.
+always fall within realistic values. The results presented in +@fig:stability
+and +@fig:nar seem largely confirmatory, and the ability of our model to reach
+the same conclusions is also a confirmation of its validity; we would like to
+point out that these approaches would usually require to make inferences on the
+parameters of interests, but also on the properties of a network for a given
+species richness. Therefore, our model allows a real economy of parameters, as
+it offers the ability to get several key elements of network structure for free
+if only the species richness is known.
 
 # Experimental Procedures
 
