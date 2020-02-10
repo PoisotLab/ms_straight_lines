@@ -493,7 +493,7 @@ $$
 [L | S, p] = { S^2 - (S - 1) \choose L - (S - 1)} p^{L-(S-1)}(1-p)^{S^2 - L} ,
 $$
 
-This is often termed a _shifted Binomial distribution_.
+This is often termed a _shifted binomial distribution_.
 
 We also note that ecological communities are different in many ways besides
 their number of species ($S$). Although we assume $p$ to be fixed within one
