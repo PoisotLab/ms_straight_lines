@@ -426,6 +426,8 @@ energy transfer allows [@ThomBros12], and as wide as competition allows
 likely to be constrained to remain within an acceptable richness, we have no
 reason to anticipate that $p\times S$ will keep growing infinitely.
 
+![**Stability imposes a limit on network growth**. Using +@eq:ld, we can calculate the maximum standard deviation in the strength of interactions which should ensure food web stability, $\sigma^\star = \sqrt{L_D}^{-1}$. This value falls sharply when the number of species increases, which will limit the stability of large food webs, and therefore explain why Eltonian demons should not emerge.](figures/may.png){#fig:stability}
+
 In fact, May [@May72] suggested that a network of richness $S$ and connectance
 $Co$ is stable as long as the criteria $\sigma \sqrt{S/Co} < 1$ is satisfied,
 with $\sigma$ being the standard deviation of the strengths of interactions.
@@ -468,7 +470,14 @@ family of relationship, and instead draws from our knowledge of ecological
 processes, and from novel tools in probabilistic programming. As a result, we
 provide predictions of the number of interactions which are closer to empirical
 data, allow to derive new ecological insights, and can be safely assumed to
-always fall within realistic values.
+always fall within realistic values. The results presented in +@fig:stability
+and +@fig:nar seem largely confirmatory, and the ability of our model to reach
+the same conclusions is also a confirmation of its validity; we would like to
+point out that these approaches would usually require to make inferences on the
+parameters of interests, but also on the properties of a network for a given
+species richness. Therefore, our model allows a real economy of parameters, as
+it offers the ability to get several key elements of network structure for free
+if only the species richness is known.
 
 # Experimental Procedures
 
