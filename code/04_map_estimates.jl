@@ -17,7 +17,7 @@ betab_posterior[:mu] |> mean
 betab_posterior[:mu] |> std
 
 betab_posterior[:phi] .|> exp |> mean
-betab_posterior[:mu] .|> exp |> std
+betab_posterior[:phi] .|> exp |> std
 
 ## Power Law
 powerlaw_posterior[:a] .|> exp |> mean
@@ -26,10 +26,19 @@ powerlaw_posterior[:a] .|> exp |> std
 powerlaw_posterior[:b] |> mean
 powerlaw_posterior[:b] |> std
 
+powerlaw_posterior[:phi] .|> exp |> mean
+powerlaw_posterior[:phi] .|> exp |> std
+
 ## Constant Connectance
 const_posterior[:a] |> mean
 const_posterior[:a] |> std
 
+const_posterior[:phi] .|> exp |> mean
+const_posterior[:phi] .|> exp |> std
+
 ## LSSL
 lssl_posterior[:a] .|> exp |> mean
 lssl_posterior[:a] .|> exp |> std
+
+lssl_posterior[:phi] .|> exp |> mean
+lssl_posterior[:phi] .|> exp |> std
