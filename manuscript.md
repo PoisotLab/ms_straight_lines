@@ -427,6 +427,21 @@ energy transfer allows [@ThomBros12], and as wide as competition allows
 likely to be constrained to remain within an acceptable richness, we have no
 reason to anticipate that $p\times S$ will keep growing infinitely.
 
+In fact, May [@May72] suggested that a network of richness $S$ and connectance
+$Co$ is stable as long as the criteria $\sigma \sqrt{S/Co} < 1$ is satisfied,
+with $\sigma$ being the standard deviation of the strengths of interactions.
+Under our model, $Co$ is derived from $S$, and $S/Co$ is the linkage density as
+per +@eq:ld. Although this criteria is not necessarily stringent enough for the
+stability of food webs [@AlleTang15; @AlleTang12], it allows deriving an
+approximate value $\sigma^\star$ which is the value of $\sigma$ above which the
+previous criteria is not satisfied, and the system is expected to be unstable.
+This threshold is the solution to $\sigma^\star = \sqrt{L_d}^{-1}$, where $L_D$
+is defined as in +@eq:ld. We illustrate this result in +@fig:stability, which
+reveals that $\sigma^\star$ falls to 0 for larger species richness. These
+results explain how ecological limitations (here on stability) can limit the
+size of food webs, are in agreement with previous simulations, placing the
+threshold for stability at about 1200 species in food webs [@AlleTang12].
+
 Finally, our results bear important consequences for the nascent field of
 studying network-areas relationships (NAR). As it has long been observed that
 not all species in a food web diffuse equally through space [@HoltLawt99],

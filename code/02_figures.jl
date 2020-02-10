@@ -277,7 +277,7 @@ end
 
 plot(S, get_quantile(0.015), fill=get_quantile(0.985), color=:darkgrey, label="", framestyle=:box) # 97% PI
 plot!(S, get_quantile(0.11), fill=get_quantile(0.89), color=:lightgrey, label="") # 89% PI
-plot!(S, get_quantile(0.5), linecolor=betab_color, linewidth=4, lab = "")
+plot!(S, get_quantile(0.5), linecolor=pal.fl, linewidth=4, lab = "")
 xaxis!(:log, "Species richness")
 yaxis!("k")
 savefig(joinpath("figures", "k_powerlaw"))
@@ -342,3 +342,20 @@ plot!(A, pl500, linecolor=pal.pl, linewidth=1, ls=:dot, label="Power law")
 xaxis!(xlabel="Area", xlims=(0.0, 1.0))
 yaxis!(ylims = (1,20), ylabel="Linkage density")
 savefig(joinpath("figures", "nar"))
+
+# stability after May / Allesina & Tang
+S = 3:750
+fl_mod = betab_posterior[:,S]
+
+fl015 = neg_to_zeros.(quantile.(eachcol(fl_mod./S'), 0.015))
+fl110 = neg_to_zeros.(quantile.(eachcol(fl_mod./S'), 0.11))
+fl890 = neg_to_zeros.(quantile.(eachcol(fl_mod./S'), 0.89))
+fl985 = neg_to_zeros.(quantile.(eachcol(fl_mod./S'), 0.985))
+fl500 = neg_to_zeros.(quantile.(eachcol(fl_mod./S'), 0.5))
+
+plot(S, vec(1.0./sqrt.(fl985)), fillrange=vec(1.0./sqrt.(fl015)), color=:grey, alpha=0.15, label="", frame=:box, size=(400, 400), dpi=120, legend=:topleft, foreground_color_legend=nothing, background_color_legend=:white, xlabel="Species richness", ylabel="Maximal \\sigma")
+plot!(S, vec(1.0./sqrt.(fl890)), fillrange=vec(1.0./sqrt.(fl110)), color=:grey, alpha=0.15, label="")
+plot!(S, vec(1.0./sqrt.(fl500)), lw=2, c=pal.fl, lab="")
+xaxis!(:log, (3,750))
+yaxis!((0,1.25), label="Maximal interaction diversity")
+savefig(joinpath("figures", "may"))
