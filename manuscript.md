@@ -384,73 +384,77 @@ links.
 ## Conclusions
 
 Here we derived a flexible link model for the prediction of the number of links
-in ecological networks using a beta-binomial distribution for $L$ and which
-outperformed the three previous and more commonly used models describing the
-relationship between species richness and the number of links (the link-species
-scaling, the constant connectance and the power law). More importantly, we
-showed how our model's parameters non only had a clear ecological
-interpretation, but how they made predictions which remained within biological
-boundaries.
+in ecological networks using a beta-binomial distribution for $L$, and show how
+it outperforms previous and more commonly used models describing this
+relationship. More importantly, we showed how our model's parameters not only
+have a clear ecological interpretation (specifically, the value of $p$ in
++@eq:lhat is the expected value of the connectance when $S$ is large), but how
+they made predictions which remained within biological boundaries.
 
-We believe that the appropriate modeling of the number of interactions can allow
-scientists to tackle a wide variety of ecological questions, which otherwise
-could have been left unexplored. For instance, the functions (productivity,
-resilience, _etc._) and dynamics of ecological networks at large spatial or
-temporal scales could be more easily explored. It also facilitates the
-conduction of network studies in regions where interaction data is lacking,
-notably due to geographical and/or financial reasons.
+This model also casts new light on previous results on the structure of food
+webs: small and large food webs behave differently [@GarlCald03]. Specifically,
+ecological network most strongly deviate from both scale free and small world
+expectations when connectance is high [@DunnWill02a]. In our model, this
+behaviour is a natural prediction, as the connectance increases sharply for low
+species richness (+@fig:beta_distributions), as the additive term $(S-1)S^{-2}$
+in +@eq:co becomes progressively larger. In a sense, small ecological networks
+are different only because due to the low values of $S$, there are only a very
+limited number of flexible links, and this drives connectance to be larger.
+Connectance in turn has inmplications for many ecological properties. A recent
+research direction has been to reveal its impact on resistance to invasion:
+denser networks with a higher connectance are comparatively more difficult to
+invade [@SmitMoor16]; different levels of connectance are also associated with
+different combination of primary producers, consumers, and apex predators
+[@WillMart00; @WillMart04], which in turns means that different species will
+have an easier success invading differently connected networks [@BaisRuss10].
+Because we can infer connectance from the richness of a community, our model
+also ties the invasion resistance of a network to its species richness.
 
-Our ability to model the number of links in an ecological network does not
-diminish the value of data collection. Among others, data on interspecific
-interactions helps understanding more deeply an ecological community and the
-interactions between two or more given species, as well as making better
-predictions in the statistical modelling of networks.
+Yet our model introduces a puzzling question. According to +@eq:ld, at large
+values of $S$, the linkage density scales according to $p\times S$ (which is
+supported by empirical data), and so species are expected to have on average
+$2\times p\times S$ interactions. A useful concept in evolutionary biology is
+the "Darwinian demon" [@Law79], *i.e.* an organism that would have infinite
+fitness in infinite environments. Our model seems to predict the emergence of
+what we call Eltonian demons, which can have arbitrarily large number of
+interactions. Yet we know that constraints on handling time of preys, for
+example, imposes hard limits on diet breadth [@ForiJenk17]. This result suggests
+that there are other limitations to the size of food webs; indeed, the fact that
+$L/S$ increases to worryingly large values only matters if ecological processes
+allow $S$ to be large enough. It is known that food webs can get as high as
+energy transfer allows [@ThomBros12], and as wide as competition allows
+[@KefiBerl12]. In short, and as +@fig:real_predict suggests, since food webs are
+likely to be constrained to remain within an acceptable richness, we have no
+reason to anticipate that $p\times S$ will keep growing infinitely.
 
-@GarlCald03 - small food webs and large food webs behave differently, and we
-didn't really knew why before
+Finally, our results bear important consequences for the nascent field of
+studying network-areas relationships (NAR). As it has long been observed that
+not all species in a food web diffuse equally through space [@HoltLawt99],
+understanding how the shape of networks varies when the area increases is an
+important goal, and in fact underpins the development of a macroecological
+theory of food webs [@BaisGrav19]. Using a power-law as the acceptable
+relationship between species and area [@Deng09; @WillGast01], the core idea of
+studying NAR is to predict network structure as a consequence of the effect of
+spatial scale on species richness [@GaliLurg18]. Drawing on these results, we
+provide in +@fig:nar a simple illustration of the fact that, due to the
+dispersal of values of $L$, the relationship between $L/S$ and area can have a
+really wide confidence interval. While our simulations generally match the
+empirical results on this topic [*e.g.* @WoodRuss15], they suggest that we will
+observe many relationships between network structure and space ,and that picking
+out the signal of network area relationships might be difficult.
 
-This model sheds some light on a classical result by @DunnWill02a: ecological
-networks deviate most strongly from the expectations under "small world" or
-"scale free" regimes when they exceed a certain connectance; this is because for
-small networks, connectance is higher, and only decreases towards $p$ when the
-term in $S^{-2}$ in +@eq:co vanishes. +@eq:co2 for the reason why
+![**Networks in space**. Representing the species richness as $S = k\times A^z$, with $A = 200$ and $k = 0.27$ @GaliLurg18, we can compare the predictions of our model to that of the generally accepted power law (+@eq:pl). While our model predicts a larger linkage density in larger areas, the confidence intervals around this prediction are extremely large. - scales faster than the power law, but the confidence interval is extremely high, suggesting that we may observe either very weak, or very strong, effects of area increase.](figures/nar.png){#fig:nar}
 
-Eltonian demons? @Law79 Of course, for increasingly large values of $S$, this
-may result in an unrealistic average degree, as species are limited by
-biological mechanisms such as handling time, capture efficiency, _etc_, in the
-number of interactions they can establish. Most ecological networks are however
-reasonably small and so this does not look like an unreasonable assumption.
-
-
-In previous work it has been debated whether $Co$ is a constant across all
-communities. However, some authors have found that this does not hold for small
-communities. This result makes it clear that this confusion comes from
-neglecting the minimum value.
-
-<!-- moving this to end because I don't really know where it fits in the narrative -->
-
-##### consequences for network topology
-
-The constraints that we discuss in this paper have important consequences for
-food web topology. For example, previous work has identified that networks with
-more omnivores have longer, more linear food web structure. Our approach
-recognizes that link number is also constrained, independently of structure.
-This means that previous work on how network topology and link number interact
-may need to be updated. @WillMart04 identified that most food webs appear to be
-limited in their height, as increasingly apical species require more energy
-flowing in to be sustained. In addition, constraints on omnivory appear to
-"linearize" food-webs; there should therefore be a limitation on the richness of
-a food web, and so for small values of $S$, the difference between assuming that
-there can be between $0$, or between $(S-1)$, and $S^2$ interactions is likely
-biologically relevant.
-
-Consequences for NAR @GaliLurg18 -- $S = kA^z$, k = 200, z = 0.27 - show a wide
-range of possible values for the scaling - we do simulations to look at it using
-their parameters and find that the confidence interval is extremely large,
-suggesting that we might observe a lot of scaling situations between area and
-network properties in space.
-
-![**FIND A TITLE**. @GaliLurg18 - scales faster than the power law, but the confidence interval is extremely high. Possible that we do not see a strong signal of scaling ](figures/nar.png){#fig:nar}
+As a conclusion, we would like to note that the relationship between $L$ and $S$
+has been underpinning most of the literature on food web structure since the
+1980s. Additional generations of data allows to switch from the link-species
+scaling law, to constant connectance, to more general formulations based on a
+power law. Our model breaks with this tradition of iterating over the same
+family of relationship, and instead draws from our knowledge of ecological
+processes, and from novel tools in probabilistic programming. As a result, we
+provide predictions of the number of interactions which are closer to empirical
+data, allow to derive new ecological insights, and can be safely assumed to
+always fall within realistic values.
 
 # Experimental Procedures
 
