@@ -543,20 +543,18 @@ parameters that generated a wide range of values for $L_i$, but which did not
 frequently predict webs of either maximum or minimum connectance, neither of
 which are observed in nature.
 
-### Data used to fit all models
+## Model fitting - data and software
 
 <!-- tk describe Mangal and its awesomeness in more wholeness -->
 We evaluated our model against 255 empirical foodwebs, available in the online
 database `mangal.io` [@PoisBais16]. We queried metadata (number of nodes and
 number of links) for all networks, and considered as food webs all networks
-having interactions of predation and herbivory.
+having interactions of predation and herbivory. We use Stan [@CarpGelm17a] which
+implements Bayesian inference using Hamiltonian Monte Carlo. We ran all models
+using four chains and 2000 iterations per chain. All models converged with no
+divergent iterations.
 
-We use Stan [@CarpGelm17a] which implements Bayesian inference using Hamiltonian
-Monte Carlo. We ran all models using four chains and 2000 iterations per chain.
-All models converged with no divergent iterations.
-
-### Model fitting and diagnostics
-
+## Model fitting - diagnostics
 
 All models fit without any divergent iterations, which indicates that is it safe
 to make inferences about the parameter estimates and to compare the models.
