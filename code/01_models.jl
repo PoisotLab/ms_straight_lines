@@ -248,6 +248,28 @@ bb_df = DataFrame(bb_chains)
 CSV.write("data/posterior_distributions/beta_binomial_posterior.csv", bb_df, delim=',')
 
 
+
+### more posterior samples for Flexible links model
+
+data_dict_2 = Dict(
+    "W" => length(d.id),
+    "L" => d.links,
+    "S" => d.nodes,
+    "cf" => 1500)
+
+
+bb_model = Stanmodel(
+        model = betabin_connectance,
+        nchains = 2,
+        num_warmup = 1000,
+        num_samples = 1000,
+        name = "betabin_connectance_bigger"
+    )
+
+
+_, bb_chains , _ = stan(bb_model, data_dict_2, summary = true);
+
+
 ## could be used to plot a "ribbon"
 bb_hpd = MCMCChains.hpd(bb_chains, alpha = 0.89)
 
