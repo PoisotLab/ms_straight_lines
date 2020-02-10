@@ -66,7 +66,7 @@ links is proportional to the richness squared,
 
 $$ L_{\textsc{cc}} = b\times S^2\,, $$ {#eq:cc}
 
-where $c$ is a constant in $]0,1[$ representing the expected value of
+where $b$ is a constant in $]0,1[$ representing the expected value of
 connectance. This model can be relaxed by assuming that the scaling of $L$ with
 $S$ does not necessarily follows the maximum number of interactions, and the
 best fit was with a model of the form
@@ -78,7 +78,7 @@ $\text{log}(S)$. This power law model can be parameterized in arbitrarily
 complex ways, including spatial scaling and species area relationships
 [@BrosOstl04]; it should further be noted that this model is a synthesis of
 preview hypotheses, encompassing both the link-species scaling ($a=1, b\approx
-2$) and the strict constant connectance ($a, b=2$) depending on which parameters
+2$) and the strict constant connectance ($a=2, b$) depending on which parameters
 are fixed. Power laws are very flexible, and indeed this function matches
 empirical data well -- so well that it is often treated as a "true" model which
 captures the scaling of link number with species richness [@WinePian01;
@@ -106,7 +106,7 @@ grazing herbivore which feeds on every plant in a field. Thus interaction number
 is constrained by ecological principles to be between $S^2$ and $S-1$, something
 which no present model includes. Secondly, accurate predictions of $L$ from $S$
 are often difficult because of how parameters are estimated. This is usually
-done using a Gaussian likelihood for $L$, often after log transformation or both
+done using a Gaussian likelihood for $L$, often after log transformation of both
 $L$ and $S$. While this approach ensures that predicted values of $L$ are always
 positive, it does nothing to ensure that they stay below $S^2$ and above $S-1$.
 Thus a good model for $L$ should meet these two needs: a bounded expression for
@@ -157,7 +157,7 @@ beta-binomial variable.
 $$ [L|S,\mu, \phi] =  { S^2 - (S - 1) \choose L - (S - 1)} \frac{B(L - (S - 1) + \mu \phi, S^2 - L + (1 - \mu)\phi)}{B(\mu \phi, (1 - \mu)\phi)} $$ {#eq:shiftBB}
 
 Where $\mathrm{B}$ is the Beta function, $\mu$ is the average probability of a
-flexible link being realized (*i.e.* the average value of $p$) and $\phi$ is the
+flexible link being realized (*i.e.* the average value of $p$ across communities) and $\phi$ is the
 concentration around this value. The support of this distribution is limited to
 only ecologically realistic values of $L$: the number of species determines the
 number of possible links and it is shifted to the right by $S-1$. This means
@@ -229,7 +229,7 @@ unrealistic for networks comprising less than 12 and 7 species, respectively.
 Only the flexible links model, by design, never failed to predict numbers of
 links between $S-1$ and $S^2$.  
 
-![**Only the flexible link model makes realistic predictions for small communities.** Here we show the proportion of posterior predictions from each of our 4 models which fall outside ecologically realistic values. The proportion of predictions in the correct range increases with species richness for the constant connectance and LSSL models. Shaded area shows the 5%, 50% and 95% quantiles of the distribution of S, demonstrating that many communities have potentially incorrect predictions under previous models](figures/real_predict.png){#fig:real_predict}
+![**Only the flexible link model makes realistic predictions for small communities.** Here we show the proportion of posterior predictions from each of our 4 models which fall outside ecologically realistic values. The proportion of predictions in the correct range increases with species richness for the constant connectance and power law models. Shaded area shows the 5%, 50% and 95% quantiles of the distribution of S, demonstrating that many communities have potentially incorrect predictions under previous models](figures/real_predict.png){#fig:real_predict}
 
 ## Parameter estimates for all models
 
@@ -261,8 +261,7 @@ connectance model; it is no surprise then than $\mu$ was about 0.09, which is
 close to our value of 0.12 for constant connectance. In addition, we obtained a
 rather large value of 24.3 for $\phi$, which shrinks the variance around the
 mean of $p$ to approximately 0.003 ($var(p)=\mu(1-\mu)/(1+\phi)$). This
-indicates that food webs are largely in their probabiliy of flexible links being
-realized.
+indicates that food webs are largely constant in their probability of flexible links being realized.
 
 ## Connectance and linkage density can be derived from a model for links
 
@@ -278,7 +277,7 @@ and
 
 $$ L_D = \frac{L}{S} = p \left(S - \frac{S-1}{S} \right) +  \frac{S-1}{S},$$ {#eq:ld}
 
-In a Beta-Binomial distribution, it is assumed that the probability of success
+In a beta-binomial distribution, it is assumed that the probability of success
 $p$ varies among groups of trials according to a Beta distribution. Since $p$
 has a Beta distribution the linear transformations described by +@eq:co and
 +@eq:ld also describe Beta distributions which have been shifted and scaled
@@ -368,7 +367,7 @@ observed links $L_{obs}$, we can calculate its $z$-score as
 
 $$z = \frac{L_{obs} - \bar{L}}{\sqrt{\sigma_L^2}} \,.$$ {#eq:z}
 
-A network where $L = \hat L$ will have a $z$-score of 0, and any network with
+A network where $L = \bar{L}$ will have a $z$-score of 0, and any network with
 more (fewer) interactions will have a positive (negative) $z$-score. We suggest
 that the use of a $z$-score could help identify significantly under (over)
 sampled networks and estimate their number of missing (extra) links.
@@ -379,7 +378,7 @@ parameterized with the maximum _a posteriori_ values of $\mu$ and $\phi$ (panel
 A), although the later can undershoot the constraint on the minimum number of
 links.
 
-![**The shifted beta-binomial distribution can be approximated by a normal distribution.** The number of links is plotted as a function of species richness obtained from A) the maximum _a posteriori_ estimates of the flexible link model and B) its normal approximation. In each panel, the colored line represent the median predicted link number and the grey areas cover the 78% and 97% percentile intervals (only the 78% percentile interval is depicted in B).](figures/betabinmap_normal_links.png){#fig:MAPnormal}
+![**The shifted beta-binomial distribution can be approximated by a normal distribution.** The number of links is plotted as a function of species richness obtained from A) the maximum _a posteriori_ estimates of the flexible link model and B) its normal approximation. In each panel, the colored line represent the median predicted link number and the grey areas cover the 78% and 97% percentile intervals.](figures/betabinmap_normal_links.png){#fig:MAPnormal}
 
 ## Conclusions
 
@@ -509,7 +508,7 @@ $$
 [L | S, p] = { S^2 - (S - 1) \choose L - (S - 1)} p^{L-(S-1)}(1-p)^{S^2 - L} ,
 $$
 
-This is often termed a _shifted Binomial distribution_.
+This is often termed a _shifted binomial distribution_.
 
 We also note that ecological communities are different in many ways besides
 their number of species ($S$). Although we assume $p$ to be fixed within one
