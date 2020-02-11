@@ -343,9 +343,15 @@ xaxis!(xlabel="Area", xlims=(0.0, 1.0))
 yaxis!(ylims = (1,20), ylabel="Linkage density")
 savefig(joinpath("figures", "nar"))
 
+
+
+# posterior samples for the flexible links model
+betab_posterior_bigger = CSV.read(joinpath("data", "posterior_distributions", "beta_binomial_posterior_bigger.csv"))
+
+
 # stability after May / Allesina & Tang
-S = 3:750
-fl_mod = betab_posterior[:,S]
+S = 1:1500
+fl_mod = betab_posterior_bigger[:,r"counterfactual_links"]
 
 fl015 = neg_to_zeros.(quantile.(eachcol(fl_mod./S'), 0.015))
 fl110 = neg_to_zeros.(quantile.(eachcol(fl_mod./S'), 0.11))
@@ -353,9 +359,13 @@ fl890 = neg_to_zeros.(quantile.(eachcol(fl_mod./S'), 0.89))
 fl985 = neg_to_zeros.(quantile.(eachcol(fl_mod./S'), 0.985))
 fl500 = neg_to_zeros.(quantile.(eachcol(fl_mod./S'), 0.5))
 
-plot(S, vec(1.0./sqrt.(fl985)), fillrange=vec(1.0./sqrt.(fl015)), color=:grey, alpha=0.15, label="", frame=:box, size=(400, 400), dpi=120, legend=:topleft, foreground_color_legend=nothing, background_color_legend=:white, xlabel="Species richness", ylabel="Maximal \\sigma")
+plot(S, vec(1.0./sqrt.(fl985)), fillrange=vec(1.0./sqrt.(fl015)),
+color=:grey, alpha=0.15, label="", frame=:box, size=(400, 400), dpi=120, legend=:topleft,
+foreground_color_legend=nothing, background_color_legend=:white, xlabel="Species richness", ylabel="Maximal \\sigma")
 plot!(S, vec(1.0./sqrt.(fl890)), fillrange=vec(1.0./sqrt.(fl110)), color=:grey, alpha=0.15, label="")
 plot!(S, vec(1.0./sqrt.(fl500)), lw=2, c=pal.fl, lab="")
-xaxis!(:log, (3,750))
+xaxis!(:log, (3,1500))
+plot!(S, sqrt.(S)./sqrt.(S.-1), lab="")
+plot!(S, 1.0 ./sqrt.(S), lab="")
 yaxis!((0,1.25), label="Maximal interaction diversity")
 savefig(joinpath("figures", "may"))
