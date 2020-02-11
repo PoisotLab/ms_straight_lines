@@ -111,7 +111,7 @@ function plot_links_quantile(model; title="", xlabel="", ylabel="", linecolor=""
         title=title, title_location=:left, titlefontsize=11,
         xlabel=xlabel, ylabel=ylabel, framestyle=:box) # 97% PI
     plot!(S, quant_890, fill=quant_110, color=:grey, alpha=0.15, label="") # 89% PI
-    scatter!(d[:nodes], d[:links], c=:grey, msw=0, markersize=5, label="") # Empirical links
+    scatter!(d[:nodes], d[:links], c=:grey, alpha=0.5, msw=0, markersize=5, label="") # Empirical links
     plot!(S, quant_500, linecolor=linecolor, linewidth=3, label="") # Median link number
     plot!(S, mms, linecolor=:black, lw=1, label="") # Minimum number of links
     plot!(S, Ms, linecolor=:black, lw=2, label="") # Maximum number of links
@@ -149,7 +149,7 @@ links_beta_map = plot(S, beta_98, fill=beta_02,label="", color=:grey, alpha=0.15
 plot!(S, beta_89, fill=beta_11,label="", color=:grey, alpha=0.15)
 plot!(S, beta_50, color=pal.fl, label="", linewidth=2)
 #scatter!(d[:nodes], d[:links], c=:grey, msw=0, markersize=5, label="") # Empirical links
-plot!(S, mms, linecolor=:black, label="") # Minimum number of links
+plot!(S, mms, linecolor=:black, label="", lw=1) # Minimum number of links
 plot!(S, Ms, linecolor=:black, label="", lw=2) # Maximum number of links
 xaxis!(:log, "Species richness", label="", xlim=(minimum(S), maximum(S)))
 yaxis!(:log, "Number of links", ylims=(1,100000))
@@ -170,12 +170,10 @@ tnormal_50 = quantile.(tnormal, 0.5)
 links_normal = plot(S, tnormal_98, fill=tnormal_02,label="", color=:grey, alpha=0.15,
     title="B. Normal approximation", title_location=:left, titlefontsize=11, framestyle=:box)
 plot!(S, tnormal_89, fill=tnormal_11,label="", color=:grey, alpha=0.15,)
-plot!(S, tnormal_50, color=pal.fl, label="", linewidth=2)
-plot!(S, mms, linecolor=:black, label="") # Minimum number of links
-plot!(S, Ms, linecolor=:black, label="") # Maximum number of links
-#scatter!(d[:nodes], d[:links], label="", color=:grey) # Empirical links
-plot!(S, mms, linecolor=:black, label="") # Minimum number of links
+plot!(S, tnormal_50, color=pal.fl, label="", lw=2)
+plot!(S, mms, linecolor=:black, label="", lw=1) # Minimum number of links
 plot!(S, Ms, linecolor=:black, label="", lw=2) # Maximum number of links
+#scatter!(d[:nodes], d[:links], label="", color=:grey) # Empirical links
 xaxis!(:log, "Species richness", label="", xlim=(minimum(S), maximum(S)))
 yaxis!(:log, "Number of links", ylims=(1,100000))
 
@@ -208,9 +206,9 @@ co_emp = d[:links] ./ (d[:nodes] .^2)
 connectance_beta = plot(S, beta985, fillrange=beta015, color=:grey, alpha=0.15,
     label="", title="A", title_location=:left, titlefontsize=11, framestyle=:box) # 97% PI
 plot!(S, beta11, fillrange=beta89, color=:grey, alpha=0.15, label="") # 89% PI
-scatter!(d[:nodes], co_emp, c=:grey, msw=0, markersize=5, label="") # Empirical connectance
+scatter!(d[:nodes], co_emp, c=:grey, alpha=0.5, msw=0, markersize=5, label="") # Empirical connectance
 plot!(S, beta500, linecolor=pal.fl, linewidth=2, label="") # Median connectance
-plot!(S, ms, label="", linecolor=:black) # Minimum connectance
+plot!(S, ms, label="", linecolor=:black, lw=1) # Minimum connectance
 xaxis!(:log, "Species richness", xlims=(minimum(S),maximum(S)))
 yaxis!("Connectance", (0, 0.5))
 
@@ -228,10 +226,10 @@ beta50_LS = quantile.(bquant_LS, 0.50)
 avg_degree_beta = plot(S, beta985_LS, fill=beta015_LS, color=:grey, alpha=0.15, lab="", title="B",
     title_location=:left, titlefontsize=11, framestyle=:box)
 plot!(S, beta11_LS, fill=beta89_LS, colour=:grey, alpha=0.15, lab="",)
-scatter!(d.nodes, d.links ./ d.nodes, c=:grey, msw=0, markersize=5, label="") # Empirical connectance
-plot!(S, beta50_LS, linecolor=pal.fl, linewidth=2, lab="")
-plot!(S, msl, linecolor=:black, lab="")
-plot!(S, S, linecolor=:black, lab="")
+scatter!(d.nodes, d.links ./ d.nodes, c=:grey, alpha=0.5, msw=0, markersize=5, label="") # Empirical connectance
+plot!(S, beta50_LS, linecolor=pal.fl, lw=2, lab="")
+plot!(S, msl, linecolor=:black, lw=1, lab="")
+plot!(S, S, linecolor=:black, lw=2, lab="")
 xaxis!(:log, "Species richness", xlims=(minimum(S),maximum(S)))
 yaxis!(:log, "Linkage density", ylims=(0.5,1000))
 
@@ -240,51 +238,7 @@ plot(connectance_beta, avg_degree_beta, label=(1,2), lab="", size=(700,350), dpi
 savefig(joinpath("figures", "connectance_linkdens"))
 
 
-# Figure 5 - Extent to which the relationship gets closer to a power law (k)
-
-# Values of k function of s and posterior p
-
-k_predict = zeros(Float64, (length(S), 10000))
-
-for (i,s) in enumerate(S), j in 1:size(k_predict, 2)
-    p = rand(beta_map)
-    k_predict[i, j] = ((1 - p) * s + (p - 1)) / (p * s^2)
-end
-
-# Replace the values of k by their row-wise quantiles
-k_quantiles = zeros(Float64, size(k_predict))
-
-n = 1000 # Round quantiles in n classes
-for s in 1:length(S)
-    qfinder = ecdf(k_predict[s,:]) # Create ECDF function
-
-    k_quantiles[s,:] = qfinder(k_predict[s,:]) # Replace scores by quantiles
-
-    k_quantiles[s,:] = round.(k_quantiles[s,:] * n) / n # Round quantiles
-end
-
-# Function for the mean values of k at the quantile q for each value of s
-function get_quantile(q)
-    k_quant = zeros(Float64, (length(S), 1))
-    for s in 1:length(S)
-        k_quant[s] = mean(k_predict[s, k_quantiles[s,:] .== q])
-    end
-    return(k_quant)
-end
-
-
-# k - species plot with quantiles:
-
-plot(S, get_quantile(0.015), fill=get_quantile(0.985), color=:darkgrey, label="", framestyle=:box) # 97% PI
-plot!(S, get_quantile(0.11), fill=get_quantile(0.89), color=:lightgrey, label="") # 89% PI
-plot!(S, get_quantile(0.5), linecolor=pal.fl, linewidth=4, lab = "")
-xaxis!(:log, "Species richness")
-yaxis!("k")
-savefig(joinpath("figures", "k_powerlaw"))
-
-
-
-# Figure 6 -- % of model prediction above or below minimum
+# Figure 5 -- % of model prediction above or below minimum
 
 function realistic_links(model_cf)
     realistic = zeros(Float64, (1, length(S)))
@@ -319,7 +273,7 @@ xaxis!(:log, "Species richness", xlims=(minimum(S),maximum(S)))
 yaxis!("Proportion of realistic links", (0.3, 1.01))
 savefig(joinpath("figures", "real_predict"))
 
-# network-area relationships after Galliana et al 2018 (using figure 3 as a template)
+# Figure 6 -- Network-area relationships after Galliana et al 2018 (using figure 3 as a template)
 A = 0.0001:0.02:1.2
 k,z = 200.0, 0.27
 AS = convert.(Int64, ceil.(k.*A.^z))
@@ -365,7 +319,7 @@ foreground_color_legend=nothing, background_color_legend=:white, xlabel="Species
 plot!(S, vec(1.0./sqrt.(fl890)), fillrange=vec(1.0./sqrt.(fl110)), color=:grey, alpha=0.15, label="")
 plot!(S, vec(1.0./sqrt.(fl500)), lw=2, c=pal.fl, lab="")
 xaxis!(:log, (3,1500))
-plot!(S, sqrt.(S)./sqrt.(S.-1), lab="")
-plot!(S, 1.0 ./sqrt.(S), lab="")
+plot!(S, sqrt.(S)./sqrt.(S.-1), lw=1, color=:black, lab="")
+plot!(S, 1.0 ./sqrt.(S), lw=2, color=:black, lab="")
 yaxis!((0,1.25), label="Maximal interaction diversity")
 savefig(joinpath("figures", "may"))
