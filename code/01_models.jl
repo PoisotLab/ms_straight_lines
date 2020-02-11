@@ -267,7 +267,13 @@ bb_model = Stanmodel(
     )
 
 
-_, bb_chains , _ = stan(bb_model, data_dict_2, summary = true);
+
+
+
+_, bb_chains_bigger , _ = stan(bb_model, data_dict_2, summary = true);
+
+bb_df = DataFrame(bb_chains_bigger)
+CSV.write("data/posterior_distributions/beta_binomial_posterior_bigger.csv", bb_df, delim=',')
 
 
 ## could be used to plot a "ribbon"
