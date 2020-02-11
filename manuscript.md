@@ -184,21 +184,21 @@ as a guide to model selection; like other information criteria it approximates
 the error in cross-validation predictions. Smaller values indicate a model which
 makes better predictions. The calculation of PSIS-LOO can also provide some
 clues about potential model fits; in our case the algorithm suggested that the
-constant connectance model was sensitive to extreme observations. Information
-criteria are only a rough guide to model selection; as always domain expertise
-should take precedence. The expected log predictive density (ELPD), on the other
+constant connectance model was sensitive to extreme observations. The expected log predictive density (ELPD), on the other
 hand, measures the predictive performance of the model; here, higher values
 indicate more reliable predictions. This suggests that the flexible link model
-will make the best predictions of $L$.
+will make the best predictions of $L$. Information
+criteria, however, are only a rough guide to model selection; as always domain expertise
+should take precedence.
 
-Useful predictions for $L$ must however stay within realistic boundaries
+To be useful to ecologists, predictions of $L$ must stay within realistic boundaries
 determined by ecological principles. We generated posterior predictions for all
 models and visualized them against these constraints (+@fig:PP_counterfactual).
 The LSSL model clearly underestimated the number of links, especially in large
 networks: its predictions were frequently lower than the minimum $S-1$. The
 constant connectance and power law models also made many predictions below this
 value, especially for small values of $S$. The flexible link model made roughly
-the same predictions, but within ecologically possible values.
+the same predictions, but within ecologically realistic values.
 
 ![**The flexible link model fits better and makes a plausible range of predictions.** The number of links is plotted as a function of species richness obtained from the posterior distributions of A) the link-species scaling, B) the constant connectance, C) the power law and D) the flexible link models. In each panel, the colored line represent the median predicted link number and the grey areas cover the 78% and 97% percentile intervals. Empirical data from the `mangal.io` database are plotted in each panel (grey dots), as well as the minimal $S-1$ and maximal $S^2$ number of links (lower and upper black lines, respectively).  ](figures/models_links.png){#fig:PP_counterfactual}
 
@@ -207,7 +207,7 @@ the same predictions, but within ecologically possible values.
 Constraints on food web structure are especially important for small
 communities. This is emphasized in +@fig:real_predict, which shows that all
 models other than the flexible links model fail to stay within realistic
-ecological constraints. The link-species scaling model made around 29% of
+ecological constraints when $S$ is small. The link-species scaling model made around 29% of
 unrealistic predictions of link numbers for every value of $S$ ($3 \leq S \leq
 750$). The constant connectance and power law models, on the other hand, also
 produced unrealistic results but for small networks only: more than 20% were
