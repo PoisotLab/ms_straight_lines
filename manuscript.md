@@ -51,7 +51,7 @@ introduced by @CoheBria84 hypothesized that all networks have the same average
 degree, thats is most species should have the same number of interactions. Links
 are modeled as the number of species times a constant:
 
-$$ L_{\textsc{lssl}} = b\times S \,$$ {#eq:lssl}
+$$ L_{\text{lssl}} = b\times S \,$$ {#eq:lssl}
 
 with $b \approx 2$. This model imagines that every species added to a community
 increases the number of interactions by two -- for example, an animal which
@@ -64,14 +64,14 @@ words, a food web is always equally filled, regardless of whether it has 5 or
 5000 species. Under the so-called "constant connectance" model, the number of
 links is proportional to the richness squared,
 
-$$ L_{\textsc{cc}} = b\times S^2\,, $$ {#eq:cc}
+$$ L_{\text{cc}} = b\times S^2\,, $$ {#eq:cc}
 
 where $b$ is a constant in $]0,1[$ representing the expected value of
 connectance. This model can be relaxed by assuming that the scaling of $L$ with
 $S$ does not necessarily follows the maximum number of interactions, and the
 best fit was with a model of the form
 
-$$ L_{\textsc{pl}} = b\times S^a\,, $$ {#eq:pl}
+$$ L_{\text{pl}} = b\times S^a\,, $$ {#eq:pl}
 
 which is trivially a linear relationship between $\text{log}(L)$ and
 $\text{log}(S)$. This power law model can be parameterized in arbitrarily
@@ -94,7 +94,7 @@ ecological principles. In short, while they can describe the *data* adequately,
 they are fundamentally unable to represent the mechanisms through which these
 data emerged. This has two causes. First, models that are variations of $L
 \approx b\times S^a$ have no constraints --  with the exception of the "constant
-connectance" model, in which $L_{\textsc{cc}}$ has a maximum value of $S^2$.
+connectance" model, in which $L_{\text{cc}}$ has a maximum value of $S^2$.
 However, we know that the number of interactions within a food web is both lower
 and upper bounded [@Mart92; @PoisGrav14]: there can be no more than $S^2$ links,
 and there can be no fewer than $S-1$ links. This minimum of $S-1$ represents
@@ -137,10 +137,10 @@ stochastic event, with two outcomes (there is, or there is not, an interaction).
 Assuming that all of these flexible links have the same chance of being
 realized, which we call $p$, then we can write the expected number of links as
 
-$$ L_{\textsc{fl}} = p\times\left[S^2-(S-1)\right]+(S-1)\,, $$ {#eq:lhat}
+$$ L_{\text{fl}} = p\times\left[S^2-(S-1)\right]+(S-1)\,, $$ {#eq:lhat}
 
 where $p \in [0,1]$. When $p = 1$, $L$ is at its maximum ($S^2$), and when $p =
-0$ it is at the minimum value ($S - 1$). We use the notation $L_{\textsc{fl}}$ to
+0$ it is at the minimum value ($S - 1$). We use the notation $L_{\text{fl}}$ to
 represent that our model considers the number of "flexible" links in a food web;
 that is, the number of links in excess of the minimum but below the maximum.
 
@@ -154,7 +154,7 @@ constant for all links in the same ecological community, but may vary between
 communities, we can model the distribution of links directly as a shifted
 beta-binomial variable.
 
-$$ [L|S,\mu, \phi] =  { S^2 - (S - 1) \choose L - (S - 1)} \frac{B(L - (S - 1) + \mu \phi, S^2 - L + (1 - \mu)\phi)}{B(\mu \phi, (1 - \mu)\phi)} $$ {#eq:shiftBB}
+$$ [L|S,\mu, \phi] =  { S^2 - (S - 1) \choose L - (S - 1)} \frac{\Beta(L - (S - 1) + \mu \phi, S^2 - L + (1 - \mu)\phi)}{\Beta(\mu \phi, (1 - \mu)\phi)} $$ {#eq:shiftBB}
 
 Where $\mathrm{B}$ is the Beta function, $\mu$ is the average probability of a
 flexible link being realized (*i.e.* the average value of $p$ across communities) and $\phi$ is the
@@ -169,7 +169,7 @@ Procedures.
 In this paper we will compare our flexible links model to three previous models
 for $L$. We estimate parameters and compare the performance of all models using
 open data from the `mangal.io` networks database [@PoisBais16]. Finally, we will
-show how our model for $L_{\textsc{fl}}$ suggests a new and more useful way of
+show how our model for $L_{\text{fl}}$ suggests a new and more useful way of
 thinking about metrics of network structure and discuss how generative models
 can be useful tools for including our knowledge of a system into our
 predictions.
@@ -283,6 +283,12 @@ has a Beta distribution the linear transformations described by +@eq:co and
 +@eq:ld also describe Beta distributions which have been shifted and scaled
 according to the number of species $S$ in a community.
 
+Just as $L$ must be within ecologically meaningful bounds, $Co$ (+@eq:co) and
+$L_D$ (+@eq:ld) must be as well. The connectance of a food web is bounded by 0
+and 1. However, the minimum bound on links similarly imposes a lower value on
+connectance. This means that the distribution for $Co$ will be a shifted beta
+distribution, a transformed version of the distribution for $p$.
+
 It is worth noting that +@eq:lhat can be expressed as a second degree
 polynomial, ($p\times S^2  + (1-p)\times S + (p-1)$), whose leading term is
 $p\times S^2$. Therefore, for large ecological systems, where $S$ has a high
@@ -301,18 +307,13 @@ Thus $p$ has an interesting ecological interpretation: it represents the average
 connectance of networks large enough that the proportion $(S-1)/S^{2}$ is
 negligible.
 
-Just as $L$ must be within ecologically meaningful bounds, $Co$ (+@eq:co) and
-$L_D$ (+@eq:ld) must be as well. The connectance of a food web is bounded by 0
-and 1. However, the minimum bound on links similarly imposes a lower value on
-connectance. This means that the distribution for $Co$ will be a shifted beta
-distribution, a transformed version of the distribution for $p$.
 
 We can convert the distribution for $p$ into one for $Co$ by replacing $p$ with
 the transformation of $Co$ as described above (+@eq:co), and rescaling by the
 new range:
 
 $$
-[Co | S, \mu, \phi] = \frac{\left(Co - \frac{S-1}{S^2}\right)^{\mu \phi - 1}\left(1 - Co\right)^{(1 - \mu)\phi - 1} }{(1 - \frac{S-1}{S^2})^{\phi - 1} \times B(\mu \phi, (1 - \mu)\phi)}
+[Co | S, \mu, \phi] = \frac{\left(Co - \frac{S-1}{S^2}\right)^{\mu \phi - 1}\left(1 - Co\right)^{(1 - \mu)\phi - 1} }{(1 - \frac{S-1}{S^2})^{\phi - 1} \times \Beta(\mu \phi, (1 - \mu)\phi)}
 $$ {#eq:shiftBetaCo}
 
 
@@ -320,7 +321,7 @@ Similarly, we can convert the distribution for $p$ into one for $L_D$ by
 replacing $p$ with the transformation of $L_D$ (+@eq:ld)
 
 $$
-[L_{D} | S, \mu, \phi] = \frac{\left(L_D - \frac{S-1} {S}\right)^{\mu \phi - 1}\left(1 - L_D\right)^{(1 - \mu)\phi - 1} }{(S - \frac{S-1}{S})^{\phi - 1} \times B(\mu \phi, (1 - \mu)\phi)}
+[L_{D} | S, \mu, \phi] = \frac{\left(L_D - \frac{S-1} {S}\right)^{\mu \phi - 1}\left(1 - L_D\right)^{(1 - \mu)\phi - 1} }{(S - \frac{S-1}{S})^{\phi - 1} \times \Beta(\mu \phi, (1 - \mu)\phi)}
 $$ {#eq:shiftBetaLD}
 
 In +@fig:beta_distributions, we show that the connectance and linkage density
@@ -429,14 +430,14 @@ reason to anticipate that $p\times S$ will keep growing infinitely.
 ![**Stability imposes a limit on network growth**. Using +@eq:ld, we can calculate the maximum standard deviation in the strength of interactions which should ensure food web stability, $\sigma^\star = \sqrt{L_D}^{-1}$. This value falls sharply when the number of species increases, which will limit the stability of large food webs, and therefore explain why Eltonian demons should not emerge.](figures/may.png){#fig:stability}
 
 In fact, May [@May72] suggested that a network of richness $S$ and connectance
-$Co$ is stable as long as the criteria $\sigma \sqrt{S/Co} < 1$ is satisfied,
+$Co$ is stable as long as the criteria $\sigma \sqrt{S \times Co} < 1$ is satisfied,
 with $\sigma$ being the standard deviation of the strengths of interactions.
-Under our model, $Co$ is derived from $S$, and $S/Co$ is the linkage density as
+Under our model, $Co$ is derived from $S$, and $S \times Co$ is the linkage density as
 per +@eq:ld. Although this criteria is not necessarily stringent enough for the
 stability of food webs [@AlleTang15; @AlleTang12], it allows deriving an
 approximate value $\sigma^\star$ which is the value of $\sigma$ above which the
 previous criteria is not satisfied, and the system is expected to be unstable.
-This threshold is the solution to $\sigma^\star = \sqrt{L_d}^{-1}$, where $L_D$
+This threshold is the solution to $\sigma^\star = L_D^{- \frac{1}{2}}$, where $L_D$
 is defined as in +@eq:ld. We illustrate this result in +@fig:stability, which
 reveals that $\sigma^\star$ falls to 0 for larger species richness. These
 results explain how ecological limitations (here on stability) can limit the
@@ -526,7 +527,7 @@ With this assumption, our likelihood becomes a shifted beta-binomial
 distribution:
 
 $$
-[L|S,\mu, \phi] =  { S^2 - (S - 1) \choose L - (S - 1)} \frac{B(L - (S - 1) + \mu \phi, S^2 - L + (1 - \mu)\phi)}{B(\mu \phi, (1 - \mu)\phi)}
+[L|S,\mu, \phi] =  { S^2 - (S - 1) \choose L - (S - 1)} \frac{\Beta(L - (S - 1) + \mu \phi, S^2 - L + (1 - \mu)\phi)}{\Beta(\mu \phi, (1 - \mu)\phi)}
 $${#eq:shiftBB}
 
 Where $B$ is the beta function.
