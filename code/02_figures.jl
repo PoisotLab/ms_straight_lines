@@ -8,19 +8,15 @@ using Statistics
 using StatsBase
 using Random
 
+# include functions
+include("common_functions.jl")
+
 Plots.scalefontsizes(1.3)
 
 # get the data and filter for predation only
 d = CSV.read(joinpath("data", "network_data.dat"))
 d = d[d.predation .> 0 , :]
 
-# posterior samples for the flexible links model
-betab_posterior = CSV.read(joinpath("data", "posterior_distributions", "beta_binomial_posterior.csv"))
-
-# posterior samples from previous models
-lssl_posterior = CSV.read(joinpath("data", "posterior_distributions", "lssl.csv"))
-const_posterior = CSV.read(joinpath("data", "posterior_distributions", "const_posterior.csv"))
-powerlaw_posterior = CSV.read(joinpath("data", "posterior_distributions", "powerlaw_posterior.csv"))
 
 # color palette for models
 pal = (
@@ -29,6 +25,15 @@ pal = (
     pl=RGB(0/255,158/255,115/255),
     fl=RGB(204/255,121/255,167/255)
     )
+
+
+# posterior samples for the flexible links model
+betab_posterior = CSV.read(joinpath("data", "posterior_distributions", "beta_binomial_posterior.csv"))
+
+# posterior samples from previous models
+lssl_posterior = CSV.read(joinpath("data", "posterior_distributions", "lssl.csv"))
+const_posterior = CSV.read(joinpath("data", "posterior_distributions", "const_posterior.csv"))
+powerlaw_posterior = CSV.read(joinpath("data", "posterior_distributions", "powerlaw_posterior.csv"))
 
 
 # number of species
@@ -95,8 +100,6 @@ savefig(joinpath("figures", "beta_fit"))
 
 
 # Figure 2 -- Links estimate from counterfactuals of the 4 models
-
-neg_to_zeros(quant) = quant > 0 ? quant : 0.01 # to deal with negative quantiles
 
 # Function to plot the quantiles of the counterfactuals links of each model
 # we use log_zeros function to plot the y-axis in log (to account for log(0))
@@ -360,12 +363,18 @@ fl985 = neg_to_zeros.(quantile.(eachcol(fl_mod./S'), 0.985))
 fl500 = neg_to_zeros.(quantile.(eachcol(fl_mod./S'), 0.5))
 
 plot(S, vec(1.0./sqrt.(fl985)), fillrange=vec(1.0./sqrt.(fl015)),
-color=:grey, alpha=0.15, label="", frame=:box, size=(400, 400), dpi=120, legend=:topleft,
-foreground_color_legend=nothing, background_color_legend=:white, xlabel="Species richness", ylabel="Maximal \\sigma")
+    color=:grey, alpha=0.15, label="", frame=:box, size=(400, 400),
+    dpi=120, legend=:topleft, foreground_color_legend=nothing,
+    background_color_legend=:white,
+    xlabel="Species richness", ylabel="Maximal \\sigma")
 plot!(S, vec(1.0./sqrt.(fl890)), fillrange=vec(1.0./sqrt.(fl110)), color=:grey, alpha=0.15, label="")
 plot!(S, vec(1.0./sqrt.(fl500)), lw=2, c=pal.fl, lab="")
 xaxis!(:log, (3,1500))
-plot!(S, sqrt.(S)./sqrt.(S.-1), lab="")
-plot!(S, 1.0 ./sqrt.(S), lab="")
+plot!(S, sqrt.(S)./sqrt.(S.-1), lab="", colour = :black, lw=1)
+plot!(S, 1.0 ./sqrt.(S), lab="", colour = :black, lw = 2)
 yaxis!((0,1.25), label="Maximal interaction diversity")
+# expression for the mean.
+mu_map = median(betab_posterior_bigger[:mu])
+plot!(S, 1 ./ sqrt.(mu_map .* S .+ (1 - mu_map) .* (S .- 1) ./ S), lab = "", color=:black, lw = 2, linestyle=:dot)
+
 savefig(joinpath("figures", "may"))

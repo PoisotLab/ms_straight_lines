@@ -11,3 +11,6 @@ function foodweb_model_output(model_chains)
             "y_hat" => ["id"]
     ))
 end
+
+
+neg_to_zeros(quant) = quant > 0 ? quant : 0.01 # to deal with negative quantiles
