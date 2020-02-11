@@ -12,7 +12,7 @@ both in observed food webs and under purely neutral models of food web structure
 the structure of a food web [@DelmBess18]. The structure of a food web, in turn,
 is almost always required to understand how the community functions, develops,
 and responds to changes [@McCa12; @ThomBros12], to the point where some authors
-suggested that describing food webs was a necessity [@SeibCado18; @McCa07]. To
+suggested that describing food webs was a necessity [@McCa07; @SeibCado18]. To
 this end, a first step is to come up with an estimate for the number of existing
 trophic interactions $L$, through sampling or otherwise. Although both $L$ and
 $S$ can be counted in nature, the sampling of interactions is orders of
@@ -58,7 +58,7 @@ increases the number of interactions by two -- for example, an animal which
 consumes one resource and is consumed by one predator. Yet this model started to
 show its deficiencies when data on larger food webs became available, which
 revealed that $L$ increases faster than a linear function of $S$ would. In
-response to the idea that the *average degree* is constant, Martinez [@Mart92]
+response to the idea that the *average degree* is constant, @Mart92
 suggested instead that *connectance* is unchanged in response to $S$; in other
 words, a food web is always equally filled, regardless of whether it has 5 or
 5000 species. Under the so-called "constant connectance" model, the number of
@@ -78,11 +78,11 @@ $\text{log}(S)$. This power law model can be parameterized in arbitrarily
 complex ways, including spatial scaling and species area relationships
 [@BrosOstl04]; it should further be noted that this model is a synthesis of
 preview hypotheses, encompassing both the link-species scaling ($a=1, b\approx
-2$) and the strict constant connectance ($a=2, b$) depending on which parameters
+2$) and the strict constant connectance ($a=2, 0<b<1$) depending on which parameters
 are fixed. Power laws are very flexible, and indeed this function matches
 empirical data well -- so well that it is often treated as a "true" model which
 captures the scaling of link number with species richness [@WinePian01;
-@RiedRall10; @GarlCald03], and from which we should draw ecological inferences
+@GarlCald03; @RiedRall10], and from which we should draw ecological inferences
 about what shapes food webs. However, this approach is limited, because the
 parameters of a power law relationship can arise from many mechanisms, and are
 difficult to reason about ecologically.
@@ -194,7 +194,7 @@ which we fit via a beta-binomial observation model, had the most favourable
 values of PSIS-LOO information criterion (+@tbl:comparison) and of expected log
 predictive density (ELPD), relative to the three competing models which used a
 negative binomial observation model. Pareto-smoothed important sampling serves
-as a guide to model selection; like other information criteria it approximates
+as a guide to model selection [@VehtGelm17]; like other information criteria it approximates
 the error in cross-validation predictions. Smaller values indicate a model which
 makes better predictions. The calculation of PSIS-LOO can also provide some
 clues about potential model fits; in our case the algorithm suggested that the
@@ -202,7 +202,7 @@ constant connectance model was sensitive to extreme observations. Information
 criteria are only a rough guide to model selection; as always domain expertise
 should take precedence. The expected log predictive density (ELPD), on the other
 hand, measures the predictive performance of the model; here, higher values
-indicate more reliable predictions. This suggests that the flexible link model
+indicate more reliable predictions [@VehtGelm17]. This suggests that the flexible link model
 will make the best predictions of $L$.
 
 Useful predictions for $L$ must however stay within realistic boundaries
@@ -331,7 +331,7 @@ connectance, and between $(S-1)/S$ and $S$ for the linkage density).
 ![**Connectance and linkage density can be derived from a model for links.** A) Connectance and B) linkage density are plotted as a function of species richness, for the maximum _a posteriori_ estimates of the flexible link model. In each panel, the colored line represent the median predicted quantity and the grey areas cover the 78% and 97% percentile intervals. Empirical data from the `mangal.io` database are plotted in each panel (grey dots). In A), the minimal $(S-1)/S^2$ connectance and in B) the minimal $(S-1)/S$ and maximum $S$ linkage density are plotted (black lines).](figures/connectance_linkdens.png){#fig:beta_distributions}
 
 Connectance is more than the proportion of realized interactions. It has been
-associated with some of the most commonly used network metrics [@PoisGrav14,
+associated with some of the most commonly used network metrics [@PoisGrav14;
 @Chag15], and contains meaningful information on the stability [@DunnWill02a;
 @MontPimm06] and dynamics [@VieiAlme15] of ecological communities. A probability
 distribution for connectance non only accounts for the variability between
@@ -433,7 +433,7 @@ $Co$ is stable as long as the criteria $\sigma \sqrt{S/Co} < 1$ is satisfied,
 with $\sigma$ being the standard deviation of the strengths of interactions.
 Under our model, $Co$ is derived from $S$, and $S/Co$ is the linkage density as
 per +@eq:ld. Although this criteria is not necessarily stringent enough for the
-stability of food webs [@AlleTang15; @AlleTang12], it allows deriving an
+stability of food webs [@AlleTang12; @AlleTang15], it allows deriving an
 approximate value $\sigma^\star$ which is the value of $\sigma$ above which the
 previous criteria is not satisfied, and the system is expected to be unstable.
 This threshold is the solution to $\sigma^\star = \sqrt{L_d}^{-1}$, where $L_D$
@@ -459,7 +459,7 @@ empirical results on this topic [*e.g.* @WoodRuss15], they suggest that we will
 observe many relationships between network structure and space ,and that picking
 out the signal of network area relationships might be difficult.
 
-![**Networks in space**. Representing the species richness as $S = k\times A^z$, with $A = 200$ and $k = 0.27$ @GaliLurg18, we can compare the predictions of our model to that of the generally accepted power law (+@eq:pl). While our model predicts a larger linkage density in larger areas, the confidence intervals around this prediction are extremely large. - scales faster than the power law, but the confidence interval is extremely high, suggesting that we may observe either very weak, or very strong, effects of area increase.](figures/nar.png){#fig:nar}
+![**Networks in space**. Representing the species richness as $S = k\times A^z$, with $A = 200$ and $k = 0.27$ [@GaliLurg18], we can compare the predictions of our model to that of the generally accepted power law (+@eq:pl). While our model predicts a larger linkage density in larger areas, the confidence intervals around this prediction are extremely large. - scales faster than the power law, but the confidence interval is extremely high, suggesting that we may observe either very weak, or very strong, effects of area increase.](figures/nar.png){#fig:nar}
 
 As a conclusion, we would like to note that the relationship between $L$ and $S$
 has been underpinning most of the literature on food web structure since the
