@@ -235,19 +235,19 @@ Table: Parameter estimates for all models. Mean and standard deviation (SD) is g
 
 Although we did not use the same approach to parameter estimation as previous
 authors, our approach to fitting these models recovered parameter estimates that
-are broadly congruent with previous work. We found very consistent values of 2.2
-for $b$ of the LSSL model, which is close to the original value of approximately
+are broadly congruent with previous work. We found a value of 2.2
+for $b$ of the LSSL model (+@tbl:parameters), which is close to the original value of approximately
 2 [@CoheBria84]. Similarly, we found a value of 0.12 for $b$ of the constant
 connectance model, which was consistent with original estimate of 0.14
 [@Mart92]. Finally, the parameters values we found for the power law were also
-comparable to earlier estimates [@BrosOstl04].
+comparable to earlier estimates [@BrosOstl04]. All of these models were fit with a negative binomial observation model, which has an additional parameter, $\kappa$, which is sometimes called a "concentration" parameter. This value increases from the top of our table to the bottom, in the same sequence as predictive performance improves in +@tbl:comparison. This indicates that the model predictions are more concentrated around the mean predicted by the model ( +@tbl:parameters, column 1).
 
-For large communities, our model should behave similarly to the constant
-connectance model; it is no surprise then than $\mu$ was about 0.09, which is
+Our parameter estimates for the flexible links model are ecologically meaninful. For large communities, our model should behave similarly to the constant
+connectance model and so it is no surprise that $\mu$ was about 0.09, which is
 close to our value of 0.12 for constant connectance. In addition, we obtained a
 rather large value of 24.3 for $\phi$, which shrinks the variance around the
 mean of $p$ to approximately 0.003 ($var(p)=\mu(1-\mu)/(1+\phi)$). This
-indicates that food webs are largely constant in their probability of flexible links being realized.
+indicates that food webs are largely similar in their probability of flexible links being realized. The flexible link model also uses fewer parameters than the power law model and makes slightly better predictions, which accounts for its superior performance in model comparison ( +@tbl:comparison)
 
 ## Connectance and linkage density can be derived from a model for links
 
