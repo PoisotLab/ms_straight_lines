@@ -243,7 +243,7 @@ connectance model, which was consistent with original estimate of 0.14
 [@Mart92]. Finally, the parameters values we found for the power law were also
 comparable to earlier estimates [@BrosOstl04]. All of these models were fit with a negative binomial observation model, which has an additional parameter, $\kappa$, which is sometimes called a "concentration" parameter. This value increases from the top of our table to the bottom, in the same sequence as predictive performance improves in +@tbl:comparison. This indicates that the model predictions are more concentrated around the mean predicted by the model ( +@tbl:parameters, column 1).
 
-Our parameter estimates for the flexible links model are ecologically meaninful. For large communities, our model should behave similarly to the constant
+Our parameter estimates for the flexible links model are ecologically meaningful. For large communities, our model should behave similarly to the constant
 connectance model and so it is no surprise that $\mu$ was about 0.09, which is
 close to our value of 0.12 for constant connectance. In addition, we obtained a
 rather large value of 24.3 for $\phi$, which shrinks the variance around the
@@ -265,26 +265,22 @@ and
 $$ L_D = \frac{L}{S} = p \left(S - \frac{S-1}{S} \right) +  \frac{S-1}{S},$$ {#eq:ld}
 
 In a beta-binomial distribution, it is assumed that the probability of success
-$p$ varies among groups of trials according to a Beta distribution. Since $p$
-has a Beta distribution the linear transformations described by +@eq:co and
-+@eq:ld also describe Beta distributions which have been shifted and scaled
-according to the number of species $S$ in a community.
+$p$ varies among groups of trials according to a $\text{Beta}(\mu\phi, (1-\mu)\phi)$ distribution. Since $p$
+has a beta distribution, the linear transformations described by +@eq:co and
++@eq:ld also describe beta distributions which have been shifted and scaled
+according to the number of species $S$ in a community. This shows that just as $L$ must be within ecologically meaningful bounds, $Co$ (+@eq:co) and
+$L_D$ (+@eq:ld) must be as well. The connectance of a food web is bounded by $(S-1)/S^2$
+and 1, while the linkage density is bounded by $(S-1)/S$ and $S$.
 
-Just as $L$ must be within ecologically meaningful bounds, $Co$ (+@eq:co) and
-$L_D$ (+@eq:ld) must be as well. The connectance of a food web is bounded by 0
-and 1. However, the minimum bound on links similarly imposes a lower value on
-connectance. This means that the distribution for $Co$ will be a shifted beta
-distribution, a transformed version of the distribution for $p$.
-
-It is worth noting that +@eq:lhat can be expressed as a second degree
+For food webs with many species, these equations simplify.
+ +@eq:lhat can be expressed as a second degree
 polynomial, ($p\times S^2  + (1-p)\times S + (p-1)$), whose leading term is
-$p\times S^2$. Therefore, for large ecological systems, where $S$ has a high
-value, +@eq:co and +@eq:ld respectively approach $Co = L/S^2 \approx p$ and
+$p\times S^2$. Therefore, when $S$ is large, +@eq:co and +@eq:ld respectively approach $Co = L/S^2 \approx p$ and
 $L_D = L/S \approx pS$. These are notable properties, as they imply that our
 model captures both the behavior of +@eq:lsll and of +eq:cc, while having a
 markedly better fit (+@tab:comparison).
 
-This implies that the addition of $n$ species should increase the linkage
+A study of equations +@eq:co and +@eq:ld also provides insight into the ecological interpretation of the parameters in our equation. For example, +@eq:ld implies that the addition of $n$ species should increase the linkage
 density by approximately $p\times n$. For example, the addition of 11 new
 species ($p^{-1}$ according to +@tab:parameters) should increase the linkage
 density in the food web by roughly 1, meaning that each species in the original
