@@ -91,7 +91,7 @@ However, we know that the number of interactions within a food web is both lower
 and upper bounded [@Mart92; @PoisGrav14]: there can be no more than $S^2$ links,
 and there can be no fewer than $S-1$ links. This minimum of $S-1$ represents
 communities where all species interact and at least some of the organisms are
-heterotrophs [@Mart92]. Numerous simple foodwebs could have this minimal number
+heterotrophs [@Mart92]. Numerous simple food webs could have this minimal number
 of links -- for example, a linear food chain wherein each trophic level consists
 of a single species, each of which consumes only the species below it; or a
 grazing herbivore which feeds on every plant in a field. Thus interaction number
@@ -173,7 +173,7 @@ derived.
 
 Table: Comparison of the four different models. We show Pareto-smoothed important sampling values (PSIS-LOO) and the SD of these values. PSIS-LOO is similar to information critera in that smaller values indicate better predictive performance. We also show expected log predictive density (ELPD) differences to the maximum for all models, along with the standard error (SE) of these differences. {#tbl:comparison}
 
-All models fitted well, without any problematic warnings from Stan's diagnostics
+All models fit well, without any problematic warnings from Stan's diagnostics
 (see Experimental Procedures), but our model for flexible links outperformed
 previous solutions to the problem of modelling $L$. The flexible link model,
 which we fit via a beta-binomial observation model, had the most favourable
@@ -240,7 +240,7 @@ are broadly congruent with previous work. We found a value of 2.2
 for $b$ of the LSSL model (+@tbl:parameters), which is close to the original value of approximately
 2 [@CoheBria84]. Similarly, we found a value of 0.12 for $b$ of the constant
 connectance model, which was consistent with original estimate of 0.14
-[@Mart92]. Finally, the parameters values we found for the power law were also
+[@Mart92]. Finally, the parameter values we found for the power law were also
 comparable to earlier estimates [@BrosOstl04]. All of these models were fit with a negative binomial observation model, which has an additional parameter, $\kappa$, which is sometimes called a "concentration" parameter. This value increases from the top of our table to the bottom, in the same sequence as predictive performance improves in +@tbl:comparison. This indicates that the model predictions are more concentrated around the mean predicted by the model ( +@tbl:parameters, column 1).
 
 Our parameter estimates for the flexible links model are ecologically meaningful. For large communities, our model should behave similarly to the constant
@@ -308,7 +308,7 @@ $$
 $$ {#eq:shiftBetaLD}
 
 In +@fig:beta_distributions, we show that the connectance and linkage density
-obtained from the equations above fitted the empirical data well. Their
+obtained from the equations above fit the empirical data well. Their
 predictions did not exceed ecological boundaries (between $(S-1)/S^2$ and 1 for
 connectance, and between $(S-1)/S$ and $S$ for the linkage density).
 
@@ -381,7 +381,7 @@ expectations when connectance is high [@DunnWill02a]. In our model, this
 behaviour is a natural prediction, as the connectance increases sharply for low
 species richness (+@fig:beta_distributions), as the additive term $(S-1)S^{-2}$
 in +@eq:co becomes progressively larger. In a sense, small ecological networks
-are different only because due to the low values of $S$, there are only a very
+are different only due to the low values of $S$, there are only a very
 limited number of flexible links, and this drives connectance to be larger.
 Connectance in turn has inmplications for many ecological properties. A recent
 research direction has been to reveal its impact on resistance to invasion:
@@ -428,7 +428,7 @@ size of food webs, are in agreement with previous simulations, placing the
 threshold for stability at about 1200 species in food webs [@AlleTang12].
 
 Finally, our results bear important consequences for the nascent field of
-studying network-areas relationships (NAR). As it has long been observed that
+studying network-area relationships (NAR). As it has long been observed that
 not all species in a food web diffuse equally through space [@HoltLawt99],
 understanding how the shape of networks varies when the area increases is an
 important goal, and in fact underpins the development of a macroecological
@@ -440,14 +440,14 @@ provide in +@fig:nar a simple illustration of the fact that, due to the
 dispersal of values of $L$, the relationship between $L/S$ and area can have a
 really wide confidence interval. While our simulations generally match the
 empirical results on this topic [*e.g.* @WoodRuss15], they suggest that we will
-observe many relationships between network structure and space ,and that picking
+observe many relationships between network structure and space, and that picking
 out the signal of network area relationships might be difficult.
 
 ![**Networks in space**. Representing the species richness as $S = k\times A^z$, with $A = 200$ and $k = 0.27$ [@GaliLurg18], we can compare the predictions of our model to that of the generally accepted power law (+@eq:pl). While our model predicts a larger linkage density in larger areas, the confidence intervals around this prediction are extremely large. - scales faster than the power law, but the confidence interval is extremely high, suggesting that we may observe either very weak, or very strong, effects of area increase.](figures/nar.png){#fig:nar}
 
 As a conclusion, we would like to note that the relationship between $L$ and $S$
 has been underpinning most of the literature on food web structure since the
-1980s. Additional generations of data allows to switch from the link-species
+1980s. Additional generations of data allows us to switch from the link-species
 scaling law, to constant connectance, to more general formulations based on a
 power law. Our model breaks with this tradition of iterating over the same
 family of relationship, and instead draws from our knowledge of ecological
@@ -553,7 +553,7 @@ which are observed in nature.
 ## Model fitting - data and software
 
 <!-- tk describe Mangal and its awesomeness in more wholeness -->
-We evaluated our model against 255 empirical foodwebs, available in the online
+We evaluated our model against 255 empirical food webs, available in the online
 database `mangal.io` [@PoisBais16]. We queried metadata (number of nodes and
 number of links) for all networks, and considered as food webs all networks
 having interactions of predation and herbivory. We use Stan [@CarpGelm17a] which
