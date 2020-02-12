@@ -54,7 +54,7 @@ with $b \approx 2$. This model imagines that every species added to a community
 increases the number of links by two -- for example, an animal which consumes
 one resource and is consumed by one predator. This model started to show its
 deficiencies when data on larger food webs became available: in these larger
-webs,  $L$ increased faster than a linear function of $S$. Maybe then all
+webs,  $L$ increased faster than a linear function of $S$. Perhaps then all
 networks have the same *connectance* [@Mart92]? In other words, a food web is
 always equally filled, regardless of whether it has 5 or 5000 species. Under the
 so-called "constant connectance" model, the number of links is proportional to
@@ -64,11 +64,11 @@ $$ L_{CC} = b\times S^2\,, $$ {#eq:cc}
 
 where $b$ is a constant in $]0,1[$ representing the expected value of
 connectance. The assumption of a scaling exponent of $2$ can be relaxed
-[@Mart92], so that $L$ is not necessarily following the maximum number of links:
+[@Mart92], so that $L$ is not in direct proportion to the maximum number of links:
 
 $$ L_{PL} = b\times S^a\,. $$ {#eq:pl}
 
-This power law model can be parameterized in many ways, including spatial
+This "power law" model can be parameterized in many ways, including spatial
 scaling and species area relationships [@BrosOstl04]. It is also a general case
 of the previous two models, encompassing both link-species scaling ($a=1,
 b\approx 2$) and the strict constant connectance ($a=2, 0<b<1$) depending on
@@ -122,10 +122,8 @@ network. The question our model should address is therefore, how many of these
 $S^2-(S-1)$ "flexible" links are actually present? A second key piece of
 information is that the presence of a link can be viewed as the outcome of a
 discrete stochastic event, of which the alternative outcome is that the link is
-absent. Assuming that all of these flexible links have the same chance of being
-realized, *i.e.* that aggregating across all possible species pairs, an
-additional link has the same probability which we call $p$, then we can write
-the expected number of links as
+absent. We assuming that all of these flexible links have the same chance of being
+realized, which we call $p$. Then, if we aggregate across all possible species pairs, the expected number of links is
 
 $$ L_{FL} = p\times\left[S^2-(S-1)\right]+(S-1)\,, $$ {#eq:lhat}
 
@@ -175,8 +173,7 @@ structure of food webs can be derived.
 
 Table: Comparison of the four different models. We show Pareto-smoothed important sampling values (PSIS-LOO) and the SD of these values. PSIS-LOO is similar to information critera in that smaller values indicate better predictive performance. We also show expected log predictive density (ELPD) differences to the maximum for all models, along with the standard error (SE) of these differences. {#tbl:comparison}
 
-All models fit well, without any problematic warnings from Stan's diagnostics
-(see Experimental Procedures), but our model for flexible links outperformed
+All models fit well, without any problematic warnings (see Experimental Procedures), and our model for flexible links outperformed
 previous solutions to the problem of modelling $L$. The flexible link model,
 which we fit via a beta-binomial observation model, had the most favourable
 values of PSIS-LOO information criterion (+@tbl:comparison) and of expected log
@@ -223,11 +220,9 @@ around 29% of unrealistic predictions of link numbers for every value of $S$ ($3
 hand, also produced unrealistic results but for small networks only: more than
 20% were unrealistic for networks comprising less than 12 and 7 species,
 respectively. Only the flexible links model, by design, never failed to predict
-numbers of links between $S-1$ and $S^2$. It must be noted that the differences
-between the realism of predictions are most common in the shaded area of
+numbers of links between $S-1$ and $S^2$. It must be noted that unrealistic predictions are most common in the shaded area of
 +@fig:real_predict, which represents 90% of the empirical data we used to fit
-the model; therefore, the part of the richness gradients on which models agree
-matter little, since there are virtually no networks observed here.
+the model; therefore it matters little that models agree for large $S$, since there are virtually no such networks observed.
 
 ![**Only the flexible link model makes realistic predictions for small
 communities.** Here we show the proportion of posterior predictions from each of
@@ -314,9 +309,9 @@ networks large enough that the proportion $(S-1)/S^{2}$ is negligible.
 
 ## Other uses for our model
 
-Our model is generative, and that is important. It means we can use this model
-to correctly generate predictions that look like real data. That is very useful!
-It suggests that we can adapt the model, using either its parameters or
+Our model is generative, and that is important and useful: we can use this model
+to correctly generate predictions that look like real data.
+This suggests that we can adapt the model, using either its parameters or
 predictions or both, to get a new perspective on many questions in network
 ecology. Here we show four possible applications that we think are interesting,
 in that relying on our model eliminates the need to speculate on the structure
@@ -389,7 +384,7 @@ $$L \sim Normal(\bar{L}, \sigma_L^2)$$
 
 $$\bar{L} = (S^2 - S + 1) \mu + S - 1$$
 
-$$\sigma_L^2 = (S^2 - S + 1) \mu (1 - \mu)(1 + \frac{S(S-1)}{\phi + 1})$$
+$$\sigma_L^2 = (S^2 - S + 1) \mu (1 - \mu)(1 + \frac{S(S-1)}{\phi + 1})$$ {#eq:bb_sigma}
 
 This means that given a network with observed species richness $S_{obs}$ and
 observed links $L_{obs}$, we can calculate its $z$-score as
@@ -430,22 +425,22 @@ studying NAR is to predict network structure as a consequence of the effect of
 spatial scale on species richness [@GaliLurg18]. Drawing on these results, we
 provide in +@fig:nar a simple illustration of the fact that, due to the
 dispersal of values of $L$, the relationship between $L/S$ and area can have a
-really wide confidence interval. While our simulations generally match the
+really wide confidence interval. While our posterior predictions generally match the
 empirical results on this topic [*e.g.* @WoodRuss15], they suggest that we will
 observe many relationships between network structure and space, and that picking
 out the signal of network area relationships might be difficult.
 
 ![**Many different Network-Area Relationships are supported by the data**.
-Representing the species richness as $S = k\times A^z$ (panel A), with $A$ being
+ Representing the species richness as $S = k\times A^z$ (panel A), with $A$ being
 the relative area size, $k = 200$ being the maximal species richness, and $k =
-0.27$ a scaling exponent [@GaliLurg18], we can compare the predictions of our
+0.27$ a scaling exponent [@GaliLurg18]. We then use the posterior distribution of $L$ to predict how $L_D$ should scale with $A$. We compare the predictions of our
 model to that of the generally accepted power law (+@eq:pl). While our model
 predicts a larger linkage density in larger areas (panel B), the confidence
 intervals around this prediction are extremely large. In particular, our model
-scales faster than the power law, but the confidence interval is extremely high
-(due to the power-law relationship between species and links), suggesting that
+scales faster than the power law, but the confidence interval is high
+(due to the scaling of variance with $S$, +@eq:bb_sigma). This suggests that
 we may observe either very weak, or very strong, effects of area
-increase.](figures/nar.png){#fig:nar}
+on networks.](figures/nar.png){#fig:nar}
 
 ### Stability imposes a limit on network size
 
@@ -534,23 +529,23 @@ network [@BaisRuss10]. Because we can infer connectance from the richness of a
 community, our model also ties the invasion resistance of a network to its
 species richness.
 
-The relationship between $L$ and $S$ has been underpinning most of the
+The relationship between $L$ and $S$ has underpinned most of the
 literature on food web structure since the 1980s. Additional generations of data
-allows us to switch from the link-species scaling law, to constant connectance,
+have allowed us to progress from the link-species scaling law, to constant connectance,
 to more general formulations based on a power law. Our model breaks with this
-tradition of iterating over the same family of relationship, and instead draws
+tradition of iterating over the same family of relationships, and instead draws
 from our knowledge of ecological processes, and from novel tools in
 probabilistic programming. As a result, we provide predictions of the number of
-links which are closer to empirical data, allow to derive new ecological
+links which are closer to empirical data, stimulate new ecological
 insights, and can be safely assumed to always fall within realistic values. The
 results presented in +@fig:nar (which reproduces results from @GaliLurg18) and
 +@fig:stability (which reproduces results from @AlleTang12) may seem largely
-confirmatory, and the ability of our model to reach the conclusions of previous
-milestone studies in food web ecology is also a strong confirmation of its
-validity; we would like to point out that these approaches would usually require
-to make inferences on the parameters of interests, but also on the properties of
-a network for a given species richness. Therefore, our model allows a real
-economy of parameters, as it offers the ability to get several key elements of
+confirmatory; in fact, the ability of our model to reach the conclusions of previous
+milestone studies in food web ecology is a strong confirmation of its
+validity. We would like to point out that these approaches would usually require ecologists
+to make inferences not only on the parameters of interests, but also on the properties of
+a network for a given species richness. In contrast, our model allows a real
+economy of parameters and offers ecologists the ability to get several key elements of
 network structure for free if only the species richness is known.
 
 # Experimental Procedures
@@ -569,11 +564,34 @@ being studied, and a distribution which represents our observations of this
 process. Both of these components can capture our ecological understanding of a
 system, including any constraints on the quantities studied.
 
+We defined Bayesian models for all 4 of the distributions
+
+Link-species scaling (LSSL) model:
+
 $$
-[L | a, \phi] = \text{NegBin}(a, S, \phi)
+[b, \kappa | \textbf{L}, \textbf{S}] = \prod_{i = 1}^{255} \text{negative binomial}(L_i | b \times S_i, e^{\kappa}) \times \text{normal}(b|0.7, 0.02) \times \text{normal}(\kappa|2, 1)
 $$
 
+Constant connectance model:
 
+$$
+[b, \kappa | \textbf{L}, \textbf{S}] = \prod_{i = 1}^{255} \text{negative binomial}(L_i | b \times S_i^2, e^{\kappa}) \times \text{beta}(b|3, 7) \times \text{normal}(\kappa|2, 1)
+$$
+
+Power law model:
+
+
+$$
+[b, a, \kappa | \textbf{L}, \textbf{S}] = \prod_{i = 1}^{255} \text{negative binomial}(L_i | \exp(b) \times S_i^a, e^{\kappa}) \times \text{normal}(b| -3 , 1) \times \text{normal}(a | 2, 0.6) \times \text{normal}(\kappa|2, 1)
+$$
+
+Flexible links model:
+
+$$
+[\mu, \phi, \kappa | \textbf{L}, \textbf{S}] = \prod_{i = 1}^{255} \text{beta binomial}(L_i - S_i + 1 | S_i^2 - S_i + 1, \mu \times e^{\phi}, (1 - \mu) \times e^\phi) \times \text{beta}(\mu| 3 , 7 ) \times \text{normal}(\phi | 3, 0.5)
+$$
+
+Note that while $e^\phi$ is shown in these equations for clarity, in the text we use $\phi$ to refer to the parameter after exponentiation.
 
 ## Explanation of shifted beta-binomial distribution
 
