@@ -252,9 +252,10 @@ indicates that food webs are largely similar in their probability of flexible li
 
 ## Connectance and linkage density can be derived from a model for links
 
+
 Of the three important quantities which describe networks ($L$, $Co$ and $L_D$)
-we have directly modelled $L$ only. However, we can reuse the posterior for our
-model of $L$ to parameterize a distribution for connectance ($L/S^2$) and
+we have directly modelled $L$ only. However, we can use the parameter estimates from our
+model for $L$ to parameterize a distribution for connectance ($L/S^2$) and
 linkage density ($L/S$). We can derive this by noticing that +@eq:lhat can be
 rearranged to show how $Co$ and $L_D$ are linear transformations of $p$:
 
@@ -264,34 +265,34 @@ and
 
 $$ L_D = \frac{L}{S} = p \left(S - \frac{S-1}{S} \right) +  \frac{S-1}{S},$$ {#eq:ld}
 
+For food webs with many species, these equations simplify.
+ +@eq:lhat can be expressed as a second degree
+polynomial, ($p\times S^2  + (1-p)\times S + (p-1)$), whose leading term is
+$p\times S^2$. Therefore, when $S$ is large, +@eq:co and +@eq:ld respectively approach $Co = L/S^2 \approx p$ and
+$L_D = L/S \approx pS$. These are notable properties, as they imply that our
+model captures both the behavior of +@eq:lssl and of +eq:cc, while having a
+markedly better fit (+@tab:comparison).
+
+A study of equations +@eq:co and +@eq:ld also provides insight into the ecological interpretation of the parameters in our equation. For example, +@eq:ld implies that the addition of $n$ species should increase the linkage
+density by approximately $p\times n$. The addition of 11 new
+species ($p^{-1}$ according to +@tab:parameters) should increase the linkage
+density in the food web by roughly 1, meaning that each species in the original
+network would be expected to develop 2 additional interactions. Similarly, +@eq:co shows that when $S$ is large, we should expect a connectance which is a constant and independent of $S$.
+Thus $p$ has an interesting ecological interpretation: it represents the average
+connectance of networks large enough that the proportion $(S-1)/S^{2}$ is
+negligible.
+
+## Probability distributions for $L_D$ and $Co$
+
 In a beta-binomial distribution, it is assumed that the probability of success
 $p$ varies among groups of trials according to a $\text{Beta}(\mu\phi, (1-\mu)\phi)$ distribution. Since $p$
 has a beta distribution, the linear transformations described by +@eq:co and
 +@eq:ld also describe beta distributions which have been shifted and scaled
 according to the number of species $S$ in a community. This shows that just as $L$ must be within ecologically meaningful bounds, $Co$ (+@eq:co) and
 $L_D$ (+@eq:ld) must be as well. The connectance of a food web is bounded by $(S-1)/S^2$
-and 1, while the linkage density is bounded by $(S-1)/S$ and $S$.
+and $1$, while the linkage density is bounded by $(S-1)/S$ and $S$.
 
-For food webs with many species, these equations simplify.
- +@eq:lhat can be expressed as a second degree
-polynomial, ($p\times S^2  + (1-p)\times S + (p-1)$), whose leading term is
-$p\times S^2$. Therefore, when $S$ is large, +@eq:co and +@eq:ld respectively approach $Co = L/S^2 \approx p$ and
-$L_D = L/S \approx pS$. These are notable properties, as they imply that our
-model captures both the behavior of +@eq:lsll and of +eq:cc, while having a
-markedly better fit (+@tab:comparison).
-
-A study of equations +@eq:co and +@eq:ld also provides insight into the ecological interpretation of the parameters in our equation. For example, +@eq:ld implies that the addition of $n$ species should increase the linkage
-density by approximately $p\times n$. For example, the addition of 11 new
-species ($p^{-1}$ according to +@tab:parameters) should increase the linkage
-density in the food web by roughly 1, meaning that each species in the original
-network would be expected to develop 2 additional interactions. For large enough
-ecological networks, we should expect a connectance which is independent of $S$.
-Thus $p$ has an interesting ecological interpretation: it represents the average
-connectance of networks large enough that the proportion $(S-1)/S^{2}$ is
-negligible.
-
-
-We can convert the distribution for $p$ into one for $Co$ by replacing $p$ with
+We can convert the beta distribution for $p$ into one for $Co$ by replacing $p$ with
 the transformation of $Co$ as described above (+@eq:co), and rescaling by the
 new range:
 
@@ -301,16 +302,14 @@ $$ {#eq:shiftBetaCo}
 
 
 Similarly, we can convert the distribution for $p$ into one for $L_D$ by
-replacing $p$ with the transformation of $L_D$ (+@eq:ld)
+replacing $p$ with the transformation that gives $L_D$ (+@eq:ld)
 
 $$
 [L_{D} | S, \mu, \phi] = \frac{\left(L_D - \frac{S-1} {S}\right)^{\mu \phi - 1}\left(1 - L_D\right)^{(1 - \mu)\phi - 1} }{(S - \frac{S-1}{S})^{\phi - 1} \times \Beta(\mu \phi, (1 - \mu)\phi)}
 $$ {#eq:shiftBetaLD}
 
 In +@fig:beta_distributions, we show that the connectance and linkage density
-obtained from the equations above fit the empirical data well. Their
-predictions did not exceed ecological boundaries (between $(S-1)/S^2$ and 1 for
-connectance, and between $(S-1)/S$ and $S$ for the linkage density).
+obtained from the equations above fit the empirical data well.
 
 ![**Connectance and linkage density can be derived from a model for links.** A) Connectance and B) linkage density are plotted as a function of species richness, for the maximum _a posteriori_ estimates of the flexible link model. In each panel, the colored line represent the median predicted quantity and the grey areas cover the 78% and 97% percentile intervals. Empirical data from the `mangal.io` database are plotted in each panel (grey dots). In A), the minimal $(S-1)/S^2$ connectance and in B) the minimal $(S-1)/S$ and maximum $S$ linkage density are plotted (black lines).](figures/connectance_linkdens.png){#fig:beta_distributions}
 
@@ -324,8 +323,7 @@ identify ecological and evolutionary mechanisms shaping communities.
 
 ## Normal approximation provides an analytic z-score
 
-Ecologists are often faced with the issue of comparing several networks. Often,
-they wish to know if the network they have is "unusual" relative to some
+Ecologists are often faced with the issue of comparing several networks. A common question is whether a given network is "unusual" relative to some
 expectation. Traditionally these comparisons have been done by constructing a
 null distribution, which involves simulating random matrices [@FortBasc06;
 @BascJord03]; importantly, this approach assumes that (i) connectance is a fixed
@@ -360,7 +358,7 @@ In (+@fig:MAPnormal), we show that the predictions made by the normal
 approximation (panel B) are similar to those made by the beta distribution
 parameterized with the maximum _a posteriori_ values of $\mu$ and $\phi$ (panel
 A), although the later can undershoot the constraint on the minimum number of
-links.
+links. This undershooting, however, will not influence any actual z-scores, since no food webs have less than S-1 interactions and therefore no z-scores so low can be calculated.
 
 ![**The shifted beta-binomial distribution can be approximated by a normal distribution.** The number of links is plotted as a function of species richness obtained from A) the maximum _a posteriori_ estimates of the flexible link model and B) its normal approximation. In each panel, the colored line represent the median predicted link number and the grey areas cover the 78% and 97% percentile intervals.](figures/betabinmap_normal_links.png){#fig:MAPnormal}
 
