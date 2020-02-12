@@ -270,12 +270,12 @@ For food webs with many species, these equations simplify.
 polynomial, ($p\times S^2  + (1-p)\times S + (p-1)$), whose leading term is
 $p\times S^2$. Therefore, when $S$ is large, +@eq:co and +@eq:ld respectively approach $Co = L/S^2 \approx p$ and
 $L_D = L/S \approx pS$. These are notable properties, as they imply that our
-model captures both the behavior of +@eq:lssl and of +eq:cc, while having a
-markedly better fit (+@tab:comparison).
+model captures both the behavior of +@eq:lssl and of +@eq:cc, while having a
+markedly better fit (+@tbl:comparison).
 
 A study of equations +@eq:co and +@eq:ld also provides insight into the ecological interpretation of the parameters in our equation. For example, +@eq:ld implies that the addition of $n$ species should increase the linkage
 density by approximately $p\times n$. The addition of 11 new
-species ($p^{-1}$ according to +@tab:parameters) should increase the linkage
+species ($p^{-1}$ according to +@tbl:parameters) should increase the linkage
 density in the food web by roughly 1, meaning that each species in the original
 network would be expected to develop 2 additional interactions. Similarly, +@eq:co shows that when $S$ is large, we should expect a connectance which is a constant and independent of $S$.
 Thus $p$ has an interesting ecological interpretation: it represents the average
