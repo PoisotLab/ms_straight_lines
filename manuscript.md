@@ -565,7 +565,7 @@ process. Both of these components can capture our ecological understanding of a
 system, including any constraints on the quantities studied.
 
 Bayesian models are a common set of generative models, frequently used to study ecological systems.
-Here, we define Bayesian models for all 4 of the distributions.
+Here, we define Bayesian models for all 4 of the distributions, using notation from @HobbHoot15.
 
 Link-species scaling (LSSL) model:
 
