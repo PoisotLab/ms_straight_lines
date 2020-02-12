@@ -122,7 +122,7 @@ network. The question our model should address is therefore, how many of these
 $S^2-(S-1)$ "flexible" links are actually present? A second key piece of
 information is that the presence of a link can be viewed as the outcome of a
 discrete stochastic event, of which the alternative outcome is that the link is
-absent. We assuming that all of these flexible links have the same chance of being
+absent. We assume that all of these flexible links have the same chance of being
 realized, which we call $p$. Then, if we aggregate across all possible species pairs, the expected number of links is
 
 $$ L_{FL} = p\times\left[S^2-(S-1)\right]+(S-1)\,, $$ {#eq:lhat}
@@ -564,7 +564,8 @@ being studied, and a distribution which represents our observations of this
 process. Both of these components can capture our ecological understanding of a
 system, including any constraints on the quantities studied.
 
-We defined Bayesian models for all 4 of the distributions
+Bayesian models are a common set of generative models, frequently used to study ecological systems.
+Here, we define Bayesian models for all 4 of the distributions.
 
 Link-species scaling (LSSL) model:
 
@@ -588,7 +589,7 @@ $$
 Flexible links model:
 
 $$
-[\mu, \phi, \kappa | \textbf{L}, \textbf{S}] = \prod_{i = 1}^{255} \text{beta binomial}(L_i - S_i + 1 | S_i^2 - S_i + 1, \mu \times e^{\phi}, (1 - \mu) \times e^\phi) \times \text{beta}(\mu| 3 , 7 ) \times \text{normal}(\phi | 3, 0.5)
+[\mu, \phi| \textbf{L}, \textbf{S}] = \prod_{i = 1}^{255} \text{beta binomial}(L_i - S_i + 1 | S_i^2 - S_i + 1, \mu \times e^{\phi}, (1 - \mu) \times e^\phi) \times \text{beta}(\mu| 3 , 7 ) \times \text{normal}(\phi | 3, 0.5)
 $$
 
 Note that while $e^\phi$ is shown in these equations for clarity, in the text we use $\phi$ to refer to the parameter after exponentiation.
