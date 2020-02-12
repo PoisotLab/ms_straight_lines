@@ -302,15 +302,34 @@ fl890 = neg_to_zeros.(quantile.(eachcol(fl_mod./AS'), 0.89))
 fl985 = neg_to_zeros.(quantile.(eachcol(fl_mod./AS'), 0.985))
 fl500 = neg_to_zeros.(quantile.(eachcol(fl_mod./AS'), 0.5))
 
-plot(A, fl985, fillrange=fl015, color=:grey, alpha=0.15, label="", frame=:box, size=(400, 400), dpi=120, legend=:topleft, foreground_color_legend=nothing, background_color_legend=:white)
+posterior_area = plot(A, fl985, fillrange=fl015, color=:grey, alpha=0.15, label="", frame=:box,
+    size=(400, 400), dpi=120, legend=:bottomright, foreground_color_legend=nothing,
+    background_color_legend=:white)
 plot!(A, fl890, fillrange=fl110, color=:grey, alpha=0.15, label="")
 plot!(A, fl500, linecolor=pal.fl, linewidth=2, label="Flexible links")
 plot!(A, pl500, linecolor=pal.pl, linewidth=1, ls=:dot, label="Power law")
 xaxis!(xlabel="Area", xlims=(0.0, 1.0))
-yaxis!(ylims = (1,20), ylabel="Linkage density")
+yaxis!(:log, ylims = (0.9,40), ylabel="Linkage density")
 savefig(joinpath("figures", "nar"))
 
+## scale the "expected" distribution according to the mimum value:
+bquant_LS_AS = LocationScale.(min_ld_as, AS .- min_ld_as, beta_map)
+beta015_LS_AS = quantile.(bquant_LS, 0.015)
+beta985_LS_AS = quantile.(bquant_LS, 0.985)
+beta11_LS_AS = quantile.(bquant_LS, 0.11)
+beta89_LS_AS = quantile.(bquant_LS, 0.89)
 
+MAP_area = plot(A, beta985_LS_AS, fill=beta015_LS_AS, color=:grey, alpha=0.15, lab="",
+    title_location=:left, titlefontsize=11, framestyle=:box)
+plot!(A, beta11_LS_AS, fill=beta89_LS_AS, colour=:grey, alpha=0.15, lab="",)
+## plot of average
+min_ld_as = (AS .- 1) ./ AS
+avg_ld = 0.086 .* (AS .- min_ld_as) .+ min_ld_as
+plot!(A, avg_ld, lab="")
+xaxis!(xlabel="Area", xlims=(0.0, 1.0))
+yaxis!(ylims = (0.01,25), ylabel="Linkage density")
+
+plot(species_area, MAP_area, posterior_area, layout = (1,3))
 
 # posterior samples for the flexible links model
 betab_posterior_bigger = CSV.read(joinpath("data", "posterior_distributions", "beta_binomial_posterior_bigger.csv"))
