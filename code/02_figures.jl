@@ -281,8 +281,18 @@ A = 0.0001:0.02:1.2
 k,z = 200.0, 0.27
 AS = convert.(Int64, ceil.(k.*A.^z))
 
-pl_mod = powerlaw_posterior[:,AS]
-fl_mod = betab_posterior[:,AS]
+## plot of species
+species_area = plot(A, AS, title="A", title_location=:left, titlefontsize=11, framestyle=:box, lab = "")
+xaxis!("Area")
+yaxis!("Species Richness")
+
+
+# extract counterfactual links only -- necessary so that position matches S
+bb_post = betab_posterior[r"counterfactual_links"]
+pl_post = powerlaw_posterior[r"counterfactual_links"]
+# extract columns matching species richness from AS
+pl_mod = pl_post[:,AS]
+fl_mod = bb_post[:,AS]
 
 pl500 = neg_to_zeros.(quantile.(eachcol(pl_mod./AS'), 0.5))
 
