@@ -282,6 +282,14 @@ A = 0.0001:0.02:1.2
 k,z = 200.0, 0.27
 AS = convert.(Int64, ceil.(k.*A.^z))
 
+pl_nar_sar = plot(A, AS, color=:grey, lw=2, label="", frame=:box,
+    legend=:topleft, foreground_color_legend=nothing, background_color_legend=:white,
+    title_location=:left, titlefontsize=11,
+    title="A. species area relationship")
+
+xaxis!(pl_nar_sar, (0, 1), "Relative area")
+yaxis!(pl_nar_sar, (0, 200), "Species richness")
+
 # extract counterfactual links only -- necessary so that position matches S
 bb_post = betab_posterior[r"counterfactual_links"]
 pl_post = powerlaw_posterior[r"counterfactual_links"]
@@ -297,13 +305,18 @@ fl890 = neg_to_zeros.(quantile.(eachcol(fl_mod./AS'), 0.89))
 fl985 = neg_to_zeros.(quantile.(eachcol(fl_mod./AS'), 0.985))
 fl500 = neg_to_zeros.(quantile.(eachcol(fl_mod./AS'), 0.5))
 
-posterior_area = plot(A, fl985, fillrange=fl015, color=:grey, alpha=0.15, label="", frame=:box, size=(400, 400),  margin=5Plots.mm,  dpi=120, legend=:topleft, foreground_color_legend=nothing, background_color_legend=:white)
-plot!(A, fl890, fillrange=fl110, color=:grey, alpha=0.15, label="")
-plot!(A, fl500, linecolor=pal.fl, linewidth=2, label="Flexible links")
-plot!(A, pl500, linecolor=pal.pl, linewidth=1, ls=:dot, label="Power law")
-xaxis!(xlabel="Area", xlims=(0.0, 1.0))
-yaxis!(ylims = (1,50), ylabel="Linkage density")
+pl_nar_nar = plot(A, fl985, fillrange=fl015, color=:grey, alpha=0.15, label="", frame=:box, legend=:topleft, foreground_color_legend=nothing, background_color_legend=:white,
+    title_location=:left, titlefontsize=11,
+    title="B. network area relationship")
+plot!(pl_nar_nar, A, fl890, fillrange=fl110, color=:grey, alpha=0.15, label="")
+plot!(pl_nar_nar, A, fl500, linecolor=pal.fl, linewidth=2, label="Flexible links")
+plot!(pl_nar_nar, A, pl500, linecolor=pal.pl, linewidth=1, ls=:dot, label="Power law")
+xaxis!(pl_nar_nar, xlabel="Relative area", xlims=(0.0, 1.0))
+yaxis!(pl_nar_nar, ylims = (1,50), ylabel="Linkage density")
+
+plot(pl_nar_sar, pl_nar_nar, layout=(1,2), size=(700,350), margin=5Plots.mm, dpi=200)
 savefig(joinpath("figures", "nar"))
+
 
 # Fig -- Stability imposes a limit on network size
 # posterior samples for the flexible links model
