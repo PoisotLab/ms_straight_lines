@@ -565,31 +565,32 @@ process. Both of these components can capture our ecological understanding of a
 system, including any constraints on the quantities studied.
 
 Bayesian models are a common set of generative models, frequently used to study ecological systems.
-Here, we define Bayesian models for all 4 of the distributions, using notation from @HobbHoot15.
+Here, we define Bayesian models for all 4 of the models described in +@eq:lssl, +@eq:cc, +@eq:pl and +@eq:lhat.
+We use notation from @HobbHoot15, writing out both the likelihood and the prior as a product over all 255 food webs in the `mangal.io` database.
 
 Link-species scaling (LSSL) model:
 
 $$
-[b, \kappa | \textbf{L}, \textbf{S}] = \prod_{i = 1}^{255} \text{negative binomial}(L_i | b \times S_i, e^{\kappa}) \times \text{normal}(b|0.7, 0.02) \times \text{normal}(\kappa|2, 1)
+[b, \kappa | \textbf{L}, \textbf{S}] \propto \prod_{i = 1}^{255} \text{negative binomial}(L_i | b \times S_i, e^{\kappa}) \times \text{normal}(b|0.7, 0.02) \times \text{normal}(\kappa|2, 1)
 $$
 
 Constant connectance model:
 
 $$
-[b, \kappa | \textbf{L}, \textbf{S}] = \prod_{i = 1}^{255} \text{negative binomial}(L_i | b \times S_i^2, e^{\kappa}) \times \text{beta}(b|3, 7) \times \text{normal}(\kappa|2, 1)
+[b, \kappa | \textbf{L}, \textbf{S}] \propto \prod_{i = 1}^{255} \text{negative binomial}(L_i | b \times S_i^2, e^{\kappa}) \times \text{beta}(b|3, 7) \times \text{normal}(\kappa|2, 1)
 $$
 
 Power law model:
 
 
 $$
-[b, a, \kappa | \textbf{L}, \textbf{S}] = \prod_{i = 1}^{255} \text{negative binomial}(L_i | \exp(b) \times S_i^a, e^{\kappa}) \times \text{normal}(b| -3 , 1) \times \text{normal}(a | 2, 0.6) \times \text{normal}(\kappa|2, 1)
+[b, a, \kappa | \textbf{L}, \textbf{S}] \propto \prod_{i = 1}^{255} \text{negative binomial}(L_i | \exp(b) \times S_i^a, e^{\kappa}) \times \text{normal}(b| -3 , 1) \times \text{normal}(a | 2, 0.6) \times \text{normal}(\kappa|2, 1)
 $$
 
 Flexible links model:
 
 $$
-[\mu, \phi| \textbf{L}, \textbf{S}] = \prod_{i = 1}^{255} \text{beta binomial}(L_i - S_i + 1 | S_i^2 - S_i + 1, \mu \times e^{\phi}, (1 - \mu) \times e^\phi) \times \text{beta}(\mu| 3 , 7 ) \times \text{normal}(\phi | 3, 0.5)
+[\mu, \phi| \textbf{L}, \textbf{S}] \propto \prod_{i = 1}^{255} \text{beta binomial}(L_i - S_i + 1 | S_i^2 - S_i + 1, \mu \times e^{\phi}, (1 - \mu) \times e^\phi) \times \text{beta}(\mu| 3 , 7 ) \times \text{normal}(\phi | 3, 0.5)
 $$
 
 Note that while $e^\phi$ is shown in these equations for clarity, in the text we use $\phi$ to refer to the parameter after exponentiation.
