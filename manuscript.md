@@ -312,29 +312,28 @@ In +@fig:beta_distributions, we show that the connectance and linkage density
 obtained from the equations above fit the empirical data well.
 
 ![**Connectance and linkage density can be derived from a model for links.** A) Connectance and B) linkage density are plotted as a function of species richness, for the maximum _a posteriori_ estimates of the flexible link model. In each panel, the colored line represent the median predicted quantity and the grey areas cover the 78% and 97% percentile intervals. Empirical data from the `mangal.io` database are plotted in each panel (grey dots). In A), the minimal $(S-1)/S^2$ connectance and in B) the minimal $(S-1)/S$ and maximum $S$ linkage density are plotted (black lines).](figures/connectance_linkdens.png){#fig:beta_distributions}
-
+<!-- perhaps move elsewhere?? around May figure? -->
 Connectance is more than the proportion of realized interactions. It has been
 associated with some of the most commonly used network metrics [@PoisGrav14;
 @Chag15], and contains meaningful information on the stability [@DunnWill02a;
 @MontPimm06] and dynamics [@VieiAlme15] of ecological communities. A probability
-distribution for connectance non only accounts for the variability between
+distribution for connectance not only accounts for the variability between
 networks, but can be used to describe fundamental properties of food webs and to
 identify ecological and evolutionary mechanisms shaping communities.
 
 ## Normal approximation provides an analytic z-score
 
-Ecologists are often faced with the issue of comparing several networks. A common question is whether a given network is "unusual" relative to some
-expectation. Traditionally these comparisons have been done by constructing a
-null distribution, which involves simulating random matrices [@FortBasc06;
-@BascJord03]; importantly, this approach assumes that (i) connectance is a fixed
-property of the network, which does not involve any stochasticity, and (ii) the
+Ecologists are often faced with the issue of comparing several networks. A common question is whether a given network has an "unusual" number of links relative to some
+expectation. Traditionally these comparisons have been done by simulating a
+"null" distribution of random matrices [@FortBasc06;
+@BascJord03]. This is intended to allow ecologists to compare food webs to a sort of standard, hopefully devoid of whatever biological process could alter the number of links. Importantly, this approach assumes that (i) connectance is a fixed
+property of the network, ignoring any stochasticity, and (ii) the
 simulated network distribution is an accurate and unbiased description of the
 null distribution. Yet recent advances in the study of probabilistic ecological
-networks show that connectance can also be modelled as a variable quantity
-[@PoisCirt16]; given that connectance drives most of the values of food web
-structure [@PoisGrav14], we provide a way to assess whether the number of links
-in a network (and therefore its connectance) is surprising. We do so using maths
-rather than simulations.
+networks show that the existence of links, and connectance itself is best thought of as a probabilistic quantity
+[@PoisCirt16]. Given that connectance drives most of the metrics of food web
+structure [@PoisGrav14], it is critical to have a reliable means of measuring differences from the expectation. We provide a way to assess whether the number of links
+in a network (and therefore its connectance) is surprising. We do so using maths rather than simulations.
 
 The shifted beta-binomial can be approximated by a normal distribution:
 
@@ -367,10 +366,8 @@ links. This undershooting, however, will not influence any actual z-scores, sinc
 Here we derived a flexible link model for the prediction of the number of links
 in ecological networks using a beta-binomial distribution for $L$, and show how
 it outperforms previous and more commonly used models describing this
-relationship. More importantly, we showed how our model's parameters not only
-have a clear ecological interpretation (specifically, the value of $p$ in
-+@eq:lhat is the expected value of the connectance when $S$ is large), but how
-they made predictions which remained within biological boundaries.
+relationship. More importantly, we showed that our model has parameters with a clear ecological interpretation (specifically, the value of $p$ in
++@eq:lhat is the expected value of the connectance when $S$ is large), and makes predictions which remain within biological boundaries.
 
 This model also casts new light on previous results on the structure of food
 webs: small and large food webs behave differently [@GarlCald03]. Specifically,
