@@ -318,7 +318,11 @@ $$ {#eq:shiftBetaLD}
 In +@fig:CoLd, we show that the connectance and linkage density
 obtained from the equations above fit the empirical data well.
 
+<<<<<<< HEAD
 ![**Connectance and linkage density can be derived from a model for links.** A) Connectance and B) linkage density are plotted as a function of species richness, for the maximum _a posteriori_ estimates of the flexible link model. In each panel, the colored line represent the median predicted quantity and the grey areas cover the 78% and 97% percentile intervals. Empirical data from the `mangal.io` database are plotted in each panel (grey dots). In A), the minimal $(S-1)/S^2$ connectance and in B) the minimal $(S-1)/S$ and maximum $S$ linkage density are plotted (black lines).  ](figures/connectance_linkdens.png){#fig:CoLd}
+=======
+![**Connectance and linkage density can be derived from a model for links.** A) Connectance and B) linkage density are plotted as a function of species richness, for the maximum _a posteriori_ estimates of the flexible link model. In each panel, the colored line represent the median predicted quantity and the grey areas cover the 78% and 97% percentile intervals. Empirical data from the `mangal.io` database are plotted in each panel (grey dots). In A), the minimal $(S-1)/S^2$ connectance and in B) the minimal $(S-1)/S$ and maximum $S$ linkage density are plotted (black lines).](figures/connectance_linkdens.png){#fig:CoLd}
+>>>>>>> d657c408364eabcde34b68aee16c5a7139afc750
 
 <!-- perhaps move elsewhere?? around May figure? -->
 Connectance is more than the proportion of realized interactions. It has been
