@@ -546,8 +546,8 @@ from our knowledge of ecological processes, and from novel tools in
 probabilistic programming. As a result, we provide predictions of the number of
 interactions which are closer to empirical data, allow to derive new ecological
 insights, and can be safely assumed to always fall within realistic values. The
-results presented in +@fig:stability [which reproduces results from @AlleTang12]
-and +@fig:nar [which reproduces results from @GaliLurg18] seem largely
+results presented in +@fig:stability (which reproduces results from @AlleTang12)
+and +@fig:nar (which reproduces results from @GaliLurg18) seem largely
 confirmatory, and the ability of our model to reach the same conclusions is also
 a confirmation of its validity; we would like to point out that these approaches
 would usually require to make inferences on the parameters of interests, but
