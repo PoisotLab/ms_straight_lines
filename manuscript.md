@@ -315,10 +315,11 @@ $$
 [L_{D} | S, \mu, \phi] = \frac{\left(L_D - \frac{S-1} {S}\right)^{\mu \phi - 1}\left(1 - L_D\right)^{(1 - \mu)\phi - 1} }{(S - \frac{S-1}{S})^{\phi - 1} \times \Beta(\mu \phi, (1 - \mu)\phi)}
 $$ {#eq:shiftBetaLD}
 
-In +@fig:beta_distributions, we show that the connectance and linkage density
+In +@fig:CoLd, we show that the connectance and linkage density
 obtained from the equations above fit the empirical data well.
 
-![**Connectance and linkage density can be derived from a model for links.** A) Connectance and B) linkage density are plotted as a function of species richness, for the maximum _a posteriori_ estimates of the flexible link model. In each panel, the colored line represent the median predicted quantity and the grey areas cover the 78% and 97% percentile intervals. Empirical data from the `mangal.io` database are plotted in each panel (grey dots). In A), the minimal $(S-1)/S^2$ connectance and in B) the minimal $(S-1)/S$ and maximum $S$ linkage density are plotted (black lines).](figures/connectance_linkdens.png){#fig:beta_distributions}
+![**Connectance and linkage density can be derived from a model for links.** A) Connectance and B) linkage density are plotted as a function of species richness, for the maximum _a posteriori_ estimates of the flexible link model. In each panel, the colored line represent the median predicted quantity and the grey areas cover the 78% and 97% percentile intervals. Empirical data from the `mangal.io` database are plotted in each panel (grey dots). In A), the minimal $(S-1)/S^2$ connectance and in B) the minimal $(S-1)/S$ and maximum $S$ linkage density are plotted (black lines).](figures/connectance_linkdens.png){#fig:CoLd}
+
 <!-- perhaps move elsewhere?? around May figure? -->
 Connectance is more than the proportion of realized interactions. It has been
 associated with some of the most commonly used network metrics [@PoisGrav14;
@@ -408,7 +409,7 @@ energy transfer allows [@ThomBros12], and as wide as competition allows
 likely to be constrained to remain within an acceptable richness, we have no
 reason to anticipate that $p\times S$ will keep growing infinitely.
 
-![**Stability imposes a limit on network size**. Using +@eq:ld, we can calculate the maximum standard deviation in the strength of interactions which should ensure food web stability, $\sigma^\star = \sqrt{L_D}^{-1}$. The fine and dark lines indicate the maximum and minimum value of maximum standard deviation, respectively. The dotted line shows the maximum for the average $L_D$, as given by +@#eq:ld. The maximum standard deviation falls sharply when the number of species increases, which will limit the stability of large food webs, and therefore explain why Eltonian demons should not emerge.](figures/may.png){#fig:stability}
+![**Stability imposes a limit on network size**. Using +@eq:ld, we can calculate the maximum standard deviation in the strength of interactions which should ensure food web stability, $\sigma^\star = \sqrt{L_D}^{-1}$. The fine and dark lines indicate the maximum and minimum value of maximum standard deviation, respectively. The dotted line shows the maximum for the average $L_D$, as given by +@eq:ld. The maximum standard deviation falls sharply when the number of species increases, which will limit the stability of large food webs, and therefore explain why Eltonian demons should not emerge.](figures/may.png){#fig:stability}
 
 Network structure may itself prevent $S$ from becoming large. May [@May72] suggested that a network of richness $S$ and connectance
 $Co$ is stable as long as the criteria $\sigma \sqrt{S \times Co} < 1$ is satisfied,
@@ -437,7 +438,7 @@ webs: small and large food webs behave differently [@GarlCald03]. Specifically,
 ecological networks most strongly deviate from scale free
 expectations when connectance is high [@DunnWill02a]. In our model, this
 behaviour emerges naturally: connectance increases sharply as
-species richness decreases (+@fig:beta_distributions) -- that is, where the additive term $(S-1)/S^{2}$
+species richness decreases (+@fig:CoLd) -- that is, where the additive term $(S-1)/S^{2}$
 in +@eq:co becomes progressively larger. In a sense, small ecological networks
 are different only due to the low values of $S$. Small networks have only a very
 limited number of flexible links, and this drives connectance to be larger.
