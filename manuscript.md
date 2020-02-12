@@ -334,7 +334,7 @@ the transformation of $Co$ as described above (+@eq:co), and rescaling by the
 new range:
 
 $$
-[Co | S, \mu, \phi] = \frac{\left(Co - \frac{S-1}{S^2}\right)^{\mu \phi - 1}\left(1 - Co\right)^{(1 - \mu)\phi - 1} }{(1 - \frac{S-1}{S^2})^{\phi - 1} \times \mathrm{B}(\mu \phi, (1 - \mu)\phi)}
+[Co | S, \mu, \phi] = \frac{\left(Co - \frac{S-1}{S^2}\right)^{\mu \phi - 1}\left(1 - Co\right)^{(1 - \mu)\phi - 1} }{\left(1 - \frac{S-1}{S^2}\right)^{\phi - 1} \times \mathrm{B}(\mu \phi, (1 - \mu)\phi)}
 $$ {#eq:shiftBetaCo}
 
 
@@ -342,7 +342,7 @@ Similarly, we can convert the distribution for $p$ into one for $L_D$ by
 replacing $p$ with the transformation that gives $L_D$ (+@eq:ld)
 
 $$
-[L_{D} | S, \mu, \phi] = \frac{\left(L_D - \frac{S-1} {S}\right)^{\mu \phi - 1}\left(1 - L_D\right)^{(1 - \mu)\phi - 1} }{(S - \frac{S-1}{S})^{\phi - 1} \times \mathrm{B}(\mu \phi, (1 - \mu)\phi)}
+[L_{D} | S, \mu, \phi] = \frac{\left(L_D - \frac{S-1} {S}\right)^{\mu \phi - 1}\left(1 - L_D\right)^{(1 - \mu)\phi - 1} }{\left(S - \frac{S-1}{S}\right)^{\phi - 1} \times \mathrm{B}(\mu \phi, (1 - \mu)\phi)}
 $$ {#eq:shiftBetaLD}
 
 In +@fig:CoLd, we show that the connectance and linkage density
@@ -595,6 +595,25 @@ $$
 
 Note that while $e^\phi$ is shown in these equations for clarity, in the text we use $\phi$ to refer to the parameter after exponentiation.
 
+When the number of links and number of interactions are transformed by their
+natural log, $a$ and $b$ can be estimated with a linear regression, as done by
+@Mart92. Here, because we want to compare all our models WAIC, we were required
+to use a discrete likelihood in all cases. We fit the three models above with a
+negative binomial distribution for observations. This distribution is limited to
+positive integers, and can vary on both sides of the mean relationship; this
+gives it a similar spirit to previous work which used a normal distribution on
+log-transformed variables.
+
+We chose our prior distribution for $p$ based on @Mart92 , who gave a value of
+constant connectance equal to 0.14. While this prior is "informative", it is
+weakly so; as @Mart92 did not provide an estimate of the variance for his value
+we chose a relatively large variation around that mean.  However, as no
+information is available to inform a prior on $\phi$, we followed the advice of
+(tk Simpson et al), and performed prior predictive checks. We chose prior
+parameters that generated a wide range of values for $L_i$, but which did not
+frequently predict webs of either maximum or minimum connectance, neither of
+which are observed in nature.
+
 ### Explanation of shifted beta-binomial distribution
 
 Equation +@eq:lhat implies that $L_{FL}$ has a binomial distribution, with
@@ -617,25 +636,6 @@ $$
 $${#eq:shiftBB}
 
 Where $B$ is the beta function. Thus, the problem of fitting this model becomes one of estimating the parameters of this univariate probability distribution.
-
-When the number of links and number of interactions are transformed by their
-natural log, $a$ and $b$ can be estimated with a linear regression, as done by
-@Mart92. Here, because we want to compare all our models WAIC, we were required
-to use a discrete likelihood in all cases. We fit the three models above with a
-negative binomial distribution for observations. This distribution is limited to
-positive integers, and can vary on both sides of the mean relationship; this
-gives it a similar spirit to previous work which used a normal distribution on
-log-transformed variables.
-
-We chose our prior distribution for $p$ based on @Mart92 , who gave a value of
-constant connectance equal to 0.14. While this prior is "informative", it is
-weakly so; as @Mart92 did not provide an estimate of the variance for his value
-we chose a relatively large variation around that mean.  However, as no
-information is available to inform a prior on $\phi$, we followed the advice of
-(tk Simpson et al), and performed prior predictive checks. We chose prior
-parameters that generated a wide range of values for $L_i$, but which did not
-frequently predict webs of either maximum or minimum connectance, neither of
-which are observed in nature.
 
 ## Model fitting - data and software
 
