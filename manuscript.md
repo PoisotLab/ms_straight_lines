@@ -550,11 +550,11 @@ network structure for free if only the species richness is known.
 
 # Experimental Procedures
 
-## Availability of code and data
+### Availability of code and data
 
 All code and data to reproduce this article is available at `ZENODO REPO TK`.
 
-## Bayesian model definitions
+### Bayesian model definitions
 
 Generative models are flexible and powerful tools for understanding and
 predicting natural phenomena. These models aim to create simulated data with the
@@ -595,22 +595,14 @@ $$
 
 Note that while $e^\phi$ is shown in these equations for clarity, in the text we use $\phi$ to refer to the parameter after exponentiation.
 
-When the number of links and number of interactions are transformed by their
-natural log, $a$ and $b$ can be estimated with a linear regression, as done by
-@Mart92. Here, because we want to compare all our models WAIC, we were required
-to use a discrete likelihood in all cases. We fit the three models above with a
-negative binomial distribution for observations. This distribution is limited to
-positive integers, and can vary on both sides of the mean relationship; this
-gives it a similar spirit to previous work which used a normal distribution on
-log-transformed variables.
+Because we want to compare all our models using information criteria, we were required
+to use a discrete likelihood to fit all models. Our model uses a discrete likelihood by default, but the previous three models (LSSL, constant connectance and the power law) normally do not. Instead, these models have typically been fit with Gaussian likelihoods, sometimes after log-transforming L and S. For example, +@eq:pl becomes a linear relationship between $\text{log}(L)$ and $\text{log}(S)$.  This ensures that predictions of $L$ are always positive, but allows otherwise unconstrained variation on both sides of the mean. To keep this same spirit, we chose the negative binomial distribution for observations.  This distribution is limited to
+positive integers, and can vary on both sides of the mean relationship.
 
-We chose our prior distribution for $p$ based on @Mart92 , who gave a value of
-constant connectance equal to 0.14. While this prior is "informative", it is
+We selected priors for our bayesian models using a combination of literature and domain expertise. For example, we chose our prior distribution for $p$ based on @Mart92 , who gave a value of
+constant connectance equal to 0.14. While the prior we use is "informative", it is
 weakly so; as @Mart92 did not provide an estimate of the variance for his value
-we chose a relatively large variation around that mean.  However, as no
-information is available to inform a prior on $\phi$, we followed the advice of
-(tk Simpson et al), and performed prior predictive checks. We chose prior
-parameters that generated a wide range of values for $L_i$, but which did not
+we chose a relatively large variation around that mean.  However, no information is available in the literature to inform a choice of prior for concentration parameters $\kappa$ and $\phi$. For these values, we followed the advice of @GabrSimp19 and performed prior predictive checks. Specifically, we chose priors that generated a wide range of values for $L_i$, but which did not
 frequently predict webs of either maximum or minimum connectance, neither of
 which are observed in nature.
 
@@ -639,18 +631,12 @@ Where $B$ is the beta function. Thus, the problem of fitting this model becomes 
 
 ## Model fitting - data and software
 
-<!-- tk describe Mangal and its awesomeness in more wholeness -->
 We evaluated our model against 255 empirical food webs, available in the online
 database `mangal.io` [@PoisBais16]. We queried metadata (number of nodes and
 number of links) for all networks, and considered as food webs all networks
 having interactions of predation and herbivory. We use Stan [@CarpGelm17a] which
 implements Bayesian inference using Hamiltonian Monte Carlo. We ran all models
-using four chains and 2000 iterations per chain. All models converged with no
-divergent iterations.
-
-## Model fitting - diagnostics
-
-All models fit without any divergent iterations, which indicates that is it safe
+using four chains and 2000 iterations per chain. Stan provides a number of diagnostics for samples from the posterior distribution, including $\hat{R}$, effective sample size, and measures of effective tree depth and divergent iterations. None of these indicated problems with the posterior sampling. All models converged with no warnings; this indicates that is it safe
 to make inferences about the parameter estimates and to compare the models.
 However, the calculation of PSIS-LOO for the LSSL model warned of problematic
 values of the Pareto-k diagnostic statistic. This indicates that the model is
