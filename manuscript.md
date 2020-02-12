@@ -134,21 +134,21 @@ where $p \in [0,1]$. When $p = 1$, $L$ is at its maximum ($S^2$), and when $p =
 represent that our model considers the number of "flexible" links in a food web;
 that is, the number of links in excess of the minimum but below the maximum.
 
-Because we assume that every one of these flexible links is an independent
-stochastic event with only two outcomes, we can follow recent literature on
-probabilistic ecological networks [@PoisCirt16] and represent every flexible
-link as an independent Bernoulli trial with a probability $p$ of existing.
-Furthermore, the observation of $L_i$ links in community $i$ represents an
-aggregation of $S^2 - (S - 1)$ such trials. If we then assume that $p$ is a
-constant for all links in community $i$, but may vary between communities, we
-can model the distribution of links directly as a shifted beta-binomial
-variable:
+Because we assume that every flexible link is an independent stochastic event
+with only two outcomes, we can follow recent literature on probabilistic
+ecological networks [@PoisCirt16] and represent them as independent Bernoulli
+trials with a probability of success $p$. Furthermore, the observation of $L$
+links in a food web represents an aggregation of $S^2 - (S - 1)$ such trials. If
+we then assume that $p$ is a constant for all links in a particular food web,
+but may vary between food webs (a strong assumption which we later show is
+actually more stringent than what data suggest), we can model the distribution
+of links directly as a shifted beta-binomial variable:
 
 $$ [L|S,\mu, \phi] =  { S^2 - (S - 1) \choose L - (S - 1)} \frac{\mathrm{B}(L - (S - 1) + \mu \phi, S^2 - L + (1 - \mu)\phi)}{\mathrm{B}(\mu \phi, (1 - \mu)\phi)} $$ {#eq:shiftBB}
 
 Where $\mathrm{B}$ is the Beta function, $\mu$ is the average probability of a
-flexible link being realized (*i.e.* the average value of $p$ across
-communities) and $\phi$ is the concentration around this value. The support of
+flexible link being realized (*i.e.* the average value of $p$ across networks in
+the dataset) and $\phi$ is the concentration around this value. The support of
 this distribution is limited to only ecologically realistic values of $L$: it
 has no probability mass below $S-1$ or above $S^2$. This means that the problem
 of estimating values for $\mu$ and $\phi$ is reduced to fitting the univariate
@@ -158,9 +158,9 @@ model derivation, fitting, and comparison, see Experimental Procedures.
 In this paper we will compare our flexible links model to three previous models
 for $L$. We estimate parameters and compare the performance of all models using
 open data from the `mangal.io` networks database [@PoisBais16]. We show how this
-model not only outperforms existing efforts at predicting the number of
-interactions, but also has numerous desirable properties from which novel
-insights about the structure of food webs can be derived.
+model not only outperforms existing efforts at predicting the number of links,
+but also has numerous desirable properties from which novel insights about the
+structure of food webs can be derived.
 
 # Results and Discussion
 
@@ -189,22 +189,20 @@ provide some clues about potential model fits; in our case the algorithm
 suggested that the constant connectance model was sensitive to extreme
 observations. The expected log predictive density (ELPD), on the other hand,
 measures the predictive performance of the model; here, higher values indicate
-more reliable predictions [@VehtGelm17]. This suggests that the flexible link
-model will make the best predictions of $L$. Information criteria, however, are
-only a rough guide to model selection; as always domain expertise should take
-precedence.
+more reliable predictions [@VehtGelm17]. This suggests that the flexible links
+model will make the best predictions of $L$.
 
 To be useful to ecologists, predictions of $L$ must stay within realistic
 boundaries determined by ecological principles. We generated posterior
 predictions for all models and visualized them against these constraints
-(+@fig:PP_counterfactual). The LSSL model clearly underestimated the number of
-links, especially in large networks: its predictions were frequently lower than
-the minimum $S-1$. The constant connectance and power law models also made many
+(+@fig:PP_counterfactual). The LSSL model underestimates the number of links,
+especially in large networks: its predictions were frequently lower than the
+minimum $S-1$. The constant connectance and power law models also made
 predictions below this value, especially for small values of $S$. The flexible
 link model made roughly the same predictions, but within ecologically realistic
 values.
 
-![**The flexible link model fits better and makes a plausible range of
+![**The flexible links model fits better and makes a plausible range of
 predictions.** The number of links is plotted as a function of species richness
 obtained from the posterior distributions of A) the link-species scaling, B) the
 constant connectance, C) the power law and D) the flexible link models. In each
@@ -225,7 +223,11 @@ around 29% of unrealistic predictions of link numbers for every value of $S$ ($3
 hand, also produced unrealistic results but for small networks only: more than
 20% were unrealistic for networks comprising less than 12 and 7 species,
 respectively. Only the flexible links model, by design, never failed to predict
-numbers of links between $S-1$ and $S^2$.  
+numbers of links between $S-1$ and $S^2$. It must be noted that the differences
+between the realism of predictions are most common in the shaded area of
++@fig:real_predict, which represents 90% of the empirical data we used to fit
+the model; therefore, the part of the richness gradients on which models agree
+matter little, since there are virtually no networks observed here.
 
 ![**Only the flexible link model makes realistic predictions for small
 communities.** Here we show the proportion of posterior predictions from each of
@@ -274,9 +276,11 @@ which is close to our value of 0.12 for constant connectance. In addition, we
 obtained a rather large value of 24.3 for $\phi$, which shrinks the variance
 around the mean of $p$ to approximately 0.003 ($var(p)=\mu(1-\mu)/(1+\phi)$).
 This indicates that food webs are largely similar in their probability of
-flexible links being realized. The flexible link model also uses fewer
-parameters than the power law model and makes slightly better predictions, which
-accounts for its superior performance in model comparison ( +@tbl:comparison)
+flexible links being realized (thus showing how our previous assumption that $p$
+might vary between food webs to be more conservative than strictly required).
+The flexible links model also uses fewer parameters than the power law model and
+makes slightly better predictions, which accounts for its superior performance
+in model comparison ( +@tbl:comparison)
 
 ## Connectance and linkage density can be derived from a model for links
 
@@ -293,34 +297,30 @@ and
 
 $$ L_D = \frac{L}{S} = p \left(S - \frac{S-1}{S} \right) +  \frac{S-1}{S},$$ {#eq:ld}
 
-For food webs with many species, these equations simplify. +@eq:lhat can be
+For food webs with many species, these equations simplify: +@eq:lhat can be
 expressed as a second degree polynomial, ($p\times S^2  + (1-p)\times S +
 (p-1)$), whose leading term is $p\times S^2$. Therefore, when $S$ is large,
 +@eq:co and +@eq:ld respectively approach $Co = L/S^2 \approx p$ and $L_D = L/S
-\approx pS$. These are notable properties, as they imply that our model captures
-both the behavior of +@eq:lssl and of +@eq:cc, while having a markedly better
-fit (+@tbl:comparison).
-
-A study of equations +@eq:co and +@eq:ld also provides insight into the
-ecological interpretation of the parameters in our equation. For example,
-+@eq:ld implies that the addition of $n$ species should increase the linkage
-density by approximately $p\times n$. The addition of 11 new species ($p^{-1}$
-according to +@tbl:parameters) should increase the linkage density in the food
-web by roughly 1, meaning that each species in the original network would be
-expected to develop 2 additional interactions. Similarly, +@eq:co shows that
-when $S$ is large, we should expect a connectance which is a constant and
-independent of $S$. Thus $p$ has an interesting ecological interpretation: it
-represents the average connectance of networks large enough that the proportion
-$(S-1)/S^{2}$ is negligible.
+\approx pS$. A study of equations +@eq:co and +@eq:ld also provides insight into
+the ecological interpretation of the parameters in our equation. For example,
++@eq:ld implies that adding $n$ species should increase the linkage density by
+approximately $p\times n$. The addition of 11 new species ($p^{-1}$ according to
++@tbl:parameters) should increase the linkage density in the food web by roughly
+1, meaning that each species in the original network would be expected to
+develop 2 additional interactions. Similarly, +@eq:co shows that when $S$ is
+large, we should expect a connectance which is a constant. Thus $p$ has an
+interesting ecological interpretation: it represents the average connectance of
+networks large enough that the proportion $(S-1)/S^{2}$ is negligible.
 
 ## Other uses for our model
 
 Our model is generative, and that is important. It means we can use this model
 to correctly generate predictions that look like real data. That is very useful!
 It suggests that we can adapt the model, using either its parameters or
-predictions or both, to get a new persepctive on many questions in network
+predictions or both, to get a new perspective on many questions in network
 ecology. Here we show four possible applications that we think are interesting,
-though many more are possible.
+in that relying on our model eliminates the need to speculate on the structure
+of networks, or to introduce new hypotheses to account for it.
 
 ### Probability distributions for $L_D$ and $Co$
 
@@ -363,14 +363,6 @@ $(S-1)/S^2$ connectance and in B) the minimal $(S-1)/S$ and maximum $S$ linkage
 density are plotted (black lines).
 ](figures/connectance_linkdens.png){#fig:CoLd}
 
-<!-- perhaps move elsewhere?? around May figure? -->
-Connectance is more than the proportion of realized interactions. It has been
-associated with some of the most commonly used network metrics [@PoisGrav14;
-@Chag15], and contains meaningful information on the stability [@DunnWill02a;
-@MontPimm06] and dynamics [@VieiAlme15] of ecological communities. A probability
-distribution for connectance not only accounts for the variability between
-networks, but can be used to describe fundamental properties of food webs and to
-identify ecological and evolutionary mechanisms shaping communities.
 
 ### An analytic alternative to null-model testing
 
@@ -405,17 +397,17 @@ observed links $L_{obs}$, we can calculate its $z$-score as
 $$z = \frac{L_{obs} - \bar{L}}{\sqrt{\sigma_L^2}} \,.$$ {#eq:z}
 
 A network where $L = \bar{L}$ will have a $z$-score of 0, and any network with
-more (fewer) interactions will have a positive (negative) $z$-score. We suggest
-that the use of a $z$-score could help identify significantly under (over)
-sampled networks and estimate their number of missing (extra) links.
+more (fewer) links will have a positive (negative) $z$-score. We suggest that
+the use of a $z$-score could help identify significantly under (over) sampled
+networks and estimate their number of missing (extra) links.
 
-In (+@fig:MAPnormal), we show that the predictions made by the normal
+In +@fig:MAPnormal, we show that the predictions made by the normal
 approximation (panel B) are similar to those made by the beta distribution
 parameterized with the maximum _a posteriori_ values of $\mu$ and $\phi$ (panel
 A), although the later can undershoot the constraint on the minimum number of
 links. This undershooting, however, will not influence any actual z-scores,
-since no food webs have less than S-1 interactions and therefore no z-scores so
-low can be calculated.
+since no food webs have fewer than S-1 links and therefore no z-scores so low
+can ever be observed.
 
 ![**The shifted beta-binomial distribution can be approximated by a normal
 distribution.** The number of links is plotted as a function of species richness
@@ -494,7 +486,7 @@ being the standard deviation of the strengths of interactions. Although this
 criteria is not necessarily stringent enough for the stability of food webs
 [@AlleTang12; @AlleTang15], it still defines an approximate maximum value
 $\sigma^\star$ which is the value of above which the system is expected to be
-unstable. This threshold is $\sigma^\star = L_D^{- \frac{1}{2}}$, where $L_D$ is
+unstable. This threshold is $\sigma^\star = 1/\sqrt{L_D}$, where $L_D$ is
 defined as in +@eq:ld. We illustrate this result in +@fig:stability, which
 reveals that $\sigma^\star$ falls towards 0 for larger species richness. The
 result in +@fig:stability is in agreement with previous simulations, placing the
@@ -503,16 +495,17 @@ how ecological limitations, for example on connectance and the resulting
 stability of the system, can limit the size of food webs [@AlleTang12;
 @BorrAlle15]. In the second panel, we show that networks of increasing richness
 (thicker lines, varying on a log-scale from $10^1$ to $10^3$) have a lower
-probability of being stable, based on the proportion of stable networks.
+probability of being stable, based on the proportion of stable networks in our
+posterior samples.
 
 ## Conclusions
 
-Here we derived a flexible link model for the prediction of the number of links
-in ecological networks using a beta-binomial distribution for $L$, and show how
-it outperforms previous and more commonly used models describing this
-relationship. More importantly, we showed that our model has parameters with a
-clear ecological interpretation (specifically, the value of $p$ in +@eq:lhat is
-the expected value of the connectance when $S$ is large), and makes predictions
+Here we derived +@eq:lhat, a model for the prediction of the number of links in
+ecological networks using a beta-binomial distribution for $L$, and show how it
+outperforms previous and more commonly used models describing this relationship.
+More importantly, we showed that our model has parameters with a clear
+ecological interpretation (specifically, the value of $p$ in +@eq:lhat is the
+expected value of the connectance when $S$ is large), and makes predictions
 which remain within biological boundaries.
 
 This model also casts new light on previous results on the structure of food
@@ -524,15 +517,22 @@ naturally: connectance increases sharply as species richness decreases
 becomes progressively larger. In a sense, small ecological networks are
 different only due to the low values of $S$. Small networks have only a very
 limited number of flexible links, and this drives connectance to be larger.
-Connectance in turn has implications for many ecological properties. A recent
-research direction has been to reveal its impact on resistance to invasion:
-denser networks with a higher connectance are comparatively more difficult to
-invade [@SmitMoor16]; different levels of connectance are also associated with
-different combinations of primary producers, consumers, and apex predators
-[@WillMart00], which in turns determines which kind of species will have more
-success invading the network [@BaisRuss10]. Because we can infer connectance
-from the richness of a community, our model also ties the invasion resistance of
-a network to its species richness.
+Connectance in turn has implications for many ecological properties. Connectance
+is more than the proportion of realized interactions. It has been associated
+with some of the most commonly used network metrics [@PoisGrav14], and contains
+meaningful information on the stability [@DunnWill02a; @MontPimm06] and dynamics
+[@VieiAlme15] of ecological communities. A probability distribution for
+connectance not only accounts for the variability between networks, but can be
+used to describe fundamental properties of food webs and to identify ecological
+and evolutionary mechanisms shaping communities. A recent research direction has
+been to reveal its impact on resistance to invasion: denser networks with a
+higher connectance are comparatively more difficult to invade [@SmitMoor16];
+different levels of connectance are also associated with different combinations
+of primary producers, consumers, and apex predators [@WillMart00], which in
+turns determines which kind of species will have more success invading the
+network [@BaisRuss10]. Because we can infer connectance from the richness of a
+community, our model also ties the invasion resistance of a network to its
+species richness.
 
 The relationship between $L$ and $S$ has been underpinning most of the
 literature on food web structure since the 1980s. Additional generations of data
@@ -541,17 +541,17 @@ to more general formulations based on a power law. Our model breaks with this
 tradition of iterating over the same family of relationship, and instead draws
 from our knowledge of ecological processes, and from novel tools in
 probabilistic programming. As a result, we provide predictions of the number of
-interactions which are closer to empirical data, allow to derive new ecological
+links which are closer to empirical data, allow to derive new ecological
 insights, and can be safely assumed to always fall within realistic values. The
-results presented in +@fig:stability (which reproduces results from @AlleTang12)
-and +@fig:nar (which reproduces results from @GaliLurg18) seem largely
-confirmatory, and the ability of our model to reach the same conclusions is also
-a confirmation of its validity; we would like to point out that these approaches
-would usually require to make inferences on the parameters of interests, but
-also on the properties of a network for a given species richness. Therefore, our
-model allows a real economy of parameters, as it offers the ability to get
-several key elements of network structure for free if only the species richness
-is known
+results presented in +@fig:nar (which reproduces results from @GaliLurg18) and
++@fig:stability (which reproduces results from @AlleTang12) may seem largely
+confirmatory, and the ability of our model to reach the conclusions of previous
+milestone studies in food web ecology is also a strong confirmation of its
+validity; we would like to point out that these approaches would usually require
+to make inferences on the parameters of interests, but also on the properties of
+a network for a given species richness. Therefore, our model allows a real
+economy of parameters, as it offers the ability to get several key elements of
+network structure for free if only the species richness is known.
 
 # Experimental Procedures
 
