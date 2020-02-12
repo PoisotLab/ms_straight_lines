@@ -205,7 +205,15 @@ predictions below this value, especially for small values of $S$. The flexible
 link model made roughly the same predictions, but within ecologically realistic
 values.
 
-![**The flexible link model fits better and makes a plausible range of predictions.** The number of links is plotted as a function of species richness obtained from the posterior distributions of A) the link-species scaling, B) the constant connectance, C) the power law and D) the flexible link models. In each panel, the colored line represent the median predicted link number and the grey areas cover the 78% and 97% percentile intervals. Empirical data from the `mangal.io` database are plotted in each panel (grey dots), as well as the minimal $S-1$ and maximal $S^2$ number of links (thinner and bolder black lines, respectively).  ](figures/models_links.png){#fig:PP_counterfactual}
+![**The flexible link model fits better and makes a plausible range of
+predictions.** The number of links is plotted as a function of species richness
+obtained from the posterior distributions of A) the link-species scaling, B) the
+constant connectance, C) the power law and D) the flexible link models. In each
+panel, the colored line represent the median predicted link number and the grey
+areas cover the 78% and 97% percentile intervals. Empirical data from the
+`mangal.io` database are plotted in each panel (grey dots), as well as the
+minimal $S-1$ and maximal $S^2$ number of links (thinner and bolder black lines,
+respectively).](figures/models_links.png){#fig:PP_counterfactual}
 
 ## The flexible links model makes realistic predictions for small communities
 
@@ -220,7 +228,14 @@ hand, also produced unrealistic results but for small networks only: more than
 respectively. Only the flexible links model, by design, never failed to predict
 numbers of links between $S-1$ and $S^2$.  
 
-![**Only the flexible link model makes realistic predictions for small communities.** Here we show the proportion of posterior predictions from each of our 4 models which fall outside ecologically realistic values. The proportion of predictions in the correct range increases with species richness for the constant connectance and power law models. Shaded area shows the 5%, 50% and 95% quantiles of the distribution of S, demonstrating that many communities have potentially incorrect predictions under previous models.  ](figures/real_predict.png){#fig:real_predict}
+![**Only the flexible link model makes realistic predictions for small
+communities.** Here we show the proportion of posterior predictions from each of
+our 4 models which fall outside ecologically realistic values. The proportion of
+predictions in the correct range increases with species richness for the
+constant connectance and power law models. Shaded area shows the 5%, 50% and 95%
+quantiles of the distribution of S, demonstrating that many communities have
+potentially incorrect predictions under previous models.
+](figures/real_predict.png){#fig:real_predict}
 
 ## Parameter estimates for all models
 
@@ -339,7 +354,15 @@ $$ {#eq:shiftBetaLD}
 In +@fig:CoLd, we show that the connectance and linkage density
 obtained from the equations above fit the empirical data well.
 
-![**Connectance and linkage density can be derived from a model for links.** A) Connectance and B) linkage density are plotted as a function of species richness, for the maximum _a posteriori_ estimates of the flexible link model. In each panel, the colored line represent the median predicted quantity and the grey areas cover the 78% and 97% percentile intervals. Empirical data from the `mangal.io` database are plotted in each panel (grey dots). In A), the minimal $(S-1)/S^2$ connectance and in B) the minimal $(S-1)/S$ and maximum $S$ linkage density are plotted (black lines).  ](figures/connectance_linkdens.png){#fig:CoLd}
+![**Connectance and linkage density can be derived from a model for links.** A)
+Connectance and B) linkage density are plotted as a function of species
+richness, for the maximum _a posteriori_ estimates of the flexible link model.
+In each panel, the colored line represent the median predicted quantity and the
+grey areas cover the 78% and 97% percentile intervals. Empirical data from the
+`mangal.io` database are plotted in each panel (grey dots). In A), the minimal
+$(S-1)/S^2$ connectance and in B) the minimal $(S-1)/S$ and maximum $S$ linkage
+density are plotted (black lines).
+](figures/connectance_linkdens.png){#fig:CoLd}
 
 <!-- perhaps move elsewhere?? around May figure? -->
 Connectance is more than the proportion of realized interactions. It has been
