@@ -282,6 +282,10 @@ Thus $p$ has an interesting ecological interpretation: it represents the average
 connectance of networks large enough that the proportion $(S-1)/S^{2}$ is
 negligible.
 
+## Other uses for our model
+
+Below we describe N useful insights that can be made using our model.
+
 ## Probability distributions for $L_D$ and $Co$
 
 In a beta-binomial distribution, it is assumed that the probability of success
@@ -371,58 +375,25 @@ relationship. More importantly, we showed that our model has parameters with a c
 
 This model also casts new light on previous results on the structure of food
 webs: small and large food webs behave differently [@GarlCald03]. Specifically,
-ecological network most strongly deviate from both scale free and small world
+ecological networks most strongly deviate from scale free
 expectations when connectance is high [@DunnWill02a]. In our model, this
-behaviour is a natural prediction, as the connectance increases sharply for low
-species richness (+@fig:beta_distributions), as the additive term $(S-1)S^{-2}$
+behaviour emerges naturally: connectance increases sharply as
+species richness decreases (+@fig:beta_distributions) -- that is, where the additive term $(S-1)/S^{2}$
 in +@eq:co becomes progressively larger. In a sense, small ecological networks
-are different only due to the low values of $S$, there are only a very
+are different only due to the low values of $S$. Small networks have only a very
 limited number of flexible links, and this drives connectance to be larger.
-Connectance in turn has inmplications for many ecological properties. A recent
+Connectance in turn has implications for many ecological properties. A recent
 research direction has been to reveal its impact on resistance to invasion:
 denser networks with a higher connectance are comparatively more difficult to
 invade [@SmitMoor16]; different levels of connectance are also associated with
 different combination of primary producers, consumers, and apex predators
-[@WillMart00; @WillMart04], which in turns means that different species will
-have an easier success invading differently connected networks [@BaisRuss10].
+[@WillMart00; @WillMart04], which in turns determines which kind of species will have more success invading the network [@BaisRuss10].
 Because we can infer connectance from the richness of a community, our model
 also ties the invasion resistance of a network to its species richness.
 
-Yet our model introduces a puzzling question. According to +@eq:ld, at large
-values of $S$, the linkage density scales according to $p\times S$ (which is
-supported by empirical data), and so species are expected to have on average
-$2\times p\times S$ interactions. A useful concept in evolutionary biology is
-the "Darwinian demon" [@Law79], *i.e.* an organism that would have infinite
-fitness in infinite environments. Our model seems to predict the emergence of
-what we call Eltonian demons, which can have arbitrarily large number of
-interactions. Yet we know that constraints on handling time of preys, for
-example, imposes hard limits on diet breadth [@ForiJenk17]. This result suggests
-that there are other limitations to the size of food webs; indeed, the fact that
-$L/S$ increases to worryingly large values only matters if ecological processes
-allow $S$ to be large enough. It is known that food webs can get as high as
-energy transfer allows [@ThomBros12], and as wide as competition allows
-[@KefiBerl12]. In short, and as +@fig:real_predict suggests, since food webs are
-likely to be constrained to remain within an acceptable richness, we have no
-reason to anticipate that $p\times S$ will keep growing infinitely.
+### Many different Network-Area Relationships are supported by the data
 
-![**Stability imposes a limit on network growth**. Using +@eq:ld, we can calculate the maximum standard deviation in the strength of interactions which should ensure food web stability, $\sigma^\star = \sqrt{L_D}^{-1}$. This value falls sharply when the number of species increases, which will limit the stability of large food webs, and therefore explain why Eltonian demons should not emerge.](figures/may.png){#fig:stability}
-
-In fact, May [@May72] suggested that a network of richness $S$ and connectance
-$Co$ is stable as long as the criteria $\sigma \sqrt{S \times Co} < 1$ is satisfied,
-with $\sigma$ being the standard deviation of the strengths of interactions.
-Under our model, $Co$ is derived from $S$, and $S \times Co$ is the linkage density as
-per +@eq:ld. Although this criteria is not necessarily stringent enough for the
-stability of food webs [@AlleTang12; @AlleTang15], it allows deriving an
-approximate value $\sigma^\star$ which is the value of $\sigma$ above which the
-previous criteria is not satisfied, and the system is expected to be unstable.
-This threshold is the solution to $\sigma^\star = L_D^{- \frac{1}{2}}$, where $L_D$
-is defined as in +@eq:ld. We illustrate this result in +@fig:stability, which
-reveals that $\sigma^\star$ falls to 0 for larger species richness. These
-results explain how ecological limitations (here on stability) can limit the
-size of food webs, are in agreement with previous simulations, placing the
-threshold for stability at about 1200 species in food webs [@AlleTang12].
-
-Finally, our results bear important consequences for the nascent field of
+Our results bear important consequences for the nascent field of
 studying network-area relationships (NAR). As it has long been observed that
 not all species in a food web diffuse equally through space [@HoltLawt99],
 understanding how the shape of networks varies when the area increases is an
@@ -438,7 +409,41 @@ empirical results on this topic [*e.g.* @WoodRuss15], they suggest that we will
 observe many relationships between network structure and space, and that picking
 out the signal of network area relationships might be difficult.
 
-![**Networks in space**. Representing the species richness as $S = k\times A^z$, with $A = 200$ and $k = 0.27$ [@GaliLurg18], we can compare the predictions of our model to that of the generally accepted power law (+@eq:pl). While our model predicts a larger linkage density in larger areas, the confidence intervals around this prediction are extremely large. - scales faster than the power law, but the confidence interval is extremely high, suggesting that we may observe either very weak, or very strong, effects of area increase.](figures/nar.png){#fig:nar}
+![**Many different Network-Area Relationships are supported by the data**. Representing the species richness as $S = k\times A^z$, with $A = 200$ and $k = 0.27$ [@GaliLurg18], we can compare the predictions of our model to that of the generally accepted power law (+@eq:pl). While our model predicts a larger linkage density in larger areas, the confidence intervals around this prediction are extremely large. - scales faster than the power law, but the confidence interval is extremely high, suggesting that we may observe either very weak, or very strong, effects of area increase.](figures/nar.png){#fig:nar}
+
+### Stability imposes a limit on network size
+
+Our model introduces a puzzling question: can organisms really interact with an infinite number of partners? According to +@eq:ld, at large
+values of $S$, the linkage density scales according to $p\times S$ (which is
+supported by empirical data), and so species are expected to have on average
+$2\times p\times S$ interactions. A useful concept in evolutionary biology is
+the "Darwinian demon" [@Law79], *i.e.* an organism that would have infinite
+fitness in infinite environments. Our model seems to predict the emergence of
+what we call Eltonian demons, which can have arbitrarily large number of
+interactions. Yet we know that constraints on handling time of prey, for
+example, imposes hard limits on diet breadth [@ForiJenk17]. This result suggests
+that there are other limitations to the size of food webs; indeed, the fact that
+$L/S$ increases to worryingly large values only matters if ecological processes
+allow $S$ to be large enough. It is known that food webs can get as high as
+energy transfer allows [@ThomBros12], and as wide as competition allows
+[@KefiBerl12]. In short, and as +@fig:real_predict suggests, since food webs are
+likely to be constrained to remain within an acceptable richness, we have no
+reason to anticipate that $p\times S$ will keep growing infinitely.
+
+![**Stability imposes a limit on network size**. Using +@eq:ld, we can calculate the maximum standard deviation in the strength of interactions which should ensure food web stability, $\sigma^\star = \sqrt{L_D}^{-1}$. The fine and dark lines indicate the maximum and minimum value of maximum standard deviation, respectively. The dotted line shows the maximum for the average $L_D$, as given by +@#eq:ld. The maximum standard deviation falls sharply when the number of species increases, which will limit the stability of large food webs, and therefore explain why Eltonian demons should not emerge.](figures/may.png){#fig:stability}
+
+Network structure may itself prevent $S$ from becoming large. May [@May72] suggested that a network of richness $S$ and connectance
+$Co$ is stable as long as the criteria $\sigma \sqrt{S \times Co} < 1$ is satisfied,
+with $\sigma$ being the standard deviation of the strengths of interactions.
+Although this criteria is not necessarily stringent enough for the stability of food webs [@AlleTang12; @AlleTang15], it still defines an approximate maximum value $\sigma^\star$ which is the value of above which the system is expected to be unstable.
+This threshold is $\sigma^\star = L_D^{- \frac{1}{2}}$, where $L_D$
+is defined as in +@eq:ld. We illustrate this result in +@fig:stability, which
+reveals that $\sigma^\star$ falls towards 0 for larger species richness.
+The result in +@fig:stability is in agreement with previous simulations, placing the
+threshold for stability at about 1200 species in food webs.
+These
+results show how ecological limitations, for example on connectance and the resulting stability of the system, can limit the
+size of food webs [@AlleTang12].
 
 As a conclusion, we would like to note that the relationship between $L$ and $S$
 has been underpinning most of the literature on food web structure since the
