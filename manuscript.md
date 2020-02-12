@@ -398,23 +398,23 @@ low can be calculated.
 ![**The shifted beta-binomial distribution can be approximated by a normal distribution.** The number of links is plotted as a function of species richness obtained from A) the maximum _a posteriori_ estimates of the flexible link model and B) its normal approximation. In each panel, the colored line represent the median predicted link number and the grey areas cover the 78% and 97% percentile intervals.  ](figures/betabinmap_normal_links.png){#fig:MAPnormal}
 
 
-### Many different Network-Area Relationships are supported by the data
+### We should see many different Network-Area Relationships
 
 Our results bear important consequences for the nascent field of studying
-network-area relationships (NAR). As it has long been observed that not all
-species in a food web diffuse equally through space [@HoltLawt99], understanding
-how the shape of networks varies when the area increases is an important goal,
-and in fact underpins the development of a macroecological theory of food webs
-[@BaisGrav19]. Using a power-law as the acceptable relationship between species
-and area [@Deng09; @WillGast01], the core idea of studying NAR is to predict
-network structure as a consequence of the effect of spatial scale on species
-richness [@GaliLurg18]. Drawing on these results, we provide in +@fig:nar a
-simple illustration of the fact that, due to the dispersal of values of $L$, the
-relationship between $L/S$ and area can have a really wide confidence interval.
-While our simulations generally match the empirical results on this topic
-[*e.g.* @WoodRuss15], they suggest that we will observe many relationships
-between network structure and space, and that picking out the signal of network
-area relationships might be difficult.
+network-area relationships [NAR; @GaliLurg18]. As it has long been observed that
+not all species in a food web diffuse equally through space [@HoltLawt99],
+understanding how the shape of networks varies when the area increases is an
+important goal, and in fact underpins the development of a macroecological
+theory of food webs [@BaisGrav19]. Using a power-law as the acceptable
+relationship between species and area [@Deng09; @WillGast01], the core idea of
+studying NAR is to predict network structure as a consequence of the effect of
+spatial scale on species richness [@GaliLurg18]. Drawing on these results, we
+provide in +@fig:nar a simple illustration of the fact that, due to the
+dispersal of values of $L$, the relationship between $L/S$ and area can have a
+really wide confidence interval. While our simulations generally match the
+empirical results on this topic [*e.g.* @WoodRuss15], they suggest that we will
+observe many relationships between network structure and space, and that picking
+out the signal of network area relationships might be difficult.
 
 ![**Many different Network-Area Relationships are supported by the data**.
 Representing the species richness as $S = k\times A^z$ (panel A), with $A$ being
@@ -448,7 +448,17 @@ and as +@fig:real_predict suggests, since food webs are likely to be constrained
 to remain within an acceptable richness, we have no reason to anticipate that
 $p\times S$ will keep growing infinitely.
 
-![**Stability imposes a limit on network size**. Using +@eq:ld, we can calculate the maximum standard deviation in the strength of interactions which should ensure food web stability, $\sigma^\star = \sqrt{L_D}^{-1}$. The fine and dark lines indicate the maximum and minimum value of maximum standard deviation, respectively. The dotted line shows the maximum for the average $L_D$, as given by +@eq:ld. The maximum standard deviation falls sharply when the number of species increases, which will limit the stability of large food webs, and therefore explain why Eltonian demons should not emerge.](figures/may.png){#fig:stability}
+![**Stability imposes a limit on network size**. Using +@eq:ld, we can calculate
+the maximum standard deviation in the strength of interactions which should
+ensure food web stability, $\sigma^\star = 1/\sqrt{L_D}$ (panel A). The fine and
+dark lines indicate the maximum and minimum value of maximum standard deviation,
+respectively. The dotted line shows the maximum for the average $L_D$, as given
+by +@eq:ld. The maximum standard deviation falls sharply when the number of
+species increases, which will limit the stability of large food webs, and
+therefore explain why Eltonian demons should not emerge. In panel B, we show the
+probability of a network with $S$ species being stable, based on draws from the
+posterior distribution, for $10 \le S \le 1000$ - larger networks (thicker
+lines) are increasingly unlikely to be stable.](figures/may.png){#fig:stability}
 
 Network structure may itself prevent $S$ from becoming large. May [@May72]
 suggested that a network of richness $S$ and connectance $Co$ is stable as long
@@ -463,7 +473,10 @@ reveals that $\sigma^\star$ falls towards 0 for larger species richness. The
 result in +@fig:stability is in agreement with previous simulations, placing the
 threshold for stability at about 1200 species in food webs. These results show
 how ecological limitations, for example on connectance and the resulting
-stability of the system, can limit the size of food webs [@AlleTang12].
+stability of the system, can limit the size of food webs [@AlleTang12]. In the
+second panel, we show that networks of increasing richness (thicker lines,
+varying on a log-scale from $10^1$ to $10^3$) have a lower probability of being
+stable, based on the proportion of stable networks.
 
 
 ## Conclusions
