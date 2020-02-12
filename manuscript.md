@@ -1,35 +1,35 @@
 # Introduction
 
 Community ecologists are fascinated by counting things. It is therefore no
-surprise that the early food web literature paid so much attention to counting
-species, counting trophic interactions, and uncovering the shape of the
-relationship that binds them -- and it is undeniable that these inquiries
-kickstarted what is now one of the most rapidly growing fields of ecology
-[@BorrMood14]. More species always means more interactions; this scaling between
-species richness $S$ and number of interactions $L$ is universal and appears
-both in observed food webs and under purely neutral models of food web structure
-[@CanaMouq12]. In fact, these numbers underlie most measures used to describe
-the structure of a food web [@DelmBess18]. The structure of a food web, in turn,
-is almost always required to understand how the community functions, develops,
-and responds to changes [@McCa12; @ThomBros12], to the point where some authors
-suggested that describing food webs was a necessity [@McCa07; @SeibCado18]. To
-this end, a first step is to come up with an estimate for the number of existing
-trophic interactions $L$, through sampling or otherwise. Although both $L$ and
-$S$ can be counted in nature, the sampling of interactions is orders of
-magnitude more difficult than the sampling of species [@Jord16a; @Jord16]. As a
-result, we have far more information about $S$. In fact, the distribution of
-species richness across the world is probably the most frequently observed and
-modelled ecological phenomena. Therefore, if we can predict $L$ from $S$ in an
-ecologically realistic way, we will be in a position to make first order
-approximations of food web structure at large scales.
+surprise that early food web research paid so much attention to counting
+species, counting trophic links, and uncovering the relationship that binds them
+-- and it is undeniable that these inquiries kickstarted what is now one of the
+most rapidly growing fields of ecology [@BorrMood14]. More species ($S$) always
+means more links ($L$); this scaling is universal and appears both in observed
+food webs and under purely neutral models of food web structure [@CanaMouq12].
+In fact, these numbers underlie most measures used to describe food webs
+[@DelmBess18]. The structure of a food web, in turn, is almost always required
+to understand how the community functions, develops, and responds to changes
+[@McCa12; @ThomBros12], to the point where some authors suggested that
+describing food webs was a necessity for community ecology [@McCa07;
+@SeibCado18]. To this end, a first step is to come up with an estimate for the
+number of existing trophic links, through sampling or otherwise. Although both
+$L$ and $S$ can be counted in nature, the measurement of links is orders of
+magnitude more difficult than the observation of species [@Jord16a; @Jord16]. As
+a result, we have far more information about values of $S$. In fact, the
+distribution of species richness across the world is probably the most
+frequently observed and modelled ecological phenomena. Therefore, if we can
+predict $L$ from $S$ in an ecologically realistic way, we will be in a position
+to make first order approximations of food web structure at large scales, even
+under our current data-limited regime.
 
-Measures of food web structure are based on three specific quantities. The first
-and most straightforward is $L$, the number of trophic interactions among
-species. This quantity can be large, especially in species-rich habitats, but it
-cannot be arbitrarily large. It is clear to any observer of nature that of all
-imaginable trophic interactions, only a fraction actually occur. If an
-ecological community contains $S$ species, then the maximum number of links in
-its foodweb is $S^2$: a community of omnivorous cannibals. This leads to the
+Measures of food web structure react most strongly to a handful of important
+quantities. The first and most straightforward is $L$, the number of trophic
+links among species. This quantity can be large, especially in species-rich
+habitats, but it cannot be arbitrarily large. It is clear to any observer of
+nature that of all imaginable trophic links, only a fraction actually occur. If
+an ecological community contains $S$ species, then the maximum number of links
+in its foodweb is $S^2$: a community of omnivorous cannibals. This leads to the
 second quantity: a ratio called *connectance* and defined by ecologists as $Co =
 L/S^2$. Connectance has become a fundamental quantity for nearly all other
 measures of food web structure and dynamics [@PascDunn06]. The third important
@@ -37,39 +37,36 @@ quantity is another ratio: *linkage density*, $L_D = L/S$. This value represents
 the number of links added to the network for every additional species in the
 ecological system. A closely related quantity is $L_D \times 2$, which is the
 _average degree_: the average number of species with which any taxa is expected
-to interact, either as predators or prey. All of these quantities capture
-ecologically important aspects of a network, and all capture the information
-present in a prediction of $L$ links among $S$ species. Accurate predictions of
-ecological networks are extremely useful in many ecological contexts; thus it is
-important to have an ecologically accurate predictive model for the underlying
-value, $L$.
+to interact, either as predator or prey. These quantities capture ecologically
+important aspects of a network, and all can be derived from the observation or
+prediction of $L$ links among $S$ species.
 
 Because $L$ represents such a fundamental quantity, many predictive models have
 been considered over the years. Here we describe three popular approaches before
-describing our own proposed model. The *link-species scaling (LSSL)* model
-introduced by @CoheBria84 hypothesized that all networks have the same _average
-degree_; that is, most species should have the same number of interactions.
-Links are modeled as the number of species times a constant:
+describing our own proposed model. The *link-species scaling (LSSL)*
+[@CoheBria84] assumes that all networks have the same _average degree_; that is,
+most species should have the same number of links. Links are modelled as the
+number of species times a constant:
 
-$$ L_{\text{lssl}} = b\times S \,$$ {#eq:lssl}
+$$ L_{LSSL} = b\times S \,$$ {#eq:lssl}
 
 with $b \approx 2$. This model imagines that every species added to a community
-increases the number of interactions by two -- for example, an animal which
-consumes one resource and is consumed by one predator. This model started to
-show its deficiencies when data on larger food webs became available: in these
-larger webs,  $L$ increased faster than a linear function of $S$. In response,
-@Mart92 suggested that all networks have the same *connectance*; in other words,
-that a food web is always equally filled, regardless of whether it has 5 or 5000
-species. Under the so-called "constant connectance" model, the number of links
-is proportional to the richness squared,
+increases the number of links by two -- for example, an animal which consumes
+one resource and is consumed by one predator. This model started to show its
+deficiencies when data on larger food webs became available: in these larger
+webs,  $L$ increased faster than a linear function of $S$. Maybe then all
+networks have the same *connectance* [@Mart92]? In other words, a food web is
+always equally filled, regardless of whether it has 5 or 5000 species. Under the
+so-called "constant connectance" model, the number of links is proportional to
+the richness squared,
 
-$$ L_{\text{cc}} = b\times S^2\,, $$ {#eq:cc}
+$$ L_{CC} = b\times S^2\,, $$ {#eq:cc}
 
 where $b$ is a constant in $]0,1[$ representing the expected value of
-connectance. The third model adds flexibility  $L$ to not necessarily follow the
-maximum number of interactions, replacing the power of 2 with another parameter:
+connectance. The assumption of a scaling exponent of $2$ can be relaxed
+[@Mart92], so that $L$ is not necessarily following the maximum number of links:
 
-$$ L_{\text{pl}} = b\times S^a\,. $$ {#eq:pl}
+$$ L_{PL} = b\times S^a\,. $$ {#eq:pl}
 
 This power law model can be parameterized in many ways, including spatial
 scaling and species area relationships [@BrosOstl04]. It is also a general case
@@ -89,23 +86,23 @@ they cannot be used for prediction while remaining within the bounds set by
 ecological principles. This has two causes. First, models that are variations of
 $L \approx b\times S^a$ have no constraints --  with the exception of the
 "constant connectance" model, in which $L_{\text{cc}}$ has a maximum value of
-$S^2$. However, we know that the number of interactions within a food web is
-both lower and upper bounded [@Mart92; @PoisGrav14]: there can be no more than
-$S^2$ links, and there can be no fewer than $S-1$ links. This minimum of $S-1$
-represents communities where all species interact and at least some of the
-organisms are heterotrophs [@Mart92]. Numerous simple food webs could have this
-minimal number of links -- for example, a linear food chain wherein each trophic
-level consists of a single species, each of which consumes only the species
-below it; or a grazing herbivore which feeds on every plant in a field. Thus
-interaction number is constrained by ecological principles to be between $S^2$
-and $S-1$, something which no present model includes. Secondly, accurate
-predictions of $L$ from $S$ are often difficult because of how parameters are
-estimated. This is usually done using a Gaussian likelihood for $L$, often after
-log transformation of both $L$ and $S$. While this approach ensures that
-predicted values of $L$ are always positive, it does nothing to ensure that they
-stay below $S^2$ and above $S-1$. Thus a good model for $L$ should meet these
-two needs: a bounded expression for the mean $\hat{L}$, as well as a bounded
-distribution for the likelihood.
+$S^2$. However, we know that the number of links within a food web is both lower
+and upper bounded [@Mart92; @PoisGrav14]: there can be no more than $S^2$ links,
+and there can be no fewer than $S-1$ links. This minimum of $S-1$ represents
+communities where all species interact and at least some of the organisms are
+heterotrophs [@Mart92]. Numerous simple food webs could have this minimal number
+of links -- for example, a linear food chain wherein each trophic level consists
+of a single species, each of which consumes only the species below it; or a
+grazing herbivore which feeds on every plant in a field. Thus the number of
+links is constrained by ecological principles to be between $S^2$ and $S-1$,
+something which no present model includes. Secondly, accurate predictions of $L$
+from $S$ are often difficult because of how parameters are estimated. This is
+usually done using a Gaussian likelihood for $L$, often after log transformation
+of both $L$ and $S$. While this approach ensures that predicted values of $L$
+are always positive, it does nothing to ensure that they stay below $S^2$ and
+above $S-1$. Thus a good model for $L$ should meet these two needs: a bounded
+expression for the average number of links, as well as a bounded distribution
+for its likelihood.
 
 Here we suggest a new perspective for a model of $L$ as a function of $S$ which
 respects ecological bounds, and has a bounded distribution of the likelihood. We
@@ -118,22 +115,22 @@ the proportion of flexible links which are realized in a community.
 
 Based on the ecological constraints discussed earlier, we know that the number
 of links $L$ is an integer such that $S-1 \le L \le S^2$. Because we know that
-there are at least $S-1$ interactions, there can be at most $S^2-(S-1)$ links
-*in excess* of this quantity. The $S-1$ minimum links do not need to be
-modelled, because their existence is guaranteed as a pre-condition of observing
-the network. The question our model should address is therefore, how many of
-these $S^2-(S-1)$ "flexible" links are actually present? A second key piece of
-information is that the presence of an interaction can be viewed as a discrete
-stochastic event, with two outcomes (there is, or there is not, an interaction).
-Assuming that all of these flexible links have the same chance of being
-realized, *i.e.* that aggregating across all possible trophic interactions, an
+there are at least $S-1$ links, there can be at most $S^2-(S-1)$ links *in
+excess* of this quantity. The $S-1$ minimum links do not need to be modelled,
+because their existence is guaranteed as a pre-condition of observing the
+network. The question our model should address is therefore, how many of these
+$S^2-(S-1)$ "flexible" links are actually present? A second key piece of
+information is that the presence of a link can be viewed as the outcome of a
+discrete stochastic event, of which the alternative outcome is that the link is
+absent. Assuming that all of these flexible links have the same chance of being
+realized, *i.e.* that aggregating across all possible species pairs, an
 additional link has the same probability which we call $p$, then we can write
 the expected number of links as
 
-$$ L_{\text{fl}} = p\times\left[S^2-(S-1)\right]+(S-1)\,, $$ {#eq:lhat}
+$$ L_{FL} = p\times\left[S^2-(S-1)\right]+(S-1)\,, $$ {#eq:lhat}
 
 where $p \in [0,1]$. When $p = 1$, $L$ is at its maximum ($S^2$), and when $p =
-0$ it is at the minimum value ($S - 1$). We use the notation $L_{\text{fl}}$ to
+0$ it is at the minimum value ($S - 1$). We use the notation $L_{FL}$ to
 represent that our model considers the number of "flexible" links in a food web;
 that is, the number of links in excess of the minimum but below the maximum.
 
