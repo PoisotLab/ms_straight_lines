@@ -126,7 +126,9 @@ these $S^2-(S-1)$ "flexible" links are actually present? A second key piece of
 information is that the presence of an interaction can be viewed as a discrete
 stochastic event, with two outcomes (there is, or there is not, an interaction).
 Assuming that all of these flexible links have the same chance of being
-realized, which we call $p$, then we can write the expected number of links as
+realized, *i.e.* that aggregating across all possible trophic interactions, an
+additional link has the same probability which we call $p$, then we can write
+the expected number of links as
 
 $$ L_{\text{fl}} = p\times\left[S^2-(S-1)\right]+(S-1)\,, $$ {#eq:lhat}
 
@@ -418,7 +420,12 @@ links. This undershooting, however, will not influence any actual z-scores,
 since no food webs have less than S-1 interactions and therefore no z-scores so
 low can be calculated.
 
-![**The shifted beta-binomial distribution can be approximated by a normal distribution.** The number of links is plotted as a function of species richness obtained from A) the maximum _a posteriori_ estimates of the flexible link model and B) its normal approximation. In each panel, the colored line represent the median predicted link number and the grey areas cover the 78% and 97% percentile intervals.  ](figures/betabinmap_normal_links.png){#fig:MAPnormal}
+![**The shifted beta-binomial distribution can be approximated by a normal
+distribution.** The number of links is plotted as a function of species richness
+obtained from A) the maximum _a posteriori_ estimates of the flexible link model
+and B) its normal approximation. In each panel, the colored line represent the
+median predicted link number and the grey areas cover the 78% and 97% percentile
+intervals.](figures/betabinmap_normal_links.png){#fig:MAPnormal}
 
 
 ### We should see many different Network-Area Relationships
@@ -496,11 +503,10 @@ reveals that $\sigma^\star$ falls towards 0 for larger species richness. The
 result in +@fig:stability is in agreement with previous simulations, placing the
 threshold for stability at about 1200 species in food webs. These results show
 how ecological limitations, for example on connectance and the resulting
-stability of the system, can limit the size of food webs [@AlleTang12]. In the
-second panel, we show that networks of increasing richness (thicker lines,
-varying on a log-scale from $10^1$ to $10^3$) have a lower probability of being
-stable, based on the proportion of stable networks.
-
+stability of the system, can limit the size of food webs [@AlleTang12;
+@BorrAlle15]. In the second panel, we show that networks of increasing richness
+(thicker lines, varying on a log-scale from $10^1$ to $10^3$) have a lower
+probability of being stable, based on the proportion of stable networks.
 
 ## Conclusions
 
