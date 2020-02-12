@@ -205,7 +205,7 @@ predictions below this value, especially for small values of $S$. The flexible
 link model made roughly the same predictions, but within ecologically realistic
 values.
 
-![**The flexible link model fits better and makes a plausible range of predictions.** The number of links is plotted as a function of species richness obtained from the posterior distributions of A) the link-species scaling, B) the constant connectance, C) the power law and D) the flexible link models. In each panel, the colored line represent the median predicted link number and the grey areas cover the 78% and 97% percentile intervals. Empirical data from the `mangal.io` database are plotted in each panel (grey dots), as well as the minimal $S-1$ and maximal $S^2$ number of links (lower and upper black lines, respectively).  ](figures/models_links.png){#fig:PP_counterfactual}
+![**The flexible link model fits better and makes a plausible range of predictions.** The number of links is plotted as a function of species richness obtained from the posterior distributions of A) the link-species scaling, B) the constant connectance, C) the power law and D) the flexible link models. In each panel, the colored line represent the median predicted link number and the grey areas cover the 78% and 97% percentile intervals. Empirical data from the `mangal.io` database are plotted in each panel (grey dots), as well as the minimal $S-1$ and maximal $S^2$ number of links (thinner and bolder black lines, respectively).  ](figures/models_links.png){#fig:PP_counterfactual}
 
 ## The flexible links model makes realistic predictions for small communities
 
@@ -250,8 +250,8 @@ with a negative binomial observation model, which has an additional parameter,
 $\kappa$, which is sometimes called a "concentration" parameter. This value
 increases from the top of our table to the bottom, in the same sequence as
 predictive performance improves in +@tbl:comparison. This indicates that the
-model predictions are more concentrated around the mean predicted by the model (
-+@tbl:parameters, column 1).
+model predictions are more concentrated around the mean predicted by the model
+(+@tbl:parameters, column 1).
 
 Our parameter estimates for the flexible links model are ecologically
 meaningful. For large communities, our model should behave similarly to the
@@ -479,7 +479,7 @@ Connectance in turn has implications for many ecological properties. A recent
 research direction has been to reveal its impact on resistance to invasion:
 denser networks with a higher connectance are comparatively more difficult to
 invade [@SmitMoor16]; different levels of connectance are also associated with
-different combination of primary producers, consumers, and apex predators
+different combinations of primary producers, consumers, and apex predators
 [@WillMart00], which in turns determines which kind of species will have more
 success invading the network [@BaisRuss10]. Because we can infer connectance
 from the richness of a community, our model also ties the invasion resistance of

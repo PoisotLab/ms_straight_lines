@@ -282,12 +282,6 @@ A = 0.0001:0.02:1.2
 k,z = 200.0, 0.27
 AS = convert.(Int64, ceil.(k.*A.^z))
 
-## plot of species
-species_area = plot(A, AS, title="A", title_location=:left, titlefontsize=11, framestyle=:box, lab = "")
-xaxis!("Area")
-yaxis!("Species Richness")
-
-
 # extract counterfactual links only -- necessary so that position matches S
 bb_post = betab_posterior[r"counterfactual_links"]
 pl_post = powerlaw_posterior[r"counterfactual_links"]
@@ -308,32 +302,12 @@ plot!(A, fl890, fillrange=fl110, color=:grey, alpha=0.15, label="")
 plot!(A, fl500, linecolor=pal.fl, linewidth=2, label="Flexible links")
 plot!(A, pl500, linecolor=pal.pl, linewidth=1, ls=:dot, label="Power law")
 xaxis!(xlabel="Area", xlims=(0.0, 1.0))
-yaxis!(:log, ylims = (0.9,40), ylabel="Linkage density")
+yaxis!(ylims = (1,50), ylabel="Linkage density")
 savefig(joinpath("figures", "nar"))
-
-## scale the "expected" distribution according to the mimum value:
-bquant_LS_AS = LocationScale.(min_ld_as, AS .- min_ld_as, beta_map)
-beta015_LS_AS = quantile.(bquant_LS, 0.015)
-beta985_LS_AS = quantile.(bquant_LS, 0.985)
-beta11_LS_AS = quantile.(bquant_LS, 0.11)
-beta89_LS_AS = quantile.(bquant_LS, 0.89)
-
-MAP_area = plot(A, beta985_LS_AS, fill=beta015_LS_AS, color=:grey, alpha=0.15, lab="",
-    title_location=:left, titlefontsize=11, framestyle=:box)
-plot!(A, beta11_LS_AS, fill=beta89_LS_AS, colour=:grey, alpha=0.15, lab="",)
-## plot of average
-min_ld_as = (AS .- 1) ./ AS
-avg_ld = 0.086 .* (AS .- min_ld_as) .+ min_ld_as
-plot!(A, avg_ld, lab="")
-xaxis!(xlabel="Area", xlims=(0.0, 1.0))
-yaxis!(ylims = (0.01,25), ylabel="Linkage density")
-
-plot(species_area, MAP_area, posterior_area, layout = (1,3))
 
 # Fig -- Stability imposes a limit on network size
 # posterior samples for the flexible links model
 betab_posterior_bigger = CSV.read(joinpath("data", "posterior_distributions", "beta_binomial_posterior_bigger.csv"))
-
 
 # stability after May / Allesina & Tang
 S = 1:1500
@@ -345,19 +319,39 @@ fl890 = neg_to_zeros.(quantile.(eachcol(fl_mod./S'), 0.89))
 fl985 = neg_to_zeros.(quantile.(eachcol(fl_mod./S'), 0.985))
 fl500 = neg_to_zeros.(quantile.(eachcol(fl_mod./S'), 0.5))
 
-plot(S, vec(1.0./sqrt.(fl985)), fillrange=vec(1.0./sqrt.(fl015)),
+pl_may_max = plot(S, vec(1.0./sqrt.(fl985)), fillrange=vec(1.0./sqrt.(fl015)),
     color=:grey, alpha=0.15, label="", frame=:box, size=(400, 400), margin=5Plots.mm,
     dpi=120, legend=:topleft, foreground_color_legend=nothing,
+    title_location=:left, titlefontsize=11,
+    title="A. maximal interaction diversity",
     background_color_legend=:white,
     xlabel="Species richness", ylabel="Maximal \\sigma")
-plot!(S, vec(1.0./sqrt.(fl890)), fillrange=vec(1.0./sqrt.(fl110)), color=:grey, alpha=0.15, label="")
-plot!(S, vec(1.0./sqrt.(fl500)), lw=2, c=pal.fl, lab="")
-xaxis!(:log, (3,1500))
-plot!(S, sqrt.(S)./sqrt.(S.-1), lab="", colour = :black, lw=1)
-plot!(S, 1.0 ./sqrt.(S), lab="", colour = :black, lw = 2)
-yaxis!((0,1.25), label="Maximal interaction diversity")
+plot!(pl_may_max, S, vec(1.0./sqrt.(fl890)), fillrange=vec(1.0./sqrt.(fl110)), color=:grey, alpha=0.15, label="")
+plot!(pl_may_max, S, vec(1.0./sqrt.(fl500)), lw=2, c=pal.fl, lab="")
+xaxis!(pl_may_max, :log, (3,1000))
+plot!(pl_may_max, S, sqrt.(S)./sqrt.(S.-1), lab="", colour = :black, lw=1)
+plot!(pl_may_max, S, 1.0 ./sqrt.(S), lab="", colour = :black, lw = 2)
+yaxis!(pl_may_max, (0,1.25), label="Maximal interaction diversity")
 # expression for the mean.
 mu_map = median(betab_posterior_bigger[:mu])
-plot!(S, 1 ./ sqrt.(mu_map .* S .+ (1 - mu_map) .* (S .- 1) ./ S), lab = "", color=:black, lw = 2, linestyle=:dot)
+plot!(pl_may_max, S, 1 ./ sqrt.(mu_map .* S .+ (1 - mu_map) .* (S .- 1) ./ S), lab = "", color=:black, lw = 1, linestyle=:dash)
 
+pl_may_prop = plot(frame=:box, title_location=:left, titlefontsize=11,
+    title="B. probability of a network being stable",
+    foreground_color_legend=nothing,
+    background_color_legend=:white)
+
+σ = 0.0:0.01:1.25
+
+
+for s in [10, 30, 100, 300, 1000]
+    L = fl_mod[:,s]
+    m = sqrt.(s.*(L./(s^2)))
+    plot!(pl_may_prop, σ, sum((σ.*m').< 1, dims=2)./2000, lab="", lw=log(s)/log(1000).*3, c=:grey, fill=(0, :darkgrey, 0.05))
+end
+
+yaxis!(pl_may_prop, (0,1), "P(stability)")
+xaxis!(pl_may_prop, "\\sigma", (minimum(σ), maximum(σ)))
+
+plot(pl_may_max, pl_may_prop, layout=(1,2), size=(700,350), margin=5Plots.mm, dpi=200)
 savefig(joinpath("figures", "may"))
