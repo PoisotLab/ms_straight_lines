@@ -68,7 +68,7 @@ const_cf_links = const_cf_links[:, S]
 powerlaw_cf_links = powerlaw_posterior[r"counterfactual_links"]
 powerlaw_cf_links = powerlaw_cf_links[:, S]
 
-# Figure 1 -- Beta fit with posterior samples
+# Fig -- Parameters can be estimated by Maximum Likelihood
 
 # generate posterior draws of the Beta distribution
 Random.seed!(1234)
@@ -87,7 +87,7 @@ p = fit(Beta, pex)
 phi_MLE = p.α + p.β
 mu_MLE = p.α / phi_MLE
 
-density(pex, c=:lightgrey, fill=(:lightgrey, 0, 0.5), dpi=200, size=(800,500), lab="Empirical data",
+density(pex, c=:lightgrey, fill=(:lightgrey, 0, 0.5), dpi=200, size=(800,500),  margin=5Plots.mm, lab="Empirical data",
     foreground_color_legend=nothing, background_color_legend=:white, framestyle=:box)
 plot!(betab_random[1], c=pal.fl, linewidth=1, alpha=0.3, lab="Posterior samples")
 for i in 1:length(index)
@@ -99,7 +99,7 @@ xaxis!((0, 0.5), "p")
 savefig(joinpath("figures", "beta_fit"))
 
 
-# Figure 2 -- Links estimate from counterfactuals of the 4 models
+# Fig -- The fexible link model ts better and makes a plausible range of predictions
 
 # Function to plot the quantiles of the counterfactuals links of each model
 # we use log_zeros function to plot the y-axis in log (to account for log(0))
@@ -131,13 +131,13 @@ plot_powerlaw = plot_links_quantile(powerlaw_cf_links, title="C. Power law",
 plot_betab = plot_links_quantile(betab_cf_links, title="D. Flexible links",
     xlabel="Species richness", linecolor=pal.fl)
 
-plot(plot_lssl, plot_const, plot_powerlaw, plot_betab, layout=(2,2), size=(700,700), dpi=200)
+plot(plot_lssl, plot_const, plot_powerlaw, plot_betab, layout=(2,2), size=(700,700),  margin=5Plots.mm, dpi=200)
 savefig(joinpath("figures", "models_links"))
 
 
-# Figure 3 -- Links estimate from MAP and normal approximation
+# Fig -- The shifted beta-binomial distribution can be approximated by a normal distribution
 
-# 3A BetaBinomial predictions from map values
+# A BetaBinomial predictions from map values
 
 bb_rand = rand.(betabin_map, 5000)
 
@@ -157,7 +157,7 @@ plot!(S, Ms, linecolor=:black, label="", lw=2) # Maximum number of links
 xaxis!(:log, "Species richness", label="", xlim=(minimum(S), maximum(S)))
 yaxis!(:log, "Number of links", ylims=(1,100000))
 
-# 3B Normal approximation of BetaBinomial
+# B Normal approximation of BetaBinomial
 means = (Ms .- mms) .* mu_map .+ S .- 1
 vars = (Ms .- mms) .* mu_map .* (1 .- mu_map) .* (1 .+ S .* (S .- 1) .* (1 / (1 + phi_map)))
 
@@ -180,15 +180,15 @@ plot!(S, Ms, linecolor=:black, label="", lw=2) # Maximum number of links
 xaxis!(:log, "Species richness", label="", xlim=(minimum(S), maximum(S)))
 yaxis!(:log, "Number of links", ylims=(1,100000))
 
-plot(links_beta_map, links_normal, layout=(1,2), size=(700,350), dpi=200)
+plot(links_beta_map, links_normal, layout=(1,2), size=(700,350), margin=5Plots.mm, dpi=200)
 savefig(joinpath("figures", "betabinmap_normal_links"))
 
 
 
 
-# Figure 4 - Connectance and link density
+# Fig - Connectance and linkage density can be derived from a model for links
 
-# 4A - connectance - species
+# A - connectance - species
 
 ## scale the "expected" distribution according to the minimum value:
 bquant = LocationScale.(ms, 1 .- ms, beta_map)
@@ -215,7 +215,7 @@ plot!(S, ms, label="", linecolor=:black, lw=1) # Minimum connectance
 xaxis!(:log, "Species richness", xlims=(minimum(S),maximum(S)))
 yaxis!("Connectance", (0, 0.5))
 
-# 4B distribution of linkage density
+# B linkage density - species
 
 ## scale the "expected" distribution according to the mimum value:
 bquant_LS = LocationScale.(msl, S .- msl, beta_map)
@@ -237,11 +237,11 @@ xaxis!(:log, "Species richness", xlims=(minimum(S),maximum(S)))
 yaxis!(:log, "Linkage density", ylims=(0.5,1000))
 
 
-plot(connectance_beta, avg_degree_beta, label=(1,2), lab="", size=(700,350), dpi=200)
+plot(connectance_beta, avg_degree_beta, label=(1,2), lab="", size=(700,350),  dpi=200,  margin=5Plots.mm)
 savefig(joinpath("figures", "connectance_linkdens"))
 
 
-# Figure 5 -- % of model prediction above or below minimum
+# Fig -- Only the flexible link model makes realistic predictions for small communities
 
 function realistic_links(model_cf)
     realistic = zeros(Float64, (1, length(S)))
@@ -263,7 +263,7 @@ medianspecies = quantile(d[:nodes], 0.5)
 species05 = quantile(d[:nodes], 0.05)
 species95 = quantile(d[:nodes], 0.95)
 
-plot([medianspecies], seriestype=:vline, color=:grey, ls=:dash, lab="", ylim=(0.4,1), frame=:box)
+plot([medianspecies], seriestype=:vline, color=:grey, ls=:dash, lab="", ylim=(0.4,1), frame=:box,  margin=5Plots.mm)
 plot!([species05, species95], [1.0, 1.0], fill=(0, :grey, 0.05), c=:transparent, lab="")
 plot!([species05], seriestype=:vline, color=:grey, ls=:dot, lab="")
 plot!([species95], seriestype=:vline, color=:grey, ls=:dot, lab="")
@@ -276,7 +276,8 @@ xaxis!(:log, "Species richness", xlims=(minimum(S),maximum(S)))
 yaxis!("Proportion of realistic links", (0.3, 1.01))
 savefig(joinpath("figures", "real_predict"))
 
-# Figure 6 -- Network-area relationships after Galliana et al 2018 (using figure 3 as a template)
+
+# Fig -- Many different Network-Area Relationships are supported by the data
 A = 0.0001:0.02:1.2
 k,z = 200.0, 0.27
 AS = convert.(Int64, ceil.(k.*A.^z))
@@ -302,9 +303,7 @@ fl890 = neg_to_zeros.(quantile.(eachcol(fl_mod./AS'), 0.89))
 fl985 = neg_to_zeros.(quantile.(eachcol(fl_mod./AS'), 0.985))
 fl500 = neg_to_zeros.(quantile.(eachcol(fl_mod./AS'), 0.5))
 
-posterior_area = plot(A, fl985, fillrange=fl015, color=:grey, alpha=0.15, label="", frame=:box,
-    size=(400, 400), dpi=120, legend=:bottomright, foreground_color_legend=nothing,
-    background_color_legend=:white)
+posterior_area = plot(A, fl985, fillrange=fl015, color=:grey, alpha=0.15, label="", frame=:box, size=(400, 400),  margin=5Plots.mm,  dpi=120, legend=:topleft, foreground_color_legend=nothing, background_color_legend=:white)
 plot!(A, fl890, fillrange=fl110, color=:grey, alpha=0.15, label="")
 plot!(A, fl500, linecolor=pal.fl, linewidth=2, label="Flexible links")
 plot!(A, pl500, linecolor=pal.pl, linewidth=1, ls=:dot, label="Power law")
@@ -331,6 +330,7 @@ yaxis!(ylims = (0.01,25), ylabel="Linkage density")
 
 plot(species_area, MAP_area, posterior_area, layout = (1,3))
 
+# Fig -- Stability imposes a limit on network size
 # posterior samples for the flexible links model
 betab_posterior_bigger = CSV.read(joinpath("data", "posterior_distributions", "beta_binomial_posterior_bigger.csv"))
 
@@ -346,7 +346,7 @@ fl985 = neg_to_zeros.(quantile.(eachcol(fl_mod./S'), 0.985))
 fl500 = neg_to_zeros.(quantile.(eachcol(fl_mod./S'), 0.5))
 
 plot(S, vec(1.0./sqrt.(fl985)), fillrange=vec(1.0./sqrt.(fl015)),
-    color=:grey, alpha=0.15, label="", frame=:box, size=(400, 400),
+    color=:grey, alpha=0.15, label="", frame=:box, size=(400, 400), margin=5Plots.mm,
     dpi=120, legend=:topleft, foreground_color_legend=nothing,
     background_color_legend=:white,
     xlabel="Species richness", ylabel="Maximal \\sigma")
