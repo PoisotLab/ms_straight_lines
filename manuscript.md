@@ -595,16 +595,9 @@ $$
 
 Note that while $e^\phi$ is shown in these equations for clarity, in the text we use $\phi$ to refer to the parameter after exponentiation.
 
-## Explanation of shifted beta-binomial distribution
+### Explanation of shifted beta-binomial distribution
 
-<!-- tk: move this 2nd order polynomail down to where it actually features in an argument
-
-This can be re-expressed as a second order polynomial:
-
-$$\hat L = p\times S^2 + (1-p)\times S + (p-1)\,. $${#eq:L} -->
-
-
-Equation [tk eq:L] implies that $\hat L_{BB}$ has a binomial distribution, with
+Equation +@eq:lhat implies that $L_{FL}$ has a binomial distribution, with
 $S^2 - S + 1$ trials and a probability $p$ of any flexible link being realized:
 
 $$
@@ -623,7 +616,7 @@ $$
 [L|S,\mu, \phi] =  { S^2 - (S - 1) \choose L - (S - 1)} \frac{\mathrm{B}(L - (S - 1) + \mu \phi, S^2 - L + (1 - \mu)\phi)}{\mathrm{B}(\mu \phi, (1 - \mu)\phi)}
 $${#eq:shiftBB}
 
-Where $B$ is the beta function.
+Where $B$ is the beta function. Thus, the problem of fitting this model becomes one of estimating the parameters of this univariate probability distribution.
 
 When the number of links and number of interactions are transformed by their
 natural log, $a$ and $b$ can be estimated with a linear regression, as done by
@@ -633,22 +626,6 @@ negative binomial distribution for observations. This distribution is limited to
 positive integers, and can vary on both sides of the mean relationship; this
 gives it a similar spirit to previous work which used a normal distribution on
 log-transformed variables.
-
-In all models we use a discrete probability distribution as the likelihood, with
-the number of observed links $L_i$ above the minimum as 'successes' and the
-number of possible links as 'trials'. Each model tries to capture variation in
-link number greater than would be predicted by $p$ alone.
-
-Our first model uses the beta-binomial distribution for observations of $L$;
-this distribution can be parameterized in terms of its mean $\mu$ and
-concentration parameter, $\phi$ :
-
-<!-- tk a better notation here; possibly imitating H&H's style?? -->
-
-$$\begin{aligned}
-\mu &\sim  \text{Beta}(3, 7)\\
-\log(\phi) & \sim \text{Normal}(3, 0.5)
-\end{aligned}$${#eq:betab}
 
 We chose our prior distribution for $p$ based on @Mart92 , who gave a value of
 constant connectance equal to 0.14. While this prior is "informative", it is
