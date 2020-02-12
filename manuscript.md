@@ -416,7 +416,7 @@ intervals.](figures/betabinmap_normal_links.png){#fig:MAPnormal}
 
 Our results bear important consequences for the nascent field of studying
 network-area relationships [NAR; @GaliLurg18]. As it has long been observed that
-not all species in a food web diffuse equally through space [@HoltLawt99],
+not all species in a food web diffuse equally through space [@HoltLawt99a],
 understanding how the shape of networks varies when the area increases is an
 important goal, and in fact underpins the development of a macroecological
 theory of food webs [@BaisGrav19]. Using a power-law as the acceptable
@@ -506,7 +506,7 @@ which remain within biological boundaries.
 This model also casts new light on previous results on the structure of food
 webs: small and large food webs behave differently [@GarlCald03]. Specifically,
 ecological networks most strongly deviate from scale free expectations when
-connectance is high [@DunnWill02a]. In our model, this behaviour emerges
+connectance is high [@DunnWill02]. In our model, this behaviour emerges
 naturally: connectance increases sharply as species richness decreases
 (+@fig:CoLd) -- that is, where the additive term $(S-1)/S^{2}$ in +@eq:co
 becomes progressively larger. In a sense, small ecological networks are
