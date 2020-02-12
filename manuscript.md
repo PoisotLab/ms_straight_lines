@@ -284,9 +284,12 @@ negligible.
 
 ## Other uses for our model
 
-Below we describe N useful insights that can be made using our model.
+Our model is generative, and that is important. It means we can use this model
+to correctly generate predictions that look like real data. That is very useful!
+It suggests that we can adapt the model, using either its parameters or predictions or
+both, to get a new persepctive on many questions in network ecology. Here we show four possible applications that we think are interesting, though many more are possible.
 
-## Probability distributions for $L_D$ and $Co$
+### Probability distributions for $L_D$ and $Co$
 
 In a beta-binomial distribution, it is assumed that the probability of success
 $p$ varies among groups of trials according to a $\text{Beta}(\mu\phi, (1-\mu)\phi)$ distribution. Since $p$
@@ -325,7 +328,7 @@ distribution for connectance not only accounts for the variability between
 networks, but can be used to describe fundamental properties of food webs and to
 identify ecological and evolutionary mechanisms shaping communities.
 
-## Normal approximation provides an analytic z-score
+### An analytic alternative to null-model testing
 
 Ecologists are often faced with the issue of comparing several networks. A common question is whether a given network has an "unusual" number of links relative to some
 expectation. Traditionally these comparisons have been done by simulating a
@@ -365,31 +368,6 @@ links. This undershooting, however, will not influence any actual z-scores, sinc
 
 ![**The shifted beta-binomial distribution can be approximated by a normal distribution.** The number of links is plotted as a function of species richness obtained from A) the maximum _a posteriori_ estimates of the flexible link model and B) its normal approximation. In each panel, the colored line represent the median predicted link number and the grey areas cover the 78% and 97% percentile intervals.](figures/betabinmap_normal_links.png){#fig:MAPnormal}
 
-## Conclusions
-
-Here we derived a flexible link model for the prediction of the number of links
-in ecological networks using a beta-binomial distribution for $L$, and show how
-it outperforms previous and more commonly used models describing this
-relationship. More importantly, we showed that our model has parameters with a clear ecological interpretation (specifically, the value of $p$ in
-+@eq:lhat is the expected value of the connectance when $S$ is large), and makes predictions which remain within biological boundaries.
-
-This model also casts new light on previous results on the structure of food
-webs: small and large food webs behave differently [@GarlCald03]. Specifically,
-ecological networks most strongly deviate from scale free
-expectations when connectance is high [@DunnWill02a]. In our model, this
-behaviour emerges naturally: connectance increases sharply as
-species richness decreases (+@fig:beta_distributions) -- that is, where the additive term $(S-1)/S^{2}$
-in +@eq:co becomes progressively larger. In a sense, small ecological networks
-are different only due to the low values of $S$. Small networks have only a very
-limited number of flexible links, and this drives connectance to be larger.
-Connectance in turn has implications for many ecological properties. A recent
-research direction has been to reveal its impact on resistance to invasion:
-denser networks with a higher connectance are comparatively more difficult to
-invade [@SmitMoor16]; different levels of connectance are also associated with
-different combination of primary producers, consumers, and apex predators
-[@WillMart00; @WillMart04], which in turns determines which kind of species will have more success invading the network [@BaisRuss10].
-Because we can infer connectance from the richness of a community, our model
-also ties the invasion resistance of a network to its species richness.
 
 ### Many different Network-Area Relationships are supported by the data
 
@@ -445,7 +423,34 @@ These
 results show how ecological limitations, for example on connectance and the resulting stability of the system, can limit the
 size of food webs [@AlleTang12].
 
-As a conclusion, we would like to note that the relationship between $L$ and $S$
+
+## Conclusions
+
+Here we derived a flexible link model for the prediction of the number of links
+in ecological networks using a beta-binomial distribution for $L$, and show how
+it outperforms previous and more commonly used models describing this
+relationship. More importantly, we showed that our model has parameters with a clear ecological interpretation (specifically, the value of $p$ in
++@eq:lhat is the expected value of the connectance when $S$ is large), and makes predictions which remain within biological boundaries.
+
+This model also casts new light on previous results on the structure of food
+webs: small and large food webs behave differently [@GarlCald03]. Specifically,
+ecological networks most strongly deviate from scale free
+expectations when connectance is high [@DunnWill02a]. In our model, this
+behaviour emerges naturally: connectance increases sharply as
+species richness decreases (+@fig:beta_distributions) -- that is, where the additive term $(S-1)/S^{2}$
+in +@eq:co becomes progressively larger. In a sense, small ecological networks
+are different only due to the low values of $S$. Small networks have only a very
+limited number of flexible links, and this drives connectance to be larger.
+Connectance in turn has implications for many ecological properties. A recent
+research direction has been to reveal its impact on resistance to invasion:
+denser networks with a higher connectance are comparatively more difficult to
+invade [@SmitMoor16]; different levels of connectance are also associated with
+different combination of primary producers, consumers, and apex predators
+[@WillMart00; @WillMart04], which in turns determines which kind of species will have more success invading the network [@BaisRuss10].
+Because we can infer connectance from the richness of a community, our model
+also ties the invasion resistance of a network to its species richness.
+
+The relationship between $L$ and $S$
 has been underpinning most of the literature on food web structure since the
 1980s. Additional generations of data allows us to switch from the link-species
 scaling law, to constant connectance, to more general formulations based on a
