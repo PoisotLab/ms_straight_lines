@@ -24,6 +24,6 @@
       "orcid": "0000-0002-0735-5184"
     }
   ],
-  "abstract": "Predicting the number of links in a food web is important, especially given biological and mathematical constraints. We investigate and compare several ways to predict link number in food webs. We conclude that a simple beta-binomial model outperforms other models. We show how this simple relationship gives rise to a predicted distribution of several quantities related to link number in food webs.",
+  "abstract": "Predicting the number of interactions that species in a food web will establish is an important task. These trophic interactions underlie many ecological and evolutionary processes, ranging from biomass fluxes, ecosystem stability, resilience to extinction, and resistance against novel species. We investigate and compare several ways to predict the number of interactions in food webs. We conclude that a simple beta-binomial model outperforms other models, with the added desirable property of respecting biological constraints. We show how this simple relationship gives rise to a predicted distribution of several quantities related to link number in food webs, including the scaling of network structure with space, and the probability that a network will be stable.",
   "keywords": ["food webs", "constant connectance", "link species scaling", "power law"]
 }
