@@ -145,7 +145,7 @@ constant for all links in community $i$, but may vary between communities, we
 can model the distribution of links directly as a shifted beta-binomial
 variable:
 
-$$ [L|S,\mu, \phi] =  { S^2 - (S - 1) \choose L - (S - 1)} \frac{\Beta(L - (S - 1) + \mu \phi, S^2 - L + (1 - \mu)\phi)}{\Beta(\mu \phi, (1 - \mu)\phi)} $$ {#eq:shiftBB}
+$$ [L|S,\mu, \phi] =  { S^2 - (S - 1) \choose L - (S - 1)} \frac{\mathrm{B}(L - (S - 1) + \mu \phi, S^2 - L + (1 - \mu)\phi)}{\mathrm{B}(\mu \phi, (1 - \mu)\phi)} $$ {#eq:shiftBB}
 
 Where $\mathrm{B}$ is the Beta function, $\mu$ is the average probability of a
 flexible link being realized (*i.e.* the average value of $p$ across
@@ -325,7 +325,7 @@ the transformation of $Co$ as described above (+@eq:co), and rescaling by the
 new range:
 
 $$
-[Co | S, \mu, \phi] = \frac{\left(Co - \frac{S-1}{S^2}\right)^{\mu \phi - 1}\left(1 - Co\right)^{(1 - \mu)\phi - 1} }{(1 - \frac{S-1}{S^2})^{\phi - 1} \times \Beta(\mu \phi, (1 - \mu)\phi)}
+[Co | S, \mu, \phi] = \frac{\left(Co - \frac{S-1}{S^2}\right)^{\mu \phi - 1}\left(1 - Co\right)^{(1 - \mu)\phi - 1} }{(1 - \frac{S-1}{S^2})^{\phi - 1} \times \mathrm{B}(\mu \phi, (1 - \mu)\phi)}
 $$ {#eq:shiftBetaCo}
 
 
@@ -333,7 +333,7 @@ Similarly, we can convert the distribution for $p$ into one for $L_D$ by
 replacing $p$ with the transformation that gives $L_D$ (+@eq:ld)
 
 $$
-[L_{D} | S, \mu, \phi] = \frac{\left(L_D - \frac{S-1} {S}\right)^{\mu \phi - 1}\left(1 - L_D\right)^{(1 - \mu)\phi - 1} }{(S - \frac{S-1}{S})^{\phi - 1} \times \Beta(\mu \phi, (1 - \mu)\phi)}
+[L_{D} | S, \mu, \phi] = \frac{\left(L_D - \frac{S-1} {S}\right)^{\mu \phi - 1}\left(1 - L_D\right)^{(1 - \mu)\phi - 1} }{(S - \frac{S-1}{S})^{\phi - 1} \times \mathrm{B}(\mu \phi, (1 - \mu)\phi)}
 $$ {#eq:shiftBetaLD}
 
 In +@fig:CoLd, we show that the connectance and linkage density
@@ -416,7 +416,17 @@ While our simulations generally match the empirical results on this topic
 between network structure and space, and that picking out the signal of network
 area relationships might be difficult.
 
-![**Many different Network-Area Relationships are supported by the data**. Representing the species richness as $S = k\times A^z$, with $A = 200$ and $k = 0.27$ [@GaliLurg18], we can compare the predictions of our model to that of the generally accepted power law (+@eq:pl). While our model predicts a larger linkage density in larger areas, the confidence intervals around this prediction are extremely large. - scales faster than the power law, but the confidence interval is extremely high, suggesting that we may observe either very weak, or very strong, effects of area increase.](figures/nar.png){#fig:nar}
+![**Many different Network-Area Relationships are supported by the data**.
+Representing the species richness as $S = k\times A^z$ (panel A), with $A$ being
+the relative area size, $k = 200$ being the maximal species richness, and $k =
+0.27$ a scaling exponent [@GaliLurg18], we can compare the predictions of our
+model to that of the generally accepted power law (+@eq:pl). While our model
+predicts a larger linkage density in larger areas (panel B), the confidence
+intervals around this prediction are extremely large. In particular, our model
+scales faster than the power law, but the confidence interval is extremely high
+(due to the power-law relationship between species and links), suggesting that
+we may observe either very weak, or very strong, effects of area
+increase.](figures/nar.png){#fig:nar}
 
 ### Stability imposes a limit on network size
 
@@ -525,7 +535,7 @@ $$
 
 
 
-## explanation of shifted beta-binomial distribution
+## Explanation of shifted beta-binomial distribution
 
 <!-- tk: move this 2nd order polynomail down to where it actually features in an argument
 
@@ -550,7 +560,7 @@ With this assumption, our likelihood becomes a shifted beta-binomial
 distribution:
 
 $$
-[L|S,\mu, \phi] =  { S^2 - (S - 1) \choose L - (S - 1)} \frac{\Beta(L - (S - 1) + \mu \phi, S^2 - L + (1 - \mu)\phi)}{\Beta(\mu \phi, (1 - \mu)\phi)}
+[L|S,\mu, \phi] =  { S^2 - (S - 1) \choose L - (S - 1)} \frac{\mathrm{B}(L - (S - 1) + \mu \phi, S^2 - L + (1 - \mu)\phi)}{\mathrm{B}(\mu \phi, (1 - \mu)\phi)}
 $${#eq:shiftBB}
 
 Where $B$ is the beta function.
@@ -610,8 +620,6 @@ values of the Pareto-k diagnostic statistic. This indicates that the model is
 heavily influenced by large values. Additionally, we had to drop the largest
 observation (> 50 000 links) from all datasets in order to calculate PSIS-LOO
 for the LSSL model. Taken together, this suggests that the LSSL model is
-insufficiently flexible to accurately reproduce the data.  
-
-
+insufficiently flexible to accurately reproduce the data.
 
 # References
