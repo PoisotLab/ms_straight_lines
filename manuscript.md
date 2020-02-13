@@ -555,7 +555,7 @@ network structure for free if only the species richness is known.
 
 ### Availability of code and data
 
-All code and data to reproduce this article is available at the Open Science Framework at https://doi.org/10.17605/OSF.IO/YGPZ2 . 
+All code and data to reproduce this article is available at the Open Science Framework at https://doi.org/10.17605/OSF.IO/YGPZ2 .
 
 ### Bayesian model definitions
 
@@ -596,7 +596,7 @@ $$
 [\mu, \phi| \textbf{L}, \textbf{S}] \propto \prod_{i = 1}^{255} \text{beta binomial}(L_i - S_i + 1 | S_i^2 - S_i + 1, \mu \times e^{\phi}, (1 - \mu) \times e^\phi) \times \text{beta}(\mu| 3 , 7 ) \times \text{normal}(\phi | 3, 0.5)
 $$
 
-Note that while $e^\phi$ is shown in these equations for clarity, in the text we use $\phi$ to refer to the parameter after exponentiation.
+Note that while $e^\phi$ is shown in these equations for clarity, in the text we use $\phi$ to refer to the parameter after exponentiation. In the above equations, bold type indicates a _vector_ of values; we use capital letters for $\textbf{L}$ and $\textbf{S}$ for consistency with the main text.
 
 Because we want to compare all our models using information criteria, we were required
 to use a discrete likelihood to fit all models. Our model uses a discrete likelihood by default, but the previous three models (LSSL, constant connectance and the power law) normally do not. Instead, these models have typically been fit with Gaussian likelihoods, sometimes after log-transforming $L$ and $S$. For example, +@eq:pl becomes a linear relationship between $\text{log}(L)$ and $\text{log}(S)$.  This ensures that predictions of $L$ are always positive, but allows otherwise unconstrained variation on both sides of the mean. To keep this same spirit, we chose the negative binomial distribution for observations.  This distribution is limited to
