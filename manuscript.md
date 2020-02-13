@@ -555,7 +555,7 @@ network structure for free if only the species richness is known.
 
 ### Availability of code and data
 
-All code and data to reproduce this article is available at `ZENODO REPO TK`.
+All code and data to reproduce this article is available at the Open Science Framework at https://doi.org/10.17605/OSF.IO/YGPZ2 . 
 
 ### Bayesian model definitions
 
