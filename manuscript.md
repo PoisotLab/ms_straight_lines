@@ -518,7 +518,7 @@ limited number of flexible links, and this drives connectance to be larger.
 Connectance in turn has implications for many ecological properties. Connectance
 is more than the proportion of realized interactions. It has been associated
 with some of the most commonly used network metrics [@PoisGrav14], and contains
-meaningful information on the stability [@DunnWill02a; @MontPimm06] and dynamics
+meaningful information on the stability [@DunnWill02; @MontPimm06] and dynamics
 [@VieiAlme15] of ecological communities. A probability distribution for
 connectance not only accounts for the variability between networks, but can be
 used to describe fundamental properties of food webs and to identify ecological
