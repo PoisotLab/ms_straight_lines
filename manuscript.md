@@ -29,7 +29,7 @@ links among species. This quantity can be large, especially in species-rich
 habitats, but it cannot be arbitrarily large. It is clear to any observer of
 nature that of all imaginable trophic links, only a fraction actually occur. If
 an ecological community contains $S$ species, then the maximum number of links
-in its foodweb is $S^2$: a community of omnivorous cannibals. This leads to the
+in its food web is $S^2$: a community of omnivorous cannibals. This leads to the
 second quantity: a ratio called *connectance* and defined by ecologists as $Co =
 L/S^2$. Connectance has become a fundamental quantity for nearly all other
 measures of food web structure and dynamics [@PascDunn06]. The third important
@@ -144,7 +144,7 @@ of links directly as a shifted beta-binomial variable:
 
 $$ [L|S,\mu, \phi] =  { S^2 - (S - 1) \choose L - (S - 1)} \frac{\mathrm{B}(L - (S - 1) + \mu \phi, S^2 - L + (1 - \mu)\phi)}{\mathrm{B}(\mu \phi, (1 - \mu)\phi)} $$ {#eq:shiftBB}
 
-Where $\mathrm{B}$ is the Beta function, $\mu$ is the average probability of a
+Where $\mathrm{B}$ is the beta function, $\mu$ is the average probability of a
 flexible link being realized (*i.e.* the average value of $p$ across networks in
 the dataset) and $\phi$ is the concentration around this value. The support of
 this distribution is limited to only ecologically realistic values of $L$: it
@@ -171,10 +171,10 @@ structure of food webs can be derived.
 | Constant [@Mart92]                 | @eq:cc   | 2811.0 ± 68.3    | -145.3               | 21.1                      |
 | Link-species scaling [@CoheBria84] | @eq:lssl | 39840.1 ± 2795.1 | -18659.8             | 1381.7                    |
 
-Table: Comparison of the four different models. We show Pareto-smoothed important sampling values (PSIS-LOO) and the SD of these values. PSIS-LOO is similar to information critera in that smaller values indicate better predictive performance. We also show expected log predictive density (ELPD) differences to the maximum for all models, along with the standard error (SE) of these differences. {#tbl:comparison}
+Table: Comparison of the four different models. We show Pareto-smoothed important sampling values (PSIS-LOO) and their standard deviation. PSIS-LOO is similar to information critera in that smaller values indicate better predictive performance. We also show expected log predictive density (ELPD) differences to the maximum for all models, along with the standard error (SE) of these differences. {#tbl:comparison}
 
 All models fit well, without any problematic warnings (see Experimental Procedures), and our model for flexible links outperformed
-previous solutions to the problem of modelling $L$. The flexible link model,
+previous solutions to the problem of modelling $L$. The flexible links model,
 which we fit via a beta-binomial observation model, had the most favourable
 values of PSIS-LOO information criterion (+@tbl:comparison) and of expected log
 predictive density (ELPD), relative to the three competing models which used a
@@ -202,7 +202,7 @@ values.
 ![**The flexible links model fits better and makes a plausible range of
 predictions.** The number of links is plotted as a function of species richness
 obtained from the posterior distributions of A) the link-species scaling, B) the
-constant connectance, C) the power law and D) the flexible link models. In each
+constant connectance, C) the power law and D) the flexible links models. In each
 panel, the colored line represent the median predicted link number and the grey
 areas cover the 78% and 97% percentile intervals. Empirical data from the
 `mangal.io` database are plotted in each panel (grey dots), as well as the
@@ -224,7 +224,7 @@ numbers of links between $S-1$ and $S^2$. It must be noted that unrealistic pred
 +@fig:real_predict, which represents 90% of the empirical data we used to fit
 the model; therefore it matters little that models agree for large $S$, since there are virtually no such networks observed.
 
-![**Only the flexible link model makes realistic predictions for small
+![**Only the flexible links model makes realistic predictions for small
 communities.** Here we show the proportion of posterior predictions from each of
 our 4 models which fall outside ecologically realistic values. The proportion of
 predictions in the correct range increases with species richness for the
@@ -275,7 +275,7 @@ flexible links being realized (thus showing how our previous assumption that $p$
 might vary between food webs to be more conservative than strictly required).
 The flexible links model also uses fewer parameters than the power law model and
 makes slightly better predictions, which accounts for its superior performance
-in model comparison ( +@tbl:comparison)
+in model comparison (+@tbl:comparison)
 
 ## Connectance and linkage density can be derived from a model for links
 
@@ -293,10 +293,10 @@ and
 $$ L_D = \frac{L}{S} = p \left(S - \frac{S-1}{S} \right) +  \frac{S-1}{S},$$ {#eq:ld}
 
 For food webs with many species, these equations simplify: +@eq:lhat can be
-expressed as a second degree polynomial, ($p\times S^2  + (1-p)\times S +
+expressed as a second degree polynomial, ($ L_{FL} = p\times S^2  + (1-p)\times S +
 (p-1)$), whose leading term is $p\times S^2$. Therefore, when $S$ is large,
 +@eq:co and +@eq:ld respectively approach $Co = L/S^2 \approx p$ and $L_D = L/S
-\approx pS$. A study of equations +@eq:co and +@eq:ld also provides insight into
+\approx pS$. A study of +@eq:co and +@eq:ld also provides insight into
 the ecological interpretation of the parameters in our equation. For example,
 +@eq:ld implies that adding $n$ species should increase the linkage density by
 approximately $p\times n$. The addition of 11 new species ($p^{-1}$ according to
@@ -350,7 +350,7 @@ obtained from the equations above fit the empirical data well.
 
 ![**Connectance and linkage density can be derived from a model for links.** A)
 Connectance and B) linkage density are plotted as a function of species
-richness, for the maximum _a posteriori_ estimates of the flexible link model.
+richness, for the maximum _a posteriori_ estimates of the flexible links model.
 In each panel, the colored line represent the median predicted quantity and the
 grey areas cover the 78% and 97% percentile intervals. Empirical data from the
 `mangal.io` database are plotted in each panel (grey dots). In A), the minimal
@@ -399,17 +399,19 @@ networks and estimate their number of missing (extra) links.
 In +@fig:MAPnormal, we show that the predictions made by the normal
 approximation (panel B) are similar to those made by the beta distribution
 parameterized with the maximum _a posteriori_ values of $\mu$ and $\phi$ (panel
-A), although the later can undershoot the constraint on the minimum number of
+A), although the former can undershoot the constraint on the minimum number of
 links. This undershooting, however, will not influence any actual z-scores,
-since no food webs have fewer than S-1 links and therefore no z-scores so low
+since no food webs have fewer than $S-1$ links and therefore no z-scores so low
 can ever be observed.
 
 ![**The shifted beta-binomial distribution can be approximated by a normal
 distribution.** The number of links is plotted as a function of species richness
-obtained from A) the maximum _a posteriori_ estimates of the flexible link model
+obtained from A) the maximum _a posteriori_ estimates of the flexible links model
 and B) its normal approximation. In each panel, the colored line represent the
 median predicted link number and the grey areas cover the 78% and 97% percentile
-intervals.](figures/betabinmap_normal_links.png){#fig:MAPnormal}
+intervals. The
+minimal $S-1$ and maximal $S^2$ numbers of links are plotted in each panel (thinner and bolder black lines,
+respectively)](figures/betabinmap_normal_links.png){#fig:MAPnormal}
 
 
 ### We should see many different Network-Area Relationships
@@ -428,15 +430,16 @@ dispersal of values of $L$, the relationship between $L/S$ and area can have a
 really wide confidence interval. While our posterior predictions generally match the
 empirical results on this topic [*e.g.* @WoodRuss15], they suggest that we will
 observe many relationships between network structure and space, and that picking
-out the signal of network area relationships might be difficult.
+out the signal of network-area relationships might be difficult.
 
 ![**Many different Network-Area Relationships are supported by the data**.
  Representing the species richness as $S = k\times A^z$ (panel A), with $A$ being
-the relative area size, $k = 200$ being the maximal species richness, and $k =
+the relative area size, $k = 200$ being the maximal species richness, and $z =
 0.27$ a scaling exponent [@GaliLurg18]. We then use the posterior distribution of $L$ to predict how $L_D$ should scale with $A$. We compare the predictions of our
 model to that of the generally accepted power law (+@eq:pl). While our model
 predicts a larger linkage density in larger areas (panel B), the confidence
-intervals around this prediction are extremely large. In particular, our model
+intervals around this prediction (grey areas covering the 78% and 97% percentile
+intervals) are extremely large. In particular, our model
 scales faster than the power law, but the confidence interval is high
 (due to the scaling of variance with $S$, +@eq:bb_sigma). This suggests that
 we may observe either very weak, or very strong, effects of area
@@ -464,7 +467,7 @@ $p\times S$ will keep growing infinitely.
 
 ![**Stability imposes a limit on network size**. Using +@eq:ld, we can calculate
 the maximum standard deviation in the strength of interactions which should
-ensure food web stability, $\sigma^\star = 1/\sqrt{L_D}$ (panel A). The fine and
+ensure food web stability, $\sigma^\star = 1/\sqrt{L_D}$ (panel A). The colored line represent the median value of maximum standard deviation, based on the posterior distribution of the flexible links model, and the grey areas cover the 78% and 97% percentile intervals. The fine and
 dark lines indicate the maximum and minimum value of maximum standard deviation,
 respectively. The dotted line shows the maximum for the average $L_D$, as given
 by +@eq:ld. The maximum standard deviation falls sharply when the number of
@@ -596,7 +599,7 @@ $$
 Note that while $e^\phi$ is shown in these equations for clarity, in the text we use $\phi$ to refer to the parameter after exponentiation.
 
 Because we want to compare all our models using information criteria, we were required
-to use a discrete likelihood to fit all models. Our model uses a discrete likelihood by default, but the previous three models (LSSL, constant connectance and the power law) normally do not. Instead, these models have typically been fit with Gaussian likelihoods, sometimes after log-transforming L and S. For example, +@eq:pl becomes a linear relationship between $\text{log}(L)$ and $\text{log}(S)$.  This ensures that predictions of $L$ are always positive, but allows otherwise unconstrained variation on both sides of the mean. To keep this same spirit, we chose the negative binomial distribution for observations.  This distribution is limited to
+to use a discrete likelihood to fit all models. Our model uses a discrete likelihood by default, but the previous three models (LSSL, constant connectance and the power law) normally do not. Instead, these models have typically been fit with Gaussian likelihoods, sometimes after log-transforming $L$ and $S$. For example, +@eq:pl becomes a linear relationship between $\text{log}(L)$ and $\text{log}(S)$.  This ensures that predictions of $L$ are always positive, but allows otherwise unconstrained variation on both sides of the mean. To keep this same spirit, we chose the negative binomial distribution for observations.  This distribution is limited to
 positive integers, and can vary on both sides of the mean relationship.
 
 We selected priors for our bayesian models using a combination of literature and domain expertise. For example, we chose our prior distribution for $p$ based on @Mart92 , who gave a value of
