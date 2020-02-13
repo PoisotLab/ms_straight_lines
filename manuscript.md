@@ -293,8 +293,8 @@ and
 $$ L_D = \frac{L}{S} = p \left(S - \frac{S-1}{S} \right) +  \frac{S-1}{S},$$ {#eq:ld}
 
 For food webs with many species, these equations simplify: +@eq:lhat can be
-expressed as a second degree polynomial, ($ L_{FL} = p\times S^2  + (1-p)\times S +
-(p-1)$), whose leading term is $p\times S^2$. Therefore, when $S$ is large,
+expressed as a second degree polynomial, $L_{FL} = p\times S^2  + (1-p)\times S +
+(p-1)$, whose leading term is $p\times S^2$. Therefore, when $S$ is large,
 +@eq:co and +@eq:ld respectively approach $Co = L/S^2 \approx p$ and $L_D = L/S
 \approx pS$. A study of +@eq:co and +@eq:ld also provides insight into
 the ecological interpretation of the parameters in our equation. For example,
