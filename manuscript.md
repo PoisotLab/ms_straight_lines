@@ -491,7 +491,7 @@ result in +@fig:stability is in agreement with previous simulations, placing the
 threshold for stability at about 1200 species in food webs. These results show
 how ecological limitations, for example on connectance and the resulting
 stability of the system, can limit the size of food webs [@AlleTang12;
-@BorrAlle15]. In the second panel, we show that networks of increasing richness
+@BorrAlle15a]. In the second panel, we show that networks of increasing richness
 (thicker lines, varying on a log-scale from $10^1$ to $10^3$) have a lower
 probability of being stable, based on the proportion of stable networks in our
 posterior samples.
