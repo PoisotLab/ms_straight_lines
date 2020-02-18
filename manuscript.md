@@ -524,13 +524,13 @@ models for food webs, such as the niche model [@WillMart00], the cascade model
 [@CoheNewm85], the DBM [@BeckPetc06] and ADBM [@PetcBeck08], the minimum
 potential niche model [@AlleAlon08], and the nested hierarchy model
 [@CattBers04] to name a few. All of these models make predictions of food web
-structure, *i.e.* their output based on some parameters (usually $S$ and $L$,
-and sometimes vectors of species-level parameters) is an adjacency matrix
-$\mathbf{A}_{S\times S}$, containing either the presence or strength of trophic
-interactions. In almost all cases, these models require to make guesses at to
-the values of $L$ for a particular value of $S$, with the additional result that
-$\sum \mathbf{A} = L$ -- in a sense, our approach can serve to penalize these
-models, by imposing that the values of $L$ they generate are withing realistic
+structure: based on some parameters (usually $S$ and $L$,
+and sometimes vectors of species-level parameters) they output an adjacency matrix
+$\mathbf{A}_{S\times S}$ which contains either the presence or strength of trophic
+interactions. Therefore, these models require estimated values of
+$L$ for a particular value of $S$, with the additional result that
+$\sum \mathbf{A} = L$/ . Our approach can serve to improve the realism of these
+models, by imposing that the values of $L$ they use are within realistic
 boundaries.
 
 This model also casts new light on previous results on the structure of food
