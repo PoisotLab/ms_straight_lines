@@ -529,7 +529,7 @@ and sometimes vectors of species-level parameters) they output an adjacency matr
 $\mathbf{A}_{S\times S}$ which contains either the presence or strength of trophic
 interactions. Therefore, these models require estimated values of
 $L$ for a particular value of $S$, with the additional result that
-$\sum \mathbf{A} = L$/ . Our approach can serve to improve the realism of these
+$\sum \mathbf{A} = L$. Our approach can serve to improve the realism of these
 models, by imposing that the values of $L$ they use are within realistic
 boundaries.
 
