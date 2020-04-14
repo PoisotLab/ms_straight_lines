@@ -430,7 +430,7 @@ respectively)](figures/betabinmap_normal_links.png){#fig:MAPnormal}
 
 Our results bear important consequences for the nascent field of studying
 network-area relationships [NAR; @GaliLurg18]. As it has long been observed that
-not all species in a food web diffuse equally through space [@HoltLawt99a],
+not all species in a food web diffuse equally through space [@HoltLawt99],
 understanding how the shape of networks varies when the area increases is an
 important goal, and in fact underpins the development of a macroecological
 theory of food webs [@BaisGrav19]. Using a power-law as the acceptable
