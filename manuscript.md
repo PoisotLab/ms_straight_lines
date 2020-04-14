@@ -319,7 +319,7 @@ large, we should expect a connectance which is a constant. Thus $p$ has an
 interesting ecological interpretation: it represents the average connectance of
 networks large enough that the proportion $(S-1)/S^{2}$ is negligible.
 
-## Other uses for our model
+## Applications of the flexible links model to key food web questions
 
 Our model is generative, and that is important and useful: we can use this model
 to correctly generate predictions that look like real data.
