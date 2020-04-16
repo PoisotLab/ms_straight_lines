@@ -404,9 +404,13 @@ observed links $L_{obs}$, we can calculate its $z$-score as
 $$z = \frac{L_{obs} - \bar{L}}{\sqrt{\sigma_L^2}} \,.$$ {#eq:z}
 
 A network where $L = \bar{L}$ will have a $z$-score of 0, and any network with
-more (fewer) links will have a positive (negative) $z$-score. We suggest that
-the use of a $z$-score could help identify significantly under (over) sampled
-networks and estimate their number of missing (extra) links.
+more (fewer) links will have a positive (negative) $z$-score.
+Following this method, we computed the empirical z-scores for the 255 food webs in the Mangal database (+@fig:zscores). Among those, 18 (7.1%) had a total number of observed links unusually higher than what was expected under the flexible links model ($|z| >$ 1.96). This proportion of "unusual" food webs is close to the significance level of 5% typically used in statistical hypothesis testing. These networks derived from their random expectations, and this suggests that their unusually high number of links might have been driven by another mechanism non-represented in our model. Ecologists can use our method to assess the deviation of their own empirical or simulated food webs from their random expectation.
+
+The use of a z-score to assess the discrepancy of a food web from its random expectation has however its limits. Indeed, z-scores computed using our model and data cannot be unusually low ($z <$ 1.96). This is because the total number of links cannot be arbitrary small, being bounded by and close to the minimum $S-1$. Hence, negative z-scores are typically low (in absolute value) in comparison to the positive ones (+@fig:zscores).
+
+![**Empirical distribution of food-web z-scores** The z-scores of all food webs in the Mangal database have been computed using +@eq:z. Food webs with an absolute z-score above 1.96 are in pink.  
+](figures/z-scores.png){#fig:zscores}
 
 In +@fig:MAPnormal, we show that the predictions made by the normal
 approximation (panel B) are similar to those made by the beta distribution
