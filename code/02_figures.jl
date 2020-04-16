@@ -368,3 +368,25 @@ xaxis!(pl_may_prop, "\\sigma", (minimum(σ), maximum(σ)))
 
 plot(pl_may_max, pl_may_prop, layout=(1,2), size=(700,350), margin=5Plots.mm, dpi=200)
 savefig(joinpath("figures", "may"))
+
+
+
+# Fig -- Histogram of z-scores
+
+# Compute expected number of links and variance
+L_hat = (d.nodes .^2 .- d.nodes .+ 1) .* mu_map .+ d.nodes .- 1
+sigma_2_L_hat = (d.nodes .^2 .- d.nodes .+ 1) .* mu_map .* (1 .- mu_map) .* (1 .+ d.nodes .* (d.nodes .- 1) ./ (phi_map .+ 1))
+
+# Compute z-scores
+z_scores = (d.links .- L_hat) ./ sqrt.(sigma_2_L_hat)
+
+# Abnormal z-scores are above 1.96 (in absolute values)
+z_scores_abnormals = z_scores[abs.(z_scores) .> 1.96]
+z_scores_abnormals_pct = length(z_scores_abnormals) / size(d, 1)
+
+# Plot histogram
+histogram(z_scores, lab="", fill=:grey, alpha=0.6,
+         frame=:box, dpi=120, bins=30,
+         xlabel="z-score", ylabel="Frequency")
+histogram!(z_scores_anormals, fill=pal.fl, alpha=0.6, lab="", bins=18)
+savefig(joinpath("figures", "z-scores"))
