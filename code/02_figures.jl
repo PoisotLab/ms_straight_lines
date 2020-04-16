@@ -264,7 +264,7 @@ species05 = quantile(d[:nodes], 0.05)
 species95 = quantile(d[:nodes], 0.95)
 
 plot([medianspecies], seriestype=:vline, color=:grey, ls=:dash, lab="", ylim=(0.4,1), frame=:box,  margin=5Plots.mm)
-plot!([species05, species95], [1.0, 1.0], fill=(0, :grey, 0.05), c=:transparent, lab="")
+plot!([species05, species95], [1.0, 1.0], fill=(0, :grey, 0.12), c=:transparent, lab="")
 plot!([species05], seriestype=:vline, color=:grey, ls=:dot, lab="")
 plot!([species95], seriestype=:vline, color=:grey, ls=:dot, lab="")
 plot!(S, realistic_lssl, color=pal.lssl, linewidth=2, label="LSSL",
