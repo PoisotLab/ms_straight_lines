@@ -263,7 +263,7 @@ Table: Parameter estimates for all models. Mean and standard deviation (SD) is g
 
 Although we did not use the same approach to parameter estimation as previous
 authors, our approach to fitting these models recovered parameter estimates that
-are broadly congruent with previous work. We found a value of 2.2 for $b$ of the
+are broadly congruent with previous works. We found a value of 2.2 for $b$ of the
 LSSL model (+@tbl:parameters), which is close to the original value of
 approximately 2 [@CoheBria84]. Similarly, we found a value of 0.12 for $b$ of
 the constant connectance model, which was consistent with original estimate of
@@ -504,7 +504,7 @@ as the criteria $\sigma \sqrt{S \times Co} < 1$ is satisfied, with $\sigma$
 being the standard deviation of the strengths of interactions. Although this
 criteria is not necessarily stringent enough for the stability of food webs
 [@AlleTang12; @AlleTang15], it still defines an approximate maximum value
-$\sigma^\star$ which is the value of above which the system is expected to be
+$\sigma^\star$ which is the value above which the system is expected to be
 unstable. This threshold is $\sigma^\star = 1/\sqrt{L_D}$, where $L_D$ is
 defined as in +@eq:ld. We illustrate this result in +@fig:stability, which
 reveals that $\sigma^\star$ falls towards 0 for larger species richness. The
