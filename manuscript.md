@@ -407,7 +407,7 @@ A network where $L = \bar{L}$ will have a $z$-score of 0, and any network with
 more (fewer) links will have a positive (negative) $z$-score.
 Following this method, we computed the empirical z-scores for the 255 food webs in the Mangal database (+@fig:zscores). Among those, 18 (7.1%) had a total number of observed links unusually higher than what was expected under the flexible links model ($|z| >$ 1.96). These networks derived from their random expectations, and this suggests that their unusually high number of links might have been driven by another mechanism, ecological or not, non-represented in our model. It could also mean that they falsely include too many links.
 
-Ecologists can use our method to assess the deviation of their own food webs from their random expectations. They could also estimate how many more links are expected to be observed in undersampled networks, or how many links might have been falsely considered realized in oversampled ones.
+Ecologists can use our method to assess the deviation of their own food webs from their random expectations. They could also estimate how many more links are expected to be observed in undersampled networks, or how many extra links might not actually occur locally in oversampled ones (i.e. inferred links that are not realized).
 
 The use of a z-score to assess the discrepancy of a food web from its random expectation has however its limits. Indeed, z-scores computed using our model and data cannot be unusually low ($z <$ 1.96). This is because the total number of links cannot be arbitrary small, being bounded by and typically close to the minimum $S-1$. Hence, negative z-scores are typically low (in absolute values) in comparison to the positive ones (+@fig:zscores).
 
