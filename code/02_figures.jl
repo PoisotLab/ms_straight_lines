@@ -98,8 +98,11 @@ yaxis!((0, 9.5), "Density")
 xaxis!((0, 0.5), "p")
 savefig(joinpath("figures", "beta_fit"))
 
-
 # Fig -- The fexible link model ts better and makes a plausible range of predictions
+
+# To make the maximum point apparent in plot
+d.nodesmax = maximum(d.nodes)
+d.linksmax = maximum(d.links)
 
 # Function to plot the quantiles of the counterfactuals links of each model
 # we use log_zeros function to plot the y-axis in log (to account for log(0))
@@ -114,8 +117,9 @@ function plot_links_quantile(model; title="", xlabel="", ylabel="", linecolor=""
         title=title, title_location=:left, titlefontsize=11,
         xlabel=xlabel, ylabel=ylabel, framestyle=:box) # 97% PI
     plot!(S, quant_890, fill=quant_110, color=:grey, alpha=0.15, label="") # 89% PI
-    scatter!(d[:nodes], d[:links], c=:grey, alpha=0.5, msw=0, markersize=5, label="") # Empirical links
+    scatter!(d[:nodes], d[:links], c=:grey, alpha=0.6, msw=0, markersize=5, label="") # Empirical links
     plot!(S, quant_500, linecolor=linecolor, linewidth=3, label="") # Median link number
+    scatter!(d.nodesmax, d.linksmax, c=:grey, alpha=0.6, msw=0, markersize=5, label="") # Maximum empirical link
     plot!(S, mms, linecolor=:black, lw=1, label="") # Minimum number of links
     plot!(S, Ms, linecolor=:black, lw=2, label="") # Maximum number of links
     xaxis!(:log, xlabel=xlabel, xlims=(minimum(S), maximum(S)))
