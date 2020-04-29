@@ -88,9 +88,8 @@ $L \approx b\times S^a$ have no constraints --  with the exception of the
 "constant connectance" model, in which $L_{\text{cc}}$ has a maximum value of
 $S^2$. However, we know that the number of links within a food web is both lower
 and upper bounded [@Mart92; @PoisGrav14]: there can be no more than $S^2$ links,
-and there can be no fewer than $S-1$ links. This minimum of $S-1$ represents
-communities where all species interact and at least some of the organisms are
-heterotrophs [@Mart92]. Numerous simple food webs could have this minimal number
+and there can be no fewer than $S-1$ links. This minimum of $S-1$ holds for food webs
+in which all species interact -- for example, a community of plants and herbivores where no plants are inedible and all herbivores must eat [@Mart92]. Numerous simple food webs could have this minimal number
 of links -- for example, a linear food chain wherein each trophic level consists
 of a single species, each of which consumes only the species below it; or a
 grazing herbivore which feeds on every plant in a field. Thus the number of
@@ -696,7 +695,7 @@ implements Bayesian inference using Hamiltonian Monte Carlo. We ran all models
 using four chains and 2000 iterations per chain. In our figures we use the posterior
 predictive distribution, which is a distribution described by the model after conditioning on the data.
 There are numerous ways to display a probability distribution; here we have chosen
-to do so using the expectation (mean) and two arbitrary percentiles: 78% and 97%. 
+to do so using the expectation (mean) and two arbitrary percentiles: 78% and 97%.
 
 Stan provides a number of diagnostics for samples from the posterior distribution, including $\hat{R}$,
 effective sample size, and measures of effective tree depth and divergent
