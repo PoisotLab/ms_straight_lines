@@ -217,7 +217,7 @@ panel, the colored line represent the median predicted link number and the grey
 areas cover the 78% and 97% percentile intervals. Empirical data from the
 `mangal.io` database are plotted in each panel (grey dots), as well as the
 minimal $S-1$ and maximal $S^2$ number of links (thinner and bolder black lines,
-respectively). Predictions from the flexible links model are always plausible, as they stay within these biological boundaries.](figures/models_links.png){#fig:PP_counterfactual}
+respectively). Predictions from the flexible links model are always plausible: they stay within these biological boundaries.](figures/models_links.png){#fig:PP_counterfactual}
 
 ## The flexible links model makes realistic predictions for small communities
 
@@ -693,8 +693,12 @@ database `mangal.io` [@PoisBais16]. We queried metadata (number of nodes and
 number of links) for all networks, and considered as food webs all networks
 having interactions of predation and herbivory. We use Stan [@CarpGelm17a] which
 implements Bayesian inference using Hamiltonian Monte Carlo. We ran all models
-using four chains and 2000 iterations per chain. Stan provides a number of
-diagnostics for samples from the posterior distribution, including $\hat{R}$,
+using four chains and 2000 iterations per chain. In our figures we use the posterior
+predictive distribution, which is a distribution described by the model after conditioning on the data.
+There are numerous ways to display a probability distribution; here we have chosen
+to do so using the expectation (mean) and two arbitrary percentiles: 78% and 97%. 
+
+Stan provides a number of diagnostics for samples from the posterior distribution, including $\hat{R}$,
 effective sample size, and measures of effective tree depth and divergent
 iterations. None of these indicated problems with the posterior sampling. All
 models converged with no warnings; this indicates that is it safe to make
