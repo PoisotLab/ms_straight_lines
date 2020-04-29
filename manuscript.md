@@ -181,8 +181,8 @@ structure of food webs can be derived.
 
 Table: Comparison of the four different models. We show Pareto-smoothed important sampling values (PSIS-LOO) and their standard deviation. PSIS-LOO is similar to information critera in that smaller values indicate better predictive performance. We also show expected log predictive density (ELPD) differences to the maximum for all models, along with the standard error (SE) of these differences. {#tbl:comparison}
 
-All models fit well, without any problematic warnings (see Experimental
-Procedures), and our model for flexible links outperformed previous solutions to
+When fit to the datasets archived on mangal.io, all four models fit without any problematic warnings (see Experimental
+Procedures), while our model for flexible links outperformed previous solutions to
 the problem of modelling $L$. The flexible links model, which we fit via a
 beta-binomial observation model, had the most favourable values of PSIS-LOO
 information criterion (+@tbl:comparison) and of expected log predictive density
