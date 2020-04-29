@@ -398,17 +398,18 @@ $$\bar{L} = (S^2 - S + 1) \mu + S - 1$$
 $$\sigma_L^2 = (S^2 - S + 1) \mu (1 - \mu)(1 + \frac{S(S-1)}{\phi + 1})$$ {#eq:bb_sigma}
 
 This means that given a network with observed species richness $S_{obs}$ and
-observed links $L_{obs}$, we can calculate its $z$-score as
+observed links $L_{obs}$, we can calculate its $z$-score, i.e. how many standard deviations an observation is from the population average, as
 
 $$z = \frac{L_{obs} - \bar{L}}{\sqrt{\sigma_L^2}} \,.$$ {#eq:z}
 
+
 A network where $L = \bar{L}$ will have a $z$-score of 0, and any network with
 more (fewer) links will have a positive (negative) $z$-score.
-Following this method, we computed the empirical z-scores for the 255 food webs archived on `mangal.io` (+@fig:zscores). Among those, 18 (7.1%) had a total number of observed links unusually higher than what was expected under the flexible links model ($|z| >$ 1.96). These networks derived from their random expectations, and this suggests that their unusually high number of links might have been driven by another mechanism, ecological or not, non-represented in our model. It could also mean that they falsely include too many links.
+Following this method, we computed the empirical z-scores for the 255 food webs archived on `mangal.io` (+@fig:zscores). Among those, 18 (7.1%) had a total number of observed links unusually higher than what was expected under the flexible links model ($|z| >$ 1.96). These networks are interesting candidates for the study of mechanisms leading to high connectance. Indeed, ecologists can use our method to assess the deviation of their own food webs from their random expectations.
 
-Ecologists can use our method to assess the deviation of their own food webs from their random expectations. They could also estimate how many more links are expected to be observed in undersampled networks, or how many extra links might not actually occur locally in oversampled ones (i.e. inferred links that are not realized).
+Our of 255 foodwebs, no webs were found to have unusually low numbers of links ($z <$ 1.96). z-scores computed using our model and data cannot be unusually low . This is because the total number of links cannot be arbitrary small, being bounded by and typically close to the minimum $S-1$. Hence, negative z-scores are typically low (in absolute values) in comparison to the positive ones (+@fig:zscores).
 
-The use of a z-score to assess the discrepancy of a food web from its random expectation has however its limits. Indeed, z-scores computed using our model and data cannot be unusually low ($z <$ 1.96). This is because the total number of links cannot be arbitrary small, being bounded by and typically close to the minimum $S-1$. Hence, negative z-scores are typically low (in absolute values) in comparison to the positive ones (+@fig:zscores).
+it doesn't mean that no food web will ever have a z-score lower than -1.96. If this model is fit to data from a specific system, it This model can be fit to data from a specific system to
 
 ![**Empirical distribution of food-web z-scores** The z-scores of all food webs archived on `mangal.io` have been computed using +@eq:z. Food webs with an absolute z-score above 1.96 are in pink.  
 ](figures/z-scores.png){#fig:zscores}
@@ -464,7 +465,7 @@ very strong, effects of area on networks.](figures/nar.png){#fig:nar}
 
 ### Stability imposes a limit on network size
 
-Our model introduces a puzzling question: can organisms really interact with an
+Can organisms really interact with an
 infinite number of partners? According to +@eq:ld, at large values of $S$, the
 linkage density scales according to $p\times S$ (which is supported by empirical
 data), and so species are expected to have on average $2\times p\times S$
@@ -536,7 +537,13 @@ interactions. Therefore, these models require estimated values of
 $L$ for a particular value of $S$, with the additional result that
 $\sum \mathbf{A} = L$. Our approach can serve to improve the realism of these
 models, by imposing that the values of $L$ they use are within realistic
-boundaries.
+boundaries. For example, a common use of structural models is to generate a set of "null" predictions:
+possible values of $\mathbf{A}$ and $L$ in the absence of the mechanism of interest.
+Empirical networks are then compared to this set of predictions, and are said to
+be significant if they are more extreme than 95% of the observations [@DelmBess18].
+A challenge in this approach is that structural models may generate a wide range of predictions, including ecologically impossible values, leading a high false negative rate. This could be
+remedied by filtering this set of predictions according to our flexible links model, resulting in a narrower
+set of null predictions and a lower false negative rate.
 
 This model also casts new light on previous results on the structure of food
 webs: small and large food webs behave differently [@GarlCald03]. Specifically,
