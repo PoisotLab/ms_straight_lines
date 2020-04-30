@@ -700,7 +700,7 @@ implements Bayesian inference using Hamiltonian Monte Carlo. We ran all models
 using four chains and 2000 iterations per chain. In our figures we use the posterior
 predictive distribution, which is a distribution described by the model after conditioning on the data.
 There are numerous ways to display a probability distribution; here we have chosen
-to do so using the expectation (mean) and two arbitrary percentiles: 78% and 97%.
+to do so using the expectation (mean) and two arbitrary percentile intervals: 78% and 97%. These intervals were chosen based on the recommendations of @McEl20, and allowed us to capture most of the probability density in the tails of the posterior distributions.
 
 Stan provides a number of diagnostics for samples from the posterior distribution, including $\hat{R}$,
 effective sample size, and measures of effective tree depth and divergent
