@@ -411,7 +411,7 @@ Our of 255 foodwebs, no webs were found to have unusually low numbers of links (
 
 it doesn't mean that no food web will ever have a z-score lower than -1.96. If this model is fit to data from a specific system, it This model can be fit to data from a specific system to
 
-![**Empirical distribution of food-web z-scores** The z-scores of all food webs archived on `mangal.io` have been computed using +@eq:z. Food webs with an absolute z-score above 1.96 are in pink.  
+![**Empirical distribution of food-web z-scores** The z-scores of all food webs archived on `mangal.io` have been computed using +@eq:z. Food webs with an absolute z-score above 1.96 are in pink. The shaded region comprises all food webs with an absolute z-score below 1.96.
 ](figures/z-scores.png){#fig:zscores}
 
 In +@fig:MAPnormal, we show that the predictions made by the normal

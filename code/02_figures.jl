@@ -384,13 +384,22 @@ sigma_2_L_hat = (d.nodes .^2 .- d.nodes .+ 1) .* mu_map .* (1 .- mu_map) .* (1 .
 # Compute z-scores
 z_scores = (d.links .- L_hat) ./ sqrt.(sigma_2_L_hat)
 
-# Abnormal z-scores are above 1.96 (in absolute values)
+# Non abnormal z-scores (below 1.96 in absolute values)
+z_scores_normals = z_scores[abs.(z_scores) .< 1.96]
+
+# Abnormal z-scores (above 1.96 in absolute values)
 z_scores_abnormals = z_scores[abs.(z_scores) .> 1.96]
 z_scores_abnormals_pct = length(z_scores_abnormals) / size(d, 1)
 
 # Plot histogram
-histogram(z_scores, lab="", fill=:grey, alpha=0.6,
+histogram(z_scores_normals, lab="", fill=:lightgrey,
+         xlims=(-6,6), xticks=-6:1:6,
+         ylims=(0,30), yticks=0:5:30,
          frame=:box, dpi=120, bins=30,
          xlabel="z-score", ylabel="Frequency")
-histogram!(z_scores_anormals, fill=pal.fl, alpha=0.6, lab="", bins=18)
+histogram!(z_scores_abnormals, fill=pal.fl, lab="", bins=18)
+plot!([-2, 2], [30, 30], fill=(0, :grey, 0.12), c=:transparent, lab="")
+plot!([-2], seriestype=:vline, color=:grey, ls=:dot, lab="")
+plot!([2], seriestype=:vline, color=:grey, ls=:dot, lab="")
+plot!([0], seriestype=:vline, color=:grey, ls=:dot, lab="")
 savefig(joinpath("figures", "z-scores"))
