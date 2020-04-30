@@ -389,7 +389,7 @@ means of measuring differences from the expectation. We provide a way to assess
 whether the number of links in a network (and therefore its connectance) is
 surprising. We do so using maths rather than simulations.
 
-The shifted beta-binomial can be approximated by a normal distribution:
+The shifted beta-binomial can be approximated by a normal distribution with mean $\bar{L}$ and variance $\sigma_L^2$:
 
 $$L \sim Normal(\bar{L}, \sigma_L^2)$$
 
@@ -404,12 +404,10 @@ $$z = \frac{L_{obs} - \bar{L}}{\sqrt{\sigma_L^2}} \,.$$ {#eq:z}
 
 
 A network where $L = \bar{L}$ will have a $z$-score of 0, and any network with
-more (fewer) links will have a positive (negative) $z$-score.
-Following this method, we computed the empirical z-scores for the 255 food webs archived on `mangal.io` (+@fig:zscores). Among those, 18 (7.1%) had a total number of observed links unusually higher than what was expected under the flexible links model ($|z| >$ 1.96). These networks are interesting candidates for the study of mechanisms leading to high connectance. Indeed, ecologists can use our method to assess the deviation of their own food webs from their random expectations.
+more (fewer) links will have a positive (negative) $z$-score. Following this method, we computed the empirical z-scores of the 255 food webs archived on `mangal.io` (+@fig:zscores). Among those, 18 (7.1%) had a total number of observed links unusually higher than what was expected under the flexible links model ($z >$ 1.96). These networks are interesting candidates for the study of mechanisms leading to high connectance.
 
-Our of 255 foodwebs, no webs were found to have unusually low numbers of links ($z <$ 1.96). z-scores computed using our model and data cannot be unusually low . This is because the total number of links cannot be arbitrary small, being bounded by and typically close to the minimum $S-1$. Hence, negative z-scores are typically low (in absolute values) in comparison to the positive ones (+@fig:zscores).
+Out of the 255 food webs, none was found to have unusually low numbers of links ($z <$ 1.96). In fact, z-scores computed using our model and data cannot be arbitrary low. This is because our model was fit to a sample of food webs of different types. Food webs having a total number of links close to the minimum $S-1$ were thus still typical when compared to this heterogenous population. It doesn't mean that no food web will ever have a z-score lower than -1.96. If the flexible links model is fit to data from a specific system, such food webs might have a surprisingly low number of links when compared to this new population. These networks would be interesting candidates for the study of mechanisms leading to low connectance or for the identification of under-sampled webs. Ecologists can thus use our method to assess the deviation of their own food webs from their own random expectations.
 
-it doesn't mean that no food web will ever have a z-score lower than -1.96. If this model is fit to data from a specific system, it This model can be fit to data from a specific system to
 
 ![**Empirical distribution of food-web z-scores** The z-scores of all food webs archived on `mangal.io` have been computed using +@eq:z. Food webs with an absolute z-score above 1.96 are in pink. The shaded region comprises all food webs with an absolute z-score below 1.96.
 ](figures/z-scores.png){#fig:zscores}
