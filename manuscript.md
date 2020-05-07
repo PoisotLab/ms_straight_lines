@@ -163,10 +163,11 @@ model derivation, fitting, and comparison, see Experimental Procedures.
 
 In this paper we will compare our flexible links model to three previous models
 for $L$. We estimate parameters and compare the performance of all models using
-open data from the `mangal.io` networks database [@PoisBais16]. We show how this
-model not only outperforms existing efforts at predicting the number of links,
-but also has numerous desirable properties from which novel insights about the
-structure of food webs can be derived.
+open data from the `mangal.io` networks database [@PoisBais16]. This online,
+open-access database collects published information on all kinds of ecological networks, including 255 food webs detailing interactions between consumers and
+resources. We use these data
+to show how our flexible links model not only outperforms existing efforts at predicting the number of links, but also has numerous desirable properties from
+which novel insights about the structure of food webs can be derived.
 
 # Results and Discussion
 
