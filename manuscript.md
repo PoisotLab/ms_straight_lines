@@ -398,7 +398,8 @@ $$\bar{L} = (S^2 - S + 1) \mu + S - 1$$
 
 $$\sigma_L^2 = (S^2 - S + 1) \mu (1 - \mu)(1 + \frac{S(S-1)}{\phi + 1})$$ {#eq:bb_sigma}
 
-This means that given a network with observed species richness $S_{obs}$ and
+This normal approximation is considered good whenever the skewness of the target distribution is modest. In food webs, this should be true whenever communities have more than about 10 species (see Appendix).
+This result means that given a network with observed species richness $S_{obs}$ and
 observed links $L_{obs}$, we can calculate its $z$-score, i.e. how many standard deviations an observation is from the population average, as
 
 $$z = \frac{L_{obs} - \bar{L}}{\sqrt{\sigma_L^2}} \,.$$ {#eq:z}
@@ -720,5 +721,20 @@ influenced by large values. Additionally, we had to drop the largest observation
 (> 50 000 links) from all datasets in order to calculate PSIS-LOO for the LSSL
 model. Taken together, this suggests that the LSSL model is insufficiently
 flexible to accurately reproduce the data.
+
+## Normal approximation and analytic z-scores
+
+We propose using a normal approximation to the beta-binomial distribution,
+to calculate analytic z-scores. This is based on a well-known similarity between
+the shape of a normal distribution and a binomial distribution.
+This approximation is considered good whenever the absolute
+skewness is less than 0.3, that is whenever:
+
+$$
+\frac{1}{\sqrt{S^2 - S + 1}}\left(\sqrt{\frac{1- \mu}{\mu}} - \sqrt{\frac{\mu}{1-\mu}}\right) < 0.3
+$$
+
+The beta-binomial distribution is close to the binomial distribution. The error in
+approximating the former with the latter is on the order of the inverse square of the parameter $\phi$, which for our model is less than 0.0017.
 
 # References
