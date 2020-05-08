@@ -728,13 +728,13 @@ We propose using a normal approximation to the beta-binomial distribution,
 to calculate analytic z-scores. This is based on a well-known similarity between
 the shape of a normal distribution and a binomial distribution.
 This approximation is considered good whenever the absolute
-skewness is less than 0.3, that is whenever:
+skewness is less than 0.3 [@BoxHunt05], that is whenever:
 
 $$
 \frac{1}{\sqrt{S^2 - S + 1}}\left(\sqrt{\frac{1- \mu}{\mu}} - \sqrt{\frac{\mu}{1-\mu}}\right) < 0.3
 $$
 
 The beta-binomial distribution is close to the binomial distribution. The error in
-approximating the former with the latter is on the order of the inverse square of the parameter $\phi$, which for our model is less than 0.0017.
+approximating the former with the latter is on the order of the inverse square of the parameter $\phi$ [@BoxHunt05], which for our model is less than 0.0017.
 
 # References
