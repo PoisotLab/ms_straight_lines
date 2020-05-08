@@ -480,12 +480,13 @@ interactions. A useful concept in evolutionary biology is the "Darwinian demon"
 environments. Our model seems to predict the emergence of what we call Eltonian
 demons, which can have arbitrarily large number of interactions. Yet we know
 that constraints on handling time of prey, for example, imposes hard limits on
-diet breadth [@ForiJenk17]. This result suggests that there are other
+diet breadth [@ForiJenk17].  This result suggests that there are other
 limitations to the size of food webs; indeed, the fact that $L/S$ increases to
 worryingly large values only matters if ecological processes allow $S$ to be
 large enough. It is known that food webs can get as high as energy transfer
-allows [@ThomBros12], and as wide as competition allows [@KefiBerl12]. In short,
-and as +@fig:real_predict suggests, since food webs are likely to be constrained
+allows [@ThomBros12], and as wide as competition allows [@KefiBerl12]. Furthermore, in more species-rich communities there is an greater diversity of functional traits among the 
+interacting organisms; this limits interactions, because traits determine suitable interaction partners.
+In short, and as +@fig:real_predict suggests, since food webs are likely to be constrained
 to remain within an acceptable richness, we have no reason to anticipate that
 $p\times S$ will keep growing infinitely.
 
