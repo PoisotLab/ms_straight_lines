@@ -120,7 +120,7 @@ because their existence is guaranteed as a pre-condition of observing the
 network. The question our model should address is therefore, how many of these
 $S^2-(S-1)$ "flexible" links are actually present? A second key piece of
 information is that the presence of a link can be viewed as the outcome of a
-discrete stochastic event, of which the alternative outcome is that the link is
+discrete stochastic event, with the alternative outcome that the link is
 absent. We assume that all of these flexible links have the same chance of being
 realized, which we call $p$. Then, if we aggregate across all possible species
 pairs, the expected number of links is
@@ -135,11 +135,10 @@ that is, the number of links in excess of the minimum but below the maximum.
 Because we assume that every flexible link is an independent stochastic event
 with only two outcomes, we can follow recent literature on probabilistic
 ecological networks [@PoisCirt16] and represent them as independent Bernoulli
-trials with a probability of success $p$. This approach to modelling is not
-grounded into the explicit representation of ecological mechanisms know to act
-on food webs [@PetcBeck08], but rather is intended to capture the fact that any
-interaction is the outcome of processes that can be represented as probabilistic
-events [@PoisStou15], and therefore assuming that flexible links can all be
+trials with a probability of success $p$. This approach does not capture
+ecological mechanisms known to act on food webs [@PetcBeck08], but rather captures that any
+interaction is the outcome of many processes which can overall be considered probabilistic
+events [@PoisStou15]. The assumption that flexible links can all be
 represented by Bernoulli events is an appropriate trade-off between biological
 realism and parameterization requirements.
 
@@ -484,7 +483,7 @@ diet breadth [@ForiJenk17].  This result suggests that there are other
 limitations to the size of food webs; indeed, the fact that $L/S$ increases to
 worryingly large values only matters if ecological processes allow $S$ to be
 large enough. It is known that food webs can get as high as energy transfer
-allows [@ThomBros12], and as wide as competition allows [@KefiBerl12]. Furthermore, in more species-rich communities there is an greater diversity of functional traits among the 
+allows [@ThomBros12], and as wide as competition allows [@KefiBerl12]. Furthermore, in more species-rich communities there is an greater diversity of functional traits among the
 interacting organisms; this limits interactions, because traits determine suitable interaction partners.
 In short, and as +@fig:real_predict suggests, since food webs are likely to be constrained
 to remain within an acceptable richness, we have no reason to anticipate that
