@@ -549,7 +549,10 @@ Empirical networks are then compared to this set of predictions, and are said to
 be significant if they are more extreme than 95% of the observations [@DelmBess18].
 A challenge in this approach is that structural models may generate a wide range of predictions, including ecologically impossible values, leading a high false negative rate. This could be
 remedied by filtering this set of predictions according to our flexible links model, resulting in a narrower
-set of null predictions and a lower false negative rate.
+set of null predictions and a lower false negative rate. In general, our approach
+is complementary to other attempts to create ecologically-realistic food web models;
+for example, probabilistic models of the number of links per species which stay within
+ecological values [@KozuPano15].
 
 This model also casts new light on previous results on the structure of food
 webs: small and large food webs behave differently [@GarlCald03]. Specifically,
@@ -559,7 +562,7 @@ naturally: connectance increases sharply as species richness decreases
 (+@fig:CoLd) -- that is, where the additive term $(S-1)/S^{2}$ in +@eq:co
 becomes progressively larger. In a sense, small ecological networks are
 different only due to the low values of $S$. Small networks have only a very
-limited number of flexible links, and this drives connectance to be larger.
+limited number of flexible links, and this drives connectance to be greater.
 Connectance in turn has implications for many ecological properties. Connectance
 is more than the proportion of realized interactions. It has been associated
 with some of the most commonly used network metrics [@PoisGrav14], and contains
