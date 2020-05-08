@@ -735,6 +735,6 @@ $$
 $$
 
 The beta-binomial distribution is close to the binomial distribution. The error in
-approximating the former with the latter is on the order of the inverse square of the parameter $\phi$ [@BoxHunt05], which for our model is less than 0.0017.
+approximating the former with the latter is on the order of the inverse square of the parameter $\phi$ [@Teer14], which for our model is less than 0.0017.
 
 # References
