@@ -731,22 +731,25 @@ database `mangal.io` [@PoisBais16]. We queried metadata (number of nodes and
 number of links) for all networks, and considered as food webs all networks
 having interactions of predation and herbivory. We use Stan [@CarpGelm17a] which
 implements Bayesian inference using Hamiltonian Monte Carlo. We ran all models
-using four chains and 2000 iterations per chain. In our figures we use the posterior
-predictive distribution, which is a distribution described by the model after conditioning on the data.
-There are numerous ways to display a probability distribution; here we have chosen
-to do so using the expectation (mean) and two arbitrary percentile intervals: 78% and 97%. These intervals were chosen based on the recommendations of @McEl20, and allowed us to capture most of the probability density in the tails of the posterior distributions.
+using four chains and 2000 iterations per chain. In our figures we use the
+posterior predictive distribution, which is a distribution described by the
+model after conditioning on the data. There are numerous ways to display a
+probability distribution; here we have chosen to do so using the expectation
+(mean) and two arbitrary percentile intervals: 78% and 97%. These intervals were
+chosen based on the recommendations of @McEl20, and allowed us to capture most
+of the probability density in the tails of the posterior distributions.
 
-Stan provides a number of diagnostics for samples from the posterior distribution, including $\hat{R}$,
-effective sample size, and measures of effective tree depth and divergent
-iterations. None of these indicated problems with the posterior sampling. All
-models converged with no warnings; this indicates that is it safe to make
-inferences about the parameter estimates and to compare the models. However, the
-calculation of PSIS-LOO for the LSSL model warned of problematic values of the
-Pareto-k diagnostic statistic. This indicates that the model is heavily
-influenced by large values. Additionally, we had to drop the largest observation
-(> 50 000 links) from all datasets in order to calculate PSIS-LOO for the LSSL
-model. Taken together, this suggests that the LSSL model is insufficiently
-flexible to accurately reproduce the data.
+Stan provides a number of diagnostics for samples from the posterior
+distribution, including $\hat{R}$, effective sample size, and measures of
+effective tree depth and divergent iterations. None of these indicated problems
+with the posterior sampling. All models converged with no warnings; this
+indicates that is it safe to make inferences about the parameter estimates and
+to compare the models. However, the calculation of PSIS-LOO for the LSSL model
+warned of problematic values of the Pareto-k diagnostic statistic. This
+indicates that the model is heavily influenced by large values. Additionally, we
+had to drop the largest observation (> 50 000 links) from all datasets in order
+to calculate PSIS-LOO for the LSSL model. Taken together, this suggests that the
+LSSL model is insufficiently flexible to accurately reproduce the data.
 
 ## Normal approximation and analytic z-scores
 
