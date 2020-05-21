@@ -514,10 +514,9 @@ suggests that there are other limitations to the size of food webs; indeed, the
 fact that $L/S$ increases to worryingly large values only matters if ecological
 processes allow $S$ to be large enough. It is known that food webs can get as
 high as energy transfer allows [@ThomBros12], and as wide as competition allows
-[@KefiBerl12]. Furthermore, in more species-rich communities there is an greater
+[@KefiBerl12]. Furthermore, in more species-rich communities there is a greater
 diversity of functional traits among the interacting organisms; this limits
-interactions, because traits determine suitable interaction partners [**ANDREW
-REF HERE** @BARTOMEUS_GRAVEL_FRAMEWORK]. In short, and as +@fig:real_predict
+interactions, because traits determine suitable interaction partners [@BartGrav16]. In short, and as +@fig:real_predict
 suggests, since food webs are likely to be constrained to remain within an
 acceptable richness, we have no reason to anticipate that $p\times S$ will keep
 growing infinitely.
