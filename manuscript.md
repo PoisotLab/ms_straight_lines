@@ -456,7 +456,6 @@ percentile intervals. The minimal $S-1$ and maximal $S^2$ numbers of links are
 plotted in each panel (thinner and bolder black lines,
 respectively)](figures/betabinmap_normal_links.png){#fig:MAPnormal}
 
-
 ### We should see many different Network-Area Relationships
 
 Our results bear important consequences for the nascent field of studying
@@ -474,6 +473,18 @@ really wide confidence interval. While our posterior predictions generally match
 the empirical results on this topic [*e.g.* @WoodRuss15], they suggest that we
 will observe many relationships between network structure and space, and that
 picking out the signal of network-area relationships might be difficult.
+
+As of now, not many NARs have been documented empirically;  but after the
+arguments made by @GaliLurg18, that tie the shape of these relationships to
+macroecological processes, we fully expect these relationships to be more
+frequently described moving forward. Our results suggest that our expectation of
+the amount of noise in these relationships should be realistic; while it is
+clear that these relationships exist, because of the scaling of dispersal in the
+number of links with the scaling in the number of species, they will exist
+within extremely wide confidence intervals, and it might require a large
+quantity of empirical data to properly characterize them. As such, our model can
+help in assessing the difficulty of capturing some foundational relationships of
+food web structure.
 
 ![**Many different Network-Area Relationships are supported by the data**.
 Representing the species richness as $S = k\times A^z$ (panel A), with $A$ being
@@ -505,10 +516,11 @@ processes allow $S$ to be large enough. It is known that food webs can get as
 high as energy transfer allows [@ThomBros12], and as wide as competition allows
 [@KefiBerl12]. Furthermore, in more species-rich communities there is an greater
 diversity of functional traits among the interacting organisms; this limits
-interactions, because traits determine suitable interaction partners. In short,
-and as +@fig:real_predict suggests, since food webs are likely to be constrained
-to remain within an acceptable richness, we have no reason to anticipate that
-$p\times S$ will keep growing infinitely.
+interactions, because traits determine suitable interaction partners [**ANDREW
+REF HERE** @BARTOMEUS_GRAVEL_FRAMEWORK]. In short, and as +@fig:real_predict
+suggests, since food webs are likely to be constrained to remain within an
+acceptable richness, we have no reason to anticipate that $p\times S$ will keep
+growing infinitely.
 
 ![**Stability imposes a limit on network size**. Using +@eq:ld, we can calculate
 the maximum standard deviation in the strength of interactions which should
