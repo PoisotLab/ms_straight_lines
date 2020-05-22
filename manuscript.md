@@ -474,13 +474,14 @@ the empirical results on this topic [*e.g.* @WoodRuss15], they suggest that we
 will observe many relationships between network structure and space, and that
 picking out the signal of network-area relationships might be difficult.
 
-As of now, not many NARs have been documented empirically;  but after the
-arguments made by @GaliLurg18, that tie the shape of these relationships to
+As of now, not many NARs have been documented empirically; but after the
+arguments made by @GaliLurg18 which tie the shape of these relationships to
 macroecological processes, we fully expect these relationships to be more
 frequently described moving forward. Our results suggest that our expectation of
 the amount of noise in these relationships should be realistic; while it is
-clear that these relationships exist, because of the scaling of dispersal in the
-number of links with the scaling in the number of species, they will exist
+clear that these relationships exist, because of the scaling of dispersion in the
+number of links with the number of species, they will necessarily be noisy. Any
+described relationships will exist
 within extremely wide confidence intervals, and it might require a large
 quantity of empirical data to properly characterize them. As such, our model can
 help in assessing the difficulty of capturing some foundational relationships of
