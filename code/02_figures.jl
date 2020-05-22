@@ -98,8 +98,11 @@ yaxis!((0, 9.5), "Density")
 xaxis!((0, 0.5), "p")
 savefig(joinpath("figures", "beta_fit"))
 
-
 # Fig -- The fexible link model ts better and makes a plausible range of predictions
+
+# To make the maximum point apparent in plot
+d.nodesmax = maximum(d.nodes)
+d.linksmax = maximum(d.links)
 
 # Function to plot the quantiles of the counterfactuals links of each model
 # we use log_zeros function to plot the y-axis in log (to account for log(0))
@@ -114,8 +117,9 @@ function plot_links_quantile(model; title="", xlabel="", ylabel="", linecolor=""
         title=title, title_location=:left, titlefontsize=11,
         xlabel=xlabel, ylabel=ylabel, framestyle=:box) # 97% PI
     plot!(S, quant_890, fill=quant_110, color=:grey, alpha=0.15, label="") # 89% PI
-    scatter!(d[:nodes], d[:links], c=:grey, alpha=0.5, msw=0, markersize=5, label="") # Empirical links
+    scatter!(d[:nodes], d[:links], c=:grey, alpha=0.6, msw=0, markersize=5, label="") # Empirical links
     plot!(S, quant_500, linecolor=linecolor, linewidth=3, label="") # Median link number
+    scatter!(d.nodesmax, d.linksmax, c=:grey, alpha=0.6, msw=0, markersize=5, label="") # Maximum empirical link
     plot!(S, mms, linecolor=:black, lw=1, label="") # Minimum number of links
     plot!(S, Ms, linecolor=:black, lw=2, label="") # Maximum number of links
     xaxis!(:log, xlabel=xlabel, xlims=(minimum(S), maximum(S)))
@@ -264,7 +268,7 @@ species05 = quantile(d[:nodes], 0.05)
 species95 = quantile(d[:nodes], 0.95)
 
 plot([medianspecies], seriestype=:vline, color=:grey, ls=:dash, lab="", ylim=(0.4,1), frame=:box,  margin=5Plots.mm)
-plot!([species05, species95], [1.0, 1.0], fill=(0, :grey, 0.05), c=:transparent, lab="")
+plot!([species05, species95], [1.0, 1.0], fill=(0, :grey, 0.12), c=:transparent, lab="")
 plot!([species05], seriestype=:vline, color=:grey, ls=:dot, lab="")
 plot!([species95], seriestype=:vline, color=:grey, ls=:dot, lab="")
 plot!(S, realistic_lssl, color=pal.lssl, linewidth=2, label="LSSL",
@@ -368,3 +372,34 @@ xaxis!(pl_may_prop, "\\sigma", (minimum(σ), maximum(σ)))
 
 plot(pl_may_max, pl_may_prop, layout=(1,2), size=(700,350), margin=5Plots.mm, dpi=200)
 savefig(joinpath("figures", "may"))
+
+
+
+# Fig -- Histogram of z-scores
+
+# Compute expected number of links and variance
+L_hat = (d.nodes .^2 .- d.nodes .+ 1) .* mu_map .+ d.nodes .- 1
+sigma_2_L_hat = (d.nodes .^2 .- d.nodes .+ 1) .* mu_map .* (1 .- mu_map) .* (1 .+ d.nodes .* (d.nodes .- 1) ./ (phi_map .+ 1))
+
+# Compute z-scores
+z_scores = (d.links .- L_hat) ./ sqrt.(sigma_2_L_hat)
+
+# Non abnormal z-scores (below 1.96 in absolute values)
+z_scores_normals = z_scores[abs.(z_scores) .< 1.96]
+
+# Abnormal z-scores (above 1.96 in absolute values)
+z_scores_abnormals = z_scores[abs.(z_scores) .> 1.96]
+z_scores_abnormals_pct = length(z_scores_abnormals) / size(d, 1)
+
+# Plot histogram
+histogram(z_scores_normals, lab="", fill=:lightgrey,
+         xlims=(-6,6), xticks=-6:1:6,
+         ylims=(0,30), yticks=0:5:30,
+         frame=:box, dpi=120, bins=30,
+         xlabel="z-score", ylabel="Frequency")
+histogram!(z_scores_abnormals, fill=pal.fl, lab="", bins=18)
+plot!([-2, 2], [30, 30], fill=(0, :grey, 0.12), c=:transparent, lab="")
+plot!([-2], seriestype=:vline, color=:grey, ls=:dot, lab="")
+plot!([2], seriestype=:vline, color=:grey, ls=:dot, lab="")
+plot!([0], seriestype=:vline, color=:grey, ls=:dot, lab="")
+savefig(joinpath("figures", "z-scores"))
