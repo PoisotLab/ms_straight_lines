@@ -6,7 +6,7 @@ species, counting trophic links, and uncovering the relationship that binds them
 -- and it is undeniable that these inquiries kickstarted what is now one of the
 most rapidly growing fields of ecology [@BorrMood14]. More species ($S$) always
 means more links ($L$); this scaling is universal and appears both in observed
-food webs and under purely neutral models of food web structure [@CanaMouq12].
+food webs and under purely neutral models of food web structure [@cana12esp].
 In fact, these numbers underlie most measures used to describe food webs
 [@DelmBess18]. The structure of a food web, in turn, is almost always required
 to understand how the community functions, develops, and responds to changes
@@ -55,7 +55,7 @@ increases the number of links by two -- for example, an animal which consumes
 one resource and is consumed by one predator. This model started to show its
 deficiencies when data on larger food webs became available: in these larger
 webs,  $L$ increased faster than a linear function of $S$. Perhaps then all
-networks have the same *connectance* [@Mart92]? In other words, a food web is
+networks have the same *connectance* [@mart92ccc]? In other words, a food web is
 always equally filled, regardless of whether it has 5 or 5000 species. Under the
 so-called "constant connectance" model, the number of links is proportional to
 the richness squared,
@@ -64,7 +64,7 @@ $$ L_{CC} = b\times S^2\,, $$ {#eq:cc}
 
 where $b$ is a constant in $]0,1[$ representing the expected value of
 connectance. The assumption of a scaling exponent of $2$ can be relaxed
-[@Mart92], so that $L$ is not in direct proportion to the maximum number of links:
+[@mart92ccc], so that $L$ is not in direct proportion to the maximum number of links:
 
 $$ L_{PL} = b\times S^a\,. $$ {#eq:pl}
 
@@ -87,10 +87,10 @@ ecological principles. This has two causes. First, models that are variations of
 $L \approx b\times S^a$ have no constraints --  with the exception of the
 "constant connectance" model, in which $L_{\text{cc}}$ has a maximum value of
 $S^2$. However, we know that the number of links within a food web is both lower
-and upper bounded [@Mart92; @PoisGrav14]: there can be no more than $S^2$ links,
+and upper bounded [@mart92ccc; @PoisGrav14]: there can be no more than $S^2$ links,
 and there can be no fewer than $S-1$ links. This minimum of $S-1$ holds for food
 webs in which all species interact -- for example, a community of plants and
-herbivores where no plants are inedible and all herbivores must eat [@Mart92].
+herbivores where no plants are inedible and all herbivores must eat [@mart92ccc].
 Numerous simple food webs could have this minimal number of links -- for
 example, a linear food chain wherein each trophic level consists of a single
 species, each of which consumes only the species below it; or a grazing
@@ -180,7 +180,7 @@ structure of food webs can be derived.
 | ---------------------------------- | -------- | ---------------- | -------------------- | ------------------------- |
 | Flexible links                     | @eq:lhat | 2520.5 ± 44.4    | 0                    | 0                         |
 | Power law [@BrosOstl04]            | @eq:pl   | 2564.3 ± 46.6    | -21.9                | 6.5                       |
-| Constant [@Mart92]                 | @eq:cc   | 2811.0 ± 68.3    | -145.3               | 21.1                      |
+| Constant [@mart92ccc]                 | @eq:cc   | 2811.0 ± 68.3    | -145.3               | 21.1                      |
 | Link-species scaling [@CoheBria84] | @eq:lssl | 39840.1 ± 2795.1 | -18659.8             | 1381.7                    |
 
 Table: Comparison of the four different models. We show Pareto-smoothed important sampling values (PSIS-LOO) and their standard deviation. PSIS-LOO is similar to information critera in that smaller values indicate better predictive performance. We also show expected log predictive density (ELPD) differences to the maximum for all models, along with the standard error (SE) of these differences. {#tbl:comparison}
@@ -256,7 +256,7 @@ potentially incorrect predictions under previous models.
 | -------------------------- | --------- | ----------------------------------- | ----- | ------ |
 | $bS$ [@CoheBria84]         | $b$       | links per species                   | 2.2   | 0.047  |
 |                            | $\kappa$  | concentration of $L$ around mean    | 1.4   | 0.12   |
-| $bS^2$ [@Mart92]           | $b$       | proportion of links realized        | 0.12  | 0.0041 |
+| $bS^2$ [@mart92ccc]           | $b$       | proportion of links realized        | 0.12  | 0.0041 |
 |                            | $\kappa$  | concentration of $L$ around mean    | 4.0   | 0.37   |
 | $bS^a$ [@BrosOstl04]       | $b$       | proportion of relationship          | 0.37  | 0.054  |
 |                            | $a$       | scaling of relationship             | 1.7   | 0.043  |
@@ -272,7 +272,7 @@ are broadly congruent with previous works. We found a value of 2.2 for $b$ of
 the LSSL model (+@tbl:parameters), which is close to the original value of
 approximately 2 [@CoheBria84]. Similarly, we found a value of 0.12 for $b$ of
 the constant connectance model, which was consistent with original estimates of
-0.14 [@Mart92]. Finally, the parameter values we found for the power law were
+0.14 [@mart92ccc]. Finally, the parameter values we found for the power law were
 also comparable to earlier estimates [@BrosOstl04]. All of these models were fit
 with a negative binomial observation model, which has an additional parameter,
 $\kappa$, which is sometimes called a "concentration" parameter. This value
@@ -380,7 +380,7 @@ density are plotted (black lines).
 Ecologists are often faced with the issue of comparing several networks. A
 common question is whether a given network has an "unusual" number of links
 relative to some expectation. Traditionally these comparisons have been done by
-simulating a "null" distribution of random matrices [@FortBasc06; @BascJord03].
+simulating a "null" distribution of random matrices [@FortBasc06a; @BascJord03].
 This is intended to allow ecologists to compare food webs to a sort of standard,
 hopefully devoid of whatever biological process could alter the number of links.
 Importantly, this approach assumes that (i) connectance is a fixed property of
@@ -515,7 +515,7 @@ suggests that there are other limitations to the size of food webs; indeed, the
 fact that $L/S$ increases to worryingly large values only matters if ecological
 processes allow $S$ to be large enough. It is known that food webs can get as
 high as energy transfer allows [@ThomBros12], and as wide as competition allows
-[@KefiBerl12]. Furthermore, in more species-rich communities there is a greater
+[@KefiBerl12a]. Furthermore, in more species-rich communities there is a greater
 diversity of functional traits among the interacting organisms; this limits
 interactions, because traits determine suitable interaction partners [@BeckPetc06; @BartGrav16]. In short, and as +@fig:real_predict
 suggests, since food webs are likely to be constrained to remain within an
@@ -568,7 +568,7 @@ which remain within biological boundaries. There are a variety of "structural"
 models for food webs, such as the niche model [@WillMart00], the cascade model
 [@CoheNewm85], the DBM [@BeckPetc06] and ADBM [@PetcBeck08], the minimum
 potential niche model [@AlleAlon08], and the nested hierarchy model
-[@CattBers04] to name a few. All of these models make predictions of food web
+[@catt04pca] to name a few. All of these models make predictions of food web
 structure: based on some parameters (usually $S$ and $L$, and sometimes vectors
 of species-level parameters) they output an adjacency matrix
 $\mathbf{A}_{S\times S}$ which contains either the presence or strength of
@@ -592,7 +592,7 @@ species which stay within ecological values [@KozuPano15].
 This model also casts new light on previous results on the structure of food
 webs: small and large food webs behave differently [@GarlCald03]. Specifically,
 ecological networks most strongly deviate from scale free expectations when
-connectance is high [@DunnWill02]. In our model, this behaviour emerges
+connectance is high [@DunnWill02b]. In our model, this behaviour emerges
 naturally: connectance increases sharply as species richness decreases
 (+@fig:CoLd) -- that is, where the additive term $(S-1)/S^{2}$ in +@eq:co
 becomes progressively larger. In a sense, small ecological networks are
@@ -601,7 +601,7 @@ limited number of flexible links, and this drives connectance to be greater.
 Connectance in turn has implications for many ecological properties. Connectance
 is more than the proportion of realized interactions. It has been associated
 with some of the most commonly used network measures [@PoisGrav14], and contains
-meaningful information on the stability [@DunnWill02; @MontPimm06] and dynamics
+meaningful information on the stability [@DunnWill02b; @MontPimm06] and dynamics
 [@VieiAlme15] of ecological communities. A probability distribution for
 connectance not only accounts for the variability between networks, but can be
 used to describe fundamental properties of food webs and to identify ecological
@@ -702,8 +702,8 @@ vary on both sides of the mean relationship.
 
 We selected priors for our Bayesian models using a combination of literature and
 domain expertise. For example, we chose our prior distribution for $p$ based on
-@Mart92 , who gave a value of constant connectance equal to 0.14. While the
-prior we use is "informative", it is weakly so; as @Mart92 did not provide an
+@mart92ccc , who gave a value of constant connectance equal to 0.14. While the
+prior we use is "informative", it is weakly so; as @mart92ccc did not provide an
 estimate of the variance for his value we chose a relatively large variation
 around that mean.  However, no information is available in the literature to
 inform a choice of prior for concentration parameters $\kappa$ and $\phi$. For
@@ -741,7 +741,7 @@ one of estimating the parameters of this univariate probability distribution.
 We evaluated our model against 255 empirical food webs, available in the online
 database `mangal.io` [@PoisBais16]. We queried metadata (number of nodes and
 number of links) for all networks, and considered as food webs all networks
-having interactions of predation and herbivory. We use Stan [@CarpGelm17a] which
+having interactions of predation and herbivory. We use Stan [@CarpGelm17] which
 implements Bayesian inference using Hamiltonian Monte Carlo. We ran all models
 using four chains and 2000 iterations per chain. In our figures we use the
 posterior predictive distribution, which is a distribution described by the
