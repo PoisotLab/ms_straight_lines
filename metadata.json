@@ -6,19 +6,20 @@
   "language": "en",
   "authors": [
     {
-      "affiliation": ["Université de Montréal, Département de Sciences Biologiques, Montréal QC, Canada", "Québec Centre for Biodiversity Sciences, Montréal QC, Canada"],
+      "affiliation": ["Université de Montréal, Département de Sciences Biologiques, H2V 0B3, Montréal, QC, Canada", "Québec Centre for Biodiversity Sciences, H3A 1B1, Montréal QC, Canada"],
       "familyname": "MacDonald",
-      "givennames": "Andrew",
-      "orcid": "0000-0003-1162-169X"
+      "givennames": "Arthur Andrew Meahan",
+      "orcid": "0000-0003-1162-169X",
+      "email": "a.a.m.macdonald@gmail.com"
     },
     {
-      "affiliation": ["Université de Montréal, Département de Sciences Biologiques, Montréal QC, Canada", "Québec Centre for Biodiversity Sciences, Montréal QC, Canada"],
+      "affiliation": ["Université de Montréal, Département de Sciences Biologiques, H2V 0B3, Montréal QC, Canada", "Québec Centre for Biodiversity Sciences, H3A 1B1, Montréal QC, Canada"],
       "familyname": "Banville",
       "givennames": "Francis",
       "orcid": "0000-0001-9051-0597"
     },
     {
-      "affiliation": ["Université de Montréal, Département de Sciences Biologiques, Montréal QC, Canada", "Québec Centre for Biodiversity Sciences, Montréal QC, Canada"],
+      "affiliation": ["Université de Montréal, Département de Sciences Biologiques, H2V 0B3, Montréal QC, Canada", "Québec Centre for Biodiversity Sciences, H3A 1B1, Montréal QC, Canada"],
       "familyname": "Poisot",
       "givennames": "Timothée",
       "orcid": "0000-0002-0735-5184"
