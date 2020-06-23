@@ -292,7 +292,7 @@ flexible links being realized (thus showing how our previous assumption that $p$
 might vary between food webs to be more conservative than strictly required).
 The flexible links model also uses fewer parameters than the power law model and
 makes slightly better predictions, which accounts for its superior performance
-in model comparison (+@tbl:comparison).
+in model comparison (+@tbl:comparison). In the supplementary material, we compare the maximum _a posteriori_ (MAP) estimates of our model parameters to their maximum likelihood estimates (MLE).
 
 ## Connectance and linkage density can be derived from a model for links
 
