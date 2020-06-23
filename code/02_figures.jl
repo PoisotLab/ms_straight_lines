@@ -12,6 +12,7 @@ using Random
 include("common_functions.jl")
 
 Plots.scalefontsizes(1.3)
+fonts=font("Arial",7)
 
 # get the data and filter for predation only
 d = CSV.read(joinpath("data", "network_data.dat"))
@@ -87,8 +88,9 @@ p = fit(Beta, pex)
 phi_MLE = p.α + p.β
 mu_MLE = p.α / phi_MLE
 
-density(pex, c=:lightgrey, fill=(:lightgrey, 0, 0.5), dpi=200, size=(800,500),  margin=5Plots.mm, lab="Empirical data",
-    foreground_color_legend=nothing, background_color_legend=:white, framestyle=:box)
+density(pex, c=:lightgrey, fill=(:lightgrey, 0, 0.5), dpi=1000, size=(800,500),  margin=5Plots.mm, lab="Empirical data",
+    foreground_color_legend=nothing, background_color_legend=:white, framestyle=:box,
+    guidefont=fonts, xtickfont=fonts, ytickfont=fonts, legendfont=fonts)
 plot!(betab_random[1], c=pal.fl, linewidth=1, alpha=0.3, lab="Posterior samples")
 for i in 1:length(index)
     plot!(betab_random[i], c=pal.fl, linewidth=1, alpha=0.3, lab="")
@@ -97,6 +99,8 @@ density!(rand(p, 100_000), c=:black, ls=:dash, linewidth=2, lab="MLE fit")
 yaxis!((0, 9.5), "Density")
 xaxis!((0, 0.5), "p")
 savefig(joinpath("figures", "beta_fit"))
+savefig(joinpath("figures", "submission", "figsup.pdf"))
+
 
 # Fig -- The fexible link model ts better and makes a plausible range of predictions
 
@@ -114,8 +118,9 @@ function plot_links_quantile(model; title="", xlabel="", ylabel="", linecolor=""
     quant_500 = neg_to_zeros.(quantile.(eachcol(model), 0.5))
 
     plot(S, quant_985, fill=quant_015, color=:grey, alpha=0.15, label="",
-        title=title, title_location=:left, titlefontsize=11,
-        xlabel=xlabel, ylabel=ylabel, framestyle=:box) # 97% PI
+        title=title, title_location=:left,
+        xlabel=xlabel, ylabel=ylabel, framestyle=:box, dpi=1000,
+        guidefont=fonts, xtickfont=fonts, ytickfont=fonts, titlefont=font("Arial",9)) # 97% PI
     plot!(S, quant_890, fill=quant_110, color=:grey, alpha=0.15, label="") # 89% PI
     scatter!(d[:nodes], d[:links], c=:grey, alpha=0.6, msw=0, markersize=5, label="") # Empirical links
     plot!(S, quant_500, linecolor=linecolor, linewidth=3, label="") # Median link number
@@ -137,6 +142,8 @@ plot_betab = plot_links_quantile(betab_cf_links, title="D. Flexible links",
 
 plot(plot_lssl, plot_const, plot_powerlaw, plot_betab, layout=(2,2), size=(700,700),  margin=5Plots.mm, dpi=200)
 savefig(joinpath("figures", "models_links"))
+savefig(joinpath("figures", "submission", "fig1.pdf"))
+
 
 
 # Fig -- The shifted beta-binomial distribution can be approximated by a normal distribution
@@ -152,7 +159,8 @@ beta_02 = quantile.(bb_rand, 0.015) .+ S .- 1
 beta_50 = quantile.(bb_rand, 0.5)  .+ S .- 1
 
 links_beta_map = plot(S, beta_98, fill=beta_02,label="", color=:grey, alpha=0.15,
-    title="A. Flexible links (MAP)", title_location=:left, titlefontsize=11, framestyle=:box)
+    title="A. Flexible links (MAP)", title_location=:left, framestyle=:box,
+    guidefont=fonts, xtickfont=fonts, ytickfont=fonts, titlefont=font("Arial",9))
 plot!(S, beta_89, fill=beta_11,label="", color=:grey, alpha=0.15)
 plot!(S, beta_50, color=pal.fl, label="", linewidth=2)
 #scatter!(d[:nodes], d[:links], c=:grey, msw=0, markersize=5, label="") # Empirical links
@@ -175,7 +183,8 @@ tnormal_02 = quantile.(tnormal, 0.015)
 tnormal_50 = quantile.(tnormal, 0.5)
 
 links_normal = plot(S, tnormal_98, fill=tnormal_02,label="", color=:grey, alpha=0.15,
-    title="B. Normal approximation", title_location=:left, titlefontsize=11, framestyle=:box)
+    title="B. Normal approximation", title_location=:left, framestyle=:box,
+    guidefont=fonts, xtickfont=fonts, ytickfont=fonts, titlefont=font("Arial",9))
 plot!(S, tnormal_89, fill=tnormal_11,label="", color=:grey, alpha=0.15,)
 plot!(S, tnormal_50, color=pal.fl, label="", lw=2)
 plot!(S, mms, linecolor=:black, label="", lw=1) # Minimum number of links
@@ -184,8 +193,9 @@ plot!(S, Ms, linecolor=:black, label="", lw=2) # Maximum number of links
 xaxis!(:log, "Species richness", label="", xlim=(minimum(S), maximum(S)))
 yaxis!(:log, "Number of links", ylims=(1,100000))
 
-plot(links_beta_map, links_normal, layout=(1,2), size=(700,350), margin=5Plots.mm, dpi=200)
+plot(links_beta_map, links_normal, layout=(1,2), size=(700,350), margin=5Plots.mm, dpi=1000)
 savefig(joinpath("figures", "betabinmap_normal_links"))
+savefig(joinpath("figures", "submission", "fig5.pdf"))
 
 
 
@@ -211,7 +221,8 @@ co_emp = d[:links] ./ (d[:nodes] .^2)
 
 # Connectance vs species
 connectance_beta = plot(S, beta985, fillrange=beta015, color=:grey, alpha=0.15,
-    label="", title="A", title_location=:left, titlefontsize=11, framestyle=:box) # 97% PI
+    label="", title="A", title_location=:left, framestyle=:box,
+    guidefont=fonts, xtickfont=fonts, ytickfont=fonts, titlefont=font("Arial",9)) # 97% PI
 plot!(S, beta11, fillrange=beta89, color=:grey, alpha=0.15, label="") # 89% PI
 scatter!(d[:nodes], co_emp, c=:grey, alpha=0.5, msw=0, markersize=5, label="") # Empirical connectance
 plot!(S, beta500, linecolor=pal.fl, linewidth=2, label="") # Median connectance
@@ -231,7 +242,8 @@ beta89_LS = quantile.(bquant_LS, 0.89)
 beta50_LS = quantile.(bquant_LS, 0.50)
 
 avg_degree_beta = plot(S, beta985_LS, fill=beta015_LS, color=:grey, alpha=0.15, lab="", title="B",
-    title_location=:left, titlefontsize=11, framestyle=:box)
+    title_location=:left, framestyle=:box,
+    guidefont=fonts, xtickfont=fonts, ytickfont=fonts, titlefont=font("Arial",9))
 plot!(S, beta11_LS, fill=beta89_LS, colour=:grey, alpha=0.15, lab="",)
 scatter!(d.nodes, d.links ./ d.nodes, c=:grey, alpha=0.5, msw=0, markersize=5, label="") # Empirical connectance
 plot!(S, beta50_LS, linecolor=pal.fl, lw=2, lab="")
@@ -241,8 +253,10 @@ xaxis!(:log, "Species richness", xlims=(minimum(S),maximum(S)))
 yaxis!(:log, "Linkage density", ylims=(0.5,1000))
 
 
-plot(connectance_beta, avg_degree_beta, label=(1,2), lab="", size=(700,350),  dpi=200,  margin=5Plots.mm)
+plot(connectance_beta, avg_degree_beta, label=(1,2), lab="", size=(700,350),  dpi=1000,  margin=5Plots.mm)
 savefig(joinpath("figures", "connectance_linkdens"))
+savefig(joinpath("figures", "submission", "fig3.pdf"))
+
 
 
 # Fig -- Only the flexible link model makes realistic predictions for small communities
@@ -267,7 +281,8 @@ medianspecies = quantile(d[:nodes], 0.5)
 species05 = quantile(d[:nodes], 0.05)
 species95 = quantile(d[:nodes], 0.95)
 
-plot([medianspecies], seriestype=:vline, color=:grey, ls=:dash, lab="", ylim=(0.4,1), frame=:box,  margin=5Plots.mm)
+plot([medianspecies], seriestype=:vline, color=:grey, ls=:dash, lab="", ylim=(0.4,1), frame=:box,  margin=5Plots.mm,
+    guidefont=fonts, xtickfont=fonts, ytickfont=fonts, legendfont=fonts, titlefont=font("Arial",9))
 plot!([species05, species95], [1.0, 1.0], fill=(0, :grey, 0.12), c=:transparent, lab="")
 plot!([species05], seriestype=:vline, color=:grey, ls=:dot, lab="")
 plot!([species95], seriestype=:vline, color=:grey, ls=:dot, lab="")
@@ -279,6 +294,8 @@ plot!(S, realistic_betab, color=pal.fl, linewidth=2, label="Flexible links")
 xaxis!(:log, "Species richness", xlims=(minimum(S),maximum(S)))
 yaxis!("Proportion of realistic links", (0.3, 1.01))
 savefig(joinpath("figures", "real_predict"))
+savefig(joinpath("figures", "submission", "fig2.pdf"))
+
 
 
 # Fig -- Many different Network-Area Relationships are supported by the data
@@ -288,7 +305,7 @@ AS = convert.(Int64, ceil.(k.*A.^z))
 
 pl_nar_sar = plot(A, AS, color=:grey, lw=2, label="", frame=:box,
     legend=:topleft, foreground_color_legend=nothing, background_color_legend=:white,
-    title_location=:left, titlefontsize=11,
+    title_location=:left, guidefont=fonts, xtickfont=fonts, ytickfont=fonts, legendfont=fonts, titlefont=font("Arial",9),
     title="A. species area relationship")
 
 xaxis!(pl_nar_sar, (0, 1), "Relative area")
@@ -310,7 +327,7 @@ fl985 = neg_to_zeros.(quantile.(eachcol(fl_mod./AS'), 0.985))
 fl500 = neg_to_zeros.(quantile.(eachcol(fl_mod./AS'), 0.5))
 
 pl_nar_nar = plot(A, fl985, fillrange=fl015, color=:grey, alpha=0.15, label="", frame=:box, legend=:topleft, foreground_color_legend=nothing, background_color_legend=:white,
-    title_location=:left, titlefontsize=11,
+    title_location=:left, guidefont=fonts, xtickfont=fonts, ytickfont=fonts, legendfont=fonts, titlefont=font("Arial",9),
     title="B. network area relationship")
 plot!(pl_nar_nar, A, fl890, fillrange=fl110, color=:grey, alpha=0.15, label="")
 plot!(pl_nar_nar, A, fl500, linecolor=pal.fl, linewidth=2, label="Flexible links")
@@ -318,8 +335,10 @@ plot!(pl_nar_nar, A, pl500, linecolor=pal.pl, linewidth=1, ls=:dot, label="Power
 xaxis!(pl_nar_nar, xlabel="Relative area", xlims=(0.0, 1.0))
 yaxis!(pl_nar_nar, ylims = (1,50), ylabel="Linkage density")
 
-plot(pl_nar_sar, pl_nar_nar, layout=(1,2), size=(700,350), margin=5Plots.mm, dpi=200)
+plot(pl_nar_sar, pl_nar_nar, layout=(1,2), size=(700,350), margin=5Plots.mm, dpi=1000)
 savefig(joinpath("figures", "nar"))
+savefig(joinpath("figures", "submission", "fig6.pdf"))
+
 
 
 # Fig -- Stability imposes a limit on network size
@@ -338,8 +357,8 @@ fl500 = neg_to_zeros.(quantile.(eachcol(fl_mod./S'), 0.5))
 
 pl_may_max = plot(S, vec(1.0./sqrt.(fl985)), fillrange=vec(1.0./sqrt.(fl015)),
     color=:grey, alpha=0.15, label="", frame=:box, size=(400, 400), margin=5Plots.mm,
-    dpi=120, legend=:topleft, foreground_color_legend=nothing,
-    title_location=:left, titlefontsize=11,
+    dpi=1000, legend=:topleft, foreground_color_legend=nothing,
+    title_location=:left, guidefont=fonts, xtickfont=fonts, ytickfont=fonts, legendfont=fonts, titlefont=font("Arial",9),
     title="A. maximal interaction diversity",
     background_color_legend=:white,
     xlabel="Species richness", ylabel="Maximal \\sigma")
@@ -353,7 +372,8 @@ yaxis!(pl_may_max, (0,1.25), label="Maximal interaction diversity")
 mu_map = median(betab_posterior_bigger[:mu])
 plot!(pl_may_max, S, 1 ./ sqrt.(mu_map .* S .+ (1 - mu_map) .* (S .- 1) ./ S), lab = "", color=:black, lw = 1, linestyle=:dash)
 
-pl_may_prop = plot(frame=:box, title_location=:left, titlefontsize=11,
+pl_may_prop = plot(frame=:box, title_location=:left,
+    guidefont=fonts, xtickfont=fonts, ytickfont=fonts, legendfont=fonts, titlefont=font("Arial",9),
     title="B. probability of a network being stable",
     foreground_color_legend=nothing,
     background_color_legend=:white)
@@ -370,8 +390,10 @@ end
 yaxis!(pl_may_prop, (0,1), "P(stability)")
 xaxis!(pl_may_prop, "\\sigma", (minimum(σ), maximum(σ)))
 
-plot(pl_may_max, pl_may_prop, layout=(1,2), size=(700,350), margin=5Plots.mm, dpi=200)
+plot(pl_may_max, pl_may_prop, layout=(1,2), size=(700,350), margin=5Plots.mm, dpi=1000)
 savefig(joinpath("figures", "may"))
+savefig(joinpath("figures", "submission", "fig7.pdf"))
+
 
 
 
@@ -395,7 +417,8 @@ z_scores_abnormals_pct = length(z_scores_abnormals) / size(d, 1)
 histogram(z_scores_normals, lab="", fill=:lightgrey,
          xlims=(-6,6), xticks=-6:1:6,
          ylims=(0,30), yticks=0:5:30,
-         frame=:box, dpi=120, bins=30,
+         frame=:box, dpi=1000, bins=30,
+         guidefont=fonts, xtickfont=fonts, ytickfont=fonts, legendfont=fonts, titlefont=font("Arial",9),
          xlabel="z-score", ylabel="Frequency")
 histogram!(z_scores_abnormals, fill=pal.fl, lab="", bins=18)
 plot!([-2, 2], [30, 30], fill=(0, :grey, 0.12), c=:transparent, lab="")
@@ -403,3 +426,4 @@ plot!([-2], seriestype=:vline, color=:grey, ls=:dot, lab="")
 plot!([2], seriestype=:vline, color=:grey, ls=:dot, lab="")
 plot!([0], seriestype=:vline, color=:grey, ls=:dot, lab="")
 savefig(joinpath("figures", "z-scores"))
+savefig(joinpath("figures", "submission", "fig4.pdf"))
