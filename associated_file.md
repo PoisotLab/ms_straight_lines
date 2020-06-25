@@ -2,7 +2,7 @@
 
 Understanding the functions, stability, resilience, and dynamics of ecological communities requires the investigation of the structure of their networks of interactions. Perhaps the most challenging issue in the study of such networks is that the sampling of ecological interactions is a strenuous task, and as a result the availability of empirical data is limited. In this contribution we derive a realistic and performant statistical model to predict the number of interactions in a food web from its number of species.
 
-Our model could be used as a first order approximation of network structure. As such, it makes the large-scale study and comparison of ecological networks more accurate and assessible. For instance, the vulnerability of food webs to perturbations could be explored using our model at the regional, continental or global scales. This is particularly relevant to the preservation of natural communities in a context of climate change and ecosystems' collapse.
+Our model could be used as a first order approximation of network structure. As such, it makes the large-scale study and comparison of ecological networks more accurate and accessible. For instance, the vulnerability of food webs to perturbations could be explored using our model at the regional, continental or global scales. This is particularly relevant to the preservation of natural communities in a context of climate change and ecosystems' collapse.
 
 
 # Highlights
@@ -18,4 +18,4 @@ We suggest that our paper should be labeled with a Data Science Maturity Level o
 
 # eTOC blurb
 
-The total number of interactions is a fundamental measure of all types of networks. In food webs, it is strongly associated with the total number of species (nodes). Previous attempts to model the relationship between these two quantities made unrealistic predictions, i.e. of numbers of links below the minimum set by ecological constraints. Here we provide a realistic and performant model to predict the number of links in a food web from its number of species by taking into account biological constraints. 
+The total number of interactions is a fundamental measure of all types of networks. In food webs, it is strongly associated with the total number of species (nodes). Previous attempts to model the relationship between these two quantities made unrealistic predictions, i.e. of numbers of links below the minimum set by ecological constraints. Here we provide a realistic and performant model to predict the number of links in a food web from its number of species by taking into account biological constraints.
