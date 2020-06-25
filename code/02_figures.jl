@@ -99,7 +99,6 @@ density!(rand(p, 100_000), c=:black, ls=:dash, linewidth=2, lab="MLE fit")
 yaxis!((0, 9.5), "Density")
 xaxis!((0, 0.5), "p")
 savefig(joinpath("figures", "beta_fit"))
-savefig(joinpath("figures", "submission", "figsup.pdf"))
 
 
 # Fig -- The fexible link model ts better and makes a plausible range of predictions
