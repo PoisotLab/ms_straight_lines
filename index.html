@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+   <head>
+      <meta charset="utf-8">
+      <title>Revisiting the links-species scaling relationship in food webs</title>
+      <script src="https://hypothes.is/embed.js" async></script>
+      <!--fonts-->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+      <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,600|Source+Sans+Pro:300,300i,400,400i,600,600i&display=swap&subset=greek" rel="stylesheet">
+      <link rel="stylesheet/less" type="test/css" href="./style.less">
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+   </head>
+   <body>
+      <header>
+         <section class="container">
+            <h1>Revisiting the links-species scaling relationship in food webs</h1>
+            <section class="creators">
+                              <div class="creator">
+                  <div class="author">Arthur Andrew Meahan MacDonald</div>
+                  <div class="affiliation"></div>
+                  <div class="orcid">0000-0003-1162-169X</div>
+               </div>
+                              <div class="creator">
+                  <div class="author">Francis Banville</div>
+                  <div class="affiliation"></div>
+                  <div class="orcid">0000-0001-9051-0597</div>
+               </div>
+                              <div class="creator">
+                  <div class="author">Timothée Poisot</div>
+                  <div class="affiliation"></div>
+                  <div class="orcid">0000-0002-0735-5184</div>
+               </div>
+                           </section>
+            <summary>
+               Predicting the number of interactions that species in a food web will establish is an important task. These trophic interactions underlie many ecological and evolutionary processes, ranging from biomass fluxes, ecosystem stability, resilience to extinction, and resistance against novel species. We investigate and compare several ways to predict the number of interactions in food webs. We conclude that a simple beta-binomial model outperforms other models, with the added desirable property of respecting biological constraints. We show how this simple relationship gives rise to a predicted distribution of several quantities related to link number in food webs, including the scaling of network structure with space, and the probability that a network will be stable.
+            </summary>
+         </section>
+      </header>
+
+      <nav class="artifacts">
+         <a href="" title="Github repo" target="_blank"><img src="https://img.shields.io/badge/write-github-blue.svg" /></a>
+         <a href="ms_straight_lines.pdf" title="Github repo" target="_blank"><img src="https://img.shields.io/badge/read-pdf-green.svg" /></a>
+         <a href="ms_straight_lines.docx" title="Github repo" target="_blank"><img src="https://img.shields.io/badge/read-docx-yellow.svg" /></a>
+      </nav>
+
+      <article class="container">
+         <h1 id="introduction">Introduction</h1>
+         <p>Community ecologists are fascinated by counting things. It is therefore no surprise that early food web research paid so much attention to counting species, counting trophic links, and uncovering the relationship that binds them – and it is undeniable that these inquiries kickstarted what is now one of the most rapidly growing fields of ecology <span class="citation" data-cites="BorrMood14">(Borrett, Moody, and Edelmann 2014)</span>. More species (<span class="math inline"><em>S</em></span>) always means more links (<span class="math inline"><em>L</em></span>); this scaling is universal and appears both in observed food webs and under purely neutral models of food web structure <span class="citation" data-cites="cana12esp">(Canard et al. 2012)</span>. In fact, these numbers underlie most measures used to describe food webs <span class="citation" data-cites="DelmBess18">(Delmas et al. 2018)</span>. The structure of a food web, in turn, is almost always required to understand how the community functions, develops, and responds to changes <span class="citation" data-cites="McCa12 ThomBros12">(McCann 2012; Thompson et al. 2012)</span>, to the point where some authors suggested that describing food webs was a necessity for community ecology <span class="citation" data-cites="McCa07 SeibCado18">(McCann 2007; Seibold et al. 2018)</span>. To this end, a first step is to come up with an estimate for the number of existing trophic links, through sampling or otherwise. Although both <span class="math inline"><em>L</em></span> and <span class="math inline"><em>S</em></span> can be counted in nature, the measurement of links is orders of magnitude more difficult than the observation of species <span class="citation" data-cites="Jord16a Jord16">(P. Jordano 2016a, 2016b)</span>. As a result, we have far more information about values of <span class="math inline"><em>S</em></span>. In fact, the distribution of species richness across the world is probably the most frequently observed and modelled ecological phenomenon. Therefore, if we can predict <span class="math inline"><em>L</em></span> from <span class="math inline"><em>S</em></span> in an ecologically realistic way, we would be in a position to make first order approximations of food web structure at large scales, even under our current data-limited regime.</p>
+         <p>Measures of food web structure react most strongly to a handful of important quantities. The first and most straightforward is <span class="math inline"><em>L</em></span>, the number of trophic links among species. This quantity can be large, especially in species-rich habitats, but it cannot be arbitrarily large. It is clear to any observer of nature that of all imaginable trophic links, only a fraction actually occur. If an ecological community contains <span class="math inline"><em>S</em></span> species, then the maximum number of links in its food web is <span class="math inline"><em>S</em><sup>2</sup></span>: a community of omnivorous cannibals. This leads to the second quantity: a ratio called <em>connectance</em> and defined by ecologists as <span class="math inline"><em>C</em><em>o</em> = <em>L</em>/<em>S</em><sup>2</sup></span>. Connectance has become a fundamental quantity for nearly all other measures of food web structure and dynamics <span class="citation" data-cites="PascDunn06">(Pascual and Dunne 2006)</span>. The third important quantity is another ratio: <em>linkage density</em>, <span class="math inline"><em>L</em><sub><em>D</em></sub> = <em>L</em>/<em>S</em></span>. This value represents the number of links added to the network for every additional species in the ecological system. A closely related quantity is <span class="math inline"><em>L</em><sub><em>D</em></sub> × 2</span>, which is the <em>average degree</em>: the average number of species with which any taxa is expected to interact, either as predator or prey. These quantities capture ecologically important aspects of a network, and all can be derived from the observation or prediction of <span class="math inline"><em>L</em></span> links among <span class="math inline"><em>S</em></span> species.</p>
+         <p>Because <span class="math inline"><em>L</em></span> represents such a fundamental quantity, many predictive models have been considered over the years. Here we describe three popular approaches before describing our own proposed model. The <em>link-species scaling (LSSL)</em> <span class="citation" data-cites="CoheBria84">(Cohen and Briand 1984)</span> assumes that all networks have the same <em>average degree</em>; that is, most species should have the same number of links. Links are modelled as the number of species times a constant:</p>
+         <p><span id="eq:lssl" class="eqnos"><br /><span class="math display"><em>L</em><sub><em>L</em><em>S</em><em>S</em><em>L</em></sub> = <em>b</em> × <em>S</em> </span><br /><span class="eqnos-number">(1)</span></span> </p>
+         <p>with <span class="math inline"><em>b</em> ≈ 2</span>. This model imagines that every species added to a community increases the number of links by two – for example, an animal which consumes one resource and is consumed by one predator. This model started to show its deficiencies when data on larger food webs became available: in these larger webs, <span class="math inline"><em>L</em></span> increased faster than a linear function of <span class="math inline"><em>S</em></span>. Perhaps then all networks have the same <em>connectance</em> <span class="citation" data-cites="mart92ccc">(Martinez 1992)</span>? In other words, a food web is always equally filled, regardless of whether it has 5 or 5000 species. Under the so-called “constant connectance” model, the number of links is proportional to the richness squared,</p>
+         <p><span id="eq:cc" class="eqnos"><br /><span class="math display"><em>L</em><sub><em>C</em><em>C</em></sub> = <em>b</em> × <em>S</em><sup>2</sup> ,</span><br /><span class="eqnos-number">(2)</span></span> </p>
+         <p>where <span class="math inline"><em>b</em></span> is a constant in <span class="math inline">]0, 1[</span> representing the expected value of connectance. The assumption of a scaling exponent of <span class="math inline">2</span> can be relaxed <span class="citation" data-cites="mart92ccc">(Martinez 1992)</span>, so that <span class="math inline"><em>L</em></span> is not in direct proportion to the maximum number of links:</p>
+         <p><span id="eq:pl" class="eqnos"><br /><span class="math display"><em>L</em><sub><em>P</em><em>L</em></sub> = <em>b</em> × <em>S</em><sup><em>a</em></sup> .</span><br /><span class="eqnos-number">(3)</span></span> </p>
+         <p>This “power law” model can be parameterized in many ways, including spatial scaling and species area relationships <span class="citation" data-cites="BrosOstl04">(Brose et al. 2004)</span>. It is also a general case of the previous two models, encompassing both link-species scaling (<span class="math inline"><em>a</em> = 1, <em>b</em> ≈ 2</span>) and the strict constant connectance (<span class="math inline"><em>a</em> = 2, 0 &lt; <em>b</em> &lt; 1</span>) depending on which parameters are fixed. Power laws are very flexible, and indeed this function matches empirical data well – so well that it is often treated as a “true” model which captures the scaling of link number with species richness <span class="citation" data-cites="WinePian01 GarlCald03 RiedRall10">(Winemiller et al. 2001; Garlaschelli, Caldarelli, and Pietronero 2003; Riede et al. 2010)</span>, and from which we should draw ecological inferences about what shapes food webs. However, this approach is limited, because the parameters of a power law relationship can arise from many mechanisms, and are difficult to reason about ecologically.</p>
+         <p>But the question of how informative parameters of a power law can be is moot. Indeed, both the general model and its variants share an important shortcoming: they cannot be used for prediction while remaining within the bounds set by ecological principles. This has two causes. First, models that are variations of <span class="math inline"><em>L</em> ≈ <em>b</em> × <em>S</em><sup><em>a</em></sup></span> have no constraints – with the exception of the “constant connectance” model, in which <span class="math inline"><em>L</em><sub>cc</sub></span> has a maximum value of <span class="math inline"><em>S</em><sup>2</sup></span>. However, we know that the number of links within a food web is both lower and upper bounded <span class="citation" data-cites="mart92ccc PoisGrav14">(Martinez 1992; Poisot and Gravel 2014)</span>: there can be no more than <span class="math inline"><em>S</em><sup>2</sup></span> links, and there can be no fewer than <span class="math inline"><em>S</em> − 1</span> links. This minimum of <span class="math inline"><em>S</em> − 1</span> holds for food webs in which all species interact – for example, a community of plants and herbivores where no plants are inedible and all herbivores must eat <span class="citation" data-cites="mart92ccc">(Martinez 1992)</span>. Numerous simple food webs could have this minimal number of links – for example, a linear food chain wherein each trophic level consists of a single species, each of which consumes only the species below it; or a grazing herbivore which feeds on every plant in a field. Thus the number of links is constrained by ecological principles to be between <span class="math inline"><em>S</em> − 1</span> and <span class="math inline"><em>S</em><sup>2</sup></span>, something which no present model includes. Secondly, accurate predictions of <span class="math inline"><em>L</em></span> from <span class="math inline"><em>S</em></span> are often difficult because of how parameters are estimated. This is usually done using a Gaussian likelihood for <span class="math inline"><em>L</em></span>, often after log transformation of both <span class="math inline"><em>L</em></span> and <span class="math inline"><em>S</em></span>. While this approach ensures that predicted values of <span class="math inline"><em>L</em></span> are always positive, it does nothing to ensure that they stay below <span class="math inline"><em>S</em><sup>2</sup></span> and above <span class="math inline"><em>S</em> − 1</span>. Thus a good model for <span class="math inline"><em>L</em></span> should meet these two needs: a bounded expression for the average number of links, as well as a bounded distribution for its likelihood.</p>
+         <p>Here we suggest a new perspective for a model of <span class="math inline"><em>L</em></span> as a function of <span class="math inline"><em>S</em></span> which respects ecological bounds, and has a bounded distribution of the likelihood. We include the minimum constraint by modelling not the total number of links, but the number in excess of the minimum. We include the maximum constraint in a similar fashion to the constant connectance model described above, by modelling the proportion of flexible links which are realized in a community.</p>
+         <h1 id="interlude---deriving-a-process-based-model-for-the-number-of-links">Interlude - deriving a process-based model for the number of links</h1>
+         <p>Based on the ecological constraints discussed earlier, we know that the number of links <span class="math inline"><em>L</em></span> is an integer such that <span class="math inline"><em>S</em> − 1 ≤ <em>L</em> ≤ <em>S</em><sup>2</sup></span>. Because we know that there are at least <span class="math inline"><em>S</em> − 1</span> links, there can be at most <span class="math inline"><em>S</em><sup>2</sup> − (<em>S</em> − 1)</span> links <em>in excess</em> of this quantity. The <span class="math inline"><em>S</em> − 1</span> minimum links do not need to be modelled, because their existence is guaranteed as a pre-condition of observing the network. The question our model should address is therefore, how many of these <span class="math inline"><em>S</em><sup>2</sup> − (<em>S</em> − 1)</span> “flexible” links are actually present? A second key piece of information is that the presence of a link can be viewed as the outcome of a discrete stochastic event, with the alternative outcome that the link is absent. We assume that all of these flexible links have the same chance of being realized, which we call <span class="math inline"><em>p</em></span>. Then, if we aggregate across all possible species pairs, the expected number of links is</p>
+         <p><span id="eq:lhat" class="eqnos"><br /><span class="math display"><em>L</em><sub><em>F</em><em>L</em></sub> = <em>p</em> × [<em>S</em><sup>2</sup>−(<em>S</em>−1)] + (<em>S</em> − 1) ,</span><br /><span class="eqnos-number">(1)</span></span> </p>
+         <p>where <span class="math inline"><em>p</em> ∈ [0, 1]</span>. When <span class="math inline"><em>p</em> = 1</span>, <span class="math inline"><em>L</em></span> is at its maximum (<span class="math inline"><em>S</em><sup>2</sup></span>), and when <span class="math inline"><em>p</em> = 0</span> it is at the minimum value (<span class="math inline"><em>S</em> − 1</span>). We use the notation <span class="math inline"><em>L</em><sub><em>F</em><em>L</em></sub></span> to represent that our model considers the number of “flexible” links in a food web; that is, the number of links in excess of the minimum but below the maximum.</p>
+         <p>Because we assume that every flexible link is an independent stochastic event with only two outcomes, we can follow recent literature on probabilistic ecological networks <span class="citation" data-cites="PoisCirt16">(Poisot, Cirtwill, et al. 2016)</span> and represent them as independent Bernoulli trials with a probability of success <span class="math inline"><em>p</em></span>. This approach does not capture ecological mechanisms known to act on food webs <span class="citation" data-cites="PetcBeck08">(Petchey et al. 2008)</span>, but rather captures that any interaction is the outcome of many processes which can overall be considered probabilistic events <span class="citation" data-cites="PoisStou15">(Poisot, Stouffer, and Gravel 2015)</span>. The assumption that flexible links can all be represented by Bernoulli events is an appropriate trade-off between biological realism and parameterization requirements.</p>
+         <p>Furthermore, the observation of <span class="math inline"><em>L</em></span> links in a food web represents an aggregation of <span class="math inline"><em>S</em><sup>2</sup> − (<em>S</em> − 1)</span> such trials. If we then assume that <span class="math inline"><em>p</em></span> is a constant for all links in a particular food web, but may vary between food webs (a strong assumption which we later show is actually more stringent than what data suggest), we can model the distribution of links directly as a shifted beta-binomial variable:</p>
+         <p><span id="eq:shiftBB" class="eqnos"><br /><span class="math display">$$ [L|S,\mu, \phi] =  { S^2 - (S - 1) \choose L - (S - 1)} \frac{\mathrm{B}(L - (S - 1) + \mu \phi, S^2 - L + (1 - \mu)\phi)}{\mathrm{B}(\mu \phi, (1 - \mu)\phi)} $$</span><br /><span class="eqnos-number">(2)</span></span> </p>
+         <p>Where <span class="math inline"><em>B</em></span> is the beta function, <span class="math inline"><em>μ</em></span> is the average probability of a flexible link being realized (<em>i.e.</em> the average value of <span class="math inline"><em>p</em></span> across networks in the dataset) and <span class="math inline"><em>ϕ</em></span> is the concentration around this value. The support of this distribution is limited to only ecologically realistic values of <span class="math inline"><em>L</em></span>: it has no probability mass below <span class="math inline"><em>S</em> − 1</span> or above <span class="math inline"><em>S</em><sup>2</sup></span>. This means that the problem of estimating values for <span class="math inline"><em>μ</em></span> and <span class="math inline"><em>ϕ</em></span> is reduced to fitting the univariate distribution described in eq. <a href="#eq:shiftBB">2</a>. For more detailed explanation of the model derivation, fitting, and comparison, see Experimental Procedures.</p>
+         <p>In this paper we will compare our flexible links model to three previous models for <span class="math inline"><em>L</em></span>. We estimate parameters and compare the performance of all models using open data from the <code>mangal.io</code> networks database <span class="citation" data-cites="PoisBais16">(Poisot, Baiser, et al. 2016)</span>. This online, open-access database collects published information on all kinds of ecological networks, including 255 food webs detailing interactions between consumers and resources <span class="citation" data-cites="PoisBerg20">(Poisot et al. 2020)</span>. We use these data to show how our flexible links model not only outperforms existing efforts at predicting the number of links, but also has numerous desirable properties from which novel insights about the structure of food webs can be derived.</p>
+         <h1 id="results-and-discussion">Results and Discussion</h1>
+         <h2 id="flexible-links-model-fits-better-and-makes-a-plausible-range-of-predictions">Flexible links model fits better and makes a plausible range of predictions</h2>
+         <div id="tbl:comparison" class="tablenos">
+         <table>
+         <caption><span>Table 1:</span> Comparison of the four different models. We show Pareto-smoothed important sampling values (PSIS-LOO) and their standard deviation. PSIS-LOO is similar to information critera in that smaller values indicate better predictive performance. We also show expected log predictive density (ELPD) differences to the maximum for all models, along with the standard error (SE) of these differences. </caption>
+         <thead>
+         <tr class="header">
+         <th>Model</th>
+         <th>eq.</th>
+         <th>PSIS-LOO</th>
+         <th><span class="math inline"><em>Δ</em>ELPD</span></th>
+         <th><span class="math inline"><em>S</em><em>E</em><sub><em>Δ</em>ELPD</sub></span></th>
+         </tr>
+         </thead>
+         <tbody>
+         <tr class="odd">
+         <td>Flexible links</td>
+         <td><a href="#eq:lhat">1</a></td>
+         <td>2520.5 ± 44.4</td>
+         <td>0</td>
+         <td>0</td>
+         </tr>
+         <tr class="even">
+         <td>Power law <span class="citation" data-cites="BrosOstl04">(Brose et al. 2004)</span></td>
+         <td><a href="#eq:pl">3</a></td>
+         <td>2564.3 ± 46.6</td>
+         <td>-21.9</td>
+         <td>6.5</td>
+         </tr>
+         <tr class="odd">
+         <td>Constant <span class="citation" data-cites="mart92ccc">(Martinez 1992)</span></td>
+         <td><a href="#eq:cc">2</a></td>
+         <td>2811.0 ± 68.3</td>
+         <td>-145.3</td>
+         <td>21.1</td>
+         </tr>
+         <tr class="even">
+         <td>Link-species scaling <span class="citation" data-cites="CoheBria84">(Cohen and Briand 1984)</span></td>
+         <td><a href="#eq:lssl">1</a></td>
+         <td>39840.1 ± 2795.1</td>
+         <td>-18659.8</td>
+         <td>1381.7</td>
+         </tr>
+         </tbody>
+         </table>
+         </div>
+         <p>When fit to the datasets archived on <code>mangal.io</code>, all four models fit without any problematic warnings (see Experimental Procedures), while our model for flexible links outperformed previous solutions to the problem of modelling <span class="math inline"><em>L</em></span>. The flexible links model, which we fit via a beta-binomial observation model, had the most favourable values of PSIS-LOO information criterion (table <a href="#tbl:comparison">1</a>) and of expected log predictive density (ELPD), relative to the three competing models which used a negative binomial observation model. Pareto-smoothed important sampling serves as a guide to model selection <span class="citation" data-cites="VehtGelm17">(Vehtari, Gelman, and Gabry 2017)</span>; like other information criteria it approximates the error in cross-validation predictions. Smaller values indicate a model which makes better predictions. The calculation of PSIS-LOO can also provide some clues about potential model fits; in our case the algorithm suggested that the constant connectance model was sensitive to extreme observations. The expected log predictive density (ELPD), on the other hand, measures the predictive performance of the model; here, higher values indicate more reliable predictions <span class="citation" data-cites="VehtGelm17">(Vehtari, Gelman, and Gabry 2017)</span>. This suggests that the flexible links model will make the best predictions of <span class="math inline"><em>L</em></span>.</p>
+         <p>To be useful to ecologists, predictions of <span class="math inline"><em>L</em></span> must stay within realistic boundaries determined by ecological principles. We generated posterior predictions for all models and visualized them against these constraints (fig. <a href="#fig:PP_counterfactual">1</a>). The LSSL model underestimates the number of links, especially in large networks: its predictions were frequently lower than the minimum <span class="math inline"><em>S</em> − 1</span>. The constant connectance and power law models also made predictions below this value, especially for small values of <span class="math inline"><em>S</em></span>. The flexible links model made roughly the same predictions, but within ecologically realistic values.</p>
+         <div id="fig:PP_counterfactual" class="fignos">
+         <figure>
+         <img src="figures/models_links.png" alt="" /><figcaption><span>Figure 1:</span> <strong>The flexible links model fits better and makes a plausible range of predictions.</strong> The number of links is plotted as a function of species richness obtained from the posterior distributions of A) the link-species scaling, B) the constant connectance, C) the power law and D) the flexible links models. In each panel, the colored line represents the median predicted link number and the grey areas cover the 78% and 97% percentile intervals. Empirical data from the <code>mangal.io</code> database are plotted in each panel (grey dots), as well as the minimal <span class="math inline"><em>S</em> − 1</span> and maximal <span class="math inline"><em>S</em><sup>2</sup></span> number of links (thinner and bolder black lines, respectively). Predictions from the flexible links model are always plausible: they stay within these biological boundaries.</figcaption>
+         </figure>
+         </div>
+         <h2 id="the-flexible-links-model-makes-realistic-predictions-for-small-communities">The flexible links model makes realistic predictions for small communities</h2>
+         <p>Constraints on food web structure are especially important for small communities. This is emphasized in fig. <a href="#fig:real_predict">2</a>, which shows that all models other than the flexible links model fail to stay within realistic ecological constraints when <span class="math inline"><em>S</em></span> is small. The link-species scaling model made around 29% of unrealistic predictions of link numbers for every value of <span class="math inline"><em>S</em></span> (<span class="math inline">3 ≤ <em>S</em> ≤ 750</span>). The constant connectance and power law models, on the other hand, also produced unrealistic results but for small networks only: more than 20% were unrealistic for networks comprising less than 12 and 7 species, respectively. Only the flexible links model, by design, never failed to predict numbers of links between <span class="math inline"><em>S</em> − 1</span> and <span class="math inline"><em>S</em><sup>2</sup></span>. It must be noted that unrealistic predictions are most common in the shaded area of fig. <a href="#fig:real_predict">2</a>, which represents 90% of the empirical data we used to fit the model; therefore it matters little that models agree for large <span class="math inline"><em>S</em></span>, since there are virtually no such networks observed.</p>
+         <div id="fig:real_predict" class="fignos">
+         <figure>
+         <img src="figures/real_predict.png" alt="" /><figcaption><span>Figure 2:</span> <strong>Only the flexible links model makes realistic predictions for small communities.</strong> Here we show the proportion of posterior predictions from each of our 4 models which fall outside ecologically realistic values. The proportion of predictions in the correct range increases with species richness for the constant connectance and power law models. Shaded area shows the 5%, 50% and 95% quantiles of the distribution of <span class="math inline"><em>S</em></span>, demonstrating that many communities have potentially incorrect predictions under previous models.</figcaption>
+         </figure>
+         </div>
+         <h2 id="parameter-estimates-for-all-models">Parameter estimates for all models</h2>
+         <div id="tbl:parameters" class="tablenos">
+         <table>
+         <caption><span>Table 2:</span> Parameter estimates for all models. Mean and standard deviation (SD) are given for each parameter. </caption>
+         <thead>
+         <tr class="header">
+         <th>Model</th>
+         <th>parameter</th>
+         <th>interpretation</th>
+         <th>value</th>
+         <th>SD</th>
+         </tr>
+         </thead>
+         <tbody>
+         <tr class="odd">
+         <td><span class="math inline"><em>b</em><em>S</em></span> <span class="citation" data-cites="CoheBria84">(Cohen and Briand 1984)</span></td>
+         <td><span class="math inline"><em>b</em></span></td>
+         <td>links per species</td>
+         <td>2.2</td>
+         <td>0.047</td>
+         </tr>
+         <tr class="even">
+         <td></td>
+         <td><span class="math inline"><em>κ</em></span></td>
+         <td>concentration of <span class="math inline"><em>L</em></span> around mean</td>
+         <td>1.4</td>
+         <td>0.12</td>
+         </tr>
+         <tr class="odd">
+         <td><span class="math inline"><em>b</em><em>S</em><sup>2</sup></span> <span class="citation" data-cites="mart92ccc">(Martinez 1992)</span></td>
+         <td><span class="math inline"><em>b</em></span></td>
+         <td>proportion of links realized</td>
+         <td>0.12</td>
+         <td>0.0041</td>
+         </tr>
+         <tr class="even">
+         <td></td>
+         <td><span class="math inline"><em>κ</em></span></td>
+         <td>concentration of <span class="math inline"><em>L</em></span> around mean</td>
+         <td>4.0</td>
+         <td>0.37</td>
+         </tr>
+         <tr class="odd">
+         <td><span class="math inline"><em>b</em><em>S</em><sup><em>a</em></sup></span> <span class="citation" data-cites="BrosOstl04">(Brose et al. 2004)</span></td>
+         <td><span class="math inline"><em>b</em></span></td>
+         <td>proportion of relationship</td>
+         <td>0.37</td>
+         <td>0.054</td>
+         </tr>
+         <tr class="even">
+         <td></td>
+         <td><span class="math inline"><em>a</em></span></td>
+         <td>scaling of relationship</td>
+         <td>1.7</td>
+         <td>0.043</td>
+         </tr>
+         <tr class="odd">
+         <td></td>
+         <td><span class="math inline"><em>κ</em></span></td>
+         <td>concentration of <span class="math inline"><em>L</em></span> around mean</td>
+         <td>4.8</td>
+         <td>0.41</td>
+         </tr>
+         <tr class="even">
+         <td><span class="math inline">(<em>S</em><sup>2</sup> − (<em>S</em> − 1))<em>p</em> + <em>S</em> − 1</span></td>
+         <td><span class="math inline"><em>μ</em></span></td>
+         <td>average value of <span class="math inline"><em>p</em></span></td>
+         <td>0.086</td>
+         <td>0.0037</td>
+         </tr>
+         <tr class="odd">
+         <td></td>
+         <td><span class="math inline"><em>ϕ</em></span></td>
+         <td>concentration around value of <span class="math inline"><em>μ</em></span></td>
+         <td>24.3</td>
+         <td>2.4</td>
+         </tr>
+         </tbody>
+         </table>
+         </div>
+         <p>Although we did not use the same approach to parameter estimation as previous authors, our approach to fitting these models recovered parameter estimates that are broadly congruent with previous works. We found a value of 2.2 for <span class="math inline"><em>b</em></span> of the LSSL model (table <a href="#tbl:parameters">2</a>), which is close to the original value of approximately 2 <span class="citation" data-cites="CoheBria84">(Cohen and Briand 1984)</span>. Similarly, we found a value of 0.12 for <span class="math inline"><em>b</em></span> of the constant connectance model, which was consistent with original estimates of 0.14 <span class="citation" data-cites="mart92ccc">(Martinez 1992)</span>. Finally, the parameter values we found for the power law were also comparable to earlier estimates <span class="citation" data-cites="BrosOstl04">(Brose et al. 2004)</span>. All of these models were fit with a negative binomial observation model, which has an additional parameter, <span class="math inline"><em>κ</em></span>, which is sometimes called a “concentration” parameter. This value increases from the top of our table to the bottom, in the same sequence as predictive performance improves in table <a href="#tbl:comparison">1</a>. This indicates that the model predictions are more concentrated around the mean predicted by the model (table <a href="#tbl:parameters">2</a>, column 1).</p>
+         <p>Our parameter estimates for the flexible links model are ecologically meaningful. For large communities, our model should behave similarly to the constant connectance model and so it is no surprise that <span class="math inline"><em>μ</em></span> was about 0.09, which is close to our value of 0.12 for constant connectance. In addition, we obtained a rather large value of 24.3 for <span class="math inline"><em>ϕ</em></span>, which shrinks the variance around the mean of <span class="math inline"><em>p</em></span> to approximately 0.003 (<span class="math inline"><em>v</em><em>a</em><em>r</em>(<em>p</em>) = <em>μ</em>(1 − <em>μ</em>)/(1 + <em>ϕ</em>)</span>). This indicates that food webs are largely similar in their probability of flexible links being realized (thus showing how our previous assumption that <span class="math inline"><em>p</em></span> might vary between food webs to be more conservative than strictly required). The flexible links model also uses fewer parameters than the power law model and makes slightly better predictions, which accounts for its superior performance in model comparison (table <a href="#tbl:comparison">1</a>). In fig. S1, we compare the maximum <em>a posteriori</em> (MAP) estimates of our model parameters to their maximum likelihood estimates (MLE).</p>
+         <h2 id="connectance-and-linkage-density-can-be-derived-from-a-model-for-links">Connectance and linkage density can be derived from a model for links</h2>
+         <p>Of the three important quantities which describe networks (<span class="math inline"><em>L</em></span>, <span class="math inline"><em>C</em><em>o</em></span> and <span class="math inline"><em>L</em><sub><em>D</em></sub></span>), we have directly modelled <span class="math inline"><em>L</em></span> only. However, we can use the parameter estimates from our model for <span class="math inline"><em>L</em></span> to parameterize a distribution for connectance (<span class="math inline"><em>L</em>/<em>S</em><sup>2</sup></span>) and linkage density (<span class="math inline"><em>L</em>/<em>S</em></span>). We can derive this by noticing that eq. <a href="#eq:lhat">1</a> can be rearranged to show how <span class="math inline"><em>C</em><em>o</em></span> and <span class="math inline"><em>L</em><sub><em>D</em></sub></span> are linear transformations of <span class="math inline"><em>p</em></span>:</p>
+         <p><span id="eq:co" class="eqnos"><br /><span class="math display">$$ Co = \frac{L}{S^2} = p\left(1 - \frac{S-1}{S^2}\right) + \frac{S-1}{S^2} ,$$</span><br /><span class="eqnos-number">(1)</span></span> </p>
+         <p>and</p>
+         <p><span id="eq:ld" class="eqnos"><br /><span class="math display">$$ L_D = \frac{L}{S} = p \left(S - \frac{S-1}{S} \right) +  \frac{S-1}{S},$$</span><br /><span class="eqnos-number">(2)</span></span> </p>
+         <p>For food webs with many species, these equations simplify: eq. <a href="#eq:lhat">1</a> can be expressed as a second degree polynomial, <span class="math inline"><em>L</em><sub><em>F</em><em>L</em></sub> = <em>p</em> × <em>S</em><sup>2</sup> + (1 − <em>p</em>) × <em>S</em> + (<em>p</em> − 1)</span>, whose leading term is <span class="math inline"><em>p</em> × <em>S</em><sup>2</sup></span>. Therefore, when <span class="math inline"><em>S</em></span> is large, eq. <a href="#eq:co">1</a> and eq. <a href="#eq:ld">2</a> respectively approach <span class="math inline"><em>C</em><em>o</em> = <em>L</em>/<em>S</em><sup>2</sup> ≈ <em>p</em></span> and <span class="math inline"><em>L</em><sub><em>D</em></sub> = <em>L</em>/<em>S</em> ≈ <em>p</em><em>S</em></span>. A study of eq. <a href="#eq:co">1</a> and eq. <a href="#eq:ld">2</a> also provides insight into the ecological interpretation of the parameters in our equation. For example, eq. <a href="#eq:ld">2</a> implies that adding <span class="math inline"><em>n</em></span> species should increase the linkage density by approximately <span class="math inline"><em>p</em> × <em>n</em></span>. The addition of 11 new species (<span class="math inline"><em>p</em><sup> − 1</sup></span> according to table <a href="#tbl:parameters">2</a>) should increase the linkage density in the food web by roughly 1, meaning that each species in the original network would be expected to develop 2 additional interactions. Similarly, eq. <a href="#eq:co">1</a> shows that when <span class="math inline"><em>S</em></span> is large, we should expect a connectance which is a constant. Thus <span class="math inline"><em>p</em></span> has an interesting ecological interpretation: it represents the average connectance of networks large enough that the proportion <span class="math inline">(<em>S</em> − 1)/<em>S</em><sup>2</sup></span> is negligible.</p>
+         <h2 id="applications-of-the-flexible-links-model-to-key-food-web-questions">Applications of the flexible links model to key food web questions</h2>
+         <p>Our model is generative, and that is important and useful: we can use this model to correctly generate predictions that look like real data. This suggests that we can adapt the model, using either its parameters or predictions or both, to get a new perspective on many questions in network ecology. Here we show four possible applications that we think are interesting, in that relying on our model eliminates the need to speculate on the structure of networks, or to introduce new hypotheses to account for it.</p>
+         <h3 id="probability-distributions-for-l_d-and-co">Probability distributions for <span class="math inline"><em>L</em><sub><em>D</em></sub></span> and <span class="math inline"><em>C</em><em>o</em></span></h3>
+         <p>In a beta-binomial distribution, it is assumed that the probability of success <span class="math inline"><em>p</em></span> varies among groups of trials according to a <span class="math inline">Beta(<em>μ</em><em>ϕ</em>, (1 − <em>μ</em>)<em>ϕ</em>)</span> distribution. Since <span class="math inline"><em>p</em></span> has a beta distribution, the linear transformations described by eq. <a href="#eq:co">1</a> and eq. <a href="#eq:ld">2</a> also describe beta distributions which have been shifted and scaled according to the number of species <span class="math inline"><em>S</em></span> in a community. This shows that just as <span class="math inline"><em>L</em></span> must be within ecologically meaningful bounds, <span class="math inline"><em>C</em><em>o</em></span> (eq. <a href="#eq:co">1</a>) and <span class="math inline"><em>L</em><sub><em>D</em></sub></span> (eq. <a href="#eq:ld">2</a>) must be as well. The connectance of a food web is bounded by <span class="math inline">(<em>S</em> − 1)/<em>S</em><sup>2</sup></span> and <span class="math inline">1</span>, while the linkage density is bounded by <span class="math inline">(<em>S</em> − 1)/<em>S</em></span> and <span class="math inline"><em>S</em></span>.</p>
+         <p>We can convert the beta distribution for <span class="math inline"><em>p</em></span> into one for <span class="math inline"><em>C</em><em>o</em></span> by replacing <span class="math inline"><em>p</em></span> with the transformation of <span class="math inline"><em>C</em><em>o</em></span> as described above (eq. <a href="#eq:co">1</a>), and rescaling by the new range:</p>
+         <p><span id="eq:shiftBetaCo" class="eqnos"><br /><span class="math display">$$
+         [Co | S, \mu, \phi] = \frac{\left(Co - \frac{S-1}{S^2}\right)^{\mu \phi - 1}\left(1 - Co\right)^{(1 - \mu)\phi - 1} }{\left(1 - \frac{S-1}{S^2}\right)^{\phi - 1} \times \mathrm{B}(\mu \phi, (1 - \mu)\phi)}
+         $$</span><br /><span class="eqnos-number">(3)</span></span> </p>
+         <p>Similarly, we can convert the distribution for <span class="math inline"><em>p</em></span> into one for <span class="math inline"><em>L</em><sub><em>D</em></sub></span> by replacing <span class="math inline"><em>p</em></span> with the transformation that gives <span class="math inline"><em>L</em><sub><em>D</em></sub></span> (eq. <a href="#eq:ld">2</a>)</p>
+         <p><span id="eq:shiftBetaLD" class="eqnos"><br /><span class="math display">$$
+         [L_{D} | S, \mu, \phi] = \frac{\left(L_D - \frac{S-1} {S}\right)^{\mu \phi - 1}\left(1 - L_D\right)^{(1 - \mu)\phi - 1} }{\left(S - \frac{S-1}{S}\right)^{\phi - 1} \times \mathrm{B}(\mu \phi, (1 - \mu)\phi)}
+         $$</span><br /><span class="eqnos-number">(4)</span></span> </p>
+         <p>In fig. <a href="#fig:CoLd">3</a>, we show that the connectance and linkage density obtained from the equations above fit the empirical data well.</p>
+         <div id="fig:CoLd" class="fignos">
+         <figure>
+         <img src="figures/connectance_linkdens.png" alt="" /><figcaption><span>Figure 3:</span> <strong>Connectance and linkage density can be derived from a model for links.</strong> A) Connectance and B) linkage density are plotted as a function of species richness, for the maximum <em>a posteriori</em> estimates of the flexible links model. In each panel, the colored line represents the median predicted quantity and the grey areas cover the 78% and 97% percentile intervals. Empirical data from the <code>mangal.io</code> database are plotted in each panel (grey dots). In A), the minimal <span class="math inline">(<em>S</em> − 1)/<em>S</em><sup>2</sup></span> connectance and in B) the minimal <span class="math inline">(<em>S</em> − 1)/<em>S</em></span> and maximum <span class="math inline"><em>S</em></span> linkage density are plotted (black lines).</figcaption>
+         </figure>
+         </div>
+         <h3 id="an-analytic-alternative-to-null-model-testing">An analytic alternative to null-model testing</h3>
+         <p>Ecologists are often faced with the issue of comparing several networks. A common question is whether a given network has an “unusual” number of links relative to some expectation. Traditionally these comparisons have been done by simulating a “null” distribution of random matrices <span class="citation" data-cites="FortBasc06a BascJord03">(Fortuna and Bascompte 2006; Bascompte et al. 2003)</span>. This is intended to allow ecologists to compare food webs to a sort of standard, hopefully devoid of whatever biological process could alter the number of links. Importantly, this approach assumes that (i) connectance is a fixed property of the network, ignoring any stochasticity, and (ii) the simulated network distribution is an accurate and unbiased description of the null distribution. Yet recent advances in the study of probabilistic ecological networks show that the existence of links, and connectance itself is best thought of as a probabilistic quantity <span class="citation" data-cites="PoisCirt16">(Poisot, Cirtwill, et al. 2016)</span>. Given that connectance drives most of the measures of food web structure <span class="citation" data-cites="PoisGrav14">(Poisot and Gravel 2014)</span>, it is critical to have a reliable means of measuring differences from the expectation. We provide a way to assess whether the number of links in a network (and therefore its connectance) is surprising. We do so using maths rather than simulations.</p>
+         <p>The shifted beta-binomial can be approximated by a normal distribution with mean <span class="math inline"><em>L̄</em></span> and variance <span class="math inline"><em>σ</em><sub><em>L</em></sub><sup>2</sup></span>:</p>
+         <p><br /><span class="math display"><em>L</em> ∼ <em>N</em><em>o</em><em>r</em><em>m</em><em>a</em><em>l</em>(<em>L̄</em>, <em>σ</em><sub><em>L</em></sub><sup>2</sup>)</span><br /></p>
+         <p><br /><span class="math display"><em>L̄</em> = (<em>S</em><sup>2</sup> − <em>S</em> + 1)<em>μ</em> + <em>S</em> − 1</span><br /></p>
+         <p><span id="eq:bb_sigma" class="eqnos"><br /><span class="math display">$$\sigma_L^2 = (S^2 - S + 1) \mu (1 - \mu)(1 + \frac{S(S-1)}{\phi + 1})$$</span><br /><span class="eqnos-number">(5)</span></span> </p>
+         <p>This normal approximation is considered good whenever the skewness of the target distribution is modest. In food webs, this should be true whenever communities have more than about 10 species (see Experimental Procedures). This result means that given a network with observed species richness <span class="math inline"><em>S</em><sub><em>o</em><em>b</em><em>s</em></sub></span> and observed links <span class="math inline"><em>L</em><sub><em>o</em><em>b</em><em>s</em></sub></span>, we can calculate its <span class="math inline"><em>z</em></span>-score, i.e. how many standard deviations an observation is from the population average, as</p>
+         <p><span id="eq:z" class="eqnos"><br /><span class="math display">$$z = \frac{L_{obs} - \bar{L}}{\sqrt{\sigma_L^2}} \,.$$</span><br /><span class="eqnos-number">(6)</span></span> </p>
+         <p>A network where <span class="math inline"><em>L</em> = <em>L̄</em></span> will have a <span class="math inline"><em>z</em></span>-score of 0, and any network with more (fewer) links will have a positive (negative) <span class="math inline"><em>z</em></span>-score. Following this method, we computed the empirical <span class="math inline"><em>z</em></span>-scores for the 255 food webs archived on <code>mangal.io</code> (fig. <a href="#fig:zscores">4</a>). We found that 18 webs (7.1%) had a total number of observed links unusually higher than what was expected under the flexible links model (<span class="math inline"><em>z</em>&gt;</span> 1.96). These networks are interesting candidates for the study of mechanisms leading to high connectance.</p>
+         <p>Out of the 255 food webs, none was found to have an unusually low number of links (<span class="math inline"><em>z</em>&lt;</span> 1.96). In fact, <span class="math inline"><em>z</em></span>-scores this low are not possible in this dataset: food webs having the minimum value of <span class="math inline"><em>S</em> − 1</span> links are still within two standard deviations of the mean, for this sample. However, this sample contains the full diversity of food webs found in the <code>mangal.io</code> database. Hence, this does not mean that no food web will ever have a <span class="math inline"><em>z</em></span>-score lower than -1.96. If the flexible links model is fit to data from a specific system, food webs might have a surprisingly low number of links when compared to this population average. These networks would be interesting candidates for the study of mechanisms leading to low connectance or for the identification of under-sampled webs. Ecologists can thus use our method to assess the deviation of their own food webs from their random expectations.</p>
+         <div id="fig:zscores" class="fignos">
+         <figure>
+         <img src="figures/z-scores.png" alt="" /><figcaption><span>Figure 4:</span> <strong>Empirical distribution of food web <span class="math inline"><em>z</em></span>-scores</strong> The <span class="math inline"><em>z</em></span>-scores of all food webs archived on <code>mangal.io</code> have been computed using eq. <a href="#eq:z">6</a>. Food webs with an absolute <span class="math inline"><em>z</em></span>-score above 1.96 are in pink. The shaded region comprises all food webs with an absolute <span class="math inline"><em>z</em></span>-score below 1.96.</figcaption>
+         </figure>
+         </div>
+         <p>In fig. <a href="#fig:MAPnormal">5</a>, we show that the predictions made by the normal approximation (panel B) are similar to those made by the beta distribution parameterized with the maximum <em>a posteriori</em> values of <span class="math inline"><em>μ</em></span> and <span class="math inline"><em>ϕ</em></span> (panel A), although the former can undershoot the constraint on the minimum number of links. This undershooting, however, will not influence any actual <span class="math inline"><em>z</em></span>-scores, since no food webs have fewer than <span class="math inline"><em>S</em> − 1</span> links and therefore no <span class="math inline"><em>z</em></span>-scores so low can ever be observed.</p>
+         <div id="fig:MAPnormal" class="fignos">
+         <figure>
+         <img src="figures/betabinmap_normal_links.png" alt="" /><figcaption><span>Figure 5:</span> <strong>The shifted beta-binomial distribution can be approximated by a normal distribution.</strong> The number of links is plotted as a function of species richness obtained from A) the maximum <em>a posteriori</em> estimates of the flexible links model and B) its normal approximation. In each panel, the colored line represents the median predicted link number and the grey areas cover the 78% and 97% percentile intervals. The minimal <span class="math inline"><em>S</em> − 1</span> and maximal <span class="math inline"><em>S</em><sup>2</sup></span> numbers of links are plotted in each panel (thinner and bolder black lines, respectively).</figcaption>
+         </figure>
+         </div>
+         <h3 id="we-should-see-many-different-network-area-relationships">We should see many different network-area relationships</h3>
+         <p>Our results bear important consequences for the nascent field of studying network-area relationships <span class="citation" data-cites="GaliLurg18">(NAR; Galiana et al. 2018)</span>. As it has long been observed that not all species in a food web diffuse equally through space <span class="citation" data-cites="HoltLawt99">(Holt et al. 1999)</span>, understanding how the shape of networks varies when the area increases is an important goal, and in fact underpins the development of a macroecological theory of food webs <span class="citation" data-cites="BaisGrav19">(Baiser et al. 2019)</span>. Using a power-law as the acceptable relationship between species and area <span class="citation" data-cites="Deng09 WillGast01">(Dengler 2009; Williamson, Gaston, and Lonsdale 2001)</span>, the core idea of studying NAR is to predict network structure as a consequence of the effect of spatial scale on species richness <span class="citation" data-cites="GaliLurg18">(Galiana et al. 2018)</span>. Drawing on these results, we provide in fig. <a href="#fig:nar">6</a> a simple illustration of the fact that, due to the dispersal of values of <span class="math inline"><em>L</em></span>, the relationship between <span class="math inline"><em>L</em>/<em>S</em></span> and area can have a really wide confidence interval. While our posterior predictions generally match the empirical results on this topic <span class="citation" data-cites="WoodRuss15">(<em>e.g.</em> Wood et al. 2015)</span>, they suggest that we will observe many relationships between network structure and space, and that picking out the signal of network-area relationships might be difficult.</p>
+         <p>As of now, not many NARs have been documented empirically; but after the arguments made by <span class="citation" data-cites="GaliLurg18">Galiana et al. (2018)</span> which tie the shape of these relationships to macroecological processes, we fully expect these relationships to be more frequently described moving forward. Our results suggest that our expectation of the amount of noise in these relationships should be realistic; while it is clear that these relationships exist, because of the scaling of dispersion in the number of links with the number of species, they will necessarily be noisy. Any described relationships will exist within extremely wide confidence intervals, and it might require a large quantity of empirical data to properly characterize them. As such, our model can help in assessing the difficulty of capturing some foundational relationships of food web structure.</p>
+         <div id="fig:nar" class="fignos">
+         <figure>
+         <img src="figures/nar.png" alt="" /><figcaption><span>Figure 6:</span> <strong>Many different network-area relationships are supported by the data</strong>. Representing the species richness as <span class="math inline"><em>S</em> = <em>k</em> × <em>A</em><sup><em>z</em></sup></span> (panel A), with <span class="math inline"><em>A</em></span> being the relative area size, <span class="math inline"><em>k</em> = 200</span> being the maximal species richness, and <span class="math inline"><em>z</em> = 0.27</span> a scaling exponent <span class="citation" data-cites="GaliLurg18">(Galiana et al. 2018)</span>. We then use the posterior distribution of <span class="math inline"><em>L</em></span> to predict how <span class="math inline"><em>L</em><sub><em>D</em></sub></span> should scale with <span class="math inline"><em>A</em></span>. We compare the predictions of our model to that of the generally accepted power law (eq. <a href="#eq:pl">3</a>). While our model predicts a larger linkage density in larger areas (panel B), the confidence intervals around this prediction (grey areas covering the 78% and 97% percentile intervals) are extremely large. In particular, our model scales faster than the power law, but the confidence interval is high (due to the scaling of variance with <span class="math inline"><em>S</em></span>, eq. <a href="#eq:bb_sigma">5</a>). This suggests that we may observe either very weak, or very strong, effects of area on networks.</figcaption>
+         </figure>
+         </div>
+         <h3 id="stability-imposes-a-limit-on-network-size">Stability imposes a limit on network size</h3>
+         <p>Can organisms really interact with an infinite number of partners? According to eq. <a href="#eq:ld">2</a>, at large values of <span class="math inline"><em>S</em></span>, the linkage density scales according to <span class="math inline"><em>p</em> × <em>S</em></span> (which is supported by empirical data), and so species are expected to have on average <span class="math inline">2 × <em>p</em> × <em>S</em></span> interactions. A useful concept in evolutionary biology is the “Darwinian demon” <span class="citation" data-cites="Law79">(Law 1979)</span>, <em>i.e.</em> an organism that would have infinite fitness in infinite environments. Our model seems to predict the emergence of what we call Eltonian demons, which can have arbitrarily large number of interactions. Yet we know that constraints on handling time of prey, for example, imposes hard limits on diet breadth <span class="citation" data-cites="ForiJenk17">(Forister and Jenkins 2017)</span>. This result suggests that there are other limitations to the size of food webs; indeed, the fact that <span class="math inline"><em>L</em>/<em>S</em></span> increases to worryingly large values only matters if ecological processes allow <span class="math inline"><em>S</em></span> to be large enough. It is known that food webs can get as high as energy transfer allows <span class="citation" data-cites="ThomBros12">(Thompson et al. 2012)</span>, and as wide as competition allows <span class="citation" data-cites="KefiBerl12a">(Kéfi et al. 2012)</span>. Furthermore, in more species-rich communities there is a greater diversity of functional traits among the interacting organisms; this limits interactions, because traits determine suitable interaction partners <span class="citation" data-cites="BeckPetc06 BartGrav16">(Beckerman, Petchey, and Warren 2006; Bartomeus et al. 2016)</span>. In short, and as fig. <a href="#fig:real_predict">2</a> suggests, since food webs are likely to be constrained to remain within an acceptable richness, we have no reason to anticipate that <span class="math inline"><em>p</em> × <em>S</em></span> will keep growing infinitely.</p>
+         <p>Network structure may itself prevent <span class="math inline"><em>S</em></span> from becoming large. May <span class="citation" data-cites="May72">(May 1972)</span> suggested that a network of richness <span class="math inline"><em>S</em></span> and connectance <span class="math inline"><em>C</em><em>o</em></span> is stable as long as the criteria <span class="math inline">$\sigma \sqrt{S \times Co} &lt; 1$</span> is satisfied, with <span class="math inline"><em>σ</em></span> being the standard deviation of the strengths of interactions. Although this criteria is not necessarily stringent enough for the stability of food webs <span class="citation" data-cites="AlleTang12 AlleTang15">(Allesina and Tang 2012, 2015)</span>, it still defines an approximate maximum value <span class="math inline"><em>σ</em><sup>⋆</sup></span> which is the value above which the system is expected to be unstable. This threshold is <span class="math inline">$\sigma^\star = 1/\sqrt{L_D}$</span>, where <span class="math inline"><em>L</em><sub><em>D</em></sub></span> is defined as in eq. <a href="#eq:ld">2</a>. We illustrate this result in fig. <a href="#fig:stability">7</a>, which reveals that <span class="math inline"><em>σ</em><sup>⋆</sup></span> falls towards 0 for larger species richness. The result in fig. <a href="#fig:stability">7</a> is in agreement with previous simulations, placing the threshold for stability at about 1200 species in food webs. These results show how ecological limitations, for example on connectance and the resulting stability of the system, can limit the size of food webs <span class="citation" data-cites="AlleTang12 BorrAlle15a">(Allesina and Tang 2012; Borrelli et al. 2015)</span>. In the second panel, we show that networks of increasing richness (thicker lines, varying on a log-scale from <span class="math inline">10<sup>1</sup></span> to <span class="math inline">10<sup>3</sup></span>) have a lower probability of being stable, based on the proportion of stable networks in our posterior samples.</p>
+         <div id="fig:stability" class="fignos">
+         <figure>
+         <img src="figures/may.png" alt="" /><figcaption><span>Figure 7:</span> <strong>Stability imposes a limit on network size</strong>. Using eq. <a href="#eq:ld">2</a>, we can calculate the maximum standard deviation in the strength of interactions which should ensure food web stability, <span class="math inline">$\sigma^\star = 1/\sqrt{L_D}$</span> (panel A). The colored line represent the median value of maximum standard deviation, based on the posterior distribution of the flexible links model, and the grey areas cover the 78% and 97% percentile intervals. The fine and dark lines indicate the maximum and minimum values of maximum standard deviation, respectively. The dotted line shows the maximum for the average <span class="math inline"><em>L</em><sub><em>D</em></sub></span>, as given by eq. <a href="#eq:ld">2</a>. The maximum standard deviation falls sharply when the number of species increases, which will limit the stability of large food webs, and therefore explain why Eltonian demons should not emerge. In panel B, we show the probability of a network with <span class="math inline"><em>S</em></span> species being stable, based on draws from the posterior distribution, for <span class="math inline">10 ≤ <em>S</em> ≤ 1000</span> - larger networks (thicker lines) are increasingly unlikely to be stable.</figcaption>
+         </figure>
+         </div>
+         <h2 id="conclusions">Conclusions</h2>
+         <p>Here we derived eq. <a href="#eq:lhat">1</a>, a model for the prediction of the number of links in ecological networks using a beta-binomial distribution for <span class="math inline"><em>L</em></span>, and show how it outperforms previous and more commonly used models describing this relationship. More importantly, we showed that our model has parameters with a clear ecological interpretation (specifically, the value of <span class="math inline"><em>p</em></span> in eq. <a href="#eq:lhat">1</a> is the expected value of the connectance when <span class="math inline"><em>S</em></span> is large), and makes predictions which remain within biological boundaries. There are a variety of “structural” models for food webs, such as the niche model <span class="citation" data-cites="WillMart00">(Williams and Martinez 2000)</span>, the cascade model <span class="citation" data-cites="CoheNewm85">(Cohen and Newman 1985)</span>, the DBM <span class="citation" data-cites="BeckPetc06">(Beckerman, Petchey, and Warren 2006)</span> and ADBM <span class="citation" data-cites="PetcBeck08">(Petchey et al. 2008)</span>, the minimum potential niche model <span class="citation" data-cites="AlleAlon08">(Allesina, Alonso, and Pascual 2008)</span>, and the nested hierarchy model <span class="citation" data-cites="catt04pca">(Cattin et al. 2004)</span> to name a few. All of these models make predictions of food web structure: based on some parameters (usually <span class="math inline"><em>S</em></span> and <span class="math inline"><em>L</em></span>, and sometimes vectors of species-level parameters) they output an adjacency matrix <span class="math inline"><strong>A</strong><sub><em>S</em> × <em>S</em></sub></span> which contains either the presence or strength of trophic interactions. Therefore, these models require estimated values of <span class="math inline"><em>L</em></span> for a particular value of <span class="math inline"><em>S</em></span>, with the additional result that <span class="math inline">∑<strong>A</strong> = <em>L</em></span>. Our approach can serve to improve the realism of these models, by imposing that the values of <span class="math inline"><em>L</em></span> they use are within realistic boundaries. For example, a common use of structural models is to generate a set of “null” predictions: possible values of <span class="math inline"><strong>A</strong></span> and <span class="math inline"><em>L</em></span> in the absence of the mechanism of interest. Empirical networks are then compared to this set of predictions, and are said to be significant if they are more extreme than 95% of the observations <span class="citation" data-cites="DelmBess18">(Delmas et al. 2018)</span>. A challenge in this approach is that structural models may generate a wide range of predictions, including ecologically impossible values, leading a high false negative rate. This could be remedied by filtering this set of predictions according to our flexible links model, resulting in a narrower set of null predictions and a lower false negative rate. In general, our approach is complementary to other attempts to create ecologically-realistic food web models; for example, probabilistic models of the number of links per species which stay within ecological values <span class="citation" data-cites="KozuPano15">(Kozubowski, Panorska, and Forister 2015)</span>.</p>
+         <p>This model also casts new light on previous results on the structure of food webs: small and large food webs behave differently <span class="citation" data-cites="GarlCald03">(Garlaschelli, Caldarelli, and Pietronero 2003)</span>. Specifically, ecological networks most strongly deviate from scale free expectations when connectance is high <span class="citation" data-cites="DunnWill02b">(Dunne, Williams, and Martinez 2002)</span>. In our model, this behaviour emerges naturally: connectance increases sharply as species richness decreases (fig. <a href="#fig:CoLd">3</a>) – that is, where the additive term <span class="math inline">(<em>S</em> − 1)/<em>S</em><sup>2</sup></span> in eq. <a href="#eq:co">1</a> becomes progressively larger. In a sense, small ecological networks are different only due to the low values of <span class="math inline"><em>S</em></span>. Small networks have only a very limited number of flexible links, and this drives connectance to be greater. Connectance in turn has implications for many ecological properties. Connectance is more than the proportion of realized interactions. It has been associated with some of the most commonly used network measures <span class="citation" data-cites="PoisGrav14">(Poisot and Gravel 2014)</span>, and contains meaningful information on the stability <span class="citation" data-cites="DunnWill02b MontPimm06">(Dunne, Williams, and Martinez 2002; Montoya, Pimm, and Solé 2006)</span> and dynamics <span class="citation" data-cites="VieiAlme15">(Vieira and Almeida‐Neto 2015)</span> of ecological communities. A probability distribution for connectance not only accounts for the variability between networks, but can be used to describe fundamental properties of food webs and to identify ecological and evolutionary mechanisms shaping communities. A recent research direction has been to reveal its impact on resistance to invasion: denser networks with a higher connectance are comparatively more difficult to invade <span class="citation" data-cites="SmitMoor16">(Smith-Ramesh, Moore, and Schmitz 2016)</span>; different levels of connectance are also associated with different combinations of primary producers, consumers, and apex predators <span class="citation" data-cites="WillMart00">(Williams and Martinez 2000)</span>, which in turns determines which kind of species will have more success invading the network <span class="citation" data-cites="BaisRuss10">(Baiser, Russell, and Lockwood 2010)</span>. Because we can infer connectance from the richness of a community, our model also ties the invasion resistance of a network to its species richness.</p>
+         <p>The relationship between <span class="math inline"><em>L</em></span> and <span class="math inline"><em>S</em></span> has underpinned most of the literature on food web structure since the 1980s. Additional generations of data have allowed us to progress from the link-species scaling law, to constant connectance, to more general formulations based on a power law. Our model breaks with this tradition of iterating over the same family of relationships, and instead draws from our knowledge of ecological processes, and from novel tools in probabilistic programming. As a result, we provide predictions of the number of links which are closer to empirical data, stimulate new ecological insights, and can be safely assumed to always fall within realistic values. The results presented in fig. <a href="#fig:nar">6</a> (which reproduces results from <span class="citation" data-cites="GaliLurg18">Galiana et al. (2018)</span>) and fig. <a href="#fig:stability">7</a> (which reproduces results from <span class="citation" data-cites="AlleTang12">Allesina and Tang (2012)</span>) may seem largely confirmatory; in fact, the ability of our model to reach the conclusions of previous milestone studies in food web ecology is a strong confirmation of its validity. We would like to point out that these approaches would usually require ecologists to make inferences not only on the parameters of interests, but also on the properties of a network for a given species richness. In contrast, our model allows a real economy of parameters and offers ecologists the ability to get several key elements of network structure for free if only the species richness is known.</p>
+         <h1 id="experimental-procedures">Experimental Procedures</h1>
+         <h3 id="availability-of-code-and-data">Availability of code and data</h3>
+         <p>All code and data to reproduce this article is available at the Open Science Framework (DOI: <a href="https://doi.org/10.17605/OSF.IO/YGPZ2">10.17605/OSF.IO/YGPZ2</a>).</p>
+         <h3 id="bayesian-model-definitions">Bayesian model definitions</h3>
+         <p>Generative models are flexible and powerful tools for understanding and predicting natural phenomena. These models aim to create simulated data with the same properties as observations. Creating such a model involves two key components: a mathematical expression which represents the ecological process being studied, and a distribution which represents our observations of this process. Both of these components can capture our ecological understanding of a system, including any constraints on the quantities studied.</p>
+         <p>Bayesian models are a common set of generative models, frequently used to study ecological systems. Here, we define Bayesian models for all 4 of the models described in eq. <a href="#eq:lssl">1</a>, eq. <a href="#eq:cc">2</a>, eq. <a href="#eq:pl">3</a> and eq. <a href="#eq:lhat">1</a>. We use notation from <span class="citation" data-cites="HobbHoot15">Hobbs and Hooten (2015)</span>, writing out both the likelihood and the prior as a product over all 255 food webs in the <code>mangal.io</code> database.</p>
+         <p>Link-species scaling (LSSL) model:</p>
+         <p><br /><span class="math display">$$
+         [b, \kappa | \textbf{L}, \textbf{S}] \propto \prod_{i = 1}^{255} \text{negative binomial}(L_i | b \times S_i, e^{\kappa}) \times \text{normal}(b|0.7, 0.02) \times \text{normal}(\kappa|2, 1)
+         $$</span><br /></p>
+         <p>Constant connectance model:</p>
+         <p><br /><span class="math display">$$
+         [b, \kappa | \textbf{L}, \textbf{S}] \propto \prod_{i = 1}^{255} \text{negative binomial}(L_i | b \times S_i^2, e^{\kappa}) \times \text{beta}(b|3, 7) \times \text{normal}(\kappa|2, 1)
+         $$</span><br /></p>
+         <p>Power law model:</p>
+         <p><br /><span class="math display">$$
+         [b, a, \kappa | \textbf{L}, \textbf{S}] \propto \prod_{i = 1}^{255} \text{negative binomial}(L_i | \exp(b) \times S_i^a, e^{\kappa}) \times \text{normal}(b| -3 , 1) \times \text{normal}(a | 2, 0.6) \times \text{normal}(\kappa|2, 1)
+         $$</span><br /></p>
+         <p>Flexible links model:</p>
+         <p><br /><span class="math display">$$
+         [\mu, \phi| \textbf{L}, \textbf{S}] \propto \prod_{i = 1}^{255} \text{beta binomial}(L_i - S_i + 1 | S_i^2 - S_i + 1, \mu \times e^{\phi}, (1 - \mu) \times e^\phi) \times \text{beta}(\mu| 3 , 7 ) \times \text{normal}(\phi | 3, 0.5)
+         $$</span><br /></p>
+         <p>Note that while <span class="math inline"><em>e</em><sup><em>ϕ</em></sup></span> is shown in these equations for clarity, in the text we use <span class="math inline"><em>ϕ</em></span> to refer to the parameter after exponentiation. In the above equations, bold type indicates a <em>vector</em> of values; we use capital letters for <span class="math inline"><strong>L</strong></span> and <span class="math inline"><strong>S</strong></span> for consistency with the main text.</p>
+         <p>Because we want to compare all our models using information criteria, we were required to use a discrete likelihood to fit all models. Our model uses a discrete likelihood by default, but the previous three models (LSSL, constant connectance and the power law) normally do not. Instead, these models have typically been fit with Gaussian likelihoods, sometimes after log-transforming <span class="math inline"><em>L</em></span> and <span class="math inline"><em>S</em></span>. For example, eq. <a href="#eq:pl">3</a> becomes a linear relationship between <span class="math inline">log(<em>L</em>)</span> and <span class="math inline">log(<em>S</em>)</span>. This ensures that predictions of <span class="math inline"><em>L</em></span> are always positive, but allows otherwise unconstrained variation on both sides of the mean. To keep this same spirit, we chose the negative binomial distribution for observations. This distribution is limited to positive integers, and can vary on both sides of the mean relationship.</p>
+         <p>We selected priors for our Bayesian models using a combination of literature and domain expertise. For example, we chose our prior distribution for <span class="math inline"><em>p</em></span> based on <span class="citation" data-cites="mart92ccc">Martinez (1992)</span> , who gave a value of constant connectance equal to 0.14. While the prior we use is “informative”, it is weakly so; as <span class="citation" data-cites="mart92ccc">Martinez (1992)</span> did not provide an estimate of the variance for his value we chose a relatively large variation around that mean. However, no information is available in the literature to inform a choice of prior for concentration parameters <span class="math inline"><em>κ</em></span> and <span class="math inline"><em>ϕ</em></span>. For these values, we followed the advice of <span class="citation" data-cites="GabrSimp19">Gabry et al. (2019)</span> and performed prior predictive checks. Specifically, we chose priors that generated a wide range of values for <span class="math inline"><em>L</em><sub><em>i</em></sub></span>, but which did not frequently predict webs of either maximum or minimum connectance, neither of which are observed in nature.</p>
+         <h3 id="explanation-of-shifted-beta-binomial-distribution">Explanation of shifted beta-binomial distribution</h3>
+         <p>Equation eq. <a href="#eq:lhat">1</a> implies that <span class="math inline"><em>L</em><sub><em>F</em><em>L</em></sub></span> has a binomial distribution, with <span class="math inline"><em>S</em><sup>2</sup> − <em>S</em> + 1</span> trials and a probability <span class="math inline"><em>p</em></span> of any flexible link being realized:</p>
+         <p><br /><span class="math display">$$
+         [L | S, p] = { S^2 - (S - 1) \choose L - (S - 1)} p^{L-(S-1)}(1-p)^{S^2 - L} ,
+         $$</span><br /></p>
+         <p>This is often termed a <em>shifted binomial distribution</em>.</p>
+         <p>We also note that ecological communities are different in many ways besides their number of species (<span class="math inline"><em>S</em></span>). Although we assume <span class="math inline"><em>p</em></span> to be fixed within one community, the precise value of <span class="math inline"><em>p</em></span> will change from one community to another. With this assumption, our likelihood becomes a shifted beta-binomial distribution:</p>
+         <p><span id="eq:shiftBB2" class="eqnos"><br /><span class="math display">$$
+         [L|S,\mu, \phi] =  { S^2 - (S - 1) \choose L - (S - 1)} \frac{\mathrm{B}(L - (S - 1) + \mu \phi, S^2 - L + (1 - \mu)\phi)}{\mathrm{B}(\mu \phi, (1 - \mu)\phi)}
+         $$</span><br /><span class="eqnos-number">(1)</span></span></p>
+         <p>Where <span class="math inline"><em>B</em></span> is the beta function. Thus, the problem of fitting this model becomes one of estimating the parameters of this univariate probability distribution.</p>
+         <h2 id="model-fitting---data-and-software">Model fitting - data and software</h2>
+         <p>We evaluated our model against 255 empirical food webs, available in the online database <code>mangal.io</code> <span class="citation" data-cites="PoisBais16">(Poisot, Baiser, et al. 2016)</span>. We queried metadata (number of nodes and number of links) for all networks, and considered as food webs all networks having interactions of predation and herbivory. We use Stan <span class="citation" data-cites="CarpGelm17">(Carpenter et al. 2017)</span> which implements Bayesian inference using Hamiltonian Monte Carlo. We ran all models using four chains and 2000 iterations per chain. In our figures we use the posterior predictive distribution, which is a distribution described by the model after conditioning on the data. There are numerous ways to display a probability distribution; here we have chosen to do so using the expectation (mean) and two arbitrary percentile intervals: 78% and 97%. These intervals were chosen based on the recommendations of <span class="citation" data-cites="McEl20">McElreath (2020)</span>, and allowed us to capture most of the probability density in the tails of the posterior distributions.</p>
+         <p>Stan provides a number of diagnostics for samples from the posterior distribution, including <span class="math inline"><em>R̂</em></span>, effective sample size, and measures of effective tree depth and divergent iterations. None of these indicated problems with the posterior sampling. All models converged with no warnings; this indicates that is it safe to make inferences about the parameter estimates and to compare the models. However, the calculation of PSIS-LOO for the LSSL model warned of problematic values of the Pareto-k diagnostic statistic. This indicates that the model is heavily influenced by large values. Additionally, we had to drop the largest observation (&gt; 50 000 links) from all datasets in order to calculate PSIS-LOO for the LSSL model. Taken together, this suggests that the LSSL model is insufficiently flexible to accurately reproduce the data.</p>
+         <h2 id="normal-approximation-and-analytic-z-scores">Normal approximation and analytic <span class="math inline"><em>z</em></span>-scores</h2>
+         <p>We propose using a normal approximation to the beta-binomial distribution, to calculate analytic <span class="math inline"><em>z</em></span>-scores. This is based on a well-known similarity between the shape of a normal distribution and a binomial distribution. This approximation is considered good whenever the absolute skewness is less than 0.3 <span class="citation" data-cites="BoxHunt05">(Box, Hunter, and Hunter 2005)</span>, that is whenever:</p>
+         <p><br /><span class="math display">$$
+         \frac{1}{\sqrt{S^2 - S + 1}}\left(\sqrt{\frac{1- \mu}{\mu}} - \sqrt{\frac{\mu}{1-\mu}}\right) &lt; 0.3
+         $$</span><br /></p>
+         <p>The beta-binomial distribution is close to the binomial distribution. The error in approximating the former with the latter is on the order of the inverse square of the parameter <span class="math inline"><em>ϕ</em></span> <span class="citation" data-cites="Teer14">(Teerapabolarn 2014)</span>, which for our model is less than 0.0017.</p>
+         <h1 id="acknowledgments">Acknowledgments</h1>
+         <p>We thank three anonymous reviewers, as well as Owen Petchey and Andrew Beckerman, for their helpful comments and suggestions. Funding was provided by the Institute for data valorization (IVADO) and the NSERC CREATE Computational Biodiversity Science and Services (BIOS<span class="math inline"><em></em><sup>2</sup></span>) training program. TP acknowledges funding from the John Evans Leaders’ funds from the Canadian Foundation for Innovation. This work was made possible thanks to the effort of volunteers developing high-quality free and open source software for research.</p>
+         <h1 class="unnumbered" id="references" class="unnumbered">References</h1>
+         <div id="refs" class="references hanging-indent" role="doc-bibliography">
+         <div id="ref-AlleAlon08">
+         <p>Allesina, S., D. Alonso, and M. Pascual. 2008. “A General Model for Food Web Structure.” <em>Science</em> 320 (5876): 658–61. <a href="https://doi.org/10.1126/science.1156269">https://doi.org/10.1126/science.1156269</a>.</p>
+         </div>
+         <div id="ref-AlleTang12">
+         <p>Allesina, Stefano, and Si Tang. 2012. “Stability Criteria for Complex Ecosystems.” <em>Nature</em> 483 (7388): 205–8. <a href="https://doi.org/10.1038/nature10832">https://doi.org/10.1038/nature10832</a>.</p>
+         </div>
+         <div id="ref-AlleTang15">
+         <p>———. 2015. “The Stability–Complexity Relationship at Age 40: A Random Matrix Perspective.” <em>Population Ecology</em> 57 (1): 63–75. <a href="https://doi.org/10.1007/s10144-014-0471-0">https://doi.org/10.1007/s10144-014-0471-0</a>.</p>
+         </div>
+         <div id="ref-BaisGrav19">
+         <p>Baiser, Benjamin, Dominique Gravel, Alyssa R. Cirtwill, Jennifer A. Dunne, Ashkaan K. Fahimipour, Luis J. Gilarranz, Joshua A. Grochow, et al. 2019. “Ecogeographical Rules and the Macroecology of Food Webs.” <em>Global Ecology and Biogeography</em> 0 (0). <a href="https://doi.org/10.1111/geb.12925">https://doi.org/10.1111/geb.12925</a>.</p>
+         </div>
+         <div id="ref-BaisRuss10">
+         <p>Baiser, Benjamin, Gareth J. Russell, and Julie L. Lockwood. 2010. “Connectance Determines Invasion Success via Trophic Interactions in Model Food Webs.” <em>Oikos</em> 119 (12): 1970–6. <a href="https://doi.org/10.1111/j.1600-0706.2010.18557.x">https://doi.org/10.1111/j.1600-0706.2010.18557.x</a>.</p>
+         </div>
+         <div id="ref-BartGrav16">
+         <p>Bartomeus, Ignasi, Dominique Gravel, Jason M. Tylianakis, Marcelo A. Aizen, Ian A. Dickie, and Maud Bernard‐Verdier. 2016. “A Common Framework for Identifying Linkage Rules Across Different Types of Interactions.” <em>Functional Ecology</em> 30 (12): 1894–1903. <a href="https://doi.org/10.1111/1365-2435.12666">https://doi.org/10.1111/1365-2435.12666</a>.</p>
+         </div>
+         <div id="ref-BascJord03">
+         <p>Bascompte, J., P. Jordano, C. J. Melian, and J. M. Olesen. 2003. “The Nested Assembly of Plant-Animal Mutualistic Networks.” <em>Proceedings of the National Academy of Sciences</em> 100 (16): 9383–7. <a href="https://doi.org/10.1073/pnas.1633576100">https://doi.org/10.1073/pnas.1633576100</a>.</p>
+         </div>
+         <div id="ref-BeckPetc06">
+         <p>Beckerman, Andrew P., Owen L. Petchey, and Philip H. Warren. 2006. “Foraging Biology Predicts Food Web Complexity.” <em>Proceedings of the National Academy of Sciences</em> 103 (37): 13745–9. <a href="https://doi.org/10.1073/pnas.0603039103">https://doi.org/10.1073/pnas.0603039103</a>.</p>
+         </div>
+         <div id="ref-BorrAlle15a">
+         <p>Borrelli, Jonathan J., Stefano Allesina, Priyanga Amarasekare, Roger Arditi, Ivan Chase, John Damuth, Robert D. Holt, et al. 2015. “Selection on Stability Across Ecological Scales.” <em>Trends in Ecology &amp; Evolution</em> 30 (7): 417–25. <a href="https://doi.org/10.1016/j.tree.2015.05.001">https://doi.org/10.1016/j.tree.2015.05.001</a>.</p>
+         </div>
+         <div id="ref-BorrMood14">
+         <p>Borrett, Stuart R., James Moody, and Achim Edelmann. 2014. “The Rise of Network Ecology: Maps of the Topic Diversity and Scientific Collaboration.” <em>Ecological Modelling</em> 293 (December): 111–27. <a href="https://doi.org/10.1016/j.ecolmodel.2014.02.019">https://doi.org/10.1016/j.ecolmodel.2014.02.019</a>.</p>
+         </div>
+         <div id="ref-BoxHunt05">
+         <p>Box, George E. P., J. Stuart Hunter, and William Gordon Hunter. 2005. <em>Statistics for Experimenters: Design, Innovation, and Discovery</em>. Wiley-Interscience.</p>
+         </div>
+         <div id="ref-BrosOstl04">
+         <p>Brose, Ulrich, Annette Ostling, Kateri Harrison, and Neo D. Martinez. 2004. “Unified Spatial Scaling of Species and Their Trophic Interactions.” <em>Nature</em> 428 (6979): 167–71. <a href="https://doi.org/10.1038/nature02297">https://doi.org/10.1038/nature02297</a>.</p>
+         </div>
+         <div id="ref-cana12esp">
+         <p>Canard, Elsa, Nicolas Mouquet, Lucile Marescot, Kevin J. Gaston, Dominique Gravel, and David Mouillot. 2012. “Emergence of Structural Patterns in Neutral Trophic Networks.” <em>PLOS ONE</em> 7 (8): e38295. <a href="https://doi.org/10.1371/journal.pone.0038295">https://doi.org/10.1371/journal.pone.0038295</a>.</p>
+         </div>
+         <div id="ref-CarpGelm17">
+         <p>Carpenter, Bob, Andrew Gelman, Matthew D. Hoffman, Daniel Lee, Ben Goodrich, Michael Betancourt, Marcus Brubaker, Jiqiang Guo, Peter Li, and Allen Riddell. 2017. “Stan: A Probabilistic Programming Language.” <em>Journal of Statistical Software</em> 76 (1): 1–32. <a href="https://doi.org/10.18637/jss.v076.i01">https://doi.org/10.18637/jss.v076.i01</a>.</p>
+         </div>
+         <div id="ref-catt04pca">
+         <p>Cattin, Marie-France, Louis-Félix Bersier, Carolin Banašek-Richter, Richard Baltensperger, and Jean-Pierre Gabriel. 2004. “Phylogenetic Constraints and Adaptation Explain Food-Web Structure.” <em>Nature</em> 427 (6977): 835–39. <a href="https://doi.org/10.1038/nature02327">https://doi.org/10.1038/nature02327</a>.</p>
+         </div>
+         <div id="ref-CoheBria84">
+         <p>Cohen, J. E., and F. Briand. 1984. “Trophic Links of Community Food Webs.” <em>Proc Natl Acad Sci U S A</em> 81 (13): 4105–9.</p>
+         </div>
+         <div id="ref-CoheNewm85">
+         <p>Cohen, Joel E., and Charles M. Newman. 1985. “A Stochastic Theory of Community Food Webs I. Models and Aggregated Data.” <em>Proceedings of the Royal Society of London. Series B. Biological Sciences</em> 224 (1237): 421–48. <a href="https://doi.org/10.1098/rspb.1985.0042">https://doi.org/10.1098/rspb.1985.0042</a>.</p>
+         </div>
+         <div id="ref-DelmBess18">
+         <p>Delmas, Eva, Mathilde Besson, Marie-Hélène Brice, Laura A. Burkle, Giulio V. Dalla Riva, Marie-Josée Fortin, Dominique Gravel, et al. 2018. “Analysing Ecological Networks of Species Interactions.” <em>Biological Reviews</em>, June, 112540. <a href="https://doi.org/10.1111/brv.12433">https://doi.org/10.1111/brv.12433</a>.</p>
+         </div>
+         <div id="ref-Deng09">
+         <p>Dengler, Jürgen. 2009. “Which Function Describes the Species–Area Relationship Best? A Review and Empirical Evaluation.” <em>Journal of Biogeography</em> 36 (4): 728–44. <a href="https://doi.org/10.1111/j.1365-2699.2008.02038.x">https://doi.org/10.1111/j.1365-2699.2008.02038.x</a>.</p>
+         </div>
+         <div id="ref-DunnWill02b">
+         <p>Dunne, J. A., R. J. Williams, and N. D. Martinez. 2002. “Food-Web Structure and Network Theory: The Role of Connectance and Size.” <em>Proceedings of the National Academy of Sciences</em> 99 (20): 12917–22. <a href="https://doi.org/10.1073/pnas.192407699">https://doi.org/10.1073/pnas.192407699</a>.</p>
+         </div>
+         <div id="ref-ForiJenk17">
+         <p>Forister, Matthew L., and Stephen H. Jenkins. 2017. “A Neutral Model for the Evolution of Diet Breadth.” <em>The American Naturalist</em> 190 (2): E40–E54. <a href="https://doi.org/10.1086/692325">https://doi.org/10.1086/692325</a>.</p>
+         </div>
+         <div id="ref-FortBasc06a">
+         <p>Fortuna, Miguel A., and Jordi Bascompte. 2006. “Habitat Loss and the Structure of Plant-Animal Mutualistic Networks: Mutualistic Networks and Habitat Loss.” <em>Ecology Letters</em> 9 (3): 281–86. <a href="https://doi.org/10.1111/j.1461-0248.2005.00868.x">https://doi.org/10.1111/j.1461-0248.2005.00868.x</a>.</p>
+         </div>
+         <div id="ref-GabrSimp19">
+         <p>Gabry, Jonah, Daniel Simpson, Aki Vehtari, Michael Betancourt, and Andrew Gelman. 2019. “Visualization in Bayesian Workflow.” <em>Journal of the Royal Statistical Society: Series A (Statistics in Society)</em> 182 (2): 389–402. <a href="https://doi.org/10.1111/rssa.12378">https://doi.org/10.1111/rssa.12378</a>.</p>
+         </div>
+         <div id="ref-GaliLurg18">
+         <p>Galiana, Nuria, Miguel Lurgi, Bernat Claramunt-López, Marie-Josée Fortin, Shawn Leroux, Kevin Cazelles, Dominique Gravel, and José M. Montoya. 2018. “The Spatial Scaling of Species Interaction Networks.” <em>Nature Ecology &amp; Evolution</em> 2 (5): 782–90. <a href="https://doi.org/10.1038/s41559-018-0517-3">https://doi.org/10.1038/s41559-018-0517-3</a>.</p>
+         </div>
+         <div id="ref-GarlCald03">
+         <p>Garlaschelli, Diego, Guido Caldarelli, and Luciano Pietronero. 2003. “Universal Scaling Relations in Food Webs.” <em>Nature</em> 423 (6936): 165–68. <a href="https://doi.org/10.1038/nature01604">https://doi.org/10.1038/nature01604</a>.</p>
+         </div>
+         <div id="ref-HobbHoot15">
+         <p>Hobbs, N. Thompson, and Mevin B. Hooten. 2015. <em>Bayesian Models: A Statistical Primer for Ecologists</em>. Princeton, New Jersey: Princeton University Press.</p>
+         </div>
+         <div id="ref-HoltLawt99">
+         <p>Holt, Robert D., John H. Lawton, Gary A. Polis, and Neo D. Martinez. 1999. “Trophic Rank and the Species–Area Relationship.” <em>Ecology</em> 80 (5): 1495–1504. <a href="https://doi.org/10.1890/0012-9658(1999)080%5B1495:TRATSA%5D2.0.CO;2">https://doi.org/10.1890/0012-9658(1999)080[1495:TRATSA]2.0.CO;2</a>.</p>
+         </div>
+         <div id="ref-Jord16a">
+         <p>Jordano, Pedro. 2016a. “Sampling Networks of Ecological Interactions.” Edited by Daniel Stouffer. <em>Functional Ecology</em> 30 (12): 1883–93. <a href="https://doi.org/10.1111/1365-2435.12763">https://doi.org/10.1111/1365-2435.12763</a>.</p>
+         </div>
+         <div id="ref-Jord16">
+         <p>———. 2016b. “Chasing Ecological Interactions.” <em>PLOS Biol</em> 14 (9): e1002559. <a href="https://doi.org/10.1371/journal.pbio.1002559">https://doi.org/10.1371/journal.pbio.1002559</a>.</p>
+         </div>
+         <div id="ref-KefiBerl12a">
+         <p>Kéfi, Sonia, Eric L. Berlow, Evie A. Wieters, Sergio A. Navarrete, Owen L. Petchey, Spencer A. Wood, Alice Boit, et al. 2012. “More Than a Meal… Integrating Non-Feeding Interactions into Food Webs: More Than a Meal ….” <em>Ecology Letters</em> 15 (4): 291–300. <a href="https://doi.org/10.1111/j.1461-0248.2011.01732.x">https://doi.org/10.1111/j.1461-0248.2011.01732.x</a>.</p>
+         </div>
+         <div id="ref-KozuPano15">
+         <p>Kozubowski, Tomasz J., Anna K. Panorska, and Matthew L. Forister. 2015. “A Discrete Truncated Pareto Distribution.” <em>Statistical Methodology</em> 26 (September): 135–50. <a href="https://doi.org/10.1016/j.stamet.2015.04.002">https://doi.org/10.1016/j.stamet.2015.04.002</a>.</p>
+         </div>
+         <div id="ref-Law79">
+         <p>Law, Richard. 1979. “Optimal Life Histories Under Age-Specific Predation.” <em>The American Naturalist</em> 114 (3): 399–417. <a href="https://www.jstor.org/stable/2460187">https://www.jstor.org/stable/2460187</a>.</p>
+         </div>
+         <div id="ref-mart92ccc">
+         <p>Martinez, Neo D. 1992. “Constant Connectance in Community Food Webs.” <em>The American Naturalist</em> 139 (6): 1208–18. <a href="http://www.jstor.org/stable/2462337">http://www.jstor.org/stable/2462337</a>.</p>
+         </div>
+         <div id="ref-May72">
+         <p>May, Robert M. 1972. “Will a Large Complex System Be Stable?” <em>Nature</em> 238 (5364): 413–14. <a href="https://doi.org/10.1038/238413a0">https://doi.org/10.1038/238413a0</a>.</p>
+         </div>
+         <div id="ref-McCa07">
+         <p>McCann, Kevin. 2007. “Protecting Biostructure.” <em>Nature</em> 446 (7131): 29–29. <a href="https://doi.org/10.1038/446029a">https://doi.org/10.1038/446029a</a>.</p>
+         </div>
+         <div id="ref-McCa12">
+         <p>McCann, Kevin S. 2012. <em>Food Webs</em>. Princeton: Princeton University Press.</p>
+         </div>
+         <div id="ref-McEl20">
+         <p>McElreath, Richard. 2020. <em>Statistical Rethinking: A Bayesian Course with Examples in R and STAN</em>. CRC Press.</p>
+         </div>
+         <div id="ref-MontPimm06">
+         <p>Montoya, José M., Stuart L. Pimm, and Ricard V. Solé. 2006. “Ecological Networks and Their Fragility.” <em>Nature</em> 442 (7100): 259–64. <a href="https://doi.org/10.1038/nature04927">https://doi.org/10.1038/nature04927</a>.</p>
+         </div>
+         <div id="ref-PascDunn06">
+         <p>Pascual, Mercedes, and Jennifer A. Dunne. 2006. <em>Ecological Networks: Linking Structure to Dynamics in Food Webs</em>. Oxford University Press, USA.</p>
+         </div>
+         <div id="ref-PetcBeck08">
+         <p>Petchey, O. L., A. P. Beckerman, J. O. Riede, and P. H. Warren. 2008. “Size, Foraging, and Food Web Structure.” <em>Proceedings of the National Academy of Sciences</em> 105 (11): 4191–6. <a href="https://doi.org/10.1073/pnas.0710672105">https://doi.org/10.1073/pnas.0710672105</a>.</p>
+         </div>
+         <div id="ref-PoisBais16">
+         <p>Poisot, Timothée, Benjamin Baiser, Jennifer A. Dunne, Sonia Kéfi, François Massol, Nicolas Mouquet, Tamara N. Romanuk, Daniel B. Stouffer, Spencer A. Wood, and Dominique Gravel. 2016. “Mangal - Making Ecological Network Analysis Simple.” <em>Ecography</em> 39 (4): 384–90. <a href="https://doi.org/10.1111/ecog.00976">https://doi.org/10.1111/ecog.00976</a>.</p>
+         </div>
+         <div id="ref-PoisBerg20">
+         <p>Poisot, Timothée, Gabriel Bergeron, Kevin Cazelles, Tad Dallas, Dominique Gravel, Andrew Macdonald, Benjamin Mercier, Clément Violet, and Steve Vissault. 2020. “Environmental Biases in the Study of Ecological Networks at the Planetary Scale.” <em>bioRxiv</em>, January, 2020.01.27.921429. <a href="https://doi.org/10.1101/2020.01.27.921429">https://doi.org/10.1101/2020.01.27.921429</a>.</p>
+         </div>
+         <div id="ref-PoisCirt16">
+         <p>Poisot, Timothée, Alyssa R. Cirtwill, Kévin Cazelles, Dominique Gravel, Marie-Josée Fortin, and Daniel B. Stouffer. 2016. “The Structure of Probabilistic Networks.” Edited by Jana Vamosi. <em>Methods in Ecology and Evolution</em> 7 (3): 303–12. <a href="https://doi.org/10.1111/2041-210X.12468">https://doi.org/10.1111/2041-210X.12468</a>.</p>
+         </div>
+         <div id="ref-PoisGrav14">
+         <p>Poisot, Timothée, and Dominique Gravel. 2014. “When Is an Ecological Network Complex? Connectance Drives Degree Distribution and Emerging Network Properties.” <em>PeerJ</em> 2 (February): e251. <a href="https://doi.org/10.7717/peerj.251">https://doi.org/10.7717/peerj.251</a>.</p>
+         </div>
+         <div id="ref-PoisStou15">
+         <p>Poisot, Timothée, Daniel B. Stouffer, and Dominique Gravel. 2015. “Beyond Species: Why Ecological Interaction Networks Vary Through Space and Time.” <em>Oikos</em> 124 (3): 243–51. <a href="https://doi.org/10.1111/oik.01719">https://doi.org/10.1111/oik.01719</a>.</p>
+         </div>
+         <div id="ref-RiedRall10">
+         <p>Riede, Jens O., Björn C. Rall, Carolin Banasek-Richter, Sergio A. Navarrete, Evie A. Wieters, Mark C. Emmerson, Ute Jacob, and Ulrich Brose. 2010. “Chapter 3 - Scaling of Food-Web Properties with Diversity and Complexity Across Ecosystems.” In <em>Advances in Ecological Research</em>, edited by Guy Woodward, 42:139–70. Ecological Networks. Academic Press. <a href="https://doi.org/10.1016/B978-0-12-381363-3.00003-4">https://doi.org/10.1016/B978-0-12-381363-3.00003-4</a>.</p>
+         </div>
+         <div id="ref-SeibCado18">
+         <p>Seibold, Sebastian, Marc W. Cadotte, J. Scott MacIvor, Simon Thorn, and Jörg Müller. 2018. “The Necessity of Multitrophic Approaches in Community Ecology.” <em>Trends in Ecology &amp; Evolution</em> 33 (10): 754–64. <a href="https://doi.org/10.1016/j.tree.2018.07.001">https://doi.org/10.1016/j.tree.2018.07.001</a>.</p>
+         </div>
+         <div id="ref-SmitMoor16">
+         <p>Smith-Ramesh, Lauren M., Alexandria C. Moore, and Oswald J. Schmitz. 2016. “Global Synthesis Suggests That Food Web Connectance Correlates to Invasion Resistance.” <em>Global Change Biology</em>, August, n/a–n/a. <a href="https://doi.org/10.1111/gcb.13460">https://doi.org/10.1111/gcb.13460</a>.</p>
+         </div>
+         <div id="ref-Teer14">
+         <p>Teerapabolarn, K. 2014. “An Improved Binomial Approximation for the Beta Binomial Distribution.” <em>International Journal of Pure and Apllied Mathematics</em> 97 (4). <a href="https://doi.org/10.12732/ijpam.v97i4.10">https://doi.org/10.12732/ijpam.v97i4.10</a>.</p>
+         </div>
+         <div id="ref-ThomBros12">
+         <p>Thompson, Ross M., Ulrich Brose, Jennifer A. Dunne, Robert O. Hall, Sally Hladyz, Roger L. Kitching, Neo D. Martinez, et al. 2012. “Food Webs: Reconciling the Structure and Function of Biodiversity.” <em>Trends in Ecology &amp; Evolution</em> 27 (12): 689–97. <a href="https://doi.org/10.1016/j.tree.2012.08.005">https://doi.org/10.1016/j.tree.2012.08.005</a>.</p>
+         </div>
+         <div id="ref-VehtGelm17">
+         <p>Vehtari, Aki, Andrew Gelman, and Jonah Gabry. 2017. “Practical Bayesian Model Evaluation Using Leave-One-Out Cross-Validation and WAIC.” <em>Statistics and Computing</em> 27 (5): 1413–32. <a href="https://doi.org/10.1007/s11222-016-9696-4">https://doi.org/10.1007/s11222-016-9696-4</a>.</p>
+         </div>
+         <div id="ref-VieiAlme15">
+         <p>Vieira, Marcos Costa, and Mário Almeida‐Neto. 2015. “A Simple Stochastic Model for Complex Coextinctions in Mutualistic Networks: Robustness Decreases with Connectance.” <em>Ecology Letters</em> 18 (2): 144–52. <a href="https://doi.org/10.1111/ele.12394">https://doi.org/10.1111/ele.12394</a>.</p>
+         </div>
+         <div id="ref-WillMart00">
+         <p>Williams, Richard J., and Neo D. Martinez. 2000. “Simple Rules Yield Complex Food Webs.” <em>Nature</em> 404 (6774): 180–83. <a href="https://doi.org/10.1038/35004572">https://doi.org/10.1038/35004572</a>.</p>
+         </div>
+         <div id="ref-WillGast01">
+         <p>Williamson, Mark, Kevin J. Gaston, and W. M. Lonsdale. 2001. “The Species–Area Relationship Does Not Have an Asymptote!” <em>Journal of Biogeography</em> 28 (7): 827–30. <a href="https://doi.org/10.1046/j.1365-2699.2001.00603.x">https://doi.org/10.1046/j.1365-2699.2001.00603.x</a>.</p>
+         </div>
+         <div id="ref-WinePian01">
+         <p>Winemiller, Kirk O., Eric R. Pianka, Laurie J. Vitt, and Anthony Joern. 2001. “Food Web Laws or Niche Theory? Six Independent Empirical Tests.” <em>The American Naturalist</em> 158 (2): 193–99. <a href="https://doi.org/10.1086/321315">https://doi.org/10.1086/321315</a>.</p>
+         </div>
+         <div id="ref-WoodRuss15">
+         <p>Wood, Spencer A., Roly Russell, Dieta Hanson, Richard J. Williams, and Jennifer A. Dunne. 2015. “Effects of Spatial Scale of Sampling on Food Web Structure.” <em>Ecology and Evolution</em> 5 (17): 3769–82. <a href="https://doi.org/10.1002/ece3.1640">https://doi.org/10.1002/ece3.1640</a>.</p>
+         </div>
+         </div>
+      </article>
+
+   </body>
+   <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js" ></script>
+</html>
